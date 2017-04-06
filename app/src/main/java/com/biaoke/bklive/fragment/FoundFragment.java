@@ -68,7 +68,7 @@ public class FoundFragment extends Fragment {
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
         }
-        myImagecycleview();
+        myImagecycleview();//轮播图，加载各种途径图片
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
@@ -92,10 +92,12 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.addHeaderView(mHeaderView, 80);
         recyclerviewFound.addFootView(mFooterView, 50);
 
-        //设置布局管理器
-        recyclerviewFound.setLayoutManager(new XGridLayoutManager(getActivity(), 2));
+        //设置布局管理器,可以根据图片大小自适应
+        XGridLayoutManager xGridLayoutManager=new XGridLayoutManager(getActivity(), 2);
+        xGridLayoutManager.setAutoMeasureEnabled(false);
+        recyclerviewFound.setLayoutManager(xGridLayoutManager);
         //设置适配器
-        liveItemAdapter = new liveItemAdapter(getActivity(),recyclerviewFound);
+        liveItemAdapter = new liveItemAdapter(getActivity(), recyclerviewFound);
         liveItemAdapter.bind(recyclerDataList);
         liveItemAdapter.setOnItemClickListener(listen);
         recyclerviewFound.setAdapter(liveItemAdapter);
@@ -159,21 +161,14 @@ public class FoundFragment extends Fragment {
         public void onItemClick(View view, int postion) {
             Toast.makeText(getActivity(), "发现页面" + postion, Toast.LENGTH_SHORT).show();
             Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
-            intent_video.putExtra("path",recyclerDataList.get(postion).getVideoUrl());
+            intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
             startActivity(intent_video);
         }
     };
 
 
-//    @Override
-//    public void onMultiWindowModeChanged(boolean isInMultiWindowMode) {
-//        super.onMultiWindowModeChanged(isInMultiWindowMode);
-//
-//        imageView.setImageResource(R.drawable.header_found);
-//        AnimationDrawable animationDrawable = (AnimationDrawable) imageView.getDrawable();
-//        animationDrawable.start();
-//    }
 
+//轮播图
     private void myImagecycleview() {
         //		mImageCycleView.setAutoCycle(false); //关闭自动播放
 //        mImageCycleView.setCycleDelayed(2000);//设置自动轮播循环时间
@@ -245,7 +240,7 @@ public class FoundFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
+//获取视频用户信息
     private void getVideo(String content) {
         OkHttpUtils
                 .postString()
@@ -292,8 +287,10 @@ public class FoundFragment extends Fragment {
                                                     public void onResponse(String response, int id) {
                                                         Log.d("成功的返回", response);
                                                         try {
-
-                                                            JSONArray jsonArray = new JSONArray(response);
+//                                                            "Result":"1",
+//                                                            "Date":[],	//数组对象
+                                                            JSONObject object = new JSONObject(response);
+                                                            JSONArray jsonArray = new JSONArray(object.getString("Date"));
 //                                                                    "Protocol":"Explore",
 //                                                                    "UserId":"0",		// 用户ＩＤ
 //                                                                    "NickName":"test1",		//用户昵称

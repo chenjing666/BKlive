@@ -6,6 +6,18 @@
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
     tools:context=".activity.SWCameraStreamingActivity">
+    <!--//布局放后面的覆盖前面的//-->
+    <com.qiniu.pili.droid.streaming.widget.AspectFrameLayout
+        android:id="@+id/cameraPreview_afl"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <android.opengl.GLSurfaceView
+            android:id="@+id/cameraPreview_surfaceView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center" />
+    </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
 
     <RelativeLayout
         android:id="@+id/live_description"
@@ -142,15 +154,5 @@
             android:textSize="15dp" />
     </RelativeLayout>
 
-    <com.qiniu.pili.droid.streaming.widget.AspectFrameLayout
-        android:id="@+id/cameraPreview_afl"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
 
-        <android.opengl.GLSurfaceView
-            android:id="@+id/cameraPreview_surfaceView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_gravity="center" />
-    </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
 </RelativeLayout>
