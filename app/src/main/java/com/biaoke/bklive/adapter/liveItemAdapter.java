@@ -46,9 +46,9 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
         }
     };
 
-    public liveItemAdapter(Context context,XRecyclerView xRecyclerView) {
+    public liveItemAdapter(Context context, XRecyclerView xRecyclerView) {
         this.context = context;
-        this.xRecyclerView=xRecyclerView;
+        this.xRecyclerView = xRecyclerView;
         loadImage = new LoadImage(context, listener);
     }
 
@@ -81,8 +81,12 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
             holder.itemLiveThumbnail.setImageBitmap(bitmap_main);
         }
 
+        if (bean.getType().equals("1")) {
+            holder.itemLiveState.setText("直播中");
+        } else {
+            holder.itemLiveState.setText("短视频");
+        }
 
-        holder.itemLiveState.setText(bean.getType());
 //        holder.itemLiveThumbnail.setImageBitmap(defaultBitmap);//设置默认图片封面
         holder.itemLiveDescription.setText(bean.getTitle());
 //        holder.itemLiveHead.setImageBitmap(defaultBitmap);//设置默认图片头像

@@ -4,7 +4,9 @@ import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
@@ -27,6 +29,8 @@ import butterknife.OnClick;
 public class SWCameraStreamingActivity extends BaseActivity implements StreamingStateChangedListener {
     @BindView(R.id.btn_start_live)
     Button start;
+    @BindView(R.id.live_description)
+    RelativeLayout liveDescription;
     private MediaStreamingManager mMediaStreamingManager;
     private String liveUrl = null;
     private StreamingProfile mProfile;
@@ -166,7 +170,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 
     @OnClick(R.id.btn_start_live)
     public void onClick() {
-//        afl.setVisibility(View.VISIBLE);
+        liveDescription.setVisibility(View.INVISIBLE);
         Toast.makeText(this, "哈哈哈哈", Toast.LENGTH_SHORT).show();
 //        initLive();
     }
