@@ -22,6 +22,7 @@ import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
 import com.xlibs.xrv.LayoutManager.XGridLayoutManager;
+import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
 import com.xlibs.xrv.listener.OnLoadMoreListener;
 import com.xlibs.xrv.listener.OnRefreshListener;
 import com.xlibs.xrv.view.XRecyclerView;
@@ -93,7 +94,7 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.addFootView(mFooterView, 50);
 
         //设置布局管理器,可以根据图片大小自适应
-        XGridLayoutManager xGridLayoutManager=new XGridLayoutManager(getActivity(), 2);
+        XStaggeredGridLayoutManager xGridLayoutManager=new XStaggeredGridLayoutManager(2,XStaggeredGridLayoutManager.VERTICAL);
         xGridLayoutManager.setAutoMeasureEnabled(false);
         recyclerviewFound.setLayoutManager(xGridLayoutManager);
         //设置适配器
@@ -130,8 +131,8 @@ public class FoundFragment extends Fragment {
     }
 
     private void initRefreshData() {
-        for (int i = 0; i < 3; i++) {
-            live_item liveItem = new live_item("", "", "", "", "", i + i + "", "", "", "", "", "");
+        for (int i = 0; i < 20; i++) {
+            live_item liveItem = new live_item("", "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
             recyclerDataList.add(liveItem);
         }
     }
