@@ -19,143 +19,143 @@
             android:layout_gravity="center" />
     </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
 
-    <RelativeLayout
-        android:id="@+id/live_description"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@color/gray_light">
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/live_description"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent"-->
+    <!--android:background="@color/gray_light">-->
 
-        <RelativeLayout
-            android:id="@+id/ll_live_top"
-            android:layout_width="match_parent"
-            android:layout_height="82dp">
-            <!--暂时不加私密功能-->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_centerVertical="true"
-                android:layout_marginStart="10dp"
-                android:background="@drawable/livecamera_secret"
-                android:visibility="gone" />
+    <!--<RelativeLayout-->
+    <!--android:id="@+id/ll_live_top"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="82dp">-->
+    <!--&lt;!&ndash;暂时不加私密功能&ndash;&gt;-->
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginStart="10dp"-->
+    <!--android:background="@drawable/livecamera_secret"-->
+    <!--android:visibility="gone" />-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@mipmap/livecamera_close" />
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:background="@mipmap/livecamera_close" />-->
 
-        </RelativeLayout>
+    <!--</RelativeLayout>-->
 
-        <LinearLayout
-            android:id="@+id/ll_live_title"
-            android:layout_width="match_parent"
-            android:layout_height="138dp"
-            android:layout_below="@+id/ll_live_top"
-            android:orientation="horizontal">
-            <!--封面暂时不加-->
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical"
-                android:background="@mipmap/livecamera_addpicture"
-                android:visibility="gone" />
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_live_title"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="138dp"-->
+    <!--android:layout_below="@+id/ll_live_top"-->
+    <!--android:orientation="horizontal">-->
+    <!--&lt;!&ndash;封面暂时不加&ndash;&gt;-->
+    <!--<ImageView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_gravity="center_vertical"-->
+    <!--android:background="@mipmap/livecamera_addpicture"-->
+    <!--android:visibility="gone" />-->
 
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+    <!--<RelativeLayout-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="给直播写个标题吧"
-                    android:textColor="#fefefe"
-                    android:textSize="25dp" />
+    <!--<TextView-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:text="给直播写个标题吧"-->
+    <!--android:textColor="#fefefe"-->
+    <!--android:textSize="25dp" />-->
 
-                <EditText
-                    android:id="@+id/et_live_title"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_centerInParent="true" />
+    <!--<EditText-->
+    <!--android:id="@+id/et_live_title"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_centerInParent="true" />-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/livecamera_addlab"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:background="@mipmap/livecamera_addlab" />-->
+    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/livecamera_addlab"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_alignParentBottom="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@mipmap/livecamera_addlab" />&ndash;&gt;-->
 
-                <!--<ImageView-->
-                    <!--android:id="@+id/livecamera_addlab2"-->
-                    <!--android:layout_width="wrap_content"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_alignParentBottom="true"-->
-                    <!--android:layout_marginStart="13dp"-->
-                    <!--android:layout_toRightOf="@+id/livecamera_addlab"-->
-                    <!--android:background="@mipmap/livecamera_addlab2" />-->
-            </RelativeLayout>
+    <!--&lt;!&ndash;<ImageView&ndash;&gt;-->
+    <!--&lt;!&ndash;android:id="@+id/livecamera_addlab2"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_alignParentBottom="true"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_marginStart="13dp"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:layout_toRightOf="@+id/livecamera_addlab"&ndash;&gt;-->
+    <!--&lt;!&ndash;android:background="@mipmap/livecamera_addlab2" />&ndash;&gt;-->
+    <!--</RelativeLayout>-->
 
-        </LinearLayout>
+    <!--</LinearLayout>-->
 
-        <LinearLayout
-            android:id="@+id/ll_live_share"
-            android:layout_width="224dp"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ll_live_title"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="54dp"
-            android:orientation="horizontal">
+    <!--<LinearLayout-->
+    <!--android:id="@+id/ll_live_share"-->
+    <!--android:layout_width="224dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_below="@+id/ll_live_title"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="54dp"-->
+    <!--android:orientation="horizontal">-->
 
-            <ImageView
-                android:id="@+id/iv_liveshare_sina"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:clickable="true"
-                android:background="@drawable/livecamera_share_weibo" />
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_liveshare_sina"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:clickable="true"-->
+    <!--android:background="@drawable/livecamera_share_weibo" />-->
 
-            <ImageView
-                android:id="@+id/iv_liveshare_wechat"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/livecamera_share_wechat" />
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_liveshare_wechat"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/livecamera_share_wechat" />-->
 
-            <ImageView
-                android:id="@+id/iv_liveshare_wechatfriend"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/livecamera_share_wechatfriend" />
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_liveshare_wechatfriend"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/livecamera_share_wechatfriend" />-->
 
-            <ImageView
-                android:id="@+id/iv_liveshare_qq"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/livecamera_share_qq" />
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_liveshare_qq"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/livecamera_share_qq" />-->
 
-            <ImageView
-                android:id="@+id/iv_liveshare_qqq"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:background="@drawable/livecamera_share_qqq" />
-        </LinearLayout>
+    <!--<ImageView-->
+    <!--android:id="@+id/iv_liveshare_qqq"-->
+    <!--android:layout_width="0dp"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_weight="1"-->
+    <!--android:background="@drawable/livecamera_share_qqq" />-->
+    <!--</LinearLayout>-->
 
-        <Button
-            android:id="@+id/btn_start_live"
-            android:layout_width="224dp"
-            android:layout_height="50dp"
-            android:layout_below="@id/ll_live_share"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
-            android:background="@mipmap/icon_start_live"
-            android:text="@string/start_live"
-            android:textColor="@color/white"
-            android:textSize="15dp" />
-    </RelativeLayout>
+    <!--<Button-->
+    <!--android:id="@+id/btn_start_live"-->
+    <!--android:layout_width="224dp"-->
+    <!--android:layout_height="50dp"-->
+    <!--android:layout_below="@id/ll_live_share"-->
+    <!--android:layout_centerHorizontal="true"-->
+    <!--android:layout_marginTop="26dp"-->
+    <!--android:background="@mipmap/icon_start_live"-->
+    <!--android:text="@string/start_live"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="15dp" />-->
+    <!--</RelativeLayout>-->
 
 
 </RelativeLayout>

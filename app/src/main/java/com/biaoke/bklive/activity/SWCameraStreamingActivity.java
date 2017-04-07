@@ -1,20 +1,13 @@
 package com.biaoke.bklive.activity;
 
-import android.content.Context;
-import android.content.SharedPreferences;
 import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
-import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.qiniu.pili.droid.streaming.AVCodecType;
 import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
@@ -25,44 +18,47 @@ import com.qiniu.pili.droid.streaming.StreamingState;
 import com.qiniu.pili.droid.streaming.StreamingStateChangedListener;
 import com.qiniu.pili.droid.streaming.WatermarkSetting;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
-import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
-import com.zhy.http.okhttp.callback.StringCallback;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import java.net.URISyntaxException;
 
-import butterknife.BindView;
 import butterknife.ButterKnife;
-import butterknife.OnClick;
-import okhttp3.Call;
-import okhttp3.MediaType;
-import okhttp3.Response;
 
 public class SWCameraStreamingActivity extends BaseActivity implements StreamingStateChangedListener {
-    @BindView(R.id.btn_start_live)
-    Button start;
-    @BindView(R.id.live_description)
-    RelativeLayout liveDescription;
-    @BindView(R.id.et_live_title)
-    EditText etLiveTitle;
+    //    @BindView(R.id.btn_start_live)
+//    Button start;
+//    @BindView(R.id.live_description)
+//    RelativeLayout liveDescription;
+//    @BindView(R.id.et_live_title)
+//    EditText etLiveTitle;
     private MediaStreamingManager mMediaStreamingManager;
     private String liveUrl = null;
     private StreamingProfile mProfile;
     private AspectFrameLayout afl;
+    private GLSurfaceView glSurfaceView;
+    private CameraStreamingSetting cameraStreamingSetting;
+    private MicrophoneStreamingSetting microphoneStreamingSetting;
+    private WatermarkSetting watermarksetting;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swcamera_streaming);
         ButterKnife.bind(this);
-//        liveUrl = getIntent().getStringExtra("liveUrl");
-//        Log.e("--------liveUrl--------", liveUrl + "");
-//        initLive();
+        liveUrl = getIntent().getStringExtra("liveUrl");
+        Log.e("--------liveUrl--------", liveUrl + "");
+        initLive();
 
     }
+
+//    private Handler mHandler = new Handler() {
+//        public void handleMessage(Message message) {
+//            switch (message.what) {
+//                case 0:
+//                    initLive();
+//                    break;
+//            }
+//        }
+//    };
 
 
     @Override
@@ -72,19 +68,20 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 
     public void initLive() {
         //水印
-        WatermarkSetting watermarksetting = new WatermarkSetting(this, R.drawable.logo_72, WatermarkSetting.WATERMARK_LOCATION.SOUTH_WEST, WatermarkSetting.WATERMARK_SIZE.MEDIUM, 100); // 100 为 alpha 值
-        MicrophoneStreamingSetting microphoneStreamingSetting = new MicrophoneStreamingSetting();
+        // 100 为 alpha 值
+        watermarksetting = new WatermarkSetting(this, R.drawable.logo_72, WatermarkSetting.WATERMARK_LOCATION.SOUTH_WEST, WatermarkSetting.WATERMARK_SIZE.MEDIUM, 100);
+        microphoneStreamingSetting = new MicrophoneStreamingSetting();
         microphoneStreamingSetting.setBluetoothSCOEnabled(true);//开启蓝牙麦克风支持
         afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);
         // Decide FULL screen or real size
         afl.setShowMode(AspectFrameLayout.SHOW_MODE.REAL);
-        GLSurfaceView glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
+        glSurfaceView = (GLSurfaceView) findViewById(R.id.cameraPreview_surfaceView);
         StreamingProfile.AudioProfile aProfile = new StreamingProfile.AudioProfile(44100, 66 * 1024);
         StreamingProfile.VideoProfile vProfile = new StreamingProfile.VideoProfile(20, 500 * 1024, 32);
         StreamingProfile.AVProfile avProfile = new StreamingProfile.AVProfile(vProfile, aProfile);
         mProfile = new StreamingProfile();
         try {
-            mProfile.setPublishUrl(liveUrl)
+            mProfile.setPublishUrl("rtmp://pili-publish.bk5977.com/bk-test1/1174?e=1491547054&token=EeZEOr-LLyxU9QaCyIoZRa0uBtJccSLWr-brhwIa:RGxuOfkrli_uCiu1JlJzYB7c4QA=")
                     .setVideoQuality(StreamingProfile.VIDEO_QUALITY_HIGH1)
                     .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
                     .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_480)
@@ -94,8 +91,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         } catch (URISyntaxException e) {
             e.printStackTrace();
         }
-        CameraStreamingSetting setting = new CameraStreamingSetting();
-        setting.setCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT)//摄像头前置
+        cameraStreamingSetting = new CameraStreamingSetting();
+        cameraStreamingSetting.setCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT)//摄像头前置
                 .setContinuousFocusModeEnabled(true)//自动对焦
                 .setFaceBeautySetting(new CameraStreamingSetting.FaceBeautySetting(1.0f, 1.0f, 0.8f))// FaceBeautySetting 中的参数依次为：beautyLevel，whiten，redden，
                 .setVideoFilter(CameraStreamingSetting.VIDEO_FILTER_TYPE.VIDEO_FILTER_BEAUTY)//即磨皮程度、美白程度以及红润程度，取值范围为[0.0f, 1.0f]
@@ -103,7 +100,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_16_9)
                 .setCameraSourceImproved(true);//只需要进行一次美颜的滤镜处理，就可以实现本地预览端和播放端的滤镜效果
         mMediaStreamingManager = new MediaStreamingManager(this, afl, glSurfaceView, AVCodecType.SW_VIDEO_WITH_SW_AUDIO_CODEC);  // soft codec
-        mMediaStreamingManager.prepare(setting, microphoneStreamingSetting, watermarksetting, mProfile);
+        mMediaStreamingManager.prepare(cameraStreamingSetting, mProfile);// microphoneStreamingSetting, watermarksetting,
         mMediaStreamingManager.setStreamingStateListener(this);
     }
 
@@ -174,90 +171,89 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         }
     }
 
-    @OnClick(R.id.btn_start_live)
-    public void onClick() {
-        //获取直播推流地址
-        okhttputils();
-        //隐藏直播描述，进入直播间
-        liveDescription.setVisibility(View.INVISIBLE);
-        Toast.makeText(this, "进入直播", Toast.LENGTH_SHORT).show();
-        initLive();
-    }
+//    @OnClick(R.id.btn_start_live)
+//    public void onClick() {
+    //获取直播推流地址
+//        okhttputils();
+    //隐藏直播描述，进入直播间
+//        liveDescription.setVisibility(View.INVISIBLE);
+//        Toast.makeText(this, "进入直播", Toast.LENGTH_SHORT).show();
+//    }
 
     //获取直播地址流
-    private void okhttputils() {
-        SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
-        String userId = sharedPreferences_user.getString("userId", "");
-        Log.e("userIduserId", userId);
-        String title_live = etLiveTitle.getText().toString().trim();
-        JSONObject paramsObject = new JSONObject();
-        try {
-            paramsObject.put("Protocol", "Live");
-            paramsObject.put("UserId", userId);
-            paramsObject.put("Cmd", "1");
-            paramsObject.put("Title", title_live);
-            paramsObject.put("Tag", "Tag");
-            Log.e("cao---=====", paramsObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        OkHttpUtils
-                .postString()
-                .url(Api.ENCRYPT64)
-                .content(paramsObject.toString())
-                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        OkHttpUtils.postString()
-                                .url(Api.LIVEPUT)
-                                .content(response)
-                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                                .build()
-                                .execute(new StringCallback() {
-                                    @Override
-                                    public void onError(Call call, Exception e, int id) {
-
-                                    }
-
-                                    @Override
-                                    public void onResponse(String response, int id) {
-                                        OkHttpUtils.postString()
-                                                .url(Api.UNENCRYPT64)
-                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                                                .content(response)
-                                                .build()
-                                                .execute(new Callback() {
-                                                    @Override
-                                                    public Object parseNetworkResponse(Response response, int id) throws Exception {
-                                                        JSONObject object = new JSONObject(response.body().string());
-                                                        liveUrl = object.getString("RTMPPublishURL");
-                                                        Log.d("liveUrl-----", liveUrl);
-//                        Message msg = new Message();
-//                        msg.what = 2;
-//                        myHandler.sendMessage(msg);
-                                                        return null;
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Call call, Exception e, int id) {
-                                                        Log.d("onError", e.getMessage());
-                                                    }
-
-                                                    @Override
-                                                    public void onResponse(Object response, int id) {
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-                });
-
-    }
+//    private void okhttputils() {
+//        SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+//        String userId = sharedPreferences_user.getString("userId", "");
+//        Log.e("userIduserId", userId);
+//        String title_live = etLiveTitle.getText().toString().trim();
+//        JSONObject paramsObject = new JSONObject();
+//        try {
+//            paramsObject.put("Protocol", "Live");
+//            paramsObject.put("UserId", userId);
+//            paramsObject.put("Cmd", "1");
+//            paramsObject.put("Title", title_live);
+//            paramsObject.put("Tag", "Tag");
+//            Log.e("cao---=====", paramsObject.toString());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        OkHttpUtils
+//                .postString()
+//                .url(Api.ENCRYPT64)
+//                .content(paramsObject.toString())
+//                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                .build()
+//                .execute(new StringCallback() {
+//                    @Override
+//                    public void onError(Call call, Exception e, int id) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String response, int id) {
+//                        OkHttpUtils.postString()
+//                                .url(Api.LIVEPUT)
+//                                .content(response)
+//                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                                .build()
+//                                .execute(new StringCallback() {
+//                                    @Override
+//                                    public void onError(Call call, Exception e, int id) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onResponse(String response, int id) {
+//                                        OkHttpUtils.postString()
+//                                                .url(Api.UNENCRYPT64)
+//                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                                                .content(response)
+//                                                .build()
+//                                                .execute(new Callback() {
+//                                                    @Override
+//                                                    public Object parseNetworkResponse(Response response, int id) throws Exception {
+//                                                        JSONObject object = new JSONObject(response.body().string());
+//                                                        liveUrl = object.getString("RTMPPublishURL");
+//                                                        Log.d("liveUrl-----", liveUrl);
+////                                                        Message msg = new Message();
+////                                                        msg.what = 0;
+////                                                        mHandler.sendMessage(msg);
+//                                                        return null;
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onError(Call call, Exception e, int id) {
+//                                                        Log.d("onError", e.getMessage());
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onResponse(Object response, int id) {
+//                                                    }
+//                                                });
+//                                    }
+//                                });
+//                    }
+//                });
+//
+//    }
 }

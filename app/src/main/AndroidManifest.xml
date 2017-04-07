@@ -2,7 +2,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.biaoke.bklive">
 
-
     <uses-permission android:name="android.permission.INTERNET" />
     //网络
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
@@ -78,7 +77,8 @@
             android:theme="@android:style/Theme.Translucent.NoTitleBar">
             //七牛录屏功能
         </activity>
-        <activity android:name=".activity.PLVideoViewActivity"></activity>
+        <activity android:name=".activity.PLVideoViewActivity" />
+        <activity android:name=".activity.PrepareLiveActivity"></activity>
     </application>
 
 </manifest>
