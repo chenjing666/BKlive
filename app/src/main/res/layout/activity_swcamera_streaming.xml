@@ -29,13 +29,14 @@
             android:id="@+id/ll_live_top"
             android:layout_width="match_parent"
             android:layout_height="82dp">
-
+            <!--暂时不加私密功能-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerVertical="true"
                 android:layout_marginStart="10dp"
-                android:background="@drawable/livecamera_secret" />
+                android:background="@drawable/livecamera_secret"
+                android:visibility="gone" />
 
             <ImageView
                 android:layout_width="wrap_content"
@@ -52,12 +53,13 @@
             android:layout_height="138dp"
             android:layout_below="@+id/ll_live_top"
             android:orientation="horizontal">
-
+            <!--封面暂时不加-->
             <ImageView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
-                android:background="@mipmap/livecamera_addpicture" />
+                android:background="@mipmap/livecamera_addpicture"
+                android:visibility="gone" />
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -77,21 +79,21 @@
                     android:layout_height="wrap_content"
                     android:layout_centerInParent="true" />
 
-                <ImageView
-                    android:id="@+id/livecamera_addlab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:background="@mipmap/livecamera_addlab" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/livecamera_addlab"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:background="@mipmap/livecamera_addlab" />-->
 
-                <ImageView
-                    android:id="@+id/livecamera_addlab2"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentBottom="true"
-                    android:layout_marginStart="13dp"
-                    android:layout_toRightOf="@+id/livecamera_addlab"
-                    android:background="@mipmap/livecamera_addlab2" />
+                <!--<ImageView-->
+                    <!--android:id="@+id/livecamera_addlab2"-->
+                    <!--android:layout_width="wrap_content"-->
+                    <!--android:layout_height="wrap_content"-->
+                    <!--android:layout_alignParentBottom="true"-->
+                    <!--android:layout_marginStart="13dp"-->
+                    <!--android:layout_toRightOf="@+id/livecamera_addlab"-->
+                    <!--android:background="@mipmap/livecamera_addlab2" />-->
             </RelativeLayout>
 
         </LinearLayout>
@@ -110,6 +112,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:clickable="true"
                 android:background="@drawable/livecamera_share_weibo" />
 
             <ImageView
