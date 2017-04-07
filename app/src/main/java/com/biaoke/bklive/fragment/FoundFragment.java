@@ -132,7 +132,7 @@ public class FoundFragment extends Fragment {
 
     private void initRefreshData() {
         for (int i = 0; i < 20; i++) {
-            live_item liveItem = new live_item("", "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
+            live_item liveItem = new live_item( "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "","");
             recyclerDataList.add(liveItem);
         }
     }
@@ -152,7 +152,7 @@ public class FoundFragment extends Fragment {
 
     private void initLoadMoreData() {
         for (int i = 0; i < 3; i++) {
-            live_item liveItem = new live_item("", "", "", "", "", i + i + "", "", "", "", "", "");
+            live_item liveItem = new live_item( "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "","");
             recyclerDataList.add(liveItem);
         }
     }
@@ -305,7 +305,6 @@ public class FoundFragment extends Fragment {
 //                                                                    "Type":"1"	//1 直播 2视频
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
-                                                                String Protocol = jsonobject.getString("Protocol");
                                                                 String UserId = jsonobject.getString("UserId");
                                                                 String NickName = jsonobject.getString("NickName");
                                                                 String IconUrl = jsonobject.getString("IconUrl");//用户头像
@@ -316,7 +315,7 @@ public class FoundFragment extends Fragment {
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
                                                                 String Type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item(Protocol, UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
+                                                                live_item liveItem = new live_item( UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
                                                                 recyclerDataList.add(liveItem);
                                                             }
 
