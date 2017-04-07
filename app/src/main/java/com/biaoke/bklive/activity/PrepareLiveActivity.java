@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
+import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -45,6 +46,8 @@ public class PrepareLiveActivity extends BaseActivity {
     ImageView ivLiveshareQqq;
     @BindView(R.id.btn_start_live)
     Button btnStartLive;
+    @BindView(R.id.live_cancel)
+    ImageView liveCancel;
     private String liveUrl;
 
     @Override
@@ -59,9 +62,9 @@ public class PrepareLiveActivity extends BaseActivity {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
-                    Intent intent_live = new Intent(PrepareLiveActivity.this, SWCameraStreamingActivity.class);
-//                    intent_live.putExtra("liveUrl", liveUrl);
-                    startActivity(intent_live);
+                    Intent intent_liveprepare = new Intent(PrepareLiveActivity.this, SWCameraStreamingActivity.class);
+                    intent_liveprepare.putExtra("liveUrl", liveUrl);
+                    startActivity(intent_liveprepare);
                     finish();
                     break;
             }
@@ -73,13 +76,19 @@ public class PrepareLiveActivity extends BaseActivity {
         return AppConsts.POWER_BAR_BACKGROUND;
     }
 
-    @OnClick(R.id.btn_start_live)
-    public void onClick() {
-        okhttputils();
-        Message msg = new Message();
-        msg.what = 0;
-        mHandler.sendMessage(msg);
-
+    @OnClick({R.id.btn_start_live, R.id.live_cancel})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.btn_start_live:
+                okhttputils();
+//                Message msg = new Message();
+//                msg.what = 0;
+//                mHandler.sendMessage(msg);
+                break;
+            case R.id.live_cancel:
+                finish();
+                break;
+        }
     }
 
     //获取直播地址流
@@ -137,9 +146,9 @@ public class PrepareLiveActivity extends BaseActivity {
                                                         JSONObject object = new JSONObject(response.body().string());
                                                         liveUrl = object.getString("RTMPPublishURL");
                                                         Log.d("liveUrl-----", liveUrl);
-//                                                        Message msg = new Message();
-//                                                        msg.what = 0;
-//                                                        mHandler.sendMessage(msg);
+                                                        Message msg = new Message();
+                                                        msg.what = 0;
+                                                        mHandler.sendMessage(msg);
                                                         return null;
                                                     }
 

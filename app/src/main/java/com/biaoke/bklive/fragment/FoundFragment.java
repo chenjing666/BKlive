@@ -21,7 +21,6 @@ import com.biaoke.bklive.adapter.liveItemAdapter;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
-import com.xlibs.xrv.LayoutManager.XGridLayoutManager;
 import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
 import com.xlibs.xrv.listener.OnLoadMoreListener;
 import com.xlibs.xrv.listener.OnRefreshListener;
@@ -160,7 +159,7 @@ public class FoundFragment extends Fragment {
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
-            Toast.makeText(getActivity(), "发现页面" + postion, Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getActivity(), "发现页面" + postion, Toast.LENGTH_SHORT).show();
             Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
             intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
             startActivity(intent_video);
@@ -291,8 +290,8 @@ public class FoundFragment extends Fragment {
 //                                                            "Result":"1",
 //                                                            "Date":[],	//数组对象
                                                             JSONObject object = new JSONObject(response);
-                                                            JSONArray jsonArray = new JSONArray(object.getString("Date"));
-//                                                                    "Protocol":"Explore",
+                                                            JSONArray jsonArray = new JSONArray(object.getString("Data"));
+//                                                                   "Protocol":"Explore",
 //                                                                    "UserId":"0",		// 用户ＩＤ
 //                                                                    "NickName":"test1",		//用户昵称
 //                                                                    "IconUrl":"http://server-test.bk5977.com:8800/BK/icon.png",		//用户头像

@@ -138,7 +138,7 @@ public class MainActivity extends BaseActivity {
     private String mFollow;
     private String mFans;
     private String mSignture;
-//    private String liveUrl;
+    //    private String liveUrl;
     private String Msg;
 
 
@@ -198,9 +198,9 @@ public class MainActivity extends BaseActivity {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 1:
-                    Intent intent_live = new Intent(MainActivity.this, PrepareLiveActivity.class);
+                    Intent intent_prepare = new Intent(MainActivity.this, PrepareLiveActivity.class);
 //                    intent_live.putExtra("liveUrl", liveUrl);
-                    startActivity(intent_live);
+                    startActivity(intent_prepare);
                     break;
                 case 2:
                     Toast.makeText(MainActivity.this, Msg, Toast.LENGTH_SHORT).show();

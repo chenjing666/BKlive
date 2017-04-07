@@ -24,12 +24,6 @@ import java.net.URISyntaxException;
 import butterknife.ButterKnife;
 
 public class SWCameraStreamingActivity extends BaseActivity implements StreamingStateChangedListener {
-    //    @BindView(R.id.btn_start_live)
-//    Button start;
-//    @BindView(R.id.live_description)
-//    RelativeLayout liveDescription;
-//    @BindView(R.id.et_live_title)
-//    EditText etLiveTitle;
     private MediaStreamingManager mMediaStreamingManager;
     private String liveUrl = null;
     private StreamingProfile mProfile;
@@ -50,22 +44,13 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 
     }
 
-//    private Handler mHandler = new Handler() {
-//        public void handleMessage(Message message) {
-//            switch (message.what) {
-//                case 0:
-//                    initLive();
-//                    break;
-//            }
-//        }
-//    };
-
-
+    //
     @Override
     protected String getPowerBarColors() {
         return AppConsts.POWER_BAR_WHITE;
     }
 
+    //
     public void initLive() {
         //水印
         // 100 为 alpha 值
@@ -80,13 +65,14 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         StreamingProfile.VideoProfile vProfile = new StreamingProfile.VideoProfile(20, 500 * 1024, 32);
         StreamingProfile.AVProfile avProfile = new StreamingProfile.AVProfile(vProfile, aProfile);
         mProfile = new StreamingProfile();
+        String path = "rtmp://pili-publish.bk5977.com/bk-test1/1133?e=1491557455&token=EeZEOr-LLyxU9QaCyIoZRa0uBtJccSLWr-brhwIa:Pg9y243OW_EbcLGEj8_5nAYf22k=";
         try {
-            mProfile.setPublishUrl("rtmp://pili-publish.bk5977.com/bk-test1/1174?e=1491547054&token=EeZEOr-LLyxU9QaCyIoZRa0uBtJccSLWr-brhwIa:RGxuOfkrli_uCiu1JlJzYB7c4QA=")
+            mProfile.setPublishUrl(liveUrl)
                     .setVideoQuality(StreamingProfile.VIDEO_QUALITY_HIGH1)
                     .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
                     .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_480)
                     .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
-                    .setAdaptiveBitrateEnable(true)//自适应码率
+//                    .setAdaptiveBitrateEnable(true)//自适应码率
                     .setAVProfile(avProfile);
         } catch (URISyntaxException e) {
             e.printStackTrace();
@@ -97,8 +83,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 .setFaceBeautySetting(new CameraStreamingSetting.FaceBeautySetting(1.0f, 1.0f, 0.8f))// FaceBeautySetting 中的参数依次为：beautyLevel，whiten，redden，
                 .setVideoFilter(CameraStreamingSetting.VIDEO_FILTER_TYPE.VIDEO_FILTER_BEAUTY)//即磨皮程度、美白程度以及红润程度，取值范围为[0.0f, 1.0f]
                 .setCameraPrvSizeLevel(CameraStreamingSetting.PREVIEW_SIZE_LEVEL.MEDIUM)
-                .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_16_9)
-                .setCameraSourceImproved(true);//只需要进行一次美颜的滤镜处理，就可以实现本地预览端和播放端的滤镜效果
+                .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_16_9);
+//                .setCameraSourceImproved(true);//只需要进行一次美颜的滤镜处理，就可以实现本地预览端和播放端的滤镜效果
         mMediaStreamingManager = new MediaStreamingManager(this, afl, glSurfaceView, AVCodecType.SW_VIDEO_WITH_SW_AUDIO_CODEC);  // soft codec
         mMediaStreamingManager.prepare(cameraStreamingSetting, mProfile);// microphoneStreamingSetting, watermarksetting,
         mMediaStreamingManager.setStreamingStateListener(this);
@@ -129,7 +115,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 break;
             case SHUTDOWN:
                 // The streaming had been finished.
-                mMediaStreamingManager.stopStreaming();//停止推流
+//                mMediaStreamingManager.stopStreaming();//停止推流
                 break;
             case IOERROR:
                 // Network connect error.
@@ -173,9 +159,9 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 
 //    @OnClick(R.id.btn_start_live)
 //    public void onClick() {
-    //获取直播推流地址
+//    获取直播推流地址
 //        okhttputils();
-    //隐藏直播描述，进入直播间
+//    隐藏直播描述，进入直播间
 //        liveDescription.setVisibility(View.INVISIBLE);
 //        Toast.makeText(this, "进入直播", Toast.LENGTH_SHORT).show();
 //    }
