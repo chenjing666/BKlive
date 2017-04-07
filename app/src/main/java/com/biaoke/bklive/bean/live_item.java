@@ -16,7 +16,7 @@ public class live_item {
 //                                                                    "Format":"mp4",		//视频格式，mp4 m3u8
 //                                                                    "HV":"H"	//H 竖屏 V 横屏
 //                                                                    "Type":"1"	//1 直播 2视频
-    private String Protocol;
+//    private String Protocol;
     private String UserId;
     private String NickName;
     private String IconUrl;
@@ -28,8 +28,8 @@ public class live_item {
     private String HV;
     private String Type;
 
-    public live_item(String protocol, String userId, String nickName, String iconUrl, String exp, String title, String snapshotUrl, String videoUrl, String format, String HV, String type) {
-        Protocol = protocol;
+    public live_item( String userId, String nickName, String iconUrl, String exp, String title, String snapshotUrl, String videoUrl, String format, String HV, String type) {
+//        Protocol = protocol;
         UserId = userId;
         NickName = nickName;
         IconUrl = iconUrl;
@@ -45,7 +45,6 @@ public class live_item {
     @Override
     public String toString() {
         return "live_item{" +
-                "Protocol='" + Protocol + '\'' +
                 ", UserId='" + UserId + '\'' +
                 ", NickName='" + NickName + '\'' +
                 ", IconUrl='" + IconUrl + '\'' +
@@ -59,13 +58,6 @@ public class live_item {
                 '}';
     }
 
-    public String getProtocol() {
-        return Protocol;
-    }
-
-    public void setProtocol(String protocol) {
-        Protocol = protocol;
-    }
 
     public String getUserId() {
         return UserId;

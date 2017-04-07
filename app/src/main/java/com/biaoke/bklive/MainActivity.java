@@ -46,7 +46,6 @@ import com.tencent.tauth.IUiListener;
 import com.tencent.tauth.Tencent;
 import com.tencent.tauth.UiError;
 import com.zhy.http.okhttp.OkHttpUtils;
-import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
@@ -58,7 +57,6 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import okhttp3.Call;
 import okhttp3.MediaType;
-import okhttp3.Response;
 
 public class MainActivity extends BaseActivity {
     @BindViews({R.id.tv_follow, R.id.tv_game, R.id.tv_found, R.id.tv_samecity})
@@ -140,7 +138,7 @@ public class MainActivity extends BaseActivity {
     private String mFollow;
     private String mFans;
     private String mSignture;
-    private String liveUrl;
+//    private String liveUrl;
     private String Msg;
 
 
@@ -201,7 +199,7 @@ public class MainActivity extends BaseActivity {
             switch (message.what) {
                 case 1:
                     Intent intent_live = new Intent(MainActivity.this, SWCameraStreamingActivity.class);
-                    intent_live.putExtra("liveUrl", liveUrl);
+//                    intent_live.putExtra("liveUrl", liveUrl);
                     startActivity(intent_live);
                     break;
                 case 2:
@@ -221,7 +219,7 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_putvideo:
-                okhttputils();
+//                okhttputils();
                 llBottomBar.setVisibility(View.GONE);
                 showPopWindow();
                 setBackgroundAlpha(0.4f, MainActivity.this);
@@ -447,80 +445,79 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-    //获取直播地址流
-    private void okhttputils() {
-//        SharedPreferences sharedPreferences_user = getSharedPreferences("userId", Context.MODE_PRIVATE);
-//        String userId = sharedPreferences_user.getString("userId", "");
-//        Log.e("userIduserId", userId);
-        JSONObject paramsObject = new JSONObject();
-        try {
+//    //获取直播地址流
+//    private void okhttputils() {
+////        SharedPreferences sharedPreferences_user = getSharedPreferences("userId", Context.MODE_PRIVATE);
+////        String userId = sharedPreferences_user.getString("userId", "");
+////        Log.e("userIduserId", userId);
+//        JSONObject paramsObject = new JSONObject();
+//        try {
+//            paramsObject.put("Protocol", "Live");
 //            paramsObject.put("UserId", UserId);
-            paramsObject.put("Protocol", "Live");
-            paramsObject.put("UserId", UserId);
-            paramsObject.put("Cmd", "1");
-            Log.e("cao---=====", paramsObject.toString());
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        OkHttpUtils
-                .postString()
-                .url(Api.ENCRYPT64)
-                .content(paramsObject.toString())
-                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                .build()
-                .execute(new StringCallback() {
-                    @Override
-                    public void onError(Call call, Exception e, int id) {
-
-                    }
-
-                    @Override
-                    public void onResponse(String response, int id) {
-                        OkHttpUtils.postString()
-                                .url(Api.LIVEPUT)
-                                .content(response)
-                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                                .build()
-                                .execute(new StringCallback() {
-                                    @Override
-                                    public void onError(Call call, Exception e, int id) {
-
-                                    }
-
-                                    @Override
-                                    public void onResponse(String response, int id) {
-                                        OkHttpUtils.postString()
-                                                .url(Api.UNENCRYPT64)
-                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-                                                .content(response)
-                                                .build()
-                                                .execute(new Callback() {
-                                                    @Override
-                                                    public Object parseNetworkResponse(Response response, int id) throws Exception {
-                                                        JSONObject object = new JSONObject(response.body().string());
-                                                        liveUrl = object.getString("RTMPPublishURL");
-                                                        Log.d("liveUrl-----", liveUrl);
-//                        Message msg = new Message();
-//                        msg.what = 2;
-//                        myHandler.sendMessage(msg);
-                                                        return null;
-                                                    }
-
-                                                    @Override
-                                                    public void onError(Call call, Exception e, int id) {
-                                                        Log.d("onError", e.getMessage());
-                                                    }
-
-                                                    @Override
-                                                    public void onResponse(Object response, int id) {
-                                                    }
-                                                });
-                                    }
-                                });
-                    }
-                });
-
-    }
+//            paramsObject.put("Cmd", "1");
+//            Log.e("cao---=====", paramsObject.toString());
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+//        OkHttpUtils
+//                .postString()
+//                .url(Api.ENCRYPT64)
+//                .content(paramsObject.toString())
+//                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                .build()
+//                .execute(new StringCallback() {
+//                    @Override
+//                    public void onError(Call call, Exception e, int id) {
+//
+//                    }
+//
+//                    @Override
+//                    public void onResponse(String response, int id) {
+//                        OkHttpUtils.postString()
+//                                .url(Api.LIVEPUT)
+//                                .content(response)
+//                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                                .build()
+//                                .execute(new StringCallback() {
+//                                    @Override
+//                                    public void onError(Call call, Exception e, int id) {
+//
+//                                    }
+//
+//                                    @Override
+//                                    public void onResponse(String response, int id) {
+//                                        OkHttpUtils.postString()
+//                                                .url(Api.UNENCRYPT64)
+//                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+//                                                .content(response)
+//                                                .build()
+//                                                .execute(new Callback() {
+//                                                    @Override
+//                                                    public Object parseNetworkResponse(Response response, int id) throws Exception {
+//                                                        JSONObject object = new JSONObject(response.body().string());
+//                                                        liveUrl = object.getString("RTMPPublishURL");
+//                                                        Log.d("liveUrl-----", liveUrl);
+////                        Message msg = new Message();
+////                        msg.what = 2;
+////                        myHandler.sendMessage(msg);
+//                                                        return null;
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onError(Call call, Exception e, int id) {
+//                                                        Log.d("onError", e.getMessage());
+//                                                    }
+//
+//                                                    @Override
+//                                                    public void onResponse(Object response, int id) {
+//                                                    }
+//                                                });
+//                                    }
+//                                });
+//                    }
+//                });
+//
+//    }
 
 
     //初始化视图
