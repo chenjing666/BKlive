@@ -71,6 +71,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
         String SnapshotUrl = bean.getSnapshotUrl();
         holder.itemLiveHead.setTag(CommonUtil.NETPATH + IconUrl);
         holder.itemLiveThumbnail.setTag(CommonUtil.NETPATH + SnapshotUrl);
+        holder.itemLiveThumbnail.setMaxHeight((250 + (position % 3) * 30));
         Bitmap bitmap_head = loadImage.getBitmap(IconUrl);
         Bitmap bitmap_main = loadImage.getBitmap(SnapshotUrl);
 

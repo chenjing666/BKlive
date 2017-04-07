@@ -22,6 +22,7 @@ import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
 import com.xlibs.xrv.LayoutManager.XGridLayoutManager;
+import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
 import com.xlibs.xrv.listener.OnLoadMoreListener;
 import com.xlibs.xrv.listener.OnRefreshListener;
 import com.xlibs.xrv.view.XRecyclerView;
@@ -93,7 +94,7 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.addFootView(mFooterView, 50);
 
         //设置布局管理器,可以根据图片大小自适应
-        XGridLayoutManager xGridLayoutManager = new XGridLayoutManager(getActivity(), 2);
+        XStaggeredGridLayoutManager xGridLayoutManager=new XStaggeredGridLayoutManager(2,XStaggeredGridLayoutManager.VERTICAL);
         xGridLayoutManager.setAutoMeasureEnabled(false);
         recyclerviewFound.setLayoutManager(xGridLayoutManager);
         //设置适配器
@@ -130,8 +131,8 @@ public class FoundFragment extends Fragment {
     }
 
     private void initRefreshData() {
-        for (int i = 0; i < 3; i++) {
-            live_item liveItem = new live_item("", "", "", "", i + i + "", "", "", "", "", "");
+        for (int i = 0; i < 20; i++) {
+            live_item liveItem = new live_item( "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "","");
             recyclerDataList.add(liveItem);
         }
     }
@@ -151,7 +152,7 @@ public class FoundFragment extends Fragment {
 
     private void initLoadMoreData() {
         for (int i = 0; i < 3; i++) {
-            live_item liveItem = new live_item("", "", "", "", i + i + "", "", "", "", "", "");
+            live_item liveItem = new live_item( "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "","");
             recyclerDataList.add(liveItem);
         }
     }
@@ -167,7 +168,8 @@ public class FoundFragment extends Fragment {
     };
 
 
-    //轮播图
+
+//轮播图
     private void myImagecycleview() {
         //		mImageCycleView.setAutoCycle(false); //关闭自动播放
 //        mImageCycleView.setCycleDelayed(2000);//设置自动轮播循环时间
@@ -239,8 +241,7 @@ public class FoundFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-
-    //获取视频用户信息
+//获取视频用户信息
     private void getVideo(String content) {
         OkHttpUtils
                 .postString()
@@ -290,7 +291,7 @@ public class FoundFragment extends Fragment {
 //                                                            "Result":"1",
 //                                                            "Date":[],	//数组对象
                                                             JSONObject object = new JSONObject(response);
-                                                            JSONArray jsonArray = new JSONArray(object.getString("Data"));
+                                                            JSONArray jsonArray = new JSONArray(object.getString("Date"));
 //                                                                    "Protocol":"Explore",
 //                                                                    "UserId":"0",		// 用户ＩＤ
 //                                                                    "NickName":"test1",		//用户昵称
@@ -304,7 +305,6 @@ public class FoundFragment extends Fragment {
 //                                                                    "Type":"1"	//1 直播 2视频
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
-//                                                                String Protocol = jsonobject.getString("Protocol");
                                                                 String UserId = jsonobject.getString("UserId");
                                                                 String NickName = jsonobject.getString("NickName");
                                                                 String IconUrl = jsonobject.getString("IconUrl");//用户头像
@@ -315,7 +315,7 @@ public class FoundFragment extends Fragment {
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
                                                                 String Type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item(UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
+                                                                live_item liveItem = new live_item( UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
                                                                 recyclerDataList.add(liveItem);
                                                             }
 
