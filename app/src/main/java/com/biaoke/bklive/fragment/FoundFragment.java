@@ -242,6 +242,13 @@ public class FoundFragment extends Fragment {
 		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","222","rrrr"));
 		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/23.jpg", "333", "tttt"));
 
+//这样也卡
+//        list.add(new ImageCycleView.ImageInfo(bannerList.get(0).getImageUrl(),"11","eeee"));
+//        list.add(new ImageCycleView.ImageInfo(bannerList.get(1).getImageUrl(),"222","rrrr"));
+//        list.add(new ImageCycleView.ImageInfo(bannerList.get(2).getImageUrl(),"11","eeee"));
+//        list.add(new ImageCycleView.ImageInfo(bannerList.get(3).getImageUrl(),"222","rrrr"));
+//        list.add(new ImageCycleView.ImageInfo(bannerList.get(4).getImageUrl(),"11","eeee"));
+
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
             @Override
             public void onClick(View imageView, ImageCycleView.ImageInfo imageInfo) {

@@ -28,12 +28,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
+        android:layout_above="@+id/rl_live_info"
+        android:layout_marginBottom="@dimen/y10"
         android:text="直播描述"
         android:textColor="#ffffff"
         android:textSize="13dp" />
 
     <RelativeLayout
+        android:id="@+id/rl_live_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/item_live_Thumbnail">

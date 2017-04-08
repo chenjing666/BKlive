@@ -12,6 +12,7 @@ import android.widget.TextView;
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.common.CommonUtil;
+import com.biaoke.bklive.common.GlideUtis;
 import com.biaoke.bklive.common.LoadImage;
 import com.biaoke.bklive.common.LogUtil;
 import com.pkmmte.view.CircularImageView;
@@ -33,6 +34,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
     private Context context;
     XRecyclerView xRecyclerView;
     private LoadImage loadImage;
+    GlideUtis glideUtis;
     private LoadImage.ImageLoadListener listener = new LoadImage.ImageLoadListener() {
         /** *回调方法 *@parambitmap 请求回来的 bitmap *@paramurl 图片请求地址 */
         public void imageLoadOk(Bitmap bitmap, String url) {
@@ -48,6 +50,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
 
     public liveItemAdapter(Context context, XRecyclerView xRecyclerView) {
         this.context = context;
+//        glideUtis=new GlideUtis(context);
         this.xRecyclerView = xRecyclerView;
         loadImage = new LoadImage(context, listener);
     }
@@ -73,7 +76,8 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
         holder.itemLiveThumbnail.setTag(CommonUtil.NETPATH + SnapshotUrl);
         Bitmap bitmap_head = loadImage.getBitmap(IconUrl);
         Bitmap bitmap_main = loadImage.getBitmap(SnapshotUrl);
-
+//        glideUtis.glide(IconUrl, holder.itemLiveHead, true);
+//        glideUtis.glide(SnapshotUrl, holder.itemLiveThumbnail, true);
         if (bitmap_head != null) {
             holder.itemLiveHead.setImageBitmap(bitmap_head);
         }
