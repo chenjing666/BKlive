@@ -82,7 +82,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
             holder.itemLiveThumbnail.setImageBitmap(bitmap_main);
         }
 
-        if (bean.getType().equals("1")) {
+        if (bean.getType().equals("live")) {
             holder.itemLiveState.setText("直播中");
         } else {
             holder.itemLiveState.setText("短视频");

@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -18,9 +19,11 @@ import android.widget.Toast;
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.activity.PLVideoViewActivity;
 import com.biaoke.bklive.adapter.liveItemAdapter;
+import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
+import com.lidroid.xutils.BitmapUtils;
 import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
 import com.xlibs.xrv.listener.OnLoadMoreListener;
 import com.xlibs.xrv.listener.OnRefreshListener;
@@ -53,12 +56,15 @@ public class FoundFragment extends Fragment {
     @BindView(R.id.recyclerview_found)
     XRecyclerView recyclerviewFound;
     private List<live_item> recyclerDataList = new ArrayList<>();
+    private List<Banner> bannerList = new ArrayList<>();
     private View mHeaderView;
     private View mFooterView;
     private liveItemAdapter liveItemAdapter;
     private ImageView imageView;
     private String useId;
     private String page = "0";
+    private String BannerUp;
+//    private boolean isFirstBanner;
 
     @Nullable
     @Override
@@ -68,10 +74,12 @@ public class FoundFragment extends Fragment {
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
         }
-        myImagecycleview();//轮播图，加载各种途径图片
 
+//        myImagecycleview();//轮播图，加载各种途径图片
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
+//        isFirstBanner = sharedPreferences.getBoolean("isFirstBanner", false);
+        BannerUp = sharedPreferences.getString("BannerUp", "");
         JSONObject jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
@@ -93,7 +101,7 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.addFootView(mFooterView, 50);
 
         //设置布局管理器,可以根据图片大小自适应
-        XStaggeredGridLayoutManager xGridLayoutManager=new XStaggeredGridLayoutManager(2,XStaggeredGridLayoutManager.VERTICAL);
+        XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
         xGridLayoutManager.setAutoMeasureEnabled(false);
         recyclerviewFound.setLayoutManager(xGridLayoutManager);
         //设置适配器
@@ -116,6 +124,32 @@ public class FoundFragment extends Fragment {
         return view;
     }
 
+    private Handler handler = new Handler() {
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    JSONObject jsonObject_banner = new JSONObject();
+                    try {
+                        jsonObject_banner.put("Protocol", "BannerUp");
+                        jsonObject_banner.put("UserId", useId);
+                        jsonObject_banner.put("Cmd", "1");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    getBanner(jsonObject_banner.toString());
+
+                    break;
+                case 1:
+                    Log.e("lllll", bannerList.size() + "");
+//                    myImagecycleview();
+                    break;
+                case 2:
+//                    myImagecycleview();
+                    break;
+            }
+        }
+    };
+
     /**
      * refresh
      */
@@ -131,7 +165,7 @@ public class FoundFragment extends Fragment {
 
     private void initRefreshData() {
         for (int i = 0; i < 20; i++) {
-            live_item liveItem = new live_item( "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "","");
+            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
             recyclerDataList.add(liveItem);
         }
     }
@@ -151,7 +185,7 @@ public class FoundFragment extends Fragment {
 
     private void initLoadMoreData() {
         for (int i = 0; i < 3; i++) {
-            live_item liveItem = new live_item( "", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "","");
+            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
             recyclerDataList.add(liveItem);
         }
     }
@@ -167,8 +201,7 @@ public class FoundFragment extends Fragment {
     };
 
 
-
-//轮播图
+    //轮播图
     private void myImagecycleview() {
         //		mImageCycleView.setAutoCycle(false); //关闭自动播放
 //        mImageCycleView.setCycleDelayed(2000);//设置自动轮播循环时间
@@ -182,20 +215,22 @@ public class FoundFragment extends Fragment {
         List<ImageCycleView.ImageInfo> list = new ArrayList<ImageCycleView.ImageInfo>();
 
         //res图片资源
-        list.add(new ImageCycleView.ImageInfo(R.drawable.a1, "111111111111", ""));
-        list.add(new ImageCycleView.ImageInfo(R.drawable.a2, "222222222222222", ""));
-        list.add(new ImageCycleView.ImageInfo(R.drawable.a3, "3333333333333", ""));
+//        list.add(new ImageCycleView.ImageInfo(R.drawable.a1, "111111111111", ""));
+//        list.add(new ImageCycleView.ImageInfo(R.drawable.a2, "222222222222222", ""));
+//        list.add(new ImageCycleView.ImageInfo(R.drawable.a3, "3333333333333", ""));
 
         //SD卡图片资源
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a1.jpg"),"11111",""));
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a2.jpg"),"22222",""));
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a3.jpg"),"33333",""));
 
-
+        for (int i = 0; i < bannerList.size(); i++) {
+            list.add(new ImageCycleView.ImageInfo(bannerList.get(i).getImageUrl(), "", ""));
+        }
         //使用网络加载图片
-//		list.add(new ImageCycleView.ImageInfo("http://img.lakalaec.com/ad/57ab6dc2-43f2-4087-81e2-b5ab5681642d.jpg","11","eeee"));
-//		list.add(new ImageCycleView.ImageInfo("http://img.lakalaec.com/ad/cb56a1a6-6c33-41e4-9c3c-363f4ec6b728.jpg","222","rrrr"));
-//		list.add(new ImageCycleView.ImageInfo("http://img.lakalaec.com/ad/e4229e25-3906-4049-9fe8-e2b52a98f6d1.jpg", "333", "tttt"));
+//		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","11","eeee"));
+//		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","222","rrrr"));
+//		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/23.jpg", "333", "tttt"));
 
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
             @Override
@@ -209,9 +244,9 @@ public class FoundFragment extends Fragment {
             public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
 
                 //本地图片
-                ImageView imageView = new ImageView(getActivity());
-                imageView.setImageResource(Integer.parseInt(imageInfo.image.toString()));
-                return imageView;
+//                ImageView imageView = new ImageView(getActivity());
+//                imageView.setImageResource(Integer.parseInt(imageInfo.image.toString()));
+//                return imageView;
 
 
 //				//使用SD卡图片
@@ -220,17 +255,15 @@ public class FoundFragment extends Fragment {
 //				return smartImageView;
 
 //				//使用SmartImageView，既可以使用网络图片也可以使用本地资源
-//				SmartImageView smartImageView=new SmartImageView(MainActivity.this);
-//				smartImageView.setImageResource(Integer.parseInt(imageInfo.image.toString()));
-//				return smartImageView;
+//                SmartImageView smartImageView = new SmartImageView(getActivity());
+//                smartImageView.setImageResource(Integer.parseInt(imageInfo.image.toString()));
+//                return smartImageView;
 
                 //使用BitmapUtils,只能使用网络图片
-//				BitmapUtils bitmapUtils = new BitmapUtils(MainActivity.this);
-//				ImageView imageView = new ImageView(MainActivity.this);
-//				bitmapUtils.display(imageView, imageInfo.image.toString());
-//				return imageView;
-
-
+                BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+                ImageView imageView = new ImageView(getActivity());
+                bitmapUtils.display(imageView, imageInfo.image.toString());
+                return imageView;
             }
         });
     }
@@ -240,7 +273,8 @@ public class FoundFragment extends Fragment {
         super.onDestroyView();
         unbinder.unbind();
     }
-//获取视频用户信息
+
+    //获取视频用户信息
     private void getVideo(String content) {
         OkHttpUtils
                 .postString()
@@ -287,9 +321,31 @@ public class FoundFragment extends Fragment {
                                                     public void onResponse(String response, int id) {
                                                         Log.d("成功的返回", response);
                                                         try {
+//                                                            "Protocol":"Explore",
 //                                                            "Result":"1",
-//                                                            "Date":[],	//数组对象
+//                                                                    "Data":[],	//数组对象
+//                                                            "BannerUp": 1491612445,//轮播图更新标志，保存后对比，如果本次和上次值不一样，更新
                                                             JSONObject object = new JSONObject(response);
+
+                                                            SharedPreferences sharedPreferences_banner = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = sharedPreferences_banner.edit();
+                                                            String Bannerup = object.getString("BannerUp");
+                                                            editor.putString("BannerUp", Bannerup);
+                                                            editor.commit();
+                                                            Log.e("Bannerup=====:", Bannerup);
+                                                            Log.e("Bannerup=====:", BannerUp);
+//                                                            if (Bannerup.equals(BannerUp)) {
+//                                                                editor.putBoolean("isFirstBanner", true);
+                                                                Message message_banner = new Message();
+                                                                message_banner.what = 0;
+                                                                handler.sendMessage(message_banner);
+//                                                            }
+//                                                            else {
+//                                                                Message message_banner = new Message();
+//                                                                message_banner.what = 2;
+//                                                                handler.sendMessage(message_banner);
+//                                                            }
+
                                                             JSONArray jsonArray = new JSONArray(object.getString("Data"));
 //                                                                   "Protocol":"Explore",
 //                                                                    "UserId":"0",		// 用户ＩＤ
@@ -301,7 +357,7 @@ public class FoundFragment extends Fragment {
 //                                                                    "VideoUrl":"0",		//视频URL
 //                                                                    "Format":"mp4",		//视频格式，mp4 m3u8
 //                                                                    "HV":"H"	//H 竖屏 V 横屏
-//                                                                    "Type":"1"	//1 直播 2视频
+//                                                                    "Type":"vod"	//live 直播 vod视频
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
                                                                 String UserId = jsonobject.getString("UserId");
@@ -314,13 +370,83 @@ public class FoundFragment extends Fragment {
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
                                                                 String Type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item( UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
+                                                                live_item liveItem = new live_item(UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
                                                                 recyclerDataList.add(liveItem);
                                                             }
 
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
+
+    //获取轮播图信息---------
+    private void getBanner(String content) {
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(content)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("错误的回调", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.BANNER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("错误的回调", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("错误的回调", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        Log.e("轮播图信息", response);
+                                                        try {
+                                                            JSONObject jsonObject_banner = new JSONObject(response);
+                                                            if (jsonObject_banner.getString("Result").equals("1")) {
+                                                                JSONArray jsonArray_banner = new JSONArray(jsonObject_banner.getString("Data"));
+                                                                for (int i = 0; i < jsonArray_banner.length(); i++) {
+                                                                    JSONObject jsonobject = jsonArray_banner.getJSONObject(i);
+                                                                    String ImgeUrl = jsonobject.getString("ImgeUrl");//轮播图片地址
+                                                                    Banner banner = new Banner(ImgeUrl);
+                                                                    bannerList.add(banner);
+                                                                }
+                                                                Message msg = new Message();
+                                                                msg.what = 1;
+                                                                handler.sendMessage(msg);
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+
                                                     }
                                                 });
                                     }

@@ -58,4 +58,6 @@ dependencies {
     compile 'com.qiniu.pili:pili-android-qos:0.8.+'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile files('libs/xUtils-2.6.14.jar')//轮播图
+    compile files('libs/android-smart-image-view-1.0.0.jar')//轮播图
 }

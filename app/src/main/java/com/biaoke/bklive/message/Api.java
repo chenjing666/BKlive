@@ -24,4 +24,5 @@ public class Api {
 
     public final static String VIDEO_LIVE = ADDRESS + "/BK/Explore.php";//发现页面视频接口
 
+    public final static String BANNER = ADDRESS + "/BK/BannerUp.php";//发现页面轮播图接口
 }
