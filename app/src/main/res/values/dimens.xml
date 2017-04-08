@@ -4,8 +4,7 @@
     <dimen name="marginstart_back">15dp</dimen>
     <dimen name="height_menu">50dp</dimen>
     <dimen name="dp_5">5dp</dimen>
-    <dimen name="word_menu">22sp</dimen>
-    <dimen name="word_mine_menu">22sp</dimen>
+    <dimen name="word_menu">17sp</dimen>
     <dimen name="dp_10">10dp</dimen>
     <dimen name="上下">5dp</dimen>
     <dimen name="user_image_wid_40dp">40dp</dimen>

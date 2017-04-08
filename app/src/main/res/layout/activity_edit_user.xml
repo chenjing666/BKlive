@@ -5,23 +5,24 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#e0e0e0"
-    android:orientation="vertical"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".user.activity.EditUserActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_width="30dp"
-            android:layout_height="24dp"
-            android:layout_marginStart="15dp"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
             android:src="@mipmap/back" />
 
         <TextView
@@ -30,29 +31,31 @@
             android:layout_centerInParent="true"
             android:text="编辑资料"
             android:textColor="@color/white"
-            android:textSize="@dimen/word_mine_menu" />
+            android:textSize="@dimen/x34" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/edit_head"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="2.5"
+        android:layout_weight="2"
         android:background="@color/white">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="头像" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="头像"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:layout_marginBottom="10dp"
-            android:layout_marginStart="200dp"
-            android:layout_marginTop="10dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x150"
             android:background="@mipmap/edit_head" />
 
         <ImageView
@@ -60,7 +63,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="10dp"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -68,7 +71,7 @@
         android:id="@+id/edit_nickname"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/y14"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -76,32 +79,34 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="昵称" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="昵称"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/tv_nickName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="123456" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="123456"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -109,23 +114,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="骠客号" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="骠客号"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/edit_bkid"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="骠客号" />
+            android:layout_marginEnd="@dimen/x155"
+            android:text="骠客号"
+            android:textColor="@color/background_color" />
     </RelativeLayout>
 
     <RelativeLayout
         android:id="@+id/edit_sex"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -133,32 +142,35 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="性别" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="性别"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <ImageView
             android:id="@+id/iv_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp" />
+            android:layout_marginEnd="@dimen/x190" />
 
         <TextView
             android:id="@+id/tv_sex"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="240dp"
-            android:text="123456" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="123456"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -166,7 +178,7 @@
         android:id="@+id/edit_signture"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -174,16 +186,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="个性签名" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="个性签名"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/my_signture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="来打我啊" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="来打我啊"
+            android:textColor="@color/background_color" />
 
 
         <ImageView
@@ -191,9 +207,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -201,7 +215,7 @@
         android:id="@+id/edit_impression"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/y14"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -209,24 +223,26 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="印象" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="印象"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="123456" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="123456"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -234,7 +250,7 @@
         android:id="@+id/edit_age"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -242,25 +258,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="年龄" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="年龄"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/tv_age"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="123456" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="123456"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -268,7 +286,7 @@
         android:id="@+id/edit_emotion"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -276,25 +294,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="情感状态" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="情感状态"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/selectemotion"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="保密" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="保密"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -302,7 +322,7 @@
         android:id="@+id/edit_hometown"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -310,16 +330,20 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="家乡" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="家乡"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/btn_home"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="123456" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="123456"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -327,9 +351,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_gravity="end"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 
@@ -338,7 +360,7 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginBottom="20dp"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/y5"
         android:layout_weight="1"
         android:background="@color/white">
 
@@ -346,25 +368,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="10dp"
-            android:text="职业" />
+            android:layout_marginStart="@dimen/x37"
+            android:text="职业"
+            android:textColor="#222222"
+            android:textSize="@dimen/x34" />
 
         <TextView
             android:id="@+id/btn_work"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginStart="200dp"
-            android:text="123456" />
+            android:layout_marginEnd="@dimen/x150"
+            android:text="123456"
+            android:textColor="@color/background_color" />
 
         <ImageView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginBottom="@dimen/上下"
-            android:layout_marginEnd="10dp"
-            android:layout_marginTop="@dimen/上下"
+            android:layout_marginEnd="@dimen/x38"
             android:background="@mipmap/item_more" />
     </RelativeLayout>
 </LinearLayout>

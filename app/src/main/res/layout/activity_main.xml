@@ -1,18 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
-    android:orientation="vertical"
     tools:context="com.biaoke.bklive.MainActivity">
 
     <LinearLayout
+        android:id="@+id/ll_main1"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color"
         android:orientation="horizontal">
 
@@ -87,7 +86,7 @@
             android:gravity="center"
             android:text="@string/mine"
             android:textColor="@color/beige"
-            android:textSize="@dimen/word_mine_menu"
+            android:textSize="@dimen/x34"
             android:visibility="gone" />
 
         <ImageView
@@ -104,8 +103,9 @@
     <LinearLayout
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="14"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_main1"
+        android:layout_above="@+id/rl_main_bottom"
         android:orientation="vertical">
 
 
@@ -119,21 +119,22 @@
     <LinearLayout
         android:id="@+id/ll_user"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="14"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/ll_main1"
+        android:layout_above="@+id/rl_main_bottom"
         android:orientation="vertical"
         android:visibility="gone">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="5"
+            android:layout_height="wrap_content"
             android:background="@mipmap/background_user"
             android:orientation="vertical">
 
             <RelativeLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y10">
 
                 <RelativeLayout
                     android:layout_width="wrap_content"
@@ -144,9 +145,11 @@
                         android:id="@+id/tv_diamond_send"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
                         android:drawableEnd="@mipmap/user_diamond"
-                        android:gravity="center"
-                        android:text="送出" />
+                        android:text="送出"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x22" />
 
                     <TextView
                         android:id="@+id/diamond_send"
@@ -154,13 +157,15 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_toEndOf="@+id/tv_diamond_send"
-                        android:text="222222" />
+                        android:text="222222"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x30" />
                 </RelativeLayout>
 
                 <com.pkmmte.view.CircularImageView
                     android:id="@+id/iv_user_head"
-                    android:layout_width="80dp"
-                    android:layout_height="80dp"
+                    android:layout_width="100dp"
+                    android:layout_height="100dp"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
                     android:src="@mipmap/head_default"
@@ -185,7 +190,7 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
                 android:orientation="horizontal">
 
@@ -193,13 +198,13 @@
                     android:id="@+id/tv_userName"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginTop="@dimen/y4"
                     android:text="帅气的大飞"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/x23" />
 
                 <ImageView
-                    android:layout_width="20dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:background="@mipmap/man" />
@@ -207,38 +212,36 @@
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="20dp"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginTop="@dimen/y11"
                 android:orientation="horizontal">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
                     android:text="@string/bk_userid"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/x23" />
 
                 <TextView
                     android:id="@+id/user_id"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginTop="2dp"
+                    android:layout_marginStart="@dimen/x14"
                     android:text="镖客号"
                     android:textColor="@color/white"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/x23" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:layout_marginTop="2dp"
+                android:layout_marginTop="@dimen/y9"
                 android:text="打遍天下无敌手"
                 android:textColor="@color/white"
-                android:textSize="12sp" />
+                android:textSize="@dimen/x23" />
 
         </LinearLayout>
 
@@ -261,13 +264,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="108" />
+                    android:text="108"
+                    android:textColor="#0068b7"
+                    android:textSize="@dimen/x36" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="直播" />
+                    android:text="直播"
+                    android:textColor="#222222"
+                    android:textSize="@dimen/x16" />
             </LinearLayout>
 
             <LinearLayout
@@ -282,13 +289,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="108" />
+                    android:text="108"
+                    android:textColor="#f37e48"
+                    android:textSize="@dimen/x36" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="关注" />
+                    android:text="关注"
+                    android:textColor="#222222"
+                    android:textSize="@dimen/x16" />
 
             </LinearLayout>
 
@@ -304,13 +315,17 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="108" />
+                    android:text="108"
+                    android:textColor="#26ca6a"
+                    android:textSize="@dimen/x36" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:text="粉丝" />
+                    android:text="粉丝"
+                    android:textColor="#222222"
+                    android:textSize="@dimen/x16" />
 
             </LinearLayout>
 
@@ -321,201 +336,199 @@
         <LinearLayout
             android:id="@+id/bk_contribution"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:src="@mipmap/bk_contribution" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="镖客贡献榜"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bk_income"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen_5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:background="@mipmap/bk_income" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
-                android:background="@color/white"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="我的收益"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bk_mydiamond"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:background="@mipmap/bk_mydiamond" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
-                android:background="@color/white"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="我的钻石"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bk_level"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen_5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:background="@mipmap/bk_level" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
-                android:background="@color/white"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="我的等级"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bk_vedio"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen_5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:background="@mipmap/bk_vedio" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
-                android:background="@color/white"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="我的短视频"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bk_identification"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen_5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:background="@mipmap/bk_identification" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="@string/bk_identification"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
         <LinearLayout
             android:id="@+id/bk_set"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_marginTop="1dp"
-            android:layout_weight="1"
+            android:layout_height="@dimen/y72"
+            android:layout_marginTop="@dimen/y6"
             android:background="@color/white"
-            android:orientation="horizontal"
-            android:padding="@dimen/dimen_5dp">
+            android:orientation="horizontal">
 
             <ImageView
-                android:layout_width="@dimen/user_image_wid_40dp"
-                android:layout_height="@dimen/user_image_height_25dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
                 android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x28"
                 android:background="@mipmap/bk_set" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginStart="@dimen/user_text_margin_30dp"
+                android:layout_marginStart="@dimen/x32"
                 android:gravity="center|start"
                 android:text="@string/bk_set"
-                android:textSize="@dimen/user_textsize_14sp" />
+                android:textColor="#222222"
+                android:textSize="@dimen/x20" />
         </LinearLayout>
 
 
     </LinearLayout>
 
     <RelativeLayout
+        android:id="@+id/rl_main_bottom"
+        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="60dp">
+        android:layout_height="wrap_content">
 
         <com.biaoke.bklive.bottombar.BottomBar
             android:id="@+id/ll_bottom_bar"
-            android:layout_width="fill_parent"
-            android:layout_height="60dip" />
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
 
         <ImageView
             android:id="@+id/live_putvideo"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:background="@mipmap/live_putvedio" />
     </RelativeLayout>
 
 
-</LinearLayout>
+</RelativeLayout>

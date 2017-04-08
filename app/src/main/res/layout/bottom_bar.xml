@@ -2,8 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:background="#ffffff"
-    android:layout_height="0dp"
-    android:layout_weight="1.6"
+    android:layout_height="wrap_content"
     android:orientation="horizontal">
 
     <RelativeLayout
@@ -14,28 +13,28 @@
 
         <ImageView
             android:id="@+id/main_unselect"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="50dp"
+            android:layout_marginStart="@dimen/x86"
             android:background="@drawable/main_selector"
             android:clickable="true" />
 
         <ImageView
             android:id="@+id/menu_putvedio"
-            android:layout_width="60dp"
-            android:layout_height="60dp"
-            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:background="@drawable/live_selector"
             android:clickable="true" />
 
         <ImageView
             android:id="@+id/main_me_unselect"
-            android:layout_width="40dp"
-            android:layout_height="35dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="50dp"
+            android:layout_marginEnd="@dimen/x86"
             android:src="@drawable/me_selector" />
 
     </RelativeLayout>

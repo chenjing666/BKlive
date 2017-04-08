@@ -12,7 +12,7 @@
     <RelativeLayout
         android:id="@+id/rl_putvideo"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color"
         android:orientation="horizontal">
 
@@ -30,7 +30,7 @@
             android:layout_centerInParent="true"
             android:text="上传视频"
             android:textColor="@color/white"
-            android:textSize="@dimen/word_mine_menu" />
+            android:textSize="@dimen/x23" />
     </RelativeLayout>
 
     <Button

@@ -1,16 +1,192 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#e9e7f3"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.biaoke.bklive.user.activity.SetActivity">
 
-    <Button
-        android:id="@+id/btn_loginout"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:background="@drawable/buttonstyle"
-        android:text="退出登录" />
-</RelativeLayout>
+        android:layout_height="@dimen/y100"
+        android:background="@color/background_color"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
+            android:src="@mipmap/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="编辑资料"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x34" />
+    </RelativeLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="绑定手机"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="密码修改"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y16"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="接受未关注人私信"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="开播提醒"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="黑名单"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y16"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="wifi自动缓存视频"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="wifi自动播放"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="清空缓存"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y16"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="帮助与反馈"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="关于我们"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y74"
+        android:layout_marginTop="@dimen/y4"
+        android:background="@color/white"
+        android:drawableEnd="@mipmap/item_more"
+        android:gravity="center_vertical"
+        android:paddingEnd="@dimen/x38"
+        android:paddingStart="@dimen/x38"
+        android:text="版本更新"
+        android:textColor="#222222"
+        android:textSize="@dimen/x34" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <!--button有阴影-->
+        <Button
+            android:id="@+id/btn_loginout"
+            android:layout_width="@dimen/x600"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/hotstyle_set_outlogin"
+            android:text="退出登录"
+            android:textColor="@color/white" />
+    </RelativeLayout>
+
+</LinearLayout>
