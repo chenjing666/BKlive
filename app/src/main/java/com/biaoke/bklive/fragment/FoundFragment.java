@@ -74,12 +74,11 @@ public class FoundFragment extends Fragment {
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
         }
-
-//        myImagecycleview();//轮播图，加载各种途径图片
+        myImagecycleview();//轮播图，加载各种途径图片
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
 //        isFirstBanner = sharedPreferences.getBoolean("isFirstBanner", false);
-        BannerUp = sharedPreferences.getString("BannerUp", "");
+//        BannerUp = sharedPreferences.getString("BannerUp", "");
         JSONObject jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
@@ -89,7 +88,7 @@ public class FoundFragment extends Fragment {
             e.printStackTrace();
         }
         getVideo(jsonObject_content.toString());
-
+//        showBanner();
 
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
         imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
@@ -124,24 +123,35 @@ public class FoundFragment extends Fragment {
         return view;
     }
 
+    private void showBanner() {
+        JSONObject jsonObject_banner = new JSONObject();
+        try {
+            jsonObject_banner.put("Protocol", "BannerUp");
+            jsonObject_banner.put("UserId", useId);
+            jsonObject_banner.put("Cmd", "1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        getBanner(jsonObject_banner.toString());
+    }
+
     private Handler handler = new Handler() {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
-                    JSONObject jsonObject_banner = new JSONObject();
-                    try {
-                        jsonObject_banner.put("Protocol", "BannerUp");
-                        jsonObject_banner.put("UserId", useId);
-                        jsonObject_banner.put("Cmd", "1");
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    getBanner(jsonObject_banner.toString());
-
+//                    JSONObject jsonObject_banner = new JSONObject();
+//                    try {
+//                        jsonObject_banner.put("Protocol", "BannerUp");
+//                        jsonObject_banner.put("UserId", useId);
+//                        jsonObject_banner.put("Cmd", "1");
+//                    } catch (JSONException e) {
+//                        e.printStackTrace();
+//                    }
+//                    getBanner(jsonObject_banner.toString());
                     break;
                 case 1:
                     Log.e("lllll", bannerList.size() + "");
-//                    myImagecycleview();
+                    myImagecycleview();
                     break;
                 case 2:
 //                    myImagecycleview();
@@ -224,13 +234,13 @@ public class FoundFragment extends Fragment {
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a2.jpg"),"22222",""));
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a3.jpg"),"33333",""));
 
-        for (int i = 0; i < bannerList.size(); i++) {
-            list.add(new ImageCycleView.ImageInfo(bannerList.get(i).getImageUrl(), "", ""));
-        }
+//        for (int i = 0; i < bannerList.size(); i++) {
+//            list.add(new ImageCycleView.ImageInfo(bannerList.get(i).getImageUrl(), "", ""));
+//        }
         //使用网络加载图片
-//		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","11","eeee"));
-//		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","222","rrrr"));
-//		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/23.jpg", "333", "tttt"));
+		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","11","eeee"));
+		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","222","rrrr"));
+		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/23.jpg", "333", "tttt"));
 
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
             @Override
@@ -327,18 +337,18 @@ public class FoundFragment extends Fragment {
 //                                                            "BannerUp": 1491612445,//轮播图更新标志，保存后对比，如果本次和上次值不一样，更新
                                                             JSONObject object = new JSONObject(response);
 
-                                                            SharedPreferences sharedPreferences_banner = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
-                                                            SharedPreferences.Editor editor = sharedPreferences_banner.edit();
-                                                            String Bannerup = object.getString("BannerUp");
-                                                            editor.putString("BannerUp", Bannerup);
-                                                            editor.commit();
-                                                            Log.e("Bannerup=====:", Bannerup);
-                                                            Log.e("Bannerup=====:", BannerUp);
+//                                                            SharedPreferences sharedPreferences_banner = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+//                                                            SharedPreferences.Editor editor = sharedPreferences_banner.edit();
+//                                                            String Bannerup = object.getString("BannerUp");
+//                                                            editor.putString("BannerUp", Bannerup);
+//                                                            editor.commit();
+//                                                            Log.e("Bannerup=====:", Bannerup);
+//                                                            Log.e("Bannerup=====:", BannerUp);
 //                                                            if (Bannerup.equals(BannerUp)) {
 //                                                                editor.putBoolean("isFirstBanner", true);
-                                                                Message message_banner = new Message();
-                                                                message_banner.what = 0;
-                                                                handler.sendMessage(message_banner);
+//                                                                Message message_banner = new Message();
+//                                                                message_banner.what = 0;
+//                                                                handler.sendMessage(message_banner);
 //                                                            }
 //                                                            else {
 //                                                                Message message_banner = new Message();
