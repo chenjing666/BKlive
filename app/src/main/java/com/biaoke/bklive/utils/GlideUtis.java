@@ -1,4 +1,4 @@
-package com.biaoke.bklive.common;
+package com.biaoke.bklive.utils;
 
 import android.content.Context;
 import android.graphics.Bitmap;
@@ -35,8 +35,9 @@ public class GlideUtis {
                 .diskCacheStrategy(DiskCacheStrategy.ALL)
                 .crossFade()
                 .skipMemoryCache(useMemory)
-                .placeholder(R.drawable.logo_72)//占位图
-                .error(R.drawable.logo_72)//加载出错的图
+                .centerCrop()
+                .placeholder(R.drawable.icon_image_loding)//占位图
+                .error(R.drawable.icon_image_err)//加载出错的图
                 .into(v);
     }
 
@@ -53,8 +54,8 @@ public class GlideUtis {
                 .crossFade()
                 .skipMemoryCache(useMemory)
                 .centerCrop()
-                .placeholder(R.drawable.logo_72)//占位图
-                .error(R.drawable.logo_1024)//加载出错的图
+                .placeholder(R.drawable.icon_image_loding)//占位图
+                .error(R.drawable.icon_image_err)//加载出错的图
                 .into(v);
     }
 
@@ -76,8 +77,8 @@ public class GlideUtis {
                 .skipMemoryCache(useMemory)
                 .centerCrop()
                 .transform(new GlideCircleTransform(mContext))
-                .placeholder(R.drawable.logo_72)//占位图
-                .error(R.drawable.logo_1024)//加载出错的图
+                .placeholder(R.drawable.icon_image_loding)//占位图
+                .error(R.drawable.icon_image_err)//加载出错的图
                 .into(new BitmapImageViewTarget(v) {
                     @Override
                     protected void setResource(Bitmap resource) {
@@ -130,8 +131,8 @@ public class GlideUtis {
                 .centerCrop()
                 .skipMemoryCache(useMemory)
                 .transform(new GlideRoundTransform(mContext,10))
-                .placeholder(R.drawable.logo_72)//占位图
-                .error(R.drawable.logo_1024)//加载出错的图
+                .placeholder(R.drawable.icon_image_loding)//占位图
+                .error(R.drawable.icon_image_err)//加载出错的图
                 .into(v);
     }
     /**
@@ -149,8 +150,8 @@ public class GlideUtis {
                 .centerCrop()
                 .skipMemoryCache(useMemory)
                 .transform(new GlideRoundTransform(mContext,10))
-                .placeholder(R.drawable.logo_72)//占位图
-                .error(R.drawable.logo_1024)//加载出错的图
+                .placeholder(R.drawable.icon_image_loding)//占位图
+                .error(R.drawable.icon_image_err)//加载出错的图
                 .into(v);
     }
 
@@ -170,8 +171,8 @@ public class GlideUtis {
                 .centerCrop()
                 .skipMemoryCache(useMemory)
                 .transform(new GlideRoundTransform(mContext,round))
-                .placeholder(R.drawable.logo_72)//占位图
-                .error(R.drawable.logo_1024)//加载出错的图
+                .placeholder(R.drawable.icon_image_loding)//占位图
+                .error(R.drawable.icon_image_err)//加载出错的图
                 .into(v);
     }
 }
