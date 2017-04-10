@@ -56,7 +56,6 @@ public class FoundFragment extends Fragment {
     @BindView(R.id.recyclerview_found)
     XRecyclerView recyclerviewFound;
     private List<live_item> recyclerDataList = new ArrayList<>();
-    private List<Banner> bannerList = new ArrayList<>();
     private View mHeaderView;
     private View mFooterView;
     private liveItemAdapter liveItemAdapter;
@@ -64,7 +63,7 @@ public class FoundFragment extends Fragment {
     private String useId;
     private String page = "0";
     private String BannerUp;
-//    private boolean isFirstBanner;
+    private List<Banner> bannerList;
 
     @Nullable
     @Override
@@ -74,11 +73,9 @@ public class FoundFragment extends Fragment {
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
         }
-        myImagecycleview();//轮播图，加载各种途径图片
+
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
-//        isFirstBanner = sharedPreferences.getBoolean("isFirstBanner", false);
-//        BannerUp = sharedPreferences.getString("BannerUp", "");
         JSONObject jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
@@ -88,7 +85,7 @@ public class FoundFragment extends Fragment {
             e.printStackTrace();
         }
         getVideo(jsonObject_content.toString());
-//        showBanner();
+        myImagecycleview();//轮播图，加载各种途径图片
 
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
         imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
@@ -151,10 +148,15 @@ public class FoundFragment extends Fragment {
                     break;
                 case 1:
                     Log.e("lllll", bannerList.size() + "");
-                    myImagecycleview();
+                    new Thread(new Runnable() {
+                        @Override
+                        public void run() {
+//                            myImagecycleview();
+                        }
+                    });
+
                     break;
                 case 2:
-//                    myImagecycleview();
                     break;
             }
         }
@@ -222,8 +224,8 @@ public class FoundFragment extends Fragment {
 //		mImageCycleView.setIndicationStyle(ImageCycleView.IndicationStyle.IMAGE,
 //				R.drawable.dian_unfocus, R.drawable.dian_focus, 1f);
 
-        List<ImageCycleView.ImageInfo> list = new ArrayList<ImageCycleView.ImageInfo>();
-
+        final List<ImageCycleView.ImageInfo> list = new ArrayList<ImageCycleView.ImageInfo>();
+        bannerList = new ArrayList<>();
         //res图片资源
 //        list.add(new ImageCycleView.ImageInfo(R.drawable.a1, "111111111111", ""));
 //        list.add(new ImageCycleView.ImageInfo(R.drawable.a2, "222222222222222", ""));
@@ -234,20 +236,96 @@ public class FoundFragment extends Fragment {
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a2.jpg"),"22222",""));
 //		list.add(new ImageCycleView.ImageInfo(new File(Environment.getExternalStorageDirectory(),"a3.jpg"),"33333",""));
 
+        JSONObject jsonObject_banner = new JSONObject();
+        try {
+            jsonObject_banner.put("Protocol", "BannerUp");
+            jsonObject_banner.put("UserId", useId);
+            jsonObject_banner.put("Cmd", "1");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+//        getBanner(jsonObject_banner.toString());
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_banner.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("错误的回调", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.BANNER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("错误的回调", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("错误的回调", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        Log.e("轮播图信息", response);
+                                                        try {
+                                                            JSONObject jsonObject_banner = new JSONObject(response);
+                                                            if (jsonObject_banner.getString("Result").equals("1")) {
+                                                                JSONArray jsonArray_banner = new JSONArray(jsonObject_banner.getString("Data"));
+                                                                for (int i = 0; i < jsonArray_banner.length(); i++) {
+                                                                    JSONObject jsonobject = jsonArray_banner.getJSONObject(i);
+                                                                    String ImgeUrl = jsonobject.getString("ImgeUrl");//轮播图片地址
+//                                                                    Banner banner = new Banner(ImgeUrl);
+//                                                                    bannerList.add(banner);
+                                                                    Log.e("轮播图地址", ImgeUrl);
+                                                                    list.add(new ImageCycleView.ImageInfo(ImgeUrl, i + "", ""));
+                                                                }
+//                                                                Message msg = new Message();
+//                                                                msg.what = 1;
+//                                                                handler.sendMessage(msg);
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+
+
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+
+                });
 //        for (int i = 0; i < bannerList.size(); i++) {
-//            list.add(new ImageCycleView.ImageInfo(bannerList.get(i).getImageUrl(), "", ""));
+//            String url = bannerList.get(i).getImageUrl();
+//            list.add(new ImageCycleView.ImageInfo(url, i + "", ""));
 //        }
         //使用网络加载图片
-		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","11","eeee"));
-		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/21.jpg","222","rrrr"));
-		list.add(new ImageCycleView.ImageInfo("http://172.16.1.144/video/23.jpg", "333", "tttt"));
+        String url1 = "http://server-test.bk5977.com:8800/video/21.jpg";
+        String url2 = "http://server-test.bk5977.com:8800/video/22.jpg";
+        String url3 = "http://server-test.bk5977.com:8800/video/23.jpg";
+        list.add(new ImageCycleView.ImageInfo(url1, "11", "eeee"));
+        list.add(new ImageCycleView.ImageInfo(url2, "222", "rrrr"));
+        list.add(new ImageCycleView.ImageInfo(url3, "333", "tttt"));
 
-//这样也卡
-//        list.add(new ImageCycleView.ImageInfo(bannerList.get(0).getImageUrl(),"11","eeee"));
-//        list.add(new ImageCycleView.ImageInfo(bannerList.get(1).getImageUrl(),"222","rrrr"));
-//        list.add(new ImageCycleView.ImageInfo(bannerList.get(2).getImageUrl(),"11","eeee"));
-//        list.add(new ImageCycleView.ImageInfo(bannerList.get(3).getImageUrl(),"222","rrrr"));
-//        list.add(new ImageCycleView.ImageInfo(bannerList.get(4).getImageUrl(),"11","eeee"));
 
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
             @Override
@@ -454,9 +532,9 @@ public class FoundFragment extends Fragment {
                                                                     Banner banner = new Banner(ImgeUrl);
                                                                     bannerList.add(banner);
                                                                 }
-                                                                Message msg = new Message();
-                                                                msg.what = 1;
-                                                                handler.sendMessage(msg);
+//                                                                Message msg = new Message();
+//                                                                msg.what = 1;
+//                                                                handler.sendMessage(msg);
                                                             }
 
                                                         } catch (JSONException e) {

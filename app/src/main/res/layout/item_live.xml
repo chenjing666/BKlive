@@ -2,33 +2,32 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingStart="1dp"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:paddingStart="1dp">
 
     <!--根据图片大小自适应布局没完成-->
     <ImageView
         android:id="@+id/item_live_Thumbnail"
         android:layout_width="match_parent"
+        android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:scaleType="centerCrop"
-        android:layout_height="wrap_content" />
+        android:scaleType="centerCrop" />
 
-    <TextView
+    <ImageView
         android:id="@+id/item_live_state"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
-        android:text="直播中"
-        android:textColor="#ffffff"
-        android:textSize="10dp" />
+        android:visibility="gone"
+        android:background="@mipmap/iv_living" />
 
     <TextView
         android:id="@+id/item_live_description"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:layout_above="@+id/rl_live_info"
+        android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/y10"
         android:text="直播描述"
         android:textColor="#ffffff"

@@ -86,9 +86,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
         }
 
         if (bean.getType().equals("live")) {
-            holder.itemLiveState.setText("直播中");
-        } else {
-            holder.itemLiveState.setText("短视频");
+            holder.itemLiveState.setVisibility(View.VISIBLE);
         }
 
 //        holder.itemLiveThumbnail.setImageBitmap(defaultBitmap);//设置默认图片封面
@@ -120,7 +118,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
 
     class liveItemViewHolder extends XRecyclerView.ViewHolder {
         @BindView(R.id.item_live_state)
-        TextView itemLiveState;
+        ImageView itemLiveState;
         @BindView(R.id.item_live_Thumbnail)
         ImageView itemLiveThumbnail;
         @BindView(R.id.item_live_description)
