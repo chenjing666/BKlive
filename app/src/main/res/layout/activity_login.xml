@@ -4,21 +4,23 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.biaoke.bklive.user.activity.LoginActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/height_menu"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="@dimen/width_back"
-            android:layout_height="24dp"
-            android:layout_marginStart="@dimen/marginstart_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
             android:src="@mipmap/back" />
 
         <TextView
@@ -32,50 +34,71 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="45px"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y50"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginStart="@dimen/x44"
             android:text="@string/china"
-            android:layout_marginStart="20dp"
-            android:textSize="25sp" />
+            android:textColor="#222222"
+            android:textSize="@dimen/x54" />
 
         <EditText
             android:id="@+id/put_phone_num"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/x10"
+            android:background="@null"
             android:hint="@string/phone_num"
-            android:phoneNumber="true" />
+            android:phoneNumber="true"
+            android:textSize="@dimen/x36" />
 
     </LinearLayout>
 
-    <LinearLayout
+    <View
         android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:layout_marginTop="73px"
+        android:layout_height="@dimen/y3"
+        android:background="#dddddd" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y73"
         android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/x44"
             android:text="@string/password"
-            android:textSize="25sp" />
+            android:textColor="#222222"
+            android:textSize="@dimen/x54" />
 
         <EditText
             android:id="@+id/put_password"
-            android:layout_width="match_parent"
+            android:layout_width="@dimen/x512"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x10"
+            android:background="@null"
             android:hint="@string/put_password"
             android:password="true" />
-    </LinearLayout>
+
+        <View
+            android:layout_width="@dimen/x512"
+            android:layout_height="@dimen/y3"
+            android:layout_alignParentEnd="true"
+            android:layout_below="@+id/put_password"
+            android:background="#dddddd" />
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -86,25 +109,30 @@
             android:id="@+id/tv_register"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:text="注册账号" />
+            android:layout_marginStart="@dimen/x20"
+            android:text="注册账号"
+            android:textColor="#222222"
+            android:textSize="@dimen/x26" />
 
         <TextView
             android:id="@+id/tv_forgotpassword"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginEnd="15dp"
-            android:text="忘记密码" />
+            android:layout_marginEnd="@dimen/x20"
+            android:text="忘记密码"
+            android:textColor="#222222"
+            android:textSize="@dimen/x26" />
     </RelativeLayout>
 
     <Button
         android:id="@+id/btn_login"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/x589"
+        android:layout_height="@dimen/y100"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/y150"
         android:background="@drawable/buttonstyle"
         android:text="@string/btn_login"
+        android:textSize="@dimen/x34"
         android:textColor="#6f57d6" />
 </LinearLayout>

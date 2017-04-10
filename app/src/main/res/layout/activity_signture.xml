@@ -11,16 +11,17 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
             android:src="@mipmap/back" />
 
         <TextView
@@ -29,24 +30,33 @@
             android:layout_centerInParent="true"
             android:text="编辑资料"
             android:textColor="@color/white"
-            android:textSize="24sp" />
+            android:textSize="@dimen/x34" />
     </RelativeLayout>
 
-    <EditText
-        android:id="@+id/et_signture"
+
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="200dp"
-        android:hint="编辑你的个性签名" />
+        android:layout_height="wrap_content"
+        android:background="@color/white">
+
+        <EditText
+            android:id="@+id/et_signture"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y315"
+            android:background="@null"
+            android:hint="编辑你的个性签名"
+            android:textSize="@dimen/x34" />
+    </RelativeLayout>
 
     <Button
         android:id="@+id/btn_save"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/x589"
+        android:layout_height="@dimen/y100"
         android:layout_gravity="center"
-        android:layout_marginEnd="50dp"
-        android:layout_marginStart="50dp"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="@dimen/y93"
         android:background="@color/background_color"
-        android:text="保存" />
+        android:text="保存"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x34" />
 
 </LinearLayout>

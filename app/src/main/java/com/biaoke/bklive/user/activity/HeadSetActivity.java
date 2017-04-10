@@ -50,6 +50,8 @@ public class HeadSetActivity extends BaseActivity {
     RadioGroup sex;
     @BindView(R.id.btn_finish)
     Button btnFinish;
+    @BindView(R.id.btn_head_set)
+    Button btnHeadSet;
     private String Msg = null;
     private String nickName = null;
     private String sexes = null;
@@ -77,10 +79,10 @@ public class HeadSetActivity extends BaseActivity {
                     SharedPreferences sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
                     SharedPreferences.Editor editor = sharedPreferences.edit();
                     user.setuId(userId);
-                    editor.putString("userId",user.getuId());
+                    editor.putString("userId", user.getuId());
                     editor.putBoolean("isLogin", true);
                     editor.commit();
-                    Intent intent=new Intent(HeadSetActivity.this, MainActivity.class);
+                    Intent intent = new Intent(HeadSetActivity.this, MainActivity.class);
                     startActivity(intent);
                     finish();
                     break;
@@ -97,13 +99,14 @@ public class HeadSetActivity extends BaseActivity {
         return AppConsts.POWER_BAR_BACKGROUND;
     }
 
-    @OnClick({R.id.back, R.id.iv_user_head, R.id.btn_finish})
+    @OnClick({R.id.back, R.id.iv_user_head, R.id.btn_finish, R.id.btn_head_set})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.back:
                 finish();
                 break;
             case R.id.iv_user_head:
+            case R.id.btn_head_set:
 
                 break;
             case R.id.btn_finish:

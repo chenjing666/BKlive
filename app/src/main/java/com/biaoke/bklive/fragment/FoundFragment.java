@@ -322,9 +322,13 @@ public class FoundFragment extends Fragment {
         String url1 = "http://server-test.bk5977.com:8800/video/21.jpg";
         String url2 = "http://server-test.bk5977.com:8800/video/22.jpg";
         String url3 = "http://server-test.bk5977.com:8800/video/23.jpg";
+        String url4 = "http://server-test.bk5977.com:8800/video/22.jpg";
+        String url5 = "http://server-test.bk5977.com:8800/video/23.jpg";
         list.add(new ImageCycleView.ImageInfo(url1, "11", "eeee"));
         list.add(new ImageCycleView.ImageInfo(url2, "222", "rrrr"));
         list.add(new ImageCycleView.ImageInfo(url3, "333", "tttt"));
+        list.add(new ImageCycleView.ImageInfo(url4, "222", "rrrr"));
+        list.add(new ImageCycleView.ImageInfo(url5, "333", "tttt"));
 
 
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {

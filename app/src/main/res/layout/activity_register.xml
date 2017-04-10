@@ -4,63 +4,66 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:fitsSystemWindows="true"
     android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context="com.biaoke.bklive.user.activity.RegisterActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back"
-            android:layout_width="30dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
+            android:padding="@dimen/x15"
             android:src="@mipmap/back" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
             android:text="@string/phone_register"
             android:textColor="@color/white"
-            android:textSize="24sp"
-            android:layout_alignBottom="@+id/back"
-            android:layout_centerHorizontal="true" />
+            android:textSize="@dimen/x34" />
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="45px"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y50"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/x30"
+            android:layout_weight="1"
             android:text="@string/china"
-            android:textSize="20sp" />
+            android:textColor="#222222"
+            android:textSize="@dimen/x44" />
 
         <EditText
             android:id="@+id/put_phonenum"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
+            android:hint="@string/phone_num"
             android:phoneNumber="true"
-            android:hint="@string/phone_num" />
+            android:textSize="@dimen/x34" />
 
         <Button
             android:id="@+id/pin_send"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
+            android:layout_gravity="center_vertical"
+            android:layout_weight="2"
             android:text="@string/send_pin" />
     </LinearLayout>
 
@@ -71,75 +74,80 @@
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="@dimen/x160"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/x30"
             android:text="@string/pin"
-            android:textSize="20sp" />
+            android:textColor="#222222"
+            android:textSize="@dimen/x44" />
 
         <EditText
             android:id="@+id/pin_put"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_gravity="center_vertical"
+            android:hint="@string/put_pin"
             android:phoneNumber="true"
-            android:hint="@string/put_pin" />
+            android:textSize="@dimen/x34" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="53px"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y40"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="@dimen/x160"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_gravity="center_vertical"
+            android:layout_marginStart="@dimen/x30"
             android:text="@string/password"
-            android:textSize="20sp" />
+            android:textColor="#222222"
+            android:textSize="@dimen/x44" />
 
         <EditText
             android:id="@+id/put_pw"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:hint="@string/put_password"
             android:password="true"
-            android:hint="@string/put_password" />
+            android:textSize="@dimen/x34" />
     </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:layout_marginTop="53px"
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y40"
         android:orientation="horizontal">
 
         <TextView
-            android:layout_width="80dp"
+            android:layout_width="@dimen/x200"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
-            android:layout_marginStart="20dp"
+            android:layout_marginStart="@dimen/x30"
             android:text="@string/confirm_pw"
-            android:textSize="20sp" />
+            android:textColor="#222222"
+            android:textSize="@dimen/x44" />
 
         <EditText
             android:id="@+id/confirm_pw"
-            android:layout_width="wrap_content"
+            android:layout_width="@dimen/x250"
             android:layout_height="wrap_content"
             android:layout_marginStart="10dp"
-            android:password="true"
-            android:hint="@string/confirm_pw" />
+            android:hint="@string/confirm_pw"
+            android:password="true" />
     </LinearLayout>
 
     <Button
         android:id="@+id/btn_register"
-        android:layout_width="260dp"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/x589"
+        android:layout_height="@dimen/y100"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="@dimen/y93"
         android:background="@drawable/buttonstyle"
         android:text="@string/btn_register"
-        android:textColor="#6f57d6" />
+        android:textColor="#6f57d6"
+        android:textSize="@dimen/x34" />
 </LinearLayout>

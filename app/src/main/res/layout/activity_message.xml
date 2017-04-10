@@ -12,48 +12,54 @@
     <RelativeLayout
         android:id="@+id/ll_message"
         android:layout_width="match_parent"
-        android:layout_height="50dp"
+        android:layout_height="@dimen/y100"
         android:background="@color/background_color"
         android:orientation="horizontal">
 
         <ImageView
             android:id="@+id/back_message"
-            android:layout_width="30dp"
-            android:layout_height="24dp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:layout_marginStart="15dp"
+            android:padding="@dimen/x15"
+            android:scaleType="centerCrop"
             android:src="@mipmap/back" />
 
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:padding="2dp"
             android:background="@drawable/hotstyle"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:padding="2dp">
+
             <TextView
                 android:id="@+id/tv_gossip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x40"
+                android:layout_marginStart="@dimen/x40"
                 android:text="@string/gossip"
                 android:textColor="@drawable/colortextview2"
-                android:textSize="24sp" />
+                android:textSize="@dimen/x34" />
 
             <TextView
                 android:id="@+id/tv_privatemessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x40"
                 android:text="@string/privatemessage"
                 android:textColor="@drawable/colortextview2"
-                android:textSize="24sp" />
+                android:textSize="@dimen/x34" />
 
             <TextView
                 android:id="@+id/tv_mymessage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x40"
                 android:text="@string/mymessage"
                 android:textColor="@drawable/colortextview2"
-                android:textSize="24sp" />
+                android:textSize="@dimen/x34" />
         </LinearLayout>
 
     </RelativeLayout>

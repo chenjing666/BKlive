@@ -1,8 +1,10 @@
 package com.biaoke.bklive;
 
+import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -147,6 +149,11 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        //6.0之后开启相机的权限
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+        }
+
         mTencent = Tencent.createInstance(APPID, MainActivity.this.getApplication());
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
         UserId = sharedPreferences_user.getString("userId", "");//如果取不到值就取后面的""
@@ -653,7 +660,7 @@ public class MainActivity extends BaseActivity {
                                                             mNickName = jsonobject.getString("NickName");
                                                             mLevel = jsonobject.getString("等级");
                                                             mExperience = jsonobject.getString("经验");
-                                                            mIncome = jsonobject.getString("收益");
+                                                            mIncome = jsonobject.getString("魅力");
                                                             mDiamond = jsonobject.getString("钻石");
                                                             mLiveNum = jsonobject.getString("直播");
                                                             mVideoNum = jsonobject.getString("点播");
