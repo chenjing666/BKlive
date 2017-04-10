@@ -145,7 +145,14 @@ public class PrepareLiveActivity extends BaseActivity {
                                                     public Object parseNetworkResponse(Response response, int id) throws Exception {
                                                         JSONObject object = new JSONObject(response.body().string());
                                                         liveUrl = object.getString("RTMPPublishURL");
+//                                                        "code": 200,
+//                                                                "userId": "1001",
+//                                                                "token": "IrBvMOtboxb/CtHNf3dhvS9Cqig9AKecy6C72GS0ol6EO+vM8atpLok2WaW+YaQnTOoJEc6tHbJ7uQS1OithRQ=="
+                                                        String RongYunToken=object.getString("RongCloudToken");//获取融云token
+                                                        JSONObject jsonObject_token=new JSONObject(RongYunToken);
+                                                        String token=jsonObject_token.getString("token");
                                                         Log.d("liveUrl-----", liveUrl);
+                                                        Log.d("token-----", token);
                                                         Message msg = new Message();
                                                         msg.what = 0;
                                                         mHandler.sendMessage(msg);

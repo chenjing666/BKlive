@@ -4,19 +4,214 @@
     android:id="@+id/activity_search"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
+    android:orientation="vertical"
     tools:context=".activity.SearchActivity">
 
     <include layout="@layout/fr_searhead" />
 
-    <TextView
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:background="@color/whitesmoke"
-        android:text="@string/search_hot"
-        android:textSize="20sp" />
+        android:background="@color/background_color">
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/y20"
+            android:layout_marginTop="@dimen/y36"
+            android:text="@string/search_hot"
+            android:textSize="@dimen/x28" />
+
+        <LinearLayout
+            android:id="@+id/search_hot_one"
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y105">
+
+            <TextView
+                android:layout_width="@dimen/x39"
+                android:layout_height="@dimen/y39"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/circle_textview_search_one"
+                android:gravity="center"
+                android:text="1"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_hot_search_one"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="center"
+                android:text="核大战开始"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_hot_two"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y105"
+            android:layout_toRightOf="@+id/search_hot_one">
+
+            <TextView
+                android:layout_width="@dimen/x39"
+                android:layout_height="@dimen/y39"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/circle_textview_search_two"
+                android:gravity="center"
+                android:text="2"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_hot_search_two"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="center"
+                android:text="核大战开始"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_hot_three"
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y180">
+
+            <TextView
+                android:layout_width="@dimen/x39"
+                android:layout_height="@dimen/y39"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/circle_textview_search_three"
+                android:gravity="center"
+                android:text="3"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_hot_search_three"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="center"
+                android:text="核大战开始"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_hot_four"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y180"
+            android:layout_toRightOf="@+id/search_hot_three">
+
+            <TextView
+                android:layout_width="@dimen/x39"
+                android:layout_height="@dimen/y39"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/circle_textview_search_four_andlater"
+                android:gravity="center"
+                android:text="4"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_hot_search_four"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="center"
+                android:text="核大战开始"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_hot_five"
+            android:layout_width="@dimen/x360"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y45"
+            android:layout_marginTop="@dimen/y255">
+
+            <TextView
+                android:layout_width="@dimen/x39"
+                android:layout_height="@dimen/y39"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/circle_textview_search_four_andlater"
+                android:gravity="center"
+                android:text="5"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_hot_search_five"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="center"
+                android:text="核大战开始"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/search_hot_six"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y255"
+            android:layout_toRightOf="@+id/search_hot_three">
+
+            <TextView
+                android:layout_width="@dimen/x39"
+                android:layout_height="@dimen/y39"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/circle_textview_search_four_andlater"
+                android:gravity="center"
+                android:text="6"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/tv_hot_search_six"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:gravity="center"
+                android:text="核大战开始"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_search_record"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:id="@+id/search_clear"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y18"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x200"
+            android:src="@mipmap/search_unuse" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginStart="@dimen/x28"
+            android:text="清空全部搜索记录"
+            android:textSize="@dimen/x30" />
+    </LinearLayout>
+
 </LinearLayout>

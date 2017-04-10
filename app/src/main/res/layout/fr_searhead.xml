@@ -1,7 +1,7 @@
 <RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
-    android:layout_height="50dp"
+    android:layout_height="@dimen/y100"
     android:background="@color/background_color">
 
     <EditText
@@ -23,7 +23,7 @@
         android:singleLine="true"
         android:textColor="@color/tab_text_dark"
         android:textColorHint="@color/gray"
-        android:textSize="14sp"/>
+        android:textSize="@dimen/x30"/>
 
     <TextView
         android:id="@+id/tv_cancle"
@@ -34,7 +34,7 @@
         android:layout_marginStart="14dp"
         android:text="@string/cancel_tv"
         android:layout_marginEnd="20dp"
-        android:textColor="#333333"
-        android:textSize="18sp"/>
+        android:textColor="@color/white"
+        android:textSize="@dimen/x34"/>
 
 </RelativeLayout>
