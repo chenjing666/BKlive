@@ -78,8 +78,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_swcamera_streaming);
         ButterKnife.bind(this);
-//        liveUrl = getIntent().getStringExtra("liveUrl");
-//        Log.e("--------liveUrl--------", liveUrl + "");
         initLive();
 
     }
@@ -92,6 +90,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                         mProfile.setPublishUrl(liveUrl);
                         mMediaStreamingManager.setStreamingProfile(mProfile);
                         mMediaStreamingManager.startStreaming();
+                        Toast.makeText(SWCameraStreamingActivity.this, "直播啦！", Toast.LENGTH_SHORT).show();
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
@@ -106,7 +105,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         return AppConsts.POWER_BAR_WHITE;
     }
 
-    //
+    //初始化直播参数
     public void initLive() {
         //水印
         // 100 为 alpha 值
@@ -121,18 +120,13 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         StreamingProfile.VideoProfile vProfile = new StreamingProfile.VideoProfile(20, 500 * 1024, 32);
         StreamingProfile.AVProfile avProfile = new StreamingProfile.AVProfile(vProfile, aProfile);
         mProfile = new StreamingProfile();
-//        try {
         mProfile
-//                    .setPublishUrl(liveUrl)
                 .setVideoQuality(StreamingProfile.VIDEO_QUALITY_HIGH1)
                 .setAudioQuality(StreamingProfile.AUDIO_QUALITY_MEDIUM2)
                 .setEncodingSizeLevel(StreamingProfile.VIDEO_ENCODING_HEIGHT_480)
                 .setEncoderRCMode(StreamingProfile.EncoderRCModes.QUALITY_PRIORITY)
 //                    .setAdaptiveBitrateEnable(true)//自适应码率
                 .setAVProfile(avProfile);
-//        } catch (URISyntaxException e) {
-//            e.printStackTrace();
-//        }
         cameraStreamingSetting = new CameraStreamingSetting();
         cameraStreamingSetting.setCameraId(Camera.CameraInfo.CAMERA_FACING_FRONT)//摄像头前置
                 .setContinuousFocusModeEnabled(true)//自动对焦
@@ -142,7 +136,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 .setCameraPrvSizeRatio(CameraStreamingSetting.PREVIEW_SIZE_RATIO.RATIO_16_9);
 //                .setCameraSourceImproved(true);//只需要进行一次美颜的滤镜处理，就可以实现本地预览端和播放端的滤镜效果
         mMediaStreamingManager = new MediaStreamingManager(this, afl, glSurfaceView, AVCodecType.SW_VIDEO_WITH_SW_AUDIO_CODEC);  // soft codec
-        mMediaStreamingManager.prepare(cameraStreamingSetting, mProfile);// microphoneStreamingSetting, watermarksetting,
+        mMediaStreamingManager.prepare(cameraStreamingSetting, microphoneStreamingSetting, watermarksetting, mProfile);// microphoneStreamingSetting, watermarksetting,
         mMediaStreamingManager.setStreamingStateListener(this);
     }
 
@@ -225,12 +219,10 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.btn_start_live:
-//            获取直播推流地址
+//              获取直播推流地址
                 okhttputils();
-//    隐藏直播描述，进入直播间
+//              隐藏直播描述，进入直播间
                 liveDescription.setVisibility(View.INVISIBLE);
-//        Toast.makeText(this, "进入直播", Toast.LENGTH_SHORT).show();
-
                 break;
             case R.id.live_cancel:
                 finish();

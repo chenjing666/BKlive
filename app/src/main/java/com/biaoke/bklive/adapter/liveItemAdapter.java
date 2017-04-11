@@ -12,7 +12,6 @@ import android.widget.TextView;
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.common.CommonUtil;
-import com.biaoke.bklive.common.GlideUtis;
 import com.biaoke.bklive.common.LoadImage;
 import com.biaoke.bklive.common.LogUtil;
 import com.pkmmte.view.CircularImageView;
