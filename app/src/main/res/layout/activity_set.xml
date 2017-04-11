@@ -178,13 +178,12 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <!--button有阴影-->
         <Button
             android:id="@+id/btn_loginout"
             android:layout_width="@dimen/x600"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/y100"
             android:layout_centerInParent="true"
-            android:background="@drawable/hotstyle_set_outlogin"
+            android:background="@drawable/icon_start_live"
             android:text="退出登录"
             android:textColor="@color/white" />
     </RelativeLayout>

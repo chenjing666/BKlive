@@ -65,7 +65,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         StreamingProfile.VideoProfile vProfile = new StreamingProfile.VideoProfile(20, 500 * 1024, 32);
         StreamingProfile.AVProfile avProfile = new StreamingProfile.AVProfile(vProfile, aProfile);
         mProfile = new StreamingProfile();
-        String path = "rtmp://pili-publish.bk5977.com/bk-test1/1133?e=1491557455&token=EeZEOr-LLyxU9QaCyIoZRa0uBtJccSLWr-brhwIa:Pg9y243OW_EbcLGEj8_5nAYf22k=";
         try {
             mProfile.setPublishUrl(liveUrl)
                     .setVideoQuality(StreamingProfile.VIDEO_QUALITY_HIGH1)

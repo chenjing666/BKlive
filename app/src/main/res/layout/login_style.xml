@@ -30,102 +30,123 @@
         android:paddingLeft="10dp"
         android:paddingRight="10dp">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="@dimen/y22"
+            android:layout_marginTop="@dimen/y40">
 
-            <ImageView
-                android:id="@+id/wechat_login"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/wechat_login" />
+                android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/wechat_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:src="@mipmap/wechat_login" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/wechat_login"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/y16"
+                    android:src="@mipmap/wechat_login1" />
+            </RelativeLayout>
+
+
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/wechat_login"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/wechat_login1" />
-        </RelativeLayout>
+                android:layout_weight="1">
 
+                <ImageView
+                    android:id="@+id/qq_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:src="@mipmap/qq_login" />
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/qq_login"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/y16"
+                    android:src="@mipmap/qq_login1" />
+            </RelativeLayout>
 
-            <ImageView
-                android:id="@+id/qq_login"
-                android:layout_width="wrap_content"
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/qq_login" />
+                android:layout_weight="1">
 
-            <ImageView
-                android:layout_width="wrap_content"
+                <ImageView
+                    android:id="@+id/phone_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:src="@mipmap/phone_login" />
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/phone_login"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/y16"
+                    android:src="@mipmap/phone_login1" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/qq_login"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/qq_login1"/>
-        </RelativeLayout>
+                android:layout_weight="1">
 
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
+                <ImageView
+                    android:id="@+id/weibo_login"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="1"
+                    android:src="@mipmap/weibo_login" />
 
-            <ImageView
-                android:id="@+id/phone_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/phone_login" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/phone_login"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/phone_login1"/>
-        </RelativeLayout>
-
-        <RelativeLayout
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1">
-
-            <ImageView
-                android:id="@+id/weibo_login"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/weibo_login" />
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/weibo_login"
-                android:layout_centerHorizontal="true"
-                android:src="@mipmap/weibo_login1" />
-        </RelativeLayout>
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/weibo_login"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="@dimen/y16"
+                    android:src="@mipmap/weibo_login1" />
+            </RelativeLayout>
+        </LinearLayout>
     </LinearLayout>
 
-    <RelativeLayout
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="@color/white"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:text="默认同意骠客服务条款"
-            android:textColor="@color/liji_material_red_500" />
-    </RelativeLayout>
+            android:text="登录即代表你同意"
+            android:textColor="#222222"
+            android:textSize="@dimen/x22" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="《骠客服务和隐私条款》"
+            android:textColor="@color/liji_material_red_500"
+            android:textSize="@dimen/x22" />
+    </LinearLayout>
 
 </LinearLayout>
