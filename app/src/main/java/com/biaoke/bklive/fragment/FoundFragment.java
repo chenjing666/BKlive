@@ -64,6 +64,7 @@ public class FoundFragment extends Fragment {
     private String page = "0";
     private String BannerUp;
     private List<Banner> bannerList;
+    private JSONObject jsonObject_content;
 
     @Nullable
     @Override
@@ -76,7 +77,7 @@ public class FoundFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
-        JSONObject jsonObject_content = new JSONObject();
+        jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
             jsonObject_content.put("UserId", useId);
@@ -176,10 +177,13 @@ public class FoundFragment extends Fragment {
     }
 
     private void initRefreshData() {
-        for (int i = 0; i < 20; i++) {
-            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
-            recyclerDataList.add(liveItem);
-        }
+        recyclerDataList.clear();
+        getVideo(jsonObject_content.toString());
+
+//        for (int i = 0; i < 20; i++) {
+//            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
+//            recyclerDataList.add(liveItem);
+//        }
     }
 
     /**
@@ -196,10 +200,20 @@ public class FoundFragment extends Fragment {
     }
 
     private void initLoadMoreData() {
-        for (int i = 0; i < 3; i++) {
-            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
-            recyclerDataList.add(liveItem);
+        page+=page;
+        try {
+            jsonObject_content.put("Protocol", "Explore");
+            jsonObject_content.put("UserId", useId);
+            jsonObject_content.put("Page", page);
+        } catch (JSONException e) {
+            e.printStackTrace();
         }
+        getVideo(jsonObject_content.toString());
+
+//        for (int i = 0; i < 3; i++) {
+//            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
+//            recyclerDataList.add(liveItem);
+//        }
     }
 
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
