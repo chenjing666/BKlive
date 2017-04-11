@@ -5,33 +5,33 @@
 
     <ImageView
         android:id="@+id/live_screeen"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/x140"
+        android:layout_height="@dimen/y140"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/live_screeen" />
+        android:background="@drawable/live_screeen" />
 
     <ImageView
         android:id="@+id/live_camera"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
-        android:layout_marginStart="40dp"
-        android:layout_marginTop="50dp"
-        android:background="@mipmap/live_camera" />
+        android:layout_width="@dimen/x140"
+        android:layout_height="@dimen/y140"
+        android:layout_marginStart="@dimen/x60"
+        android:layout_marginTop="@dimen/y100"
+        android:background="@drawable/live_camera" />
 
     <ImageView
         android:id="@+id/vedio_short"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/x140"
+        android:layout_height="@dimen/y140"
         android:layout_alignParentEnd="true"
-        android:layout_marginEnd="40dp"
-        android:layout_marginTop="50dp"
-        android:background="@mipmap/vedio_short" />
+        android:layout_marginEnd="@dimen/x60"
+        android:layout_marginTop="@dimen/y100"
+        android:background="@drawable/vedio_short" />
 
     <ImageView
         android:id="@+id/live_unputvideo"
-        android:layout_width="60dp"
-        android:layout_height="60dp"
+        android:layout_width="@dimen/x130"
+        android:layout_height="@dimen/y130"
         android:layout_below="@+id/live_camera"
         android:layout_centerHorizontal="true"
-        android:background="@mipmap/live_unputvedio" />
+        android:background="@drawable/live_unputvedio" />
 </RelativeLayout>

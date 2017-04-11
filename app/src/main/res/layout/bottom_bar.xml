@@ -22,8 +22,8 @@
 
         <ImageView
             android:id="@+id/menu_putvedio"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/y125"
             android:layout_centerInParent="true"
             android:background="@drawable/live_selector"
             android:clickable="true" />

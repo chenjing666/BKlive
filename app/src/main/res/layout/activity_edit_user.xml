@@ -23,7 +23,7 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/x20"
             android:scaleType="centerCrop"
-            android:src="@mipmap/back" />
+            android:src="@drawable/back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -56,7 +56,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x150"
-            android:background="@mipmap/edit_head" />
+            android:background="@drawable/edit_head" />
 
         <ImageView
             android:layout_width="wrap_content"
@@ -64,7 +64,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -100,7 +100,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -171,7 +171,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -208,7 +208,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -243,7 +243,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -279,7 +279,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -315,7 +315,7 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -352,7 +352,7 @@
             android:layout_centerVertical="true"
             android:layout_gravity="end"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 
     <RelativeLayout
@@ -389,6 +389,6 @@
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x38"
-            android:background="@mipmap/item_more" />
+            android:background="@drawable/item_more" />
     </RelativeLayout>
 </LinearLayout>

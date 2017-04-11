@@ -22,7 +22,7 @@
             android:layout_height="24dp"
             android:layout_centerVertical="true"
             android:layout_marginStart="15dp"
-            android:src="@mipmap/back" />
+            android:src="@drawable/back" />
 
         <TextView
             android:layout_width="wrap_content"

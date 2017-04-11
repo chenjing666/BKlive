@@ -22,7 +22,7 @@
             android:layout_centerVertical="true"
             android:padding="@dimen/x20"
             android:scaleType="centerCrop"
-            android:src="@mipmap/back" />
+            android:src="@drawable/back" />
 
         <TextView
             android:layout_width="wrap_content"
@@ -44,7 +44,7 @@
             android:layout_width="120dp"
             android:layout_height="120dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/head_end"
+            android:src="@drawable/head_end"
             app:border="true"
             app:border_color="#16f5f5f5"
             app:border_width="6dp"

@@ -274,12 +274,12 @@ public class EditUserActivity extends BaseActivity {
         public void onClick(View v) {
             switch (v.getId()) {
                 case R.id.rl_man:
-                    ivSex.setImageResource(R.mipmap.man);
+                    ivSex.setImageResource(R.drawable.man);
                     tvSex.setText("男");
                     sexPopw.dismiss();
                     break;
                 case R.id.rl_female:
-                    ivSex.setImageResource(R.mipmap.female);
+                    ivSex.setImageResource(R.drawable.female);
                     tvSex.setText("女");
                     sexPopw.dismiss();
                     break;

@@ -22,7 +22,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@mipmap/message_main" />
+            android:src="@drawable/message_main" />
 
         <LinearLayout
             android:id="@+id/main_head"
@@ -95,7 +95,7 @@
             android:layout_height="24dp"
             android:layout_gravity="center_vertical"
             android:layout_weight="1"
-            android:src="@mipmap/search_main" />
+            android:src="@drawable/search_main" />
 
 
     </LinearLayout>
@@ -127,7 +127,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="@dimen/y410"
+            android:layout_height="@dimen/y400"
             android:background="@drawable/bg_user"
             android:orientation="vertical">
 
@@ -146,7 +146,7 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:drawableEnd="@mipmap/user_diamond"
+                        android:drawableEnd="@drawable/user_diamond"
                         android:text="送出"
                         android:textColor="@color/white"
                         android:textSize="@dimen/x22" />
@@ -164,11 +164,11 @@
 
                 <com.pkmmte.view.CircularImageView
                     android:id="@+id/iv_user_head"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="@dimen/x180"
+                    android:layout_height="@dimen/y180"
                     android:layout_centerInParent="true"
                     android:scaleType="centerInside"
-                    android:src="@mipmap/head_default"
+                    android:src="@drawable/head_default"
                     app:border="true"
                     app:border_color="#16f5f5f5"
                     app:border_width="6dp"
@@ -180,12 +180,12 @@
 
                 <ImageView
                     android:id="@+id/btn_edit"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
                     android:layout_centerVertical="true"
-                    android:layout_marginStart="10dp"
+                    android:layout_marginStart="@dimen/x20"
                     android:layout_toEndOf="@+id/iv_user_head"
-                    android:background="@mipmap/btn_edit" />
+                    android:background="@drawable/btn_edit" />
             </RelativeLayout>
 
             <LinearLayout
@@ -207,7 +207,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:background="@mipmap/man" />
+                    android:background="@drawable/man" />
             </LinearLayout>
 
             <LinearLayout
@@ -354,7 +354,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/x42"
-                        android:src="@mipmap/bk_contribution" />
+                        android:src="@drawable/bk_contribution" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -379,7 +379,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/x42"
-                        android:background="@mipmap/bk_income" />
+                        android:background="@drawable/bk_income" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -404,7 +404,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/x42"
-                        android:background="@mipmap/bk_mydiamond" />
+                        android:background="@drawable/bk_mydiamond" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -429,7 +429,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/x42"
-                        android:background="@mipmap/bk_level" />
+                        android:background="@drawable/bk_level" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -454,7 +454,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/x42"
-                        android:background="@mipmap/bk_vedio" />
+                        android:background="@drawable/bk_vedio" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -479,7 +479,7 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
                         android:layout_marginStart="@dimen/x42"
-                        android:background="@mipmap/bk_identification" />
+                        android:background="@drawable/bk_identification" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -504,8 +504,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
-                        android:layout_marginStart="@dimen/x42"
-                        android:background="@mipmap/bk_set" />
+                        android:layout_marginStart="@dimen/x38"
+                        android:background="@drawable/bk_set" />
 
                     <TextView
                         android:layout_width="match_parent"
@@ -534,10 +534,10 @@
 
         <ImageView
             android:id="@+id/live_putvideo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x125"
+            android:layout_height="@dimen/y125"
             android:layout_centerHorizontal="true"
-            android:background="@mipmap/live_putvedio" />
+            android:background="@drawable/live_putvedio" />
     </RelativeLayout>
 
 

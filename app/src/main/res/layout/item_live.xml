@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:visibility="gone"
-        android:background="@mipmap/iv_living" />
+        android:background="@drawable/iv_living" />
 
     <TextView
         android:id="@+id/item_live_description"
@@ -47,7 +47,7 @@
             android:layout_centerVertical="true"
             android:layout_marginStart="5dp"
             android:scaleType="centerInside"
-            android:src="@mipmap/head_end"
+            android:src="@drawable/head_end"
             app:border="true"
             app:border_color="#16f5f5f5"
             app:border_width="4dp"
@@ -73,7 +73,7 @@
             android:layout_centerVertical="true"
             android:layout_marginEnd="5dp"
             android:layout_toLeftOf="@+id/item_live_people"
-            android:src="@mipmap/live_looknum" />
+            android:src="@drawable/live_looknum" />
 
         <TextView
             android:id="@+id/item_live_people"

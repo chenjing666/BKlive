@@ -14,7 +14,7 @@
         android:layout_marginRight="10dp"
         android:background="@drawable/hotstyle"
         android:backgroundTint="#F1F1F1"
-        android:drawableStart="@mipmap/search_right"
+        android:drawableStart="@drawable/search_right"
         android:drawablePadding="5dp"
         android:gravity="start|center_vertical"
         android:hint="输入查询的关键字"

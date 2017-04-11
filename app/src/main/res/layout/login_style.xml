@@ -13,7 +13,7 @@
             android:layout_width="0dp"
             android:layout_height="100dp"
             android:layout_weight="3"
-            android:src="@mipmap/login_logo" />
+            android:src="@drawable/login_logo" />
 
         <TextView
             android:layout_width="0dp"
@@ -47,7 +47,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_weight="1"
-                    android:src="@mipmap/wechat_login" />
+                    android:src="@drawable/wechat_login" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -55,7 +55,7 @@
                     android:layout_below="@+id/wechat_login"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/y16"
-                    android:src="@mipmap/wechat_login1" />
+                    android:src="@drawable/wechat_login1" />
             </RelativeLayout>
 
 
@@ -70,7 +70,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_weight="1"
-                    android:src="@mipmap/qq_login" />
+                    android:src="@drawable/qq_login" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -78,7 +78,7 @@
                     android:layout_below="@+id/qq_login"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/y16"
-                    android:src="@mipmap/qq_login1" />
+                    android:src="@drawable/qq_login1" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -92,7 +92,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_weight="1"
-                    android:src="@mipmap/phone_login" />
+                    android:src="@drawable/phone_login" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -100,7 +100,7 @@
                     android:layout_below="@+id/phone_login"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/y16"
-                    android:src="@mipmap/phone_login1" />
+                    android:src="@drawable/phone_login1" />
             </RelativeLayout>
 
             <RelativeLayout
@@ -114,7 +114,7 @@
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:layout_weight="1"
-                    android:src="@mipmap/weibo_login" />
+                    android:src="@drawable/weibo_login" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -122,7 +122,7 @@
                     android:layout_below="@+id/weibo_login"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="@dimen/y16"
-                    android:src="@mipmap/weibo_login1" />
+                    android:src="@drawable/weibo_login1" />
             </RelativeLayout>
         </LinearLayout>
     </LinearLayout>
