@@ -25,7 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.biaoke.bklive.activity.MessageActivity;
-import com.biaoke.bklive.activity.PrepareLiveActivity;
+import com.biaoke.bklive.activity.SWCameraStreamingActivity;
 import com.biaoke.bklive.activity.SearchActivity;
 import com.biaoke.bklive.activity.ShortVedioActivity;
 import com.biaoke.bklive.base.BaseActivity;
@@ -205,7 +205,7 @@ public class MainActivity extends BaseActivity {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 1:
-                    Intent intent_prepare = new Intent(MainActivity.this, PrepareLiveActivity.class);
+                    Intent intent_prepare = new Intent(MainActivity.this, SWCameraStreamingActivity.class);
 //                    intent_live.putExtra("liveUrl", liveUrl);
                     startActivity(intent_prepare);
                     break;
