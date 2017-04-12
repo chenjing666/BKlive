@@ -21,6 +21,7 @@ import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -113,6 +114,8 @@ public class MainActivity extends BaseActivity {
     BottomBar llBottomBar;
     @BindView(R.id.live_putvideo)
     ImageView livePutvideo;
+    @BindView(R.id.sl_user)
+    ScrollView slUser;
     private PopupWindow popupWindow_vedio, popupWindow_login;
     private ImageView imageView_qq;
     private String APPID = "1106047080";
@@ -167,7 +170,8 @@ public class MainActivity extends BaseActivity {
                     mainHead.setVisibility(View.VISIBLE);
                     llMain.setVisibility(View.VISIBLE);
                     mine.setVisibility(View.GONE);
-                    llUser.setVisibility(View.GONE);
+//                    llUser.setVisibility(View.GONE);
+                    slUser.setVisibility(View.GONE);
                 } else if (index == 1) {
                     SharedPreferences sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
                     boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
@@ -177,7 +181,8 @@ public class MainActivity extends BaseActivity {
                     } else {
                         mainHead.setVisibility(View.GONE);
                         mine.setVisibility(View.VISIBLE);
-                        llUser.setVisibility(View.VISIBLE);
+//                        llUser.setVisibility(View.VISIBLE);
+                        slUser.setVisibility(View.VISIBLE);
                         llMain.setVisibility(View.GONE);
 
                         JSONObject jsonObject_user = new JSONObject();
