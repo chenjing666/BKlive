@@ -4,26 +4,27 @@
     android:layout_height="match_parent">
 
     <!--<ScrollView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="match_parent">-->
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <include layout="@layout/header" />
+        <!--<com.biaoke.bklive.imagecycleview.ImageCycleView-->
+        <!--android:id="@+id/icv_topView"-->
         <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="match_parent">-->
+        <!--android:layout_height="140dp">-->
 
-        <RelativeLayout
+        <!--</com.biaoke.bklive.imagecycleview.ImageCycleView>-->
+
+        <com.jcodecraeer.xrecyclerview.XRecyclerView
+            android:id="@+id/recyclerview_found"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <!--<com.biaoke.bklive.imagecycleview.ImageCycleView-->
-                <!--android:id="@+id/icv_topView"-->
-                <!--android:layout_width="match_parent"-->
-                <!--android:layout_height="140dp">-->
-
-            <!--</com.biaoke.bklive.imagecycleview.ImageCycleView>-->
-
-            <com.jcodecraeer.xrecyclerview.XRecyclerView
-                android:id="@+id/recyclerview_found"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_below="@+id/icv_topView"
-                android:overScrollMode="never" />
-        </RelativeLayout>
+            android:layout_height="match_parent"
+            android:layout_below="@+id/icv_topView"
+            android:overScrollMode="never" />
+    </RelativeLayout>
     <!--</ScrollView>-->
 </RelativeLayout>

@@ -501,7 +501,7 @@
                     android:id="@+id/bk_set"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/y108"
-                    android:layout_marginBottom="@dimen/y135"
+                    android:layout_marginBottom="@dimen/y25"
                     android:layout_marginTop="@dimen/y3"
                     android:background="@color/white"
                     android:orientation="horizontal">

@@ -1,46 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/root_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:fitsSystemWindows="true"
-    android:id="@+id/root_layout"
     android:background="#e0918f8f"
     android:clipToPadding="false"
+    android:fitsSystemWindows="true"
     tools:context="com.biaoke.bklive.activity.PLVideoViewActivity">
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/start_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开始" />
-
-        <Button
-            android:id="@+id/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂停" />
-
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="结束" />
-    </LinearLayout>
 
     <com.pili.pldroid.player.widget.PLVideoView
         android:id="@+id/PLVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:layout_gravity="center">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -52,9 +27,9 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="50dp"
+                android:layout_marginTop="10dp"
                 android:layout_weight="40"
                 android:background="#e0000000"
-                android:layout_marginTop="10dp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingRight="5dp"
@@ -65,6 +40,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="25"
                     android:gravity="center">
+
                     <ImageView
                         android:layout_width="40dp"
                         android:layout_height="40dp"
@@ -78,12 +54,14 @@
                     android:layout_weight="45"
                     android:gravity="center"
                     android:orientation="vertical">
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="我的名字"
                         android:textColor="@android:color/white"
                         android:textSize="12sp" />
+
                     <TextView
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
@@ -91,10 +69,14 @@
                         android:textColor="@android:color/white"
                         android:textSize="12sp" />
                 </LinearLayout>
+
                 <Button
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
+                    android:layout_marginBottom="@dimen/y10"
+                    android:layout_marginTop="@dimen/y10"
                     android:layout_weight="30"
+                    android:background="@color/background_color"
                     android:text="关注"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -107,18 +89,105 @@
                 android:scrollbars="none" />
         </LinearLayout>
 
-
     </com.pili.pldroid.player.widget.PLVideoView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y140"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:background="@drawable/bg_living_charm"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x15"
+                android:text="魅力"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+
+            <TextView
+                android:id="@+id/tv_charm_living_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:text="123651231"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:gravity="center_vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x20"
+                android:layout_toLeftOf="@+id/tv_bk_id"
+                android:text="骠客号"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+
+            <TextView
+                android:id="@+id/tv_bk_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:text="1236231"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
     <com.biaoke.bklive.activity.room.GiftLayout
         android:id="@+id/gift_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerVertical="true"
         android:layout_marginBottom="5dp" />
+
     <com.biaoke.bklive.activity.room.PeriscopeLayout
         android:id="@+id/periscope_layout"
-        android:layout_width="150dp"
-        android:layout_height="190dp"
-        android:layout_alignParentBottom="true"
+        android:layout_width="@dimen/x160"
+        android:layout_height="@dimen/y200"
+        android:layout_above="@+id/bottom_bar"
         android:layout_alignParentEnd="true" />
+
+
+    <com.biaoke.bklive.rongcloud.widge.ChatListView
+        android:id="@+id/chat_listview"
+        android:layout_width="@dimen/x400"
+        android:layout_height="@dimen/y260"
+        android:layout_above="@+id/bottom_bar"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll" />
+
+    <fragment
+        android:id="@+id/bottom_bar"
+        android:name="com.biaoke.bklive.rongcloud.widge.fragment.BottomPanelFragment"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/fragment_bottombar" />
+
+    <ImageView
+        android:id="@+id/iv_livingroom_upvot"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/bottom_bar"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/y40"
+        android:layout_marginEnd="@dimen/x20"
+        android:background="@drawable/upvote_livingroom" />
 </RelativeLayout>

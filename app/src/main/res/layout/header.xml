@@ -5,8 +5,9 @@
 
     <ImageView
         android:id="@+id/headiv_found"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/x100"
+        android:layout_height="@dimen/y125"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/header_found" />
+        android:background="@drawable/header_found"
+        android:visibility="gone"/>
 </RelativeLayout>
