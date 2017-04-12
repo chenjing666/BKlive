@@ -104,7 +104,7 @@
         android:id="@+id/ll_main"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rl_main_bottom"
+        android:layout_above="@+id/ll_bottom_bar"
         android:layout_below="@+id/ll_main1"
         android:orientation="vertical">
 
@@ -120,7 +120,7 @@
         android:id="@+id/sl_user"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_above="@+id/rl_main_bottom"
+        android:layout_above="@+id/ll_bottom_bar"
         android:layout_below="@+id/ll_main1"
         android:background="@color/gray_light"
         android:visibility="gone">
@@ -337,193 +337,193 @@
 
             </LinearLayout>
 
-            <ScrollView
+            <!--<ScrollView-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:background="@color/gray_light">-->
+
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@color/gray_light">
+                android:orientation="vertical">
 
                 <LinearLayout
+                    android:id="@+id/bk_contribution"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical">
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginTop="@dimen/y10"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
 
-                    <LinearLayout
-                        android:id="@+id/bk_contribution"
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x42"
+                        android:src="@drawable/bk_contribution" />
+
+                    <TextView
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginTop="@dimen/y10"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x42"
-                            android:src="@drawable/bk_contribution" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="镖客贡献榜"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bk_income"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginTop="@dimen/y3"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x42"
-                            android:background="@drawable/bk_income" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="我的收益"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bk_mydiamond"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginTop="@dimen/y3"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x42"
-                            android:background="@drawable/bk_mydiamond" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="我的钻石"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bk_level"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginTop="@dimen/y3"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x42"
-                            android:background="@drawable/bk_level" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="我的等级"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bk_vedio"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginTop="@dimen/y3"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x42"
-                            android:background="@drawable/bk_vedio" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="我的短视频"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bk_identification"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginTop="@dimen/y3"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x42"
-                            android:background="@drawable/bk_identification" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="@string/bk_identification"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
-
-                    <LinearLayout
-                        android:id="@+id/bk_set"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/y108"
-                        android:layout_marginBottom="@dimen/y135"
-                        android:layout_marginTop="@dimen/y3"
-                        android:background="@color/white"
-                        android:orientation="horizontal">
-
-                        <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_gravity="center"
-                            android:layout_marginStart="@dimen/x38"
-                            android:background="@drawable/bk_set" />
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_marginStart="@dimen/x48"
-                            android:gravity="center|start"
-                            android:text="@string/bk_set"
-                            android:textColor="#222222"
-                            android:textSize="@dimen/x28" />
-                    </LinearLayout>
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="镖客贡献榜"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
                 </LinearLayout>
-            </ScrollView>
+
+                <LinearLayout
+                    android:id="@+id/bk_income"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginTop="@dimen/y3"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x42"
+                        android:background="@drawable/bk_income" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="我的收益"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bk_mydiamond"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginTop="@dimen/y3"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x42"
+                        android:background="@drawable/bk_mydiamond" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="我的钻石"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bk_level"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginTop="@dimen/y3"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x42"
+                        android:background="@drawable/bk_level" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="我的等级"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bk_vedio"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginTop="@dimen/y3"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x42"
+                        android:background="@drawable/bk_vedio" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="我的短视频"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bk_identification"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginTop="@dimen/y3"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x42"
+                        android:background="@drawable/bk_identification" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="@string/bk_identification"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/bk_set"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/y108"
+                    android:layout_marginBottom="@dimen/y135"
+                    android:layout_marginTop="@dimen/y3"
+                    android:background="@color/white"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="@dimen/x38"
+                        android:background="@drawable/bk_set" />
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="@dimen/x48"
+                        android:gravity="center|start"
+                        android:text="@string/bk_set"
+                        android:textColor="#222222"
+                        android:textSize="@dimen/x28" />
+                </LinearLayout>
+            </LinearLayout>
+            <!--</ScrollView>-->
 
         </LinearLayout>
     </ScrollView>

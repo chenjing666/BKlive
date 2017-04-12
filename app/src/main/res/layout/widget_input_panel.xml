@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:orientation="vertical">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="#d4ceaa"
+        android:orientation="horizontal">
+
+
+        <ImageView
+            android:id="@+id/iv_chatbarrage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/livingroom_beauty_open" />
+
+        <RelativeLayout
+            android:id="@+id/input_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/input_editor"
+                android:layout_width="@dimen/x522"
+                android:layout_height="@dimen/y66"
+                android:layout_centerInParent="true"
+                android:background="@drawable/livingroom_edittext"
+                android:maxLines="4"
+                android:text="说点什么吧"
+                android:textColor="#beb5dd"
+                android:textSize="@dimen/x26" />
+
+            <!--<ImageView-->
+            <!--android:id="@+id/input_emoji_btn"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_alignParentRight="true"-->
+            <!--android:layout_centerVertical="true"-->
+            <!--android:layout_margin="5dp"-->
+            <!--android:src="@drawable/rc_emoji_selector"/>-->
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/input_send"
+            android:layout_width="@dimen/x82"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/input_send_button"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/rc_send"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x28" />
+    </LinearLayout>
+
+    <!--<cn.rongcloud.live.ui.widget.EmojiBoard-->
+    <!--android:id="@+id/input_emoji_board"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:visibility="gone"/>-->
+</LinearLayout>

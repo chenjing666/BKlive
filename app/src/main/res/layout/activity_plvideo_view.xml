@@ -103,4 +103,13 @@
             android:layout_height="wrap_content"
             android:text="结束" />
     </LinearLayout>
+    <!--<com.biaoke.bklive.rongcloud.widge.ChatListView-->
+        <!--android:id="@+id/chat_listview"-->
+        <!--android:layout_width="230dp"-->
+        <!--android:layout_height="152dp"-->
+        <!--android:layout_above="@+id/bottom_bar"-->
+        <!--android:divider="@null"-->
+        <!--android:listSelector="@android:color/transparent"-->
+        <!--android:scrollbars="none"-->
+        <!--android:transcriptMode="alwaysScroll"/>-->
 </RelativeLayout>

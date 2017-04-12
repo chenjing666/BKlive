@@ -3,12 +3,13 @@ package com.biaoke.bklive.fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,11 +24,8 @@ import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
+import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lidroid.xutils.BitmapUtils;
-import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
-import com.xlibs.xrv.listener.OnLoadMoreListener;
-import com.xlibs.xrv.listener.OnRefreshListener;
-import com.xlibs.xrv.view.XRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -50,7 +48,7 @@ import okhttp3.MediaType;
  */
 
 public class FoundFragment extends Fragment {
-    @BindView(R.id.icv_topView)
+    //    @BindView(R.id.icv_topView)
     ImageCycleView mImageCycleView;
     Unbinder unbinder;
     @BindView(R.id.recyclerview_found)
@@ -86,38 +84,60 @@ public class FoundFragment extends Fragment {
             e.printStackTrace();
         }
         getVideo(jsonObject_content.toString());
-        myImagecycleview();//轮播图，加载各种途径图片
 
-        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
-        imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
-        imageView.setBackgroundResource(R.drawable.header_found);
-        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
-        anim.start();
-        mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
-        recyclerviewFound.addHeaderView(mHeaderView, 80);
-        recyclerviewFound.addFootView(mFooterView, 50);
 
+//        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
+//        imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
+//        imageView.setBackgroundResource(R.drawable.header_found);
+//        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
+//        anim.start();
+//        mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
+//        recyclerviewFound.addHeaderView(mHeaderView);
+//        recyclerviewFound.addFootView(mFooterView);
+
+        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header2, null);
+        recyclerviewFound.addHeaderView(mHeaderView);
+        mImageCycleView = (ImageCycleView) mHeaderView.findViewById(R.id.icv_topView);
         //设置布局管理器,可以根据图片大小自适应
-        XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
-        xGridLayoutManager.setAutoMeasureEnabled(false);
-        recyclerviewFound.setLayoutManager(xGridLayoutManager);
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        gridLayoutManager.setAutoMeasureEnabled(false);
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
+//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+//        XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
+//        xGridLayoutManager.setAutoMeasureEnabled(false);
+        recyclerviewFound.setLayoutManager(gridLayoutManager);
         //设置适配器
         liveItemAdapter = new liveItemAdapter(getActivity(), recyclerviewFound);
         liveItemAdapter.bind(recyclerDataList);
         liveItemAdapter.setOnItemClickListener(listen);
         recyclerviewFound.setAdapter(liveItemAdapter);
-        recyclerviewFound.setOnLoadMoreListener(new OnLoadMoreListener() {
+        recyclerviewFound.setLoadingMoreEnabled(true);
+        recyclerviewFound.setPullRefreshEnabled(true);
+        recyclerviewFound.setLoadingListener(new XRecyclerView.LoadingListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+
             @Override
             public void onLoadMore() {
                 loadMoreData();
             }
         });
-        recyclerviewFound.setOnRefreshListener(new OnRefreshListener() {
-            @Override
-            public void onRefresh() {
-                refreshData();
-            }
-        });
+//        recyclerviewFound.setOnLoadMoreListener(new OnLoadMoreListener() {
+//            @Override
+//            public void onLoadMore() {
+//                loadMoreData();
+//            }
+//        });
+//        recyclerviewFound.setOnRefreshListener(new OnRefreshListener() {
+//            @Override
+//            public void onRefresh() {
+//                refreshData();
+//            }
+//        });
+        myImagecycleview();//轮播图，加载各种途径图片
         return view;
     }
 
@@ -171,7 +191,7 @@ public class FoundFragment extends Fragment {
             @Override
             public void run() {
                 initRefreshData();
-                recyclerviewFound.refreshComplate();
+                recyclerviewFound.refreshComplete();
             }
         }, 2000);
     }
@@ -179,11 +199,6 @@ public class FoundFragment extends Fragment {
     private void initRefreshData() {
         recyclerDataList.clear();
         getVideo(jsonObject_content.toString());
-
-//        for (int i = 0; i < 20; i++) {
-//            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
-//            recyclerDataList.add(liveItem);
-//        }
     }
 
     /**
@@ -194,13 +209,13 @@ public class FoundFragment extends Fragment {
             @Override
             public void run() {
                 initLoadMoreData();
-                recyclerviewFound.loadMoreComplate();
+                recyclerviewFound.loadMoreComplete();
             }
         }, 2000);
     }
 
     private void initLoadMoreData() {
-        page+=page;
+        page += page;
         try {
             jsonObject_content.put("Protocol", "Explore");
             jsonObject_content.put("UserId", useId);
@@ -209,11 +224,6 @@ public class FoundFragment extends Fragment {
             e.printStackTrace();
         }
         getVideo(jsonObject_content.toString());
-
-//        for (int i = 0; i < 3; i++) {
-//            live_item liveItem = new live_item("", "", "", "", i + i + "", "http://img.25pp.com/uploadfile/bizhi/iphone4/2012/1003/20121003113200683_3g.jpg", "", "", "", "");
-//            recyclerDataList.add(liveItem);
-//        }
     }
 
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {

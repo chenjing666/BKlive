@@ -143,7 +143,6 @@ public class MainActivity extends BaseActivity {
     private String mFollow;
     private String mFans;
     private String mSignture;
-    //    private String liveUrl;
     private String Msg;
 
 
@@ -211,7 +210,6 @@ public class MainActivity extends BaseActivity {
             switch (message.what) {
                 case 1:
                     Intent intent_prepare = new Intent(MainActivity.this, SWCameraStreamingActivity.class);
-//                    intent_live.putExtra("liveUrl", liveUrl);
                     startActivity(intent_prepare);
                     break;
                 case 2:
@@ -231,10 +229,9 @@ public class MainActivity extends BaseActivity {
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.live_putvideo:
-//                okhttputils();
                 llBottomBar.setVisibility(View.GONE);
                 showPopWindow();
-                setBackgroundAlpha(0.4f, MainActivity.this);
+                setBackgroundAlpha(0.5f, MainActivity.this);
                 popupWindow_vedio.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.iv_message:
