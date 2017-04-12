@@ -9,8 +9,6 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.support.v7.widget.GridLayoutManager;
-import android.support.v7.widget.LinearLayoutManager;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,9 +23,11 @@ import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
-import com.jcodecraeer.xrecyclerview.ProgressStyle;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.lidroid.xutils.BitmapUtils;
+import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
+import com.xlibs.xrv.listener.OnLoadMoreListener;
+import com.xlibs.xrv.listener.OnRefreshListener;
+import com.xlibs.xrv.view.XRecyclerView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -50,6 +50,7 @@ import okhttp3.MediaType;
  */
 
 public class FoundFragment extends Fragment {
+    @BindView(R.id.icv_topView)
     ImageCycleView mImageCycleView;
     Unbinder unbinder;
     @BindView(R.id.recyclerview_found)
@@ -85,54 +86,38 @@ public class FoundFragment extends Fragment {
             e.printStackTrace();
         }
         getVideo(jsonObject_content.toString());
+        myImagecycleview();//轮播图，加载各种途径图片
 
+        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
+        imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
+        imageView.setBackgroundResource(R.drawable.header_found);
+        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
+        anim.start();
+        mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
+        recyclerviewFound.addHeaderView(mHeaderView, 80);
+        recyclerviewFound.addFootView(mFooterView, 50);
 
-//        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
-//        imageView = (ImageView) getActivity().findViewById(R.id.headiv_found);
-//        imageView.setBackgroundResource(R.drawable.header_found);
-//        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
-//        anim.start();
-//        mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
-//        recyclerviewFound.addHeaderView(mHeaderView);
-//        recyclerviewFound.addFootView(mFooterView);
-        mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header2, null);
-        recyclerviewFound.addHeaderView(mHeaderView);
-        recyclerviewFound.setLoadingMoreProgressStyle(ProgressStyle.BallPulse);
-        mImageCycleView = (ImageCycleView) mHeaderView.findViewById(R.id.icv_topView);
         //设置布局管理器,可以根据图片大小自适应
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-        gridLayoutManager.setAutoMeasureEnabled(true);
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity());
-//        layoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-//        XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
-//        xGridLayoutManager.setAutoMeasureEnabled(false);
-        recyclerviewFound.setLayoutManager(gridLayoutManager);
+        XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
+        xGridLayoutManager.setAutoMeasureEnabled(false);
+        recyclerviewFound.setLayoutManager(xGridLayoutManager);
         //设置适配器
         liveItemAdapter = new liveItemAdapter(getActivity(), recyclerviewFound);
         liveItemAdapter.bind(recyclerDataList);
         liveItemAdapter.setOnItemClickListener(listen);
         recyclerviewFound.setAdapter(liveItemAdapter);
-        recyclerviewFound.setLoadingMoreEnabled(true);
-        recyclerviewFound.setPullRefreshEnabled(true);
-        recyclerviewFound.setLoadingListener(new XRecyclerView.LoadingListener() {
-            @Override
-            public void onRefresh() {
-                imageView = (ImageView) getActivity().findViewById(R.id.headiv_found);
-                imageView.setBackgroundResource(R.drawable.header_found);
-                AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
-                anim.start();
-                imageView.setVisibility(View.VISIBLE);
-                recyclerviewFound.setRefreshProgressStyle(R.id.headiv_found);
-                refreshData();
-            }
-
+        recyclerviewFound.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
             public void onLoadMore() {
                 loadMoreData();
             }
         });
-        myImagecycleview();//轮播图，加载各种途径图片
+        recyclerviewFound.setOnRefreshListener(new OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshData();
+            }
+        });
         return view;
     }
 
@@ -152,25 +137,14 @@ public class FoundFragment extends Fragment {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
-//                    JSONObject jsonObject_banner = new JSONObject();
-//                    try {
-//                        jsonObject_banner.put("Protocol", "BannerUp");
-//                        jsonObject_banner.put("UserId", useId);
-//                        jsonObject_banner.put("Cmd", "1");
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                    getBanner(jsonObject_banner.toString());
                     break;
                 case 1:
                     Log.e("lllll", bannerList.size() + "");
                     new Thread(new Runnable() {
                         @Override
                         public void run() {
-//                            myImagecycleview();
                         }
                     });
-
                     break;
                 case 2:
                     break;
@@ -186,16 +160,14 @@ public class FoundFragment extends Fragment {
             @Override
             public void run() {
                 initRefreshData();
-                recyclerviewFound.refreshComplete();
+                recyclerviewFound.refreshComplate();
             }
         }, 2000);
-//        imageView.setVisibility(View.GONE);
     }
 
     private void initRefreshData() {
         recyclerDataList.clear();
         getVideo(jsonObject_content.toString());
-        imageView.setVisibility(View.GONE);
     }
 
     /**
@@ -206,13 +178,13 @@ public class FoundFragment extends Fragment {
             @Override
             public void run() {
                 initLoadMoreData();
-                recyclerviewFound.loadMoreComplete();
+                recyclerviewFound.loadMoreComplate();
             }
         }, 2000);
     }
 
     private void initLoadMoreData() {
-//        page += page;
+        page += page;
         try {
             jsonObject_content.put("Protocol", "Explore");
             jsonObject_content.put("UserId", useId);
@@ -226,7 +198,6 @@ public class FoundFragment extends Fragment {
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
-//            Toast.makeText(getActivity(), "发现页面" + postion, Toast.LENGTH_SHORT).show();
             Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
             intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
             startActivity(intent_video);

@@ -44,8 +44,8 @@ dependencies {
     compile files('libs/pldroid-player-1.5.1.jar')
     //    compile 'com.jcodecraeer:xrecyclerview:1.3.2'
     //自带刷新加载的recyclerview
-//    compile project(':xlibs')
-    compile 'com.jcodecraeer:xrecyclerview:1.3.2'
+    compile project(':xlibs')
+//    compile 'com.jcodecraeer:xrecyclerview:1.3.2'
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'

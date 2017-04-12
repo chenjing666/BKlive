@@ -14,8 +14,8 @@ import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.common.CommonUtil;
 import com.biaoke.bklive.common.LoadImage;
 import com.biaoke.bklive.common.LogUtil;
-import com.jcodecraeer.xrecyclerview.XRecyclerView;
 import com.pkmmte.view.CircularImageView;
+import com.xlibs.xrv.view.XRecyclerView;
 
 import java.util.List;
 
