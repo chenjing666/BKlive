@@ -4,14 +4,43 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true"
+    android:id="@+id/root_layout"
+    android:background="#e0918f8f"
     android:clipToPadding="false"
     tools:context="com.biaoke.bklive.activity.PLVideoViewActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="60dp"
+        android:layout_alignParentBottom="true"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/start_video"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="开始" />
+
+        <Button
+            android:id="@+id/pause"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="暂停" />
+
+        <Button
+            android:id="@+id/stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="结束" />
+    </LinearLayout>
 
     <com.pili.pldroid.player.widget.PLVideoView
         android:id="@+id/PLVideoView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_gravity="center" >
+        android:layout_gravity="center"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -77,39 +106,19 @@
                 android:layout_weight="60"
                 android:scrollbars="none" />
         </LinearLayout>
+
+
     </com.pili.pldroid.player.widget.PLVideoView>
-
-    <LinearLayout
+    <com.biaoke.bklive.activity.room.GiftLayout
+        android:id="@+id/gift_layout"
         android:layout_width="match_parent"
-        android:layout_height="60dp"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_marginBottom="5dp" />
+    <com.biaoke.bklive.activity.room.PeriscopeLayout
+        android:id="@+id/periscope_layout"
+        android:layout_width="150dp"
+        android:layout_height="190dp"
         android:layout_alignParentBottom="true"
-        android:orientation="horizontal">
-
-        <Button
-            android:id="@+id/start_video"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="开始" />
-
-        <Button
-            android:id="@+id/pause"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="暂停" />
-
-        <Button
-            android:id="@+id/stop"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="结束" />
-    </LinearLayout>
-    <!--<com.biaoke.bklive.rongcloud.widge.ChatListView-->
-        <!--android:id="@+id/chat_listview"-->
-        <!--android:layout_width="230dp"-->
-        <!--android:layout_height="152dp"-->
-        <!--android:layout_above="@+id/bottom_bar"-->
-        <!--android:divider="@null"-->
-        <!--android:listSelector="@android:color/transparent"-->
-        <!--android:scrollbars="none"-->
-        <!--android:transcriptMode="alwaysScroll"/>-->
+        android:layout_alignParentEnd="true" />
 </RelativeLayout>

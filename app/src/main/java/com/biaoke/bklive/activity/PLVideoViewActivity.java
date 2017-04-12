@@ -3,11 +3,17 @@ package com.biaoke.bklive.activity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.RelativeLayout;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
+import com.biaoke.bklive.activity.room.GiftLayout;
+import com.biaoke.bklive.activity.room.PeriscopeLayout;
 import com.biaoke.bklive.adapter.VideoHeadImgAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.HeadBean;
@@ -32,10 +38,18 @@ public class PLVideoViewActivity extends BaseActivity {
     private String path2;
     private VideoHeadImgAdapter videoHeadImgAdapter;
     private List<HeadBean> list = new ArrayList<HeadBean>();
-
+    @BindView(R.id.root_layout)
+    RelativeLayout rootLayout;
+    @BindView(R.id.periscope_layout)
+    PeriscopeLayout periscopeLayout;
+    @BindView(R.id.gift_layout)
+    GiftLayout giftLayout;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,
+                WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_plvideo_view);
         ButterKnife.bind(this);
 
@@ -64,6 +78,16 @@ public class PLVideoViewActivity extends BaseActivity {
             }
         });
         addHeadimg();
+        rootLayout.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                //根布局点赞
+                periscopeLayout.addHeart();
+                giftLayout.showLeftGiftVeiw(PLVideoViewActivity.this, "你的名字", "http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg");
+
+                return false;
+            }
+        });
     }
 
     private void addHeadimg() {
