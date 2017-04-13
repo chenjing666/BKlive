@@ -87,6 +87,13 @@
                 android:layout_height="match_parent"
                 android:layout_weight="60"
                 android:scrollbars="none" />
+
+            <ImageView
+                android:id="@+id/living_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/livecamera_close" />
         </LinearLayout>
 
     </com.pili.pldroid.player.widget.PLVideoView>
@@ -100,8 +107,8 @@
         <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:gravity="center_vertical"
             android:background="@drawable/bg_living_charm"
+            android:gravity="center_vertical"
             android:orientation="horizontal">
 
             <TextView
@@ -123,9 +130,9 @@
         </LinearLayout>
 
         <RelativeLayout
-            android:gravity="center_vertical"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
 
             <TextView
                 android:layout_width="wrap_content"
@@ -175,7 +182,7 @@
 
     <fragment
         android:id="@+id/bottom_bar"
-        android:name="com.biaoke.bklive.rongcloud.widge.fragment.BottomPanelFragment"
+        android:name="com.biaoke.bklive.rongcloud.fragment.BottomPanelFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"

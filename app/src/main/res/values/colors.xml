@@ -15,4 +15,5 @@
     <color name="gray_light">#D0D0D0</color>
     <color name="red">#FF0000</color><!--红色 -->
     <color name="tab_text_dark">#333333</color>
+    <color name="black">#222222</color>
 </resources>

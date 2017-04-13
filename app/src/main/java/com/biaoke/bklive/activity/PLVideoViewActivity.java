@@ -31,7 +31,7 @@ public class PLVideoViewActivity extends BaseActivity {
     RecyclerView videoHeadimgXrv;
     private PLVideoView mVideoView;
     private List<live_item> recyclerDataList = new ArrayList<>();
-    private String path = "http://pili-live-hls.bk5977.com/bk-test1/1174.m3u8";
+//    private String path = "http://pili-live-hls.bk5977.com/bk-test1/1174.m3u8";
     private String path2;
     private VideoHeadImgAdapter videoHeadImgAdapter;
     private List<HeadBean> list = new ArrayList<HeadBean>();
