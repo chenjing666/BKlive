@@ -50,6 +50,7 @@
         <activity android:name=".user.activity.RegisterActivity" />
         <activity android:name=".user.activity.ForgetPasswordActivity" />
         <activity android:name=".user.activity.HeadSetActivity" />
+        //QQ第三方
         <activity
             android:name="com.tencent.tauth.AuthActivity"
             android:launchMode="singleTask"
@@ -78,7 +79,28 @@
             //七牛录屏功能
         </activity>
         <activity android:name=".activity.PLVideoViewActivity" />
-        <activity android:name=".activity.PrepareLiveActivity"></activity>
+        //新浪微博
+        <activity
+            android:name=".WBShareActivity"
+            android:configChanges="keyboardHidden|orientation"
+            android:screenOrientation="portrait">
+            <intent-filter>
+                <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
+                <category android:name="android.intent.category.DEFAULT" />
+            </intent-filter>
+        </activity>
+        //微信第三方
+        <activity
+            android:name=".wxapi.WXEntryActivity"
+            android:configChanges="keyboardHidden|orientation|screenSize"
+            android:exported="true"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        //友盟第三方
+        <meta-data
+            android:name="UMENG_APPKEY"
+            android:value="58ef32f7f5ade44d62000f99">
+        </meta-data>
     </application>
 
 </manifest>

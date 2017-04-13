@@ -1,5 +1,6 @@
 package com.biaoke.bklive.activity;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.hardware.Camera;
@@ -9,6 +10,8 @@ import android.os.Handler;
 import android.os.Message;
 import android.util.Log;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -73,9 +76,13 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     private MicrophoneStreamingSetting microphoneStreamingSetting;
     private WatermarkSetting watermarksetting;
 
+    @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        //使布局延伸到状态栏
+        getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_swcamera_streaming);
         ButterKnife.bind(this);
         initLive();

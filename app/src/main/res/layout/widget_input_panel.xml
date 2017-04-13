@@ -5,19 +5,32 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
-    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y100"
-        android:background="#d4ceaa"
+        android:background="#e2e2e2"
         android:orientation="horizontal">
 
-
-        <ImageView
-            android:id="@+id/iv_chatbarrage"
+        <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/livingroom_beauty_open" />
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_chatbarrage"
+                android:layout_width="@dimen/x90"
+                android:layout_height="@dimen/y66"
+                android:layout_marginEnd="@dimen/x10"
+                android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/livingroom_beauty_open" />
+
+            <ImageView
+                android:layout_width="@dimen/x56"
+                android:layout_height="@dimen/y56"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginTop="@dimen/y4"
+                android:background="@drawable/livingroom_chatbarrage_switch" />
+        </RelativeLayout>
 
         <RelativeLayout
             android:id="@+id/input_bar"
@@ -27,29 +40,22 @@
 
             <EditText
                 android:id="@+id/input_editor"
-                android:layout_width="@dimen/x522"
-                android:layout_height="@dimen/y66"
+                android:layout_width="@dimen/x500"
+                android:layout_height="@dimen/y80"
                 android:layout_centerInParent="true"
                 android:background="@drawable/livingroom_edittext"
+                android:gravity="center"
+                android:hint="说点什么吧"
                 android:maxLines="4"
-                android:text="说点什么吧"
                 android:textColor="#beb5dd"
-                android:textSize="@dimen/x26" />
+                android:textSize="@dimen/x32" />
 
-            <!--<ImageView-->
-            <!--android:id="@+id/input_emoji_btn"-->
-            <!--android:layout_width="wrap_content"-->
-            <!--android:layout_height="wrap_content"-->
-            <!--android:layout_alignParentRight="true"-->
-            <!--android:layout_centerVertical="true"-->
-            <!--android:layout_margin="5dp"-->
-            <!--android:src="@drawable/rc_emoji_selector"/>-->
         </RelativeLayout>
 
         <TextView
             android:id="@+id/input_send"
             android:layout_width="@dimen/x82"
-            android:layout_height="wrap_content"
+            android:layout_height="@dimen/y70"
             android:layout_gravity="center_vertical"
             android:background="@drawable/input_send_button"
             android:enabled="false"
@@ -59,9 +65,4 @@
             android:textSize="@dimen/x28" />
     </LinearLayout>
 
-    <!--<cn.rongcloud.live.ui.widget.EmojiBoard-->
-    <!--android:id="@+id/input_emoji_board"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:visibility="gone"/>-->
 </LinearLayout>

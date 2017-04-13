@@ -42,17 +42,16 @@ import com.biaoke.bklive.user.activity.LoginActivity;
 import com.biaoke.bklive.user.activity.SetActivity;
 import com.biaoke.bklive.user.bean.User;
 import com.pkmmte.view.CircularImageView;
-import com.tencent.connect.UserInfo;
-import com.tencent.connect.auth.QQToken;
-import com.tencent.connect.common.Constants;
-import com.tencent.tauth.IUiListener;
-import com.tencent.tauth.Tencent;
-import com.tencent.tauth.UiError;
+import com.umeng.socialize.UMAuthListener;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.bean.SHARE_MEDIA;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -119,9 +118,9 @@ public class MainActivity extends BaseActivity {
     private PopupWindow popupWindow_vedio, popupWindow_login;
     private ImageView imageView_qq;
     private String APPID = "1106047080";
-    Tencent mTencent;
-    private BaseUiListener mIUiListener;
-    private UserInfo mInfo;
+    //    Tencent mTencent;
+//    private BaseUiListener mIUiListener;
+//    private UserInfo mInfo;
     private String openID = null;
     //点击2次返回，退出程序
     private boolean isExit = false;
@@ -156,7 +155,7 @@ public class MainActivity extends BaseActivity {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
         }
 
-        mTencent = Tencent.createInstance(APPID, MainActivity.this.getApplication());
+//        mTencent = Tencent.createInstance(APPID, MainActivity.this.getApplication());
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
         UserId = sharedPreferences_user.getString("userId", "");//如果取不到值就取后面的""
         Log.e(UserId + "主页面获取用户名:", UserId);
@@ -264,29 +263,33 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-
+//登录弹窗，第三方登录
     private void loginPopupWindow() {
         final View contentView = LayoutInflater.from(this).inflate(R.layout.login_style, null);
-//        contentView.getBackground().setAlpha(60);
         imageView_qq = (ImageView) contentView.findViewById(R.id.qq_login);
         imageView_qq.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                mIUiListener = new BaseUiListener();
-                mTencent.login(MainActivity.this, "all", mIUiListener);
                 popupWindow_login.dismiss();
-
+                UMShareAPI.get(MainActivity.this).doOauthVerify(MainActivity.this, SHARE_MEDIA.QQ, umAuthListener);
             }
         });
-//        ImageView imageView_weibo = (ImageView) contentView.findViewById(R.id.weibo_login);
-//        imageView_weibo.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Intent intent_test = new Intent(MainActivity.this, UserActivity.class);
-//                startActivity(intent_test);
-//                popupWindow.dismiss();
-//            }
-//        });
+        ImageView imageView_weibo = (ImageView) contentView.findViewById(R.id.weibo_login);
+        imageView_weibo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow_login.dismiss();
+                UMShareAPI.get(MainActivity.this).doOauthVerify(MainActivity.this, SHARE_MEDIA.SINA, umAuthListener);
+            }
+        });
+        ImageView imageView_wechat = (ImageView) contentView.findViewById(R.id.wechat_login);
+        imageView_wechat.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                popupWindow_login.dismiss();
+                UMShareAPI.get(MainActivity.this).doOauthVerify(MainActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
+            }
+        });
         ImageView imageView_phone = (ImageView) contentView.findViewById(R.id.phone_login);
         imageView_phone.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -323,24 +326,6 @@ public class MainActivity extends BaseActivity {
                 return false;
             }
         });
-//        setBackgroundAlpha(0.6f, contentView.getContext());//设置屏幕透明度
-//        popupWindow.setOnDismissListener(new PopupWindow.OnDismissListener() {
-//            @Override
-//            public void onDismiss() {
-//                // popupWindow隐藏时恢复屏幕正常透明度
-//                setBackgroundAlpha(1.0f, MainActivity.this);
-//            }
-//        });
-//        contentView.setOnTouchListener(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View v, MotionEvent event) {
-//                if (popupWindow != null && popupWindow.isShowing()) {
-//                    popupWindow.dismiss();
-//                    popupWindow = null;
-//                }
-//                return false;
-//            }
-//        });
     }
 
     private void showPopWindow() {
@@ -687,66 +672,97 @@ public class MainActivity extends BaseActivity {
     }
 
     //******************************                 qq                 *****************************//
-    private class BaseUiListener implements IUiListener {
+//    private class BaseUiListener implements IUiListener {
+//        @Override
+//        public void onComplete(Object response) {
+//            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
+//            Message msg = new Message();
+//            msg.what = 1;
+//            myHandler.sendMessage(msg);
+//            Log.e("tag", "response:" + response);
+//            JSONObject jo = (JSONObject) response;
+//
+//            try {
+//                openID = jo.getString("openid");
+//                String accessToken = jo.getString("access_token");
+//                String expires = jo.getString("expires_in");
+//                mTencent.setOpenId(openID);
+//                mTencent.setAccessToken(accessToken, expires);
+//                QQToken qqToken = mTencent.getQQToken();
+//                mInfo = new UserInfo(getApplicationContext(), qqToken);
+//                mInfo.getUserInfo(new IUiListener() {
+//                    @Override
+//                    public void onComplete(Object response) {
+//                        Log.e("BaseUiListener", "成功" + response.toString());
+//                    }
+//
+//                    @Override
+//                    public void onError(UiError uiError) {
+//                        Log.e("BaseUiListener", "失败" + uiError.toString());
+//                    }
+//
+//                    @Override
+//                    public void onCancel() {
+//                        Log.e("BaseUiListener", "取消");
+//                    }
+//                });
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//
+//        @Override
+//        public void onError(UiError uiError) {
+//            Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+//        }
+//
+//        @Override
+//        public void onCancel() {
+//            Toast.makeText(getApplicationContext(), "登录取消", Toast.LENGTH_SHORT).show();
+//        }
+//    }
+//
+//
+//    @Override
+//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+//        Log.d("TAG", "-->onActivityResult " + requestCode + " resultCode=" + resultCode);
+//        if (requestCode == Constants.REQUEST_LOGIN ||
+//                requestCode == Constants.REQUEST_APPBAR) {
+//            Tencent.onActivityResultData(requestCode, resultCode, data, mIUiListener);
+//        }
+//
+//        super.onActivityResult(requestCode, resultCode, data);
+//    }
+
+    //*************************第三方登录*************************//
+    private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
-        public void onComplete(Object response) {
-            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-            Message msg = new Message();
-            msg.what = 1;
-            myHandler.sendMessage(msg);
-            Log.e("tag", "response:" + response);
-            JSONObject jo = (JSONObject) response;
-
-            try {
-                openID = jo.getString("openid");
-                String accessToken = jo.getString("access_token");
-                String expires = jo.getString("expires_in");
-                mTencent.setOpenId(openID);
-                mTencent.setAccessToken(accessToken, expires);
-                QQToken qqToken = mTencent.getQQToken();
-                mInfo = new UserInfo(getApplicationContext(), qqToken);
-                mInfo.getUserInfo(new IUiListener() {
-                    @Override
-                    public void onComplete(Object response) {
-                        Log.e("BaseUiListener", "成功" + response.toString());
-                    }
-
-                    @Override
-                    public void onError(UiError uiError) {
-                        Log.e("BaseUiListener", "失败" + uiError.toString());
-                    }
-
-                    @Override
-                    public void onCancel() {
-                        Log.e("BaseUiListener", "取消");
-                    }
-                });
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
+        public void onStart(SHARE_MEDIA platform) {
+            //授权开始的回调
         }
 
         @Override
-        public void onError(UiError uiError) {
-            Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
+        public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
+            Toast.makeText(getApplicationContext(), "Authorize succeed", Toast.LENGTH_SHORT).show();
+
         }
 
         @Override
-        public void onCancel() {
-            Toast.makeText(getApplicationContext(), "登录取消", Toast.LENGTH_SHORT).show();
+        public void onError(SHARE_MEDIA platform, int action, Throwable t) {
+            Toast.makeText(getApplicationContext(), "Authorize fail", Toast.LENGTH_SHORT).show();
         }
-    }
 
+        @Override
+        public void onCancel(SHARE_MEDIA platform, int action) {
+            Toast.makeText(getApplicationContext(), "Authorize cancel", Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        Log.d("TAG", "-->onActivityResult " + requestCode + " resultCode=" + resultCode);
-        if (requestCode == Constants.REQUEST_LOGIN ||
-                requestCode == Constants.REQUEST_APPBAR) {
-            Tencent.onActivityResultData(requestCode, resultCode, data, mIUiListener);
-        }
-
         super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
     }
 
     //点击两次返回退出程序
