@@ -1,12 +1,14 @@
 package com.biaoke.bklive.rongcloud.fragment;
 
 
+import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -101,18 +103,20 @@ public class BottomPanelFragment extends Fragment {
         }
     }
 
-//    public static boolean onKeyDown(int keyCode, KeyEvent event) {
-//        if (keyCode == event.KEYCODE_BACK) {
-//            Log.d("GameFragmet事件", "OK");
-//        }
-//        return true;
-//    }
-
     private void sharePopw() {
         final View livingsgareView = LayoutInflater.from(getActivity()).inflate(R.layout.share_livingroom, null);
         popupWindow_living_share = new PopupWindow(livingsgareView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         Button button_cancel = (Button) livingsgareView.findViewById(R.id.btn_livingshare_cancel);
         button_cancel.setOnClickListener(shareListen);
+        popupWindow_living_share.setTouchable(true);
+        popupWindow_living_share.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
+        popupWindow_living_share.setBackgroundDrawable(new ColorDrawable(getActivity().getResources().getColor(R.color.transparent)));
     }
 
     private View.OnClickListener shareListen = new View.OnClickListener() {

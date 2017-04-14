@@ -127,6 +127,13 @@
                 android:text="123651231"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/x28" />
+
+            <ImageView
+                android:id="@+id/charm_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/charm_more" />
         </LinearLayout>
 
         <RelativeLayout
@@ -190,8 +197,8 @@
 
     <ImageView
         android:id="@+id/iv_livingroom_upvot"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/y120"
         android:layout_above="@+id/bottom_bar"
         android:layout_alignParentEnd="true"
         android:layout_marginBottom="@dimen/y40"

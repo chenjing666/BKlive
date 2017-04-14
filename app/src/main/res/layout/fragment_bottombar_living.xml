@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <!--<TextView-->
+        <!--android:id="@+id/tv_sendmessage"-->
+        <!--android:layout_width="@dimen/x450"-->
+        <!--android:layout_height="@dimen/y72"-->
+        <!--android:layout_centerVertical="true"-->
+        <!--android:layout_marginEnd="@dimen/x26"-->
+        <!--android:layout_toLeftOf="@+id/iv_livingroom_gift"-->
+        <!--android:background="@drawable/textviewstyle"-->
+        <!--android:gravity="center_vertical"-->
+        <!--android:text="向主播倾诉仰慕之情吧"-->
+        <!--android:textColor="#8b8b8b"-->
+        <!--android:textSize="@dimen/x24" />-->
+        <ImageView
+            android:id="@+id/iv_livingroom_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x10"
+            android:background="@drawable/livingroom_comments" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_private_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x140"
+            android:background="@drawable/livingroom_private_message" />
+
+        <ImageView
+            android:id="@+id/living_livingroom_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/livingroom_share" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_pickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/x140"
+            android:background="@drawable/livingroom_expand" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/x10"
+            android:background="@drawable/livingroom_music" />
+
+    </RelativeLayout>
+
+    <com.biaoke.bklive.rongcloud.widge.InputPanel
+        android:id="@+id/input_panel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone" />
+</RelativeLayout>

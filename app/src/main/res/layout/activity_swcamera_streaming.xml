@@ -25,8 +25,9 @@
         android:id="@+id/liveDescription"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true">
+        android:visibility="gone">
         <!--<RelativeLayout-->
         <!--android:id="@+id/live_description"-->
         <!--android:layout_width="match_parent"-->
@@ -176,4 +177,32 @@
             android:textColor="@color/white"
             android:textSize="15dp" />
     </RelativeLayout>
+
+    <com.biaoke.bklive.rongcloud.widge.ChatListView
+        android:id="@+id/chat_listview"
+        android:layout_width="@dimen/x400"
+        android:layout_height="@dimen/y260"
+        android:layout_above="@+id/bottom_bar_living"
+        android:divider="@null"
+        android:listSelector="@android:color/transparent"
+        android:scrollbars="none"
+        android:transcriptMode="alwaysScroll" />
+
+    <ImageView
+        android:id="@+id/living_livingroom_upvot"
+        android:layout_width="@dimen/x120"
+        android:layout_height="@dimen/y120"
+        android:layout_above="@+id/bottom_bar_living"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="@dimen/y40"
+        android:layout_marginEnd="@dimen/x20"
+        android:background="@drawable/upvote_livingroom" />
+
+    <fragment
+        android:id="@+id/bottom_bar_living"
+        android:name="com.biaoke.bklive.rongcloud.fragment.BottomPanelFragmentLiving"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        tools:layout="@layout/fragment_bottombar_living" />
 </RelativeLayout>

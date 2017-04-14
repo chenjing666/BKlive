@@ -1,0 +1,278 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical"
+    tools:context="com.biaoke.bklive.user.activity.DiamondActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y550"
+        android:background="@drawable/bg_account"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y100">
+
+            <ImageView
+                android:id="@+id/back"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:padding="@dimen/x15"
+                android:scaleType="centerCrop"
+                android:src="@drawable/back" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:text="我的账户"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x34" />
+        </RelativeLayout>
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/y10"
+            android:background="@drawable/diamond_account" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/y10"
+            android:text="账户余额"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x30" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/y10"
+            android:text="12080"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x108" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y106">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x38"
+            android:background="@drawable/user_diamond" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x120"
+            android:text="200"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x34" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="@dimen/x212"
+                android:layout_height="@dimen/y60"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x50"
+                android:background="@drawable/textview_chongzhi"
+                android:gravity="center"
+                android:text="100"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x200"
+                android:background="@drawable/icon_money" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/x660"
+        android:layout_height="@dimen/y2"
+        android:layout_gravity="end"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y106">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x38"
+            android:background="@drawable/user_diamond" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x120"
+            android:text="200"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x34" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="@dimen/x212"
+                android:layout_height="@dimen/y60"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x50"
+                android:background="@drawable/textview_chongzhi"
+                android:gravity="center"
+                android:text="100"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x200"
+                android:background="@drawable/icon_money" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/x660"
+        android:layout_height="@dimen/y2"
+        android:layout_gravity="end"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y106">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x38"
+            android:background="@drawable/user_diamond" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x120"
+            android:text="200"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x34" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="@dimen/x212"
+                android:layout_height="@dimen/y60"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x50"
+                android:background="@drawable/textview_chongzhi"
+                android:gravity="center"
+                android:text="100"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x200"
+                android:background="@drawable/icon_money" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/x660"
+        android:layout_height="@dimen/y2"
+        android:layout_gravity="end"
+        android:background="@color/gray" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y106">
+
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x38"
+            android:background="@drawable/user_diamond" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x120"
+            android:text="200"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x34" />
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true">
+
+            <TextView
+                android:layout_width="@dimen/x212"
+                android:layout_height="@dimen/y60"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x50"
+                android:background="@drawable/textview_chongzhi"
+                android:gravity="center"
+                android:text="100"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:layout_marginEnd="@dimen/x200"
+                android:background="@drawable/icon_money" />
+        </RelativeLayout>
+    </RelativeLayout>
+
+    <View
+        android:layout_width="@dimen/x660"
+        android:layout_height="@dimen/y2"
+        android:layout_gravity="end"
+        android:background="@color/gray" />
+
+
+</LinearLayout>

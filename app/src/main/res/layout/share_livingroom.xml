@@ -29,7 +29,7 @@
             <ImageView
                 android:id="@+id/livingroom_share_wechat"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/y125"
                 android:background="@drawable/livingroom_share_wechat" />
 
             <TextView
@@ -52,7 +52,7 @@
             <ImageView
                 android:id="@+id/livingroom_share_qq"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/y125"
                 android:background="@drawable/livingroom_share_qq" />
 
             <TextView
@@ -75,7 +75,7 @@
             <ImageView
                 android:id="@+id/livingroom_share_sina"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/y125"
                 android:background="@drawable/livingroom_share_sina" />
 
             <TextView
@@ -98,7 +98,7 @@
             <ImageView
                 android:id="@+id/livingroom_share_friend"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/y125"
                 android:background="@drawable/livingroom_share_friend" />
 
             <TextView
@@ -122,7 +122,7 @@
             <ImageView
                 android:id="@+id/livingroom_share_qqq"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/y125"
                 android:background="@drawable/livingroom_share_qqq" />
 
             <TextView
@@ -152,7 +152,7 @@
             <ImageView
                 android:id="@+id/livingroom_copyadress"
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_height="@dimen/y125"
                 android:background="@drawable/livingroom_copyadress" />
 
             <TextView

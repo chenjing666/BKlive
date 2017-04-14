@@ -16,4 +16,5 @@
     <color name="red">#FF0000</color><!--红色 -->
     <color name="tab_text_dark">#333333</color>
     <color name="black">#222222</color>
+    <color name="transparent">#00000000</color>
 </resources>

@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg_income"
+    android:orientation="vertical"
+    tools:context="com.biaoke.bklive.user.activity.IncomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100">
+
+        <ImageView
+            android:id="@+id/back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/x15"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的收益"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x34" />
+    </RelativeLayout>
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y44"
+        android:background="@drawable/crown_income" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y26"
+        android:text="魅力值"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x34" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y26"
+        android:text="魅力值"
+        android:textColor="@color/white"
+        android:textSize="@dimen/x70" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y26"
+        android:text="可提现金额(元)"
+        android:textColor="@color/gray_light"
+        android:textSize="@dimen/x30" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y18"
+        android:text="125"
+        android:textColor="#f9fc00"
+        android:textSize="@dimen/x30" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y40"
+        android:background="@drawable/income_change" />
+
+    <EditText
+        android:id="@+id/et_pick_money"
+        android:layout_width="@dimen/x346"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y40"
+        android:background="@null"
+        android:drawableStart="@drawable/yuan"
+        android:gravity="center"
+        android:hint="0.00"
+        android:textColorHint="@color/gray"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/x70" />
+
+    <View
+        android:layout_width="@dimen/x346"
+        android:layout_height="@dimen/y3"
+        android:layout_gravity="center_horizontal"
+        android:background="@color/gray" />
+
+    <Button
+        android:id="@+id/btn_pick_money"
+        android:layout_width="@dimen/x639"
+        android:layout_height="@dimen/y100"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/y100"
+        android:background="@drawable/btn_income2"
+        android:textSize="@dimen/x40"
+        android:textColor="@color/gray"
+        android:text="提现" />
+
+</LinearLayout>

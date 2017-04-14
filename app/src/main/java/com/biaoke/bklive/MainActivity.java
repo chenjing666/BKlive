@@ -4,6 +4,7 @@ import android.Manifest;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -37,8 +38,14 @@ import com.biaoke.bklive.fragment.GameFragment;
 import com.biaoke.bklive.fragment.SameCityFragment;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
+import com.biaoke.bklive.user.activity.ContributionActivity;
+import com.biaoke.bklive.user.activity.DiamondActivity;
 import com.biaoke.bklive.user.activity.EditUserActivity;
+import com.biaoke.bklive.user.activity.IdentificationActivity;
+import com.biaoke.bklive.user.activity.IncomeActivity;
+import com.biaoke.bklive.user.activity.LevelActivity;
 import com.biaoke.bklive.user.activity.LoginActivity;
+import com.biaoke.bklive.user.activity.MyVedioActivity;
 import com.biaoke.bklive.user.activity.SetActivity;
 import com.biaoke.bklive.user.bean.User;
 import com.pkmmte.view.CircularImageView;
@@ -246,16 +253,28 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent_edit);
                 break;
             case R.id.bk_contribution:
+                Intent intent_contribution = new Intent(this, ContributionActivity.class);
+                startActivity(intent_contribution);
                 break;
             case R.id.bk_income:
+                Intent intent_income = new Intent(this, IncomeActivity.class);
+                startActivity(intent_income);
                 break;
             case R.id.bk_mydiamond:
+                Intent intent_mydiamond = new Intent(this, DiamondActivity.class);
+                startActivity(intent_mydiamond);
                 break;
             case R.id.bk_level:
+                Intent intent_level = new Intent(this, LevelActivity.class);
+                startActivity(intent_level);
                 break;
             case R.id.bk_vedio:
+                Intent intent_myvedio = new Intent(this, MyVedioActivity.class);
+                startActivity(intent_myvedio);
                 break;
             case R.id.bk_identification:
+                Intent intent_identification = new Intent(this, IdentificationActivity.class);
+                startActivity(intent_identification);
                 break;
             case R.id.bk_set:
                 Intent intent_set = new Intent(this, SetActivity.class);
@@ -263,7 +282,8 @@ public class MainActivity extends BaseActivity {
                 break;
         }
     }
-//登录弹窗，第三方登录
+
+    //登录弹窗，第三方登录
     private void loginPopupWindow() {
         final View contentView = LayoutInflater.from(this).inflate(R.layout.login_style, null);
         imageView_qq = (ImageView) contentView.findViewById(R.id.qq_login);
@@ -305,27 +325,15 @@ public class MainActivity extends BaseActivity {
 //        ColorDrawable cd = new ColorDrawable(this.getResources().getColor(R.color.white));
 //        popupWindow.setBackgroundDrawable(cd);
         //点击popwindow以外的布局让pop消失
-        popupWindow_login.setOutsideTouchable(true);
-        popupWindow_login.setFocusable(true);
-        popupWindow_login.setOnDismissListener(new PopupWindow.OnDismissListener() {
-
-            @Override
-            public void onDismiss() {
-                popupWindow_login.dismiss();
-            }
-        });
-
+        popupWindow_login.setTouchable(true);
         popupWindow_login.setTouchInterceptor(new View.OnTouchListener() {
-
             @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_OUTSIDE) {
-                    popupWindow_login.dismiss();
-                    return true;
-                }
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
                 return false;
             }
         });
+        popupWindow_login.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
 
     private void showPopWindow() {
