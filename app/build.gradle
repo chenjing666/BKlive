@@ -95,4 +95,5 @@ dependencies {
     compile 'com.github.florent37:viewanimator:1.0.4'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    compile 'com.android.support:recyclerview-v7:25.0.+'
 }

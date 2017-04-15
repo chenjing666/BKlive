@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="@dimen/y20"
+        android:background="@drawable/hotstyle3"
+        android:gravity="center"
+        android:orientation="horizontal"
+        android:padding="2dp">
+
+        <TextView
+            android:id="@+id/tv_privatemessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x40"
+            android:layout_marginStart="@dimen/x40"
+            android:text="@string/privatemessage"
+            android:textColor="@drawable/colortextview3"
+            android:textSize="@dimen/x34" />
+
+        <TextView
+            android:id="@+id/tv_mymessage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x40"
+            android:text="@string/mymessage"
+            android:textColor="@drawable/colortextview3"
+            android:textSize="@dimen/x34" />
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/listview_message_livingroom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y500"
+        android:layout_marginTop="@dimen/x20">
+
+    </ListView>
+
+
+</LinearLayout>

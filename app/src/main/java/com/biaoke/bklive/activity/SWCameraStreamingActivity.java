@@ -117,7 +117,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     public void initLive() {
         //水印
         // 100 为 alpha 值
-        watermarksetting = new WatermarkSetting(this, R.drawable.shuiyin, WatermarkSetting.WATERMARK_LOCATION.NORTH_EAST, WatermarkSetting.WATERMARK_SIZE.MEDIUM, 100);
+        watermarksetting = new WatermarkSetting(this, R.drawable.shuiyin, WatermarkSetting.WATERMARK_LOCATION.SOUTH_EAST, WatermarkSetting.WATERMARK_SIZE.MEDIUM, 100);
         microphoneStreamingSetting = new MicrophoneStreamingSetting();
         microphoneStreamingSetting.setBluetoothSCOEnabled(true);//开启蓝牙麦克风支持
         afl = (AspectFrameLayout) findViewById(R.id.cameraPreview_afl);

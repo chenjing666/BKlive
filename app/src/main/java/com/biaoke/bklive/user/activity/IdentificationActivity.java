@@ -1,17 +1,18 @@
 package com.biaoke.bklive.user.activity;
 
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 
 import com.biaoke.bklive.R;
+import com.biaoke.bklive.base.BaseActivity;
+import com.biaoke.bklive.message.AppConsts;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 
-public class IdentificationActivity extends AppCompatActivity {
+public class IdentificationActivity extends BaseActivity {
 
     @BindView(R.id.back)
     ImageView back;
@@ -23,6 +24,11 @@ public class IdentificationActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_identification);
         ButterKnife.bind(this);
+    }
+
+    @Override
+    protected String getPowerBarColors() {
+        return AppConsts.POWER_BAR_BACKGROUND;
     }
 
     @OnClick(R.id.back)

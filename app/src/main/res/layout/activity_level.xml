@@ -1,9 +1,469 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context="com.biaoke.bklive.user.activity.LevelActivity">
 
-</android.support.constraint.ConstraintLayout>
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/background_color"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="我的等级"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x34" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/y750"
+        android:background="@drawable/bg_level"
+        android:gravity="center_horizontal"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y18">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bk_contribution_second_edge" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/y130"
+                android:background="@drawable/bk_contribution_leveltwo"
+                android:gravity="center"
+                android:text="lv.8"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x28" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/level_exp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:text="升级所需经验："
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:text="1200"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y30"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="升lv.8"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x22"
+                android:background="@drawable/level_exp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x22"
+                android:text="lv.9"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y60"
+            android:layout_marginTop="@dimen/y20">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/level_exp_quick" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x90"
+                android:layout_marginTop="@dimen/y12"
+                android:text="这样快速升级？"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x26" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/x140"
+                android:background="@drawable/bg_levelup_quick"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/levelup_tolive" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="直播"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x26" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10经验/次"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x18" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/x100"
+                android:layout_marginTop="@dimen/y80"
+                android:background="@drawable/bg_levelup_quick"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/levelup_share" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="分享"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x26" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10经验/次"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x18" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/x120"
+                android:layout_marginTop="@dimen/y160"
+                android:background="@drawable/bg_levelup_quick"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:src="@drawable/levelup_makevedio" />
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="录视频"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x26" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10经验/次"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x18" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x50"
+                android:layout_marginTop="@dimen/y40"
+                android:background="@drawable/bg_levelup_quick"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="送礼"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x26" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="10经验/钻"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x18" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/x15"
+                    android:src="@drawable/levelup_sendgift" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x30"
+                android:layout_marginTop="@dimen/y140"
+                android:background="@drawable/bg_levelup_quick2"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="看播"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x26" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="3经验/5分钟"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x18" />
+                </LinearLayout>
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:layout_marginStart="@dimen/x20"
+                    android:src="@drawable/levelup_lookvedio" />
+            </LinearLayout>
+        </RelativeLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y65"
+        android:background="@color/white">
+
+        <ImageView
+            android:layout_width="@dimen/x160"
+            android:layout_height="@dimen/y60"
+            android:layout_marginStart="@dimen/x10"
+            android:background="@drawable/level_power" />
+
+        <TextView
+            android:layout_width="@dimen/x120"
+            android:layout_height="@dimen/y50"
+            android:layout_marginStart="@dimen/x40"
+            android:layout_marginTop="@dimen/y25"
+            android:text="等级特权"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x26" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x55"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x120"
+                android:layout_height="@dimen/y120"
+                android:src="@drawable/level_kind2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y20"
+                android:text="挂名靠前"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2级开启"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x22" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x40"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x120"
+                android:layout_height="@dimen/y120"
+                android:src="@drawable/level_kind1" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y20"
+                android:text="个性点赞"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2级开启"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x22" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x40"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x120"
+                android:layout_height="@dimen/y120"
+                android:src="@drawable/level_kind31" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y20"
+                android:text="经验提升"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2级开启"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x22" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x40"
+            android:gravity="center_horizontal"
+            android:orientation="vertical">
+
+            <ImageView
+                android:layout_width="@dimen/x120"
+                android:layout_height="@dimen/y120"
+                android:src="@drawable/expression_level2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y20"
+                android:text="尊贵表情"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2级开启"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x22" />
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

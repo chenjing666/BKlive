@@ -10,11 +10,12 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y550"
+        android:layout_height="@dimen/y590"
         android:background="@drawable/bg_account"
         android:orientation="vertical">
 
         <RelativeLayout
+            android:layout_marginTop="@dimen/y60"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y100">
 

@@ -10,7 +10,8 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100">
+        android:layout_height="@dimen/y100"
+        android:layout_marginTop="@dimen/y60">
 
         <ImageView
             android:id="@+id/back"
@@ -90,8 +91,8 @@
         android:drawableStart="@drawable/yuan"
         android:gravity="center"
         android:hint="0.00"
-        android:textColorHint="@color/gray"
         android:textColor="@color/gray"
+        android:textColorHint="@color/gray"
         android:textSize="@dimen/x70" />
 
     <View
@@ -105,10 +106,10 @@
         android:layout_width="@dimen/x639"
         android:layout_height="@dimen/y100"
         android:layout_gravity="center"
-        android:layout_marginTop="@dimen/y100"
+        android:layout_marginTop="@dimen/y60"
         android:background="@drawable/btn_income2"
-        android:textSize="@dimen/x40"
+        android:text="提现"
         android:textColor="@color/gray"
-        android:text="提现" />
+        android:textSize="@dimen/x40" />
 
 </LinearLayout>
