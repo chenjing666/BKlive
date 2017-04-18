@@ -5,6 +5,7 @@ package com.biaoke.bklive.message;
  * 网络连接地址
  */
 public class Api {
+    public   final static String WSHOST = "ws://server-test.bk5977.com:8282";
 
     private static final String ADDRESS = "http:server-test.bk5977.com:8800";
 

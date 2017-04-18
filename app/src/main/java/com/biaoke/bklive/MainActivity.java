@@ -166,6 +166,8 @@ public class MainActivity extends BaseActivity {
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
         UserId = sharedPreferences_user.getString("userId", "");//如果取不到值就取后面的""
         Log.e(UserId + "主页面获取用户名:", UserId);
+//        String AccessKey=sharedPreferences_user.getString("AccessKey","");
+//        Log.e(AccessKey + "主页面获取用户名:", AccessKey);
         BottomBar bottomBar = (BottomBar) findViewById(R.id.ll_bottom_bar);
         bottomBar.setOnItemChangedListener(new BottomBar.OnItemChangedListener() {
 
@@ -207,6 +209,11 @@ public class MainActivity extends BaseActivity {
         });
         bottomBar.setSelectedState(0);
         init();//主页面
+        SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
+        editor_userinfo.putString("mNickName",mNickName);
+        editor_userinfo.putString("mLevel",mLevel);
+        editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
+        editor_userinfo.commit();
 
     }
 
@@ -447,80 +454,6 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-//    //获取直播地址流
-//    private void okhttputils() {
-////        SharedPreferences sharedPreferences_user = getSharedPreferences("userId", Context.MODE_PRIVATE);
-////        String userId = sharedPreferences_user.getString("userId", "");
-////        Log.e("userIduserId", userId);
-//        JSONObject paramsObject = new JSONObject();
-//        try {
-//            paramsObject.put("Protocol", "Live");
-//            paramsObject.put("UserId", UserId);
-//            paramsObject.put("Cmd", "1");
-//            Log.e("cao---=====", paramsObject.toString());
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//        OkHttpUtils
-//                .postString()
-//                .url(Api.ENCRYPT64)
-//                .content(paramsObject.toString())
-//                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-//                .build()
-//                .execute(new StringCallback() {
-//                    @Override
-//                    public void onError(Call call, Exception e, int id) {
-//
-//                    }
-//
-//                    @Override
-//                    public void onResponse(String response, int id) {
-//                        OkHttpUtils.postString()
-//                                .url(Api.LIVEPUT)
-//                                .content(response)
-//                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-//                                .build()
-//                                .execute(new StringCallback() {
-//                                    @Override
-//                                    public void onError(Call call, Exception e, int id) {
-//
-//                                    }
-//
-//                                    @Override
-//                                    public void onResponse(String response, int id) {
-//                                        OkHttpUtils.postString()
-//                                                .url(Api.UNENCRYPT64)
-//                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
-//                                                .content(response)
-//                                                .build()
-//                                                .execute(new Callback() {
-//                                                    @Override
-//                                                    public Object parseNetworkResponse(Response response, int id) throws Exception {
-//                                                        JSONObject object = new JSONObject(response.body().string());
-//                                                        liveUrl = object.getString("RTMPPublishURL");
-//                                                        Log.d("liveUrl-----", liveUrl);
-////                        Message msg = new Message();
-////                        msg.what = 2;
-////                        myHandler.sendMessage(msg);
-//                                                        return null;
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onError(Call call, Exception e, int id) {
-//                                                        Log.d("onError", e.getMessage());
-//                                                    }
-//
-//                                                    @Override
-//                                                    public void onResponse(Object response, int id) {
-//                                                    }
-//                                                });
-//                                    }
-//                                });
-//                    }
-//                });
-//
-//    }
-
 
     //初始化视图
     private void init() {
@@ -653,7 +586,7 @@ public class MainActivity extends BaseActivity {
                                                         try {
                                                             JSONObject jsonobject = new JSONObject(response);
                                                             mNickName = jsonobject.getString("NickName");
-                                                            mLevel = jsonobject.getString("等级");
+                                                            mLevel = jsonobject.getString("Level");
                                                             mExperience = jsonobject.getString("经验");
                                                             mIncome = jsonobject.getString("魅力");
                                                             mDiamond = jsonobject.getString("钻石");

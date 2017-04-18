@@ -177,6 +177,11 @@ public class LoginActivity extends BaseActivity {
                                                             Msg = jsonobject.getString("Msg");
                                                             String Result = jsonobject.getString("Result");
                                                             userId = jsonobject.getString("Id");
+                                                            String AccessKey=jsonobject.getString("AccessKey");
+                                                            SharedPreferences sharedPreferences_accesskey=getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = sharedPreferences_accesskey.edit();
+                                                            editor.putString("AccessKey",AccessKey);
+                                                            editor.commit();
                                                             Message msg = new Message();
                                                             if (Result.equals("1")) {
                                                                 msg.what = 1;

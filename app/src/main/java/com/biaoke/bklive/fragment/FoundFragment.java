@@ -1,7 +1,9 @@
 package com.biaoke.bklive.fragment;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.Bundle;
@@ -9,6 +11,7 @@ import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -23,6 +26,7 @@ import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
+import com.biaoke.bklive.websocket.WebSocketService;
 import com.lidroid.xutils.BitmapUtils;
 import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
 import com.xlibs.xrv.listener.OnLoadMoreListener;
@@ -66,6 +70,9 @@ public class FoundFragment extends Fragment {
     private List<Banner> bannerList;
     private JSONObject jsonObject_content;
 
+    //websocket
+    private Intent websocketServiceIntent;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -90,7 +97,7 @@ public class FoundFragment extends Fragment {
 
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
         imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
-        imageView.setBackgroundResource(R.drawable.header_found);
+        imageView.setBackgroundResource(R.drawable.header_down_load);
         AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
         anim.start();
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
@@ -137,6 +144,8 @@ public class FoundFragment extends Fragment {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
+//                    joinInWeb();
+//                    WebSocketService.webSocketConnect();
                     break;
                 case 1:
                     Log.e("lllll", bannerList.size() + "");
@@ -151,6 +160,49 @@ public class FoundFragment extends Fragment {
             }
         }
     };
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(WebSocketService.WEBSOCKET_ACTION);
+        getActivity().registerReceiver(imReceiver, filter);
+    }
+
+    private BroadcastReceiver imReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (WebSocketService.WEBSOCKET_ACTION.equals(action)) {
+                Bundle bundle = intent.getExtras();
+                if (bundle != null) {
+                    String msg = bundle.getString("message");
+                    if (!TextUtils.isEmpty(msg))
+                        getMessage(msg);
+                }
+
+            }
+        }
+    };
+
+    protected void getMessage(String msg) {
+//        messageTv.setText("");
+        Toast.makeText(getActivity(), msg, Toast.LENGTH_SHORT).show();
+    }
+
+    private void joinInWeb() {
+        SharedPreferences sharedPreferences_accesskey = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+        String AccessKey = sharedPreferences_accesskey.getString("AccessKey", "");
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("Protocol", "Logging");
+            jsonObject.put("UserId", useId);
+            jsonObject.put("AccessKey", AccessKey);
+            jsonObject.put("PwdModel", "3");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        WebSocketService.sendMsg(jsonObject.toString());
+    }
 
     /**
      * refresh
@@ -198,9 +250,22 @@ public class FoundFragment extends Fragment {
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
+            String chatroomId = recyclerDataList.get(postion).getUserId();
             Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
             intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
+            intent_video.putExtra("chatroomId", chatroomId);
             startActivity(intent_video);
+            SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor_chatroomId = sharedPreferences_chatroomId.edit();
+            editor_chatroomId.putString("chatroomId", chatroomId);
+            editor_chatroomId.commit();
+            websocketServiceIntent = new Intent(getActivity(), WebSocketService.class);
+            getActivity().startService(websocketServiceIntent);
+
+            WebSocketService.webSocketConnect();
+//            Message msg = new Message();
+//            msg.what = 0;
+//            handler.sendMessage(msg);
         }
     };
 
@@ -363,6 +428,7 @@ public class FoundFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+        getActivity().unregisterReceiver(imReceiver);
     }
 
     //获取视频用户信息
@@ -451,7 +517,7 @@ public class FoundFragment extends Fragment {
 //                                                                    "Type":"vod"	//live 直播 vod视频
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
-                                                                String UserId = jsonobject.getString("UserId");
+                                                                String UserId_video = jsonobject.getString("UserId");
                                                                 String NickName = jsonobject.getString("NickName");
                                                                 String IconUrl = jsonobject.getString("IconUrl");//用户头像
                                                                 String Exp = jsonobject.getString("Exp");//热度 心形后面的数字
@@ -461,7 +527,7 @@ public class FoundFragment extends Fragment {
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
                                                                 String Type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item(UserId, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
+                                                                live_item liveItem = new live_item(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
                                                                 recyclerDataList.add(liveItem);
                                                             }
 

@@ -165,43 +165,138 @@
     <com.biaoke.bklive.activity.room.GiftLayout
         android:id="@+id/gift_layout"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_centerVertical="true"
-        android:layout_marginBottom="5dp" />
+        android:layout_height="@dimen/y300"
+        android:layout_centerVertical="true" />
 
     <com.biaoke.bklive.activity.room.PeriscopeLayout
         android:id="@+id/periscope_layout"
         android:layout_width="@dimen/x160"
-        android:layout_height="@dimen/y200"
-        android:layout_above="@+id/bottom_bar"
+        android:layout_height="@dimen/y400"
+        android:layout_above="@+id/iv_livingroom_upvot"
         android:layout_alignParentEnd="true" />
 
-
-    <com.biaoke.bklive.rongcloud.widge.ChatListView
-        android:id="@+id/chat_listview"
-        android:layout_width="@dimen/x400"
+    <RelativeLayout
+        android:layout_width="@dimen/x450"
         android:layout_height="@dimen/y260"
-        android:layout_above="@+id/bottom_bar"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:transcriptMode="alwaysScroll" />
-
-    <fragment
-        android:id="@+id/bottom_bar"
-        android:name="com.biaoke.bklive.rongcloud.fragment.BottomPanelFragment"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        tools:layout="@layout/fragment_bottombar" />
+        android:layout_marginBottom="@dimen/y110"
+        >
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_recyclerview"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+    <!--礼物及分享-->
+    <RelativeLayout
+        android:id="@+id/BottomPanel_send"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y110"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true">
+
+        <TextView
+            android:id="@+id/tv_sendmessage"
+            android:layout_width="@dimen/x450"
+            android:layout_height="@dimen/y72"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x26"
+            android:layout_toLeftOf="@+id/iv_livingroom_gift"
+            android:background="@drawable/textviewstyle"
+            android:gravity="center_vertical"
+            android:text="向主播倾诉仰慕之情吧"
+            android:textColor="#8b8b8b"
+            android:textSize="@dimen/x24" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_gift"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/x30"
+            android:layout_toLeftOf="@+id/iv_livingroom_share"
+            android:background="@drawable/livingroom_gift" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/x30"
+            android:background="@drawable/livingroom_share" />
+    </RelativeLayout>
+    <!--//聊天输入-->
+    <LinearLayout
+        android:id="@+id/input_message_livingroom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y90"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/y10"
+        android:background="#e2e2e2"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_chatbarrage"
+                android:layout_width="@dimen/x90"
+                android:layout_height="@dimen/y66"
+                android:layout_marginEnd="@dimen/x10"
+                android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/livingroom_beauty_open" />
+
+            <ImageView
+                android:layout_width="@dimen/x56"
+                android:layout_height="@dimen/y56"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginTop="@dimen/y4"
+                android:background="@drawable/livingroom_chatbarrage_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/input_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/input_editor"
+                android:layout_width="@dimen/x500"
+                android:layout_height="@dimen/y80"
+                android:layout_centerInParent="true"
+                android:background="@drawable/livingroom_edittext"
+                android:gravity="center"
+                android:hint="说点什么吧"
+                android:maxLines="4"
+                android:textColor="#beb5dd"
+                android:textSize="@dimen/x32" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/input_send"
+            android:layout_width="@dimen/x82"
+            android:layout_height="@dimen/y70"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/input_send_button"
+            android:enabled="false"
+            android:gravity="center"
+            android:text="@string/rc_send"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x28" />
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/iv_livingroom_upvot"
         android:layout_width="@dimen/x120"
         android:layout_height="@dimen/y120"
-        android:layout_above="@+id/bottom_bar"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/y40"
+        android:layout_marginBottom="@dimen/y120"
         android:layout_marginEnd="@dimen/x20"
         android:background="@drawable/upvote_livingroom" />
 </RelativeLayout>

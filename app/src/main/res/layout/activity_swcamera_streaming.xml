@@ -178,15 +178,16 @@
             android:textSize="15dp" />
     </RelativeLayout>
 
-    <com.biaoke.bklive.rongcloud.widge.ChatListView
-        android:id="@+id/chat_listview"
-        android:layout_width="@dimen/x400"
-        android:layout_height="@dimen/y260"
-        android:layout_above="@+id/bottom_bar_living"
-        android:divider="@null"
-        android:listSelector="@android:color/transparent"
-        android:scrollbars="none"
-        android:transcriptMode="alwaysScroll" />
+    <!--<com.biaoke.bklive.rongcloud.widge.ChatListView-->
+        <!--android:id="@+id/chat_listview"-->
+        <!--android:layout_width="@dimen/x480"-->
+        <!--android:layout_height="@dimen/y280"-->
+        <!--android:divider="@null"-->
+        <!--android:listSelector="@android:color/transparent"-->
+        <!--android:scrollbars="none"-->
+        <!--android:transcriptMode="alwaysScroll"-->
+        <!--android:layout_above="@+id/bottom_bar_living"-->
+        <!--android:layout_toEndOf="@+id/liveDescription" />-->
 
     <ImageView
         android:id="@+id/living_livingroom_upvot"
@@ -198,11 +199,55 @@
         android:layout_marginEnd="@dimen/x20"
         android:background="@drawable/upvote_livingroom" />
 
-    <fragment
+    <!--<fragment-->
+        <!--android:id="@+id/bottom_bar_living"-->
+        <!--android:name="com.biaoke.bklive.rongcloud.fragment.BottomPanelFragmentLiving"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_alignParentBottom="true"-->
+        <!--tools:layout="@layout/fragment_bottombar_living" />-->
+    <RelativeLayout
         android:id="@+id/bottom_bar_living"
-        android:name="com.biaoke.bklive.rongcloud.fragment.BottomPanelFragmentLiving"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
-        tools:layout="@layout/fragment_bottombar_living" />
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <ImageView
+            android:id="@+id/iv_livingroom_comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x10"
+            android:background="@drawable/livingroom_comments" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_private_message"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="@dimen/x140"
+            android:background="@drawable/livingroom_private_message" />
+
+        <ImageView
+            android:id="@+id/living_livingroom_share"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/livingroom_share" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_pickup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/x140"
+            android:background="@drawable/livingroom_expand" />
+
+        <ImageView
+            android:id="@+id/iv_livingroom_music"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="@dimen/x10"
+            android:background="@drawable/livingroom_music" />
+
+    </RelativeLayout>
 </RelativeLayout>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@drawable/livingroom_edge_chat2"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <!--<com.pkmmte.view.CircularImageView-->
+        <!--android:id="@+id/iv_user_head_living"-->
+        <!--android:layout_width="@dimen/x80"-->
+        <!--android:layout_height="@dimen/y80"-->
+        <!--android:layout_centerInParent="true"-->
+        <!--android:scaleType="centerInside"-->
+        <!--android:src="@drawable/icon_start_live"-->
+        <!--app:border="true"-->
+        <!--app:border_color="#16f5f5f5"-->
+        <!--app:border_width="3dp"-->
+        <!--app:selector="true"-->
+        <!--app:selector_color="#4D000000"-->
+        <!--app:selector_stroke_color="#16f5f5f5"-->
+        <!--app:selector_stroke_width="3dp"-->
+        <!--app:shadow="false" />-->
+        <ImageView
+            android:id="@+id/iv_user_head_living"
+            android:layout_width="@dimen/x60"
+            android:layout_height="@dimen/y60"
+            android:layout_marginEnd="@dimen/x10"
+            android:layout_marginStart="@dimen/x10" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content">
+
+                    <ImageView
+                        android:id="@+id/level_image_color"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:background="@drawable/zhibojian_huang" />
+
+                    <TextView
+                        android:id="@+id/tv_level_living"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerInParent="true"
+                        android:text="lv.88"
+                        android:textColor="@color/white"
+                        android:textSize="@dimen/x10" />
+                </RelativeLayout>
+
+                <TextView
+                    android:id="@+id/tv_nickname_living"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
+                    android:text="动感愁人"
+                    android:textColor="@color/background_color"
+                    android:textSize="@dimen/x20" />
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_message_livingroom"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="主播哈哈哈哈"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+        </LinearLayout>
+    </LinearLayout>
+</RelativeLayout>
