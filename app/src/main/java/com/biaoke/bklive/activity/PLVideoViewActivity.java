@@ -23,6 +23,7 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.activity.room.GiftLayout;
@@ -179,8 +180,8 @@ public class PLVideoViewActivity extends BaseActivity {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
-                    LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, true);
-                    layoutManager_chatmessage.setAutoMeasureEnabled(true);
+                    LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, false);
+                    layoutManager_chatmessage.setAutoMeasureEnabled(false);
                     chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
                     livingroomChatListAdapter = new LivingroomChatListAdapter(PLVideoViewActivity.this, chatList);
                     livingroomChatListAdapter.bind(chatList);
@@ -221,6 +222,10 @@ public class PLVideoViewActivity extends BaseActivity {
                             try {
                                 JSONObject object_joinchat = new JSONObject(response);
                                 String joinchat = object_joinchat.getString("Msg");
+
+                                if (mNickName.isEmpty()) {
+                                    mNickName = "游客";
+                                }
                                 if (joinchat.equals("加入聊天室成功")) {
                                     //提示某某加入聊天室
                                     livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, "加入聊天室");
@@ -230,7 +235,7 @@ public class PLVideoViewActivity extends BaseActivity {
                                     chatList.add(livingroomChatListBean_chatmsg);
                                 }
                                 LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, true);
-                                layoutManager_chatmessage.setAutoMeasureEnabled(true);
+                                layoutManager_chatmessage.setAutoMeasureEnabled(false);
                                 chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
                                 livingroomChatSysAdapter = new LivingroomChatSysAdapter(PLVideoViewActivity.this, chatList);
                                 livingroomChatSysAdapter.bind(chatList);
@@ -245,15 +250,26 @@ public class PLVideoViewActivity extends BaseActivity {
 //            {"Protocol":"ChatRom","Cmd":"chat","ChatRomId":"10012","Cmd":"Msg","UserId":"1002","NickName":"","IconUrl":"","Level":"0","Msg":"消息内容"}
                 JSONObject object_chatMsg = new JSONObject(mmsg);
                 //处理接收到的聊天信息
+                String cmd = object_chatMsg.getString("Cmd");
                 String NickName = object_chatMsg.getString("NickName");
                 String IconUrl = object_chatMsg.getString("IconUrl");
                 String Level = object_chatMsg.getString("Level");
                 String Msg_chat = object_chatMsg.getString("Msg");
+                if (Msg_chat.equals("加入聊天室成功")) {
+                    //提示某某加入聊天室
+                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, "加入聊天室");
+                    chatList.add(livingroomChatListBean_chatmsg);
+                } else if (cmd.equals("sys")) {
+                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", "系统消息", Msg_chat);
+                    chatList.add(livingroomChatListBean_chatmsg);
+                } else if (!IconUrl.isEmpty()) {
                 livingroomChatListBean_chatmsg = new LivingroomChatListBean(IconUrl, Level, NickName, Msg_chat);
-                chatList.add(livingroomChatListBean_chatmsg);
+                    chatList.add(livingroomChatListBean_chatmsg);
+                }
                 Message msgg = new Message();
                 msgg.what = 0;
                 handler.sendMessage(msgg);
+
             } catch (JSONException e) {
                 e.printStackTrace();
             }
@@ -382,6 +398,7 @@ public class PLVideoViewActivity extends BaseActivity {
                 popupWindow_living_share.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.input_send:
+                Toast.makeText(this, "点击了发信息", Toast.LENGTH_SHORT).show();
                 chatRoomMessage();
                 inputEditor.getText().clear();
                 break;
@@ -390,13 +407,14 @@ public class PLVideoViewActivity extends BaseActivity {
 
     private void chatRoomMessage() {
         //            {"Protocol":"ChatRom","Cmd":"chat","ChatRomId":"10012","Cmd":"Msg","UserId":"1002","NickName":"","IconUrl":"","Level":"0","Msg":"消息内容"}
+//        {"Protocol":"ChatRom","Cmd":"chat","NickName":"","IconUrl":"","Level":"0","Msg":"消息内容"}
         JSONObject object_chatroomMsg = new JSONObject();
         String mMsg = inputEditor.getText().toString().trim();
         try {
             object_chatroomMsg.put("Protocol", "ChatRom");
             object_chatroomMsg.put("Cmd", "chat");
 //            object_chatroomMsg.put("ChatRomId", chatroomId);
-            object_chatroomMsg.put("UserId", "");
+//            object_chatroomMsg.put("UserId", "");
             object_chatroomMsg.put("NickName", mNickName);
             object_chatroomMsg.put("IconUrl", IconUrl);
             object_chatroomMsg.put("Level", Level);
@@ -405,7 +423,23 @@ public class PLVideoViewActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        WebSocketService.sendMsg(object_chatroomMsg.toString());
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(object_chatroomMsg.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
+
     }
 
     private void sharePopw() {

@@ -184,8 +184,8 @@
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_recyclerview"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
     </RelativeLayout>
     <!--礼物及分享-->
     <RelativeLayout
@@ -283,7 +283,6 @@
             android:layout_height="@dimen/y70"
             android:layout_gravity="center_vertical"
             android:background="@drawable/input_send_button"
-            android:enabled="false"
             android:gravity="center"
             android:text="@string/rc_send"
             android:textColor="#ffffff"

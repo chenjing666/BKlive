@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -178,39 +177,22 @@
             android:textSize="15dp" />
     </RelativeLayout>
 
-    <!--<com.biaoke.bklive.rongcloud.widge.ChatListView-->
-        <!--android:id="@+id/chat_listview"-->
-        <!--android:layout_width="@dimen/x480"-->
-        <!--android:layout_height="@dimen/y280"-->
-        <!--android:divider="@null"-->
-        <!--android:listSelector="@android:color/transparent"-->
-        <!--android:scrollbars="none"-->
-        <!--android:transcriptMode="alwaysScroll"-->
-        <!--android:layout_above="@+id/bottom_bar_living"-->
-        <!--android:layout_toEndOf="@+id/liveDescription" />-->
 
     <ImageView
         android:id="@+id/living_livingroom_upvot"
         android:layout_width="@dimen/x120"
         android:layout_height="@dimen/y120"
-        android:layout_above="@+id/bottom_bar_living"
+        android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_marginBottom="@dimen/y40"
+        android:layout_marginBottom="@dimen/y130"
         android:layout_marginEnd="@dimen/x20"
         android:background="@drawable/upvote_livingroom" />
 
-    <!--<fragment-->
-        <!--android:id="@+id/bottom_bar_living"-->
-        <!--android:name="com.biaoke.bklive.rongcloud.fragment.BottomPanelFragmentLiving"-->
-        <!--android:layout_width="match_parent"-->
-        <!--android:layout_height="wrap_content"-->
-        <!--android:layout_alignParentBottom="true"-->
-        <!--tools:layout="@layout/fragment_bottombar_living" />-->
     <RelativeLayout
         android:id="@+id/bottom_bar_living"
-        android:layout_alignParentBottom="true"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true">
 
         <ImageView
             android:id="@+id/iv_livingroom_comments"
@@ -250,4 +232,69 @@
             android:background="@drawable/livingroom_music" />
 
     </RelativeLayout>
+    <!--//聊天输入-->
+    <LinearLayout
+        android:id="@+id/input_message_liveroom"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y90"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginBottom="@dimen/y20"
+        android:background="#e2e2e2"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center">
+
+            <ImageView
+                android:id="@+id/iv_chatbarrage"
+                android:layout_width="@dimen/x90"
+                android:layout_height="@dimen/y66"
+                android:layout_marginEnd="@dimen/x10"
+                android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/livingroom_beauty_open" />
+
+            <ImageView
+                android:layout_width="@dimen/x56"
+                android:layout_height="@dimen/y56"
+                android:layout_marginStart="@dimen/x20"
+                android:layout_marginTop="@dimen/y4"
+                android:background="@drawable/livingroom_chatbarrage_switch" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/input_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/input_editor_live"
+                android:layout_width="@dimen/x500"
+                android:layout_height="@dimen/y80"
+                android:layout_centerInParent="true"
+                android:background="@drawable/livingroom_edittext"
+                android:gravity="center"
+                android:hint="说点什么吧"
+                android:maxLines="4"
+                android:textColor="#beb5dd"
+                android:textSize="@dimen/x32" />
+
+        </RelativeLayout>
+        <!--android:enabled="false"-->
+        <TextView
+            android:id="@+id/input_sendmsg"
+            android:layout_width="@dimen/x82"
+            android:layout_height="@dimen/y70"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/input_send_button"
+
+            android:gravity="center"
+            android:text="@string/rc_send"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x28" />
+    </LinearLayout>
 </RelativeLayout>

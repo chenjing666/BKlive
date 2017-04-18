@@ -150,6 +150,7 @@ public class MainActivity extends BaseActivity {
     private String mFans;
     private String mSignture;
     private String Msg;
+    private SharedPreferences sharedPreferences_user;
 
 
     @Override
@@ -163,7 +164,8 @@ public class MainActivity extends BaseActivity {
         }
 
 //        mTencent = Tencent.createInstance(APPID, MainActivity.this.getApplication());
-        SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
+        //首先获取用户ID，直播要取
+        sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         UserId = sharedPreferences_user.getString("userId", "");//如果取不到值就取后面的""
         Log.e(UserId + "主页面获取用户名:", UserId);
 //        String AccessKey=sharedPreferences_user.getString("AccessKey","");
@@ -209,11 +211,11 @@ public class MainActivity extends BaseActivity {
         });
         bottomBar.setSelectedState(0);
         init();//主页面
-        SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
-        editor_userinfo.putString("mNickName",mNickName);
-        editor_userinfo.putString("mLevel",mLevel);
-        editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
-        editor_userinfo.commit();
+//        SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
+//        editor_userinfo.putString("mNickName",mNickName);
+//        editor_userinfo.putString("mLevel",mLevel);
+//        editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
+//        editor_userinfo.commit();
 
     }
 
@@ -227,6 +229,14 @@ public class MainActivity extends BaseActivity {
                     break;
                 case 2:
                     Toast.makeText(MainActivity.this, Msg, Toast.LENGTH_SHORT).show();
+                    break;
+                case 3:
+
+                    SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
+                    editor_userinfo.putString("mNickName",mNickName);
+                    editor_userinfo.putString("mLevel",mLevel);
+                    editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
+                    editor_userinfo.commit();
                     break;
             }
         }
@@ -541,6 +551,7 @@ public class MainActivity extends BaseActivity {
         }
     };
 
+    //获取用户信息
     public void UserInfoHttp(String url, String path) {
         OkHttpUtils
                 .postString()
@@ -601,6 +612,9 @@ public class MainActivity extends BaseActivity {
                                                             mFollow = jsonobject.getString("关注" + "");
                                                             mFans = jsonobject.getString("粉丝" + "");
                                                             mSignture = jsonobject.getString("签名" + "");
+                                                            Message message_userinfo=new Message();
+                                                            message_userinfo.what=3;
+                                                            mHandler.sendMessage(message_userinfo);
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }

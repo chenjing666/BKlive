@@ -5,7 +5,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y100"
+        android:layout_height="@dimen/y80"
         android:background="@drawable/livingroom_edge_chat2"
         android:gravity="center_vertical"
         android:orientation="horizontal">
@@ -77,7 +77,8 @@
                 android:id="@+id/tv_message_livingroom"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="主播哈哈哈哈"
+                android:gravity="center_horizontal"
+                android:text="主播哈"
                 android:textColor="@color/white"
                 android:textSize="@dimen/x20" />
 

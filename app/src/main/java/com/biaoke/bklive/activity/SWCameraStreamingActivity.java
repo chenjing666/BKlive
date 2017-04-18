@@ -22,9 +22,11 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
@@ -75,6 +77,30 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     ImageView liveCancel;
     @BindView(R.id.liveDescription)
     RelativeLayout liveDescription;
+    @BindView(R.id.iv_chatbarrage)
+    ImageView ivChatbarrage;
+    @BindView(R.id.input_editor_live)
+    EditText inputEditorLive;
+    @BindView(R.id.input_bar)
+    RelativeLayout inputBar;
+    @BindView(R.id.input_sendmsg)
+    TextView inputSendmsg;
+    @BindView(R.id.input_message_liveroom)
+    LinearLayout inputMessageLiveroom;
+    @BindView(R.id.cameraPreview_surfaceView)
+    GLSurfaceView cameraPreviewSurfaceView;
+    @BindView(R.id.cameraPreview_afl)
+    AspectFrameLayout cameraPreviewAfl;
+    @BindView(R.id.ll_live_top)
+    RelativeLayout llLiveTop;
+    @BindView(R.id.ll_live_title)
+    LinearLayout llLiveTitle;
+    @BindView(R.id.ll_live_share)
+    LinearLayout llLiveShare;
+    @BindView(R.id.living_livingroom_upvot)
+    ImageView livingLivingroomUpvot;
+    @BindView(R.id.bottom_bar_living)
+    RelativeLayout bottomBarLiving;
 
     private MediaStreamingManager mMediaStreamingManager;
     private String liveUrl = null;
@@ -95,6 +121,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     ImageView ivLivingroomPickup;
     @BindView(R.id.iv_livingroom_music)
     ImageView ivLivingroomMusic;
+
     @SuppressLint("InlinedApi")
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,7 +131,15 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, WindowManager.LayoutParams.FLAG_FULLSCREEN);
         setContentView(R.layout.activity_swcamera_streaming);
         ButterKnife.bind(this);
+//        TextView textView = (TextView) findViewById(R.id.input_sendmsg);
+//        textView.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Toast.makeText(SWCameraStreamingActivity.this, "点击了发信息", Toast.LENGTH_SHORT).show();
+//            }
+//        });
         liveDescription.setVisibility(View.VISIBLE);
+        bottomBarLiving.setVisibility(View.GONE);
         initLive();
 
     }
@@ -118,6 +153,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                         mMediaStreamingManager.setStreamingProfile(mProfile);
                         mMediaStreamingManager.startStreaming();
                         Toast.makeText(SWCameraStreamingActivity.this, "直播啦！", Toast.LENGTH_SHORT).show();
+                        bottomBarLiving.setVisibility(View.VISIBLE);
                     } catch (URISyntaxException e) {
                         e.printStackTrace();
                     }
@@ -242,23 +278,14 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         super.onBackPressed();
     }
 
-    //    @OnClick({R.id.btn_start_live, R.id.live_cancel})
-//    public void onClick(View view) {
-//        switch (view.getId()) {
-//            case R.id.btn_start_live:
-////              获取直播推流地址
-//                okhttputils();
-////              隐藏直播描述，进入直播间
-//                liveDescription.setVisibility(View.INVISIBLE);
-//                break;
-//            case R.id.live_cancel:
-//                finish();
-//                break;
-//        }
-//    }
-    @OnClick({R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
+    @OnClick({R.id.iv_chatbarrage, R.id.input_sendmsg, R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.iv_chatbarrage:
+                break;
+            case R.id.input_sendmsg:
+                Toast.makeText(this, "点击了发信息", Toast.LENGTH_SHORT).show();
+                break;
             case R.id.btn_start_live:
 //              获取直播推流地址
                 okhttputils();
@@ -269,8 +296,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 finish();
                 break;
             case R.id.iv_livingroom_comments:
-//                ivLivingroomComments.setVisibility(View.GONE);
-//                inputPanel.setVisibility(View.VISIBLE);
+                bottomBarLiving.setVisibility(View.GONE);
+                inputMessageLiveroom.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_livingroom_private_message:
                 messagePop();
@@ -473,4 +500,5 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 });
 
     }
+
 }
