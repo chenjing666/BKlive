@@ -2,10 +2,15 @@ package com.biaoke.bklive.activity;
 
 import android.content.Context;
 import android.content.SharedPreferences;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.v4.view.PagerAdapter;
+import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -115,9 +120,10 @@ public class PLVideoViewActivity extends BaseActivity {
     //系统提示
     private LivingroomChatSysAdapter livingroomChatSysAdapter;
     private String mNickName;
-    private PopupWindow popupWindow_living_share;
+    private PopupWindow popupWindow_living_share, popupWindow_living_gift;
     private String IconUrl;
-    private String Level;
+    private String Level;//view数组
+    private List<View> viewList;
 
 
     @Override
@@ -392,6 +398,8 @@ public class PLVideoViewActivity extends BaseActivity {
                 inputMessageLivingroom.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_livingroom_gift:
+                giftPop();
+                popupWindow_living_gift.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.iv_livingroom_share:
                 sharePopw();
@@ -402,6 +410,127 @@ public class PLVideoViewActivity extends BaseActivity {
                 chatRoomMessage();
                 inputEditor.getText().clear();
                 break;
+        }
+    }
+
+    //礼物popwindow
+    private void giftPop() {
+        View gift_view1, gift_view2, gift_view3;
+        LayoutInflater mlayout = getLayoutInflater();
+        final View livinggiftView = LayoutInflater.from(this).inflate(R.layout.gift_livingroom, null);
+        popupWindow_living_gift = new PopupWindow(livinggiftView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        final Button[] mPreSelectedBt = {null};
+        final LinearLayout mNumLayout = (LinearLayout) livinggiftView.findViewById(R.id.ll_page_num);
+        ViewPager viewPager_gift = (ViewPager) livinggiftView.findViewById(R.id.viewpager_gift);
+        ImageView imageView_reCharge = (ImageView) livinggiftView.findViewById(R.id.diamong_recharge_gift);
+        Button button_sendGift = (Button) livinggiftView.findViewById(R.id.gift_send);
+        viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
+        gift_view1 = mlayout.inflate(R.layout.gift_view1, null);
+        gift_view2 = mlayout.inflate(R.layout.gift_view2, null);
+        gift_view3 = mlayout.inflate(R.layout.gift_view3, null);
+        viewList.add(gift_view1);
+        viewList.add(gift_view2);
+        viewList.add(gift_view3);
+        GiftPagerAdapter giftadapter = new GiftPagerAdapter();
+        viewPager_gift.setAdapter(giftadapter);
+        final ImageView imageView_gift_bbt = (ImageView) gift_view1.findViewById(R.id.gift_png);
+        imageView_gift_bbt.setBackgroundResource(R.drawable.gift_bangbangtang);
+        final AnimationDrawable anim_bbt = (AnimationDrawable) imageView_gift_bbt.getBackground();
+//        anim_bbt.start();
+        final ImageView imageView_gift_livingroom_bbt = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_bbt);
+        final LinearLayout linearLayout_bbt = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_bbt);
+        final TextView textView_bbt = (TextView) gift_view1.findViewById(R.id.gift_bg_exp);
+        imageView_gift_livingroom_bbt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {//目前只能点击一次，还不知道why
+                Toast.makeText(PLVideoViewActivity.this, "变色啊", Toast.LENGTH_SHORT).show();
+                if (!imageView_gift_bbt.isSelected()) {
+                    linearLayout_bbt.setSelected(true);
+                    textView_bbt.setSelected(true);
+                    textView_bbt.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_bbt.setVisibility(View.GONE);
+                    imageView_gift_bbt.setVisibility(View.VISIBLE);
+                    anim_bbt.start();
+//                    if (linearLayout_bbt.isSelected())
+                } else {
+                    linearLayout_bbt.setSelected(false);
+                    textView_bbt.setSelected(false);
+                    textView_bbt.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_bbt.setVisibility(View.VISIBLE);
+                    imageView_gift_bbt.setVisibility(View.GONE);
+                    anim_bbt.stop();
+                }
+            }
+        });
+
+        //圆点指示器
+        Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.liwu_dian2);
+        for (int i = 0; i < viewList.size(); i++) {
+            Button bt = new Button(this);
+            bt.setLayoutParams(new ViewGroup.LayoutParams(bitmap.getWidth(), bitmap.getHeight()));
+            bt.setBackgroundResource(R.drawable.liwu_dian1);
+            mNumLayout.addView(bt);
+        }
+
+        //滑动监听
+        viewPager_gift.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+            @Override
+            public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+                if (mPreSelectedBt[0] != null) {
+                    mPreSelectedBt[0].setBackgroundResource(R.drawable.liwu_dian1);
+                }
+
+                Button currentBt = (Button) mNumLayout.getChildAt(position);
+                currentBt.setBackgroundResource(R.drawable.liwu_dian2);
+                mPreSelectedBt[0] = currentBt;
+            }
+
+            @Override
+            public void onPageSelected(int position) {
+
+            }
+
+            @Override
+            public void onPageScrollStateChanged(int state) {
+
+            }
+        });
+
+        popupWindow_living_gift.setTouchable(true);
+        popupWindow_living_gift.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
+        popupWindow_living_gift.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
+    }
+
+    //礼物滑动适配
+    private class GiftPagerAdapter extends PagerAdapter {
+
+        @Override
+        public int getCount() {
+            return viewList.size();
+        }
+
+        @Override
+        public Object instantiateItem(View container, int position) {
+            Log.i("INFO", "instantiate item:" + position);
+            ((ViewPager) container).addView(viewList.get(position), 0);
+            return viewList.get(position);
+        }
+
+        @Override
+        public void destroyItem(View container, int position, Object object) {
+            Log.i("INFO", "destroy item:" + position);
+            ((ViewPager) container).removeView(viewList.get(position));
+        }
+
+        @Override
+        public boolean isViewFromObject(View arg0, Object arg1) {
+            return arg0 == arg1;
         }
     }
 
@@ -443,9 +572,9 @@ public class PLVideoViewActivity extends BaseActivity {
     }
 
     private void sharePopw() {
-        final View livingsgareView = LayoutInflater.from(this).inflate(R.layout.share_livingroom, null);
-        popupWindow_living_share = new PopupWindow(livingsgareView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        Button button_cancel = (Button) livingsgareView.findViewById(R.id.btn_livingshare_cancel);
+        final View livingshareView = LayoutInflater.from(this).inflate(R.layout.share_livingroom, null);
+        popupWindow_living_share = new PopupWindow(livingshareView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        Button button_cancel = (Button) livingshareView.findViewById(R.id.btn_livingshare_cancel);
         button_cancel.setOnClickListener(shareListen);
         popupWindow_living_share.setTouchable(true);
         popupWindow_living_share.setTouchInterceptor(new View.OnTouchListener() {
