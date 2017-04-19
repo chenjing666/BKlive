@@ -433,25 +433,24 @@ public class PLVideoViewActivity extends BaseActivity {
         viewList.add(gift_view3);
         GiftPagerAdapter giftadapter = new GiftPagerAdapter();
         viewPager_gift.setAdapter(giftadapter);
-        final ImageView imageView_gift_bbt = (ImageView) gift_view1.findViewById(R.id.gift_png);
+        //棒棒糖开始
+        final ImageView imageView_gift_bbt = (ImageView) gift_view1.findViewById(R.id.gift_png_bbt);
         imageView_gift_bbt.setBackgroundResource(R.drawable.gift_bangbangtang);
         final AnimationDrawable anim_bbt = (AnimationDrawable) imageView_gift_bbt.getBackground();
-//        anim_bbt.start();
         final ImageView imageView_gift_livingroom_bbt = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_bbt);
         final LinearLayout linearLayout_bbt = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_bbt);
         final TextView textView_bbt = (TextView) gift_view1.findViewById(R.id.gift_bg_exp);
-        imageView_gift_livingroom_bbt.setOnClickListener(new View.OnClickListener() {
+        linearLayout_bbt.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {//目前只能点击一次，还不知道why
-                Toast.makeText(PLVideoViewActivity.this, "变色啊", Toast.LENGTH_SHORT).show();
-                if (!imageView_gift_bbt.isSelected()) {
+            public void onClick(View v) {
+//                Toast.makeText(PLVideoViewActivity.this, "变色啊", Toast.LENGTH_SHORT).show();
+                if (!linearLayout_bbt.isSelected()) {
                     linearLayout_bbt.setSelected(true);
                     textView_bbt.setSelected(true);
                     textView_bbt.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_bbt.setVisibility(View.GONE);
                     imageView_gift_bbt.setVisibility(View.VISIBLE);
                     anim_bbt.start();
-//                    if (linearLayout_bbt.isSelected())
                 } else {
                     linearLayout_bbt.setSelected(false);
                     textView_bbt.setSelected(false);
@@ -462,6 +461,35 @@ public class PLVideoViewActivity extends BaseActivity {
                 }
             }
         });
+        //棒棒糖结束
+        //蓝瘦香菇开始
+        final ImageView imageView_gift_lsxg = (ImageView) gift_view1.findViewById(R.id.gift_png_lsxg);
+        imageView_gift_lsxg.setBackgroundResource(R.drawable.gift_lanshouxianggu);
+        final AnimationDrawable anim_lsxg = (AnimationDrawable) imageView_gift_lsxg.getBackground();
+        final ImageView imageView_gift_livingroom_lsxg = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_lsxg);
+        final LinearLayout linearLayout_lsxg = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_lsxg);
+        final TextView textView_lsxg = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_lsxg);
+        linearLayout_lsxg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_lsxg.isSelected()) {
+                    linearLayout_lsxg.setSelected(true);
+                    textView_lsxg.setSelected(true);
+                    textView_lsxg.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_lsxg.setVisibility(View.GONE);
+                    imageView_gift_lsxg.setVisibility(View.VISIBLE);
+                    anim_lsxg.start();
+                } else {
+                    linearLayout_lsxg.setSelected(false);
+                    textView_lsxg.setSelected(false);
+                    textView_lsxg.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_lsxg.setVisibility(View.VISIBLE);
+                    imageView_gift_lsxg.setVisibility(View.GONE);
+                    anim_lsxg.stop();
+                }
+            }
+        });//蓝瘦香菇结束
+
 
         //圆点指示器
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.liwu_dian2);
