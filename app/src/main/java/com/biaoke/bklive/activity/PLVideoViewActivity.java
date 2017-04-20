@@ -43,6 +43,7 @@ import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
+import com.biaoke.bklive.utils.GlideUtis;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
@@ -106,6 +107,9 @@ public class PLVideoViewActivity extends BaseActivity {
     TextView onlinePeople;
     @BindView(R.id.btn_follow)
     Button btnFollow;
+    @BindView(R.id.livingroom_user_image)
+    ImageView livingroomUserImage;
+    private GlideUtis glideUtis;
     private PLVideoView mVideoView;
     private String path2;
     private VideoHeadImgAdapter videoHeadImgAdapter;
@@ -179,6 +183,8 @@ public class PLVideoViewActivity extends BaseActivity {
                 return false;
             }
         });
+        glideUtis = new GlideUtis(this);
+        glideUtis.glideCircle(IconUrl, livingroomUserImage, true);
         myNickname.setText(mNickName);
         tvCharmLivingShow.setText(Charm);
         tvBkId.setText(userId);

@@ -51,6 +51,7 @@
             android:textSize="@dimen/x34" />
 
         <ImageView
+            android:id="@+id/edit_user_header"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"

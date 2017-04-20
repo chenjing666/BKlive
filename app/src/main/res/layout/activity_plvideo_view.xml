@@ -42,6 +42,7 @@
                     android:gravity="center">
 
                     <ImageView
+                        android:id="@+id/livingroom_user_image"
                         android:layout_width="@dimen/y60"
                         android:layout_height="@dimen/y60"
                         android:scaleType="centerCrop"

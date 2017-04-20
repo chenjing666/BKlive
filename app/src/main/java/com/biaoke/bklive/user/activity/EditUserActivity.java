@@ -1,13 +1,19 @@
 package com.biaoke.bklive.user.activity;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.os.Handler;
 import android.os.Message;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -24,12 +30,20 @@ import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
+import com.biaoke.bklive.common.HeaderImageUtils;
+import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.eventbus.Event_mywork;
 import com.biaoke.bklive.user.eventbus.Event_nickname;
 import com.biaoke.bklive.user.eventbus.Event_signture;
 import com.lljjcoder.citypickerview.widget.CityPicker;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.File;
 import java.util.Calendar;
 
 import butterknife.BindView;
@@ -38,6 +52,8 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 
 public class EditUserActivity extends BaseActivity {
@@ -80,6 +96,31 @@ public class EditUserActivity extends BaseActivity {
     TextView btnHome;
     @BindView(R.id.btn_work)
     TextView btnWork;
+    @BindView(R.id.edit_user_header)
+    ImageView editUserHeader;
+
+    protected static final int CHOOSE_PICTURE = 0;
+    protected static final int TAKE_PICTURE = 1;
+    private static final int CROP_SMALL_PICTURE = 2;
+    protected static Uri tempUri;
+    private String userId;
+    private String mNickName;
+    private String mLevel;
+    private String mExperience;
+    private String mCharm;
+    private String mDiamond;
+    private String mLiveNum;
+    private String mVideoNum;
+    private String mHeadimageUrl;
+    private String mSex;
+    private String mAge;
+    private String mEmotion;
+    private String mHometown;
+    private String mWork;
+    private String mFollow;
+    private String mFans;
+    private String mSignture;
+    private SharedPreferences sharedPreferences_user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,9 +128,54 @@ public class EditUserActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_user);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
-
+        //获取本地保存的用户信息
+        getUserInfo();
     }
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        //设置用户信息
+        setUserInfo();
+    }
+
+    //获取用户信息
+    private void getUserInfo() {
+        sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID
+        userId = sharedPreferences_user.getString("userId", "");
+        mNickName = sharedPreferences_user.getString("mNickName", "");
+        mHeadimageUrl = sharedPreferences_user.getString("mHeadimageUrl", "");
+        mLevel = sharedPreferences_user.getString("mLevel", "");
+        mCharm = sharedPreferences_user.getString("mCharm", "");
+        mExperience = sharedPreferences_user.getString("mExperience", "");
+        mDiamond = sharedPreferences_user.getString("mDiamond", "");
+        mLiveNum = sharedPreferences_user.getString("mLiveNum", "");
+        mVideoNum = sharedPreferences_user.getString("mVideoNum", "");
+        mSex = sharedPreferences_user.getString("mSex", "");
+        mAge = sharedPreferences_user.getString("mAge", "");
+        mEmotion = sharedPreferences_user.getString("mEmotion", "");
+        mHometown = sharedPreferences_user.getString("mHometown", "");
+        mWork = sharedPreferences_user.getString("mWork", "");
+        mFollow = sharedPreferences_user.getString("mFollow", "");
+        mFans = sharedPreferences_user.getString("mFans", "");
+        mSignture = sharedPreferences_user.getString("mSignture", "");
+    }
+
+    //设置用户信息
+    private void setUserInfo() {
+        tvNickName.setText(mNickName);
+        editBkid.setText(userId);
+        tvSex.setText(mSex);
+        if (mSex.equals("男")) {
+            ivSex.setImageResource(R.drawable.man);
+        } else {
+            ivSex.setImageResource(R.drawable.female);
+        }
+        mySignture.setText(mSignture);
+        selectemotion.setText(mEmotion);
+        btnHome.setText(mHometown);
+        btnWork.setText(mWork);
+    }
     @Override
     protected String getPowerBarColors() {
         return AppConsts.POWER_BAR_BACKGROUND;
@@ -184,6 +270,8 @@ public class EditUserActivity extends BaseActivity {
             @Override
             public void onSelected(String... citySelected) {
                 btnHome.setText(citySelected[0] + citySelected[1]);
+                //家乡上传服务器
+                sendHometown(citySelected[0] + citySelected[1]);
             }
 //            tvResult.setText("选择结果：\n省：" + citySelected[0] + "\n市：" + citySelected[1] + "\n区："
 //                    + citySelected[2] + "\n邮编：" + citySelected[3]);
@@ -193,6 +281,72 @@ public class EditUserActivity extends BaseActivity {
                 Toast.makeText(EditUserActivity.this, "已取消", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    private void sendHometown(String home) {
+        JSONObject jsonObject_sendNickname = new JSONObject();
+        try {
+            jsonObject_sendNickname.put("Protocol", "UserInfo");
+            jsonObject_sendNickname.put("Cmd", "Set");
+            jsonObject_sendNickname.put("UserId", userId);
+            jsonObject_sendNickname.put("Name", "家乡");
+            jsonObject_sendNickname.put("Data", home);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("修改昵称", jsonObject_sendNickname.toString());
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_sendNickname.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_nickname = new JSONObject(response);
+                                                            String msg = object_nickname.getString("Msg");
+//                                                            Toast.makeText(NicknameActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
     }
 
     private void headPopupWindow(View v) {
@@ -228,32 +382,98 @@ public class EditUserActivity extends BaseActivity {
     }
 
     private void takePhoto() {
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        startActivityForResult(intent, 100);
+        Intent openCameraIntent = new Intent(
+                MediaStore.ACTION_IMAGE_CAPTURE);
+        tempUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.jpg"));
+        // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
+        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+        startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
     ;
 
     private void selectPhoto() {
-        final Intent intent = getPhotoPickIntent();
-        startActivityForResult(intent, 200);
+        Intent openAlbumIntent = new Intent(Intent.ACTION_GET_CONTENT);
+        openAlbumIntent.setType("image/*");
+        startActivityForResult(openAlbumIntent, CHOOSE_PICTURE);
     }
 
-    public static Intent getPhotoPickIntent() {
-        Intent intent = new Intent(Intent.ACTION_GET_CONTENT, null);
-        intent.setType("image/*");
-        intent.putExtra("crop", "true");
-        // 设置裁剪功能
-        intent.putExtra("aspectX", 1);
-        // 宽高比例
-        intent.putExtra("aspectY", 1);
-        intent.putExtra("outputX", 80);
-        // 宽高值
-        intent.putExtra("outputY", 80);
-        intent.putExtra("return-data", true);
-        // 返回裁剪结果
-        return intent;
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (resultCode == RESULT_OK) { // 如果返回码是可以用的
+            switch (requestCode) {
+                case TAKE_PICTURE:
+                    startPhotoZoom(tempUri); // 开始对图片进行裁剪处理
+                    break;
+                case CHOOSE_PICTURE:
+                    startPhotoZoom(data.getData()); // 开始对图片进行裁剪处理
+                    break;
+                case CROP_SMALL_PICTURE:
+                    if (data != null) {
+                        setImageToView(data); // 让刚才选择裁剪得到的图片显示在界面上
+                    }
+                    break;
+            }
+        }
     }
+
+    /**
+     * 裁剪图片方法实现
+     *
+     * @param uri
+     */
+    protected void startPhotoZoom(Uri uri) {
+        if (uri == null) {
+            Log.i("tag", "The uri is not exist.");
+        }
+        tempUri = uri;
+        Intent intent = new Intent("com.android.camera.action.CROP");
+        intent.setDataAndType(uri, "image/*");
+        // 设置裁剪
+        intent.putExtra("crop", "true");
+        // aspectX aspectY 是宽高的比例
+        intent.putExtra("aspectX", 1);
+        intent.putExtra("aspectY", 1);
+        // outputX outputY 是裁剪图片宽高
+        intent.putExtra("outputX", 150);
+        intent.putExtra("outputY", 150);
+        intent.putExtra("return-data", true);
+        startActivityForResult(intent, CROP_SMALL_PICTURE);
+    }
+
+    /**
+     * 保存裁剪之后的图片数据
+     *
+     * @param
+     * @param data
+     */
+    protected void setImageToView(Intent data) {
+        Bundle extras = data.getExtras();
+        if (extras != null) {
+            Bitmap photo = extras.getParcelable("data");
+            photo = HeaderImageUtils.toRoundBitmap(photo, tempUri); // 这个时候的图片已经被处理成圆形的了
+            editUserHeader.setImageBitmap(photo);
+            uploadPic(photo);
+        }
+    }
+
+    private void uploadPic(Bitmap bitmap) {
+        // 上传至服务器
+        // ... 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
+        // 注意这里得到的图片已经是圆形图片了
+        // bitmap是没有做个圆形处理的，但已经被裁剪了
+
+        String imagePath = HeaderImageUtils.savePhoto(bitmap, Environment
+                .getExternalStorageDirectory().getAbsolutePath(), String
+                .valueOf(System.currentTimeMillis()));
+        Log.e("imagePath", imagePath + "");
+        if (imagePath != null) {
+            // 拿着imagePath上传了
+
+        }
+    }
+
 
     private void sexPop() {
         final View sex_View = LayoutInflater.from(this).inflate(R.layout.sex_select, null);
@@ -276,11 +496,13 @@ public class EditUserActivity extends BaseActivity {
                 case R.id.rl_man:
                     ivSex.setImageResource(R.drawable.man);
                     tvSex.setText("男");
+                    sendSex("男");
                     sexPopw.dismiss();
                     break;
                 case R.id.rl_female:
                     ivSex.setImageResource(R.drawable.female);
                     tvSex.setText("女");
+                    sendSex("女");
                     sexPopw.dismiss();
                     break;
                 case R.id.btn_cancel:
@@ -289,6 +511,71 @@ public class EditUserActivity extends BaseActivity {
             }
         }
     };
+
+    private void sendSex(String sex) {
+        JSONObject jsonObject_sendNickname = new JSONObject();
+        try {
+            jsonObject_sendNickname.put("Protocol", "UserInfo");
+            jsonObject_sendNickname.put("Cmd", "Set");
+            jsonObject_sendNickname.put("UserId", userId);
+            jsonObject_sendNickname.put("Name", "性别");
+            jsonObject_sendNickname.put("Data", sex);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_sendNickname.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_nickname = new JSONObject(response);
+                                                            String msg = object_nickname.getString("Msg");
+//                                                            Toast.makeText(NicknameActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
 
 
     @Subscribe(threadMode = ThreadMode.MainThread)
@@ -340,18 +627,22 @@ public class EditUserActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.secret:
                     selectemotion.setText("保密");
+                    sendEmotion("保密");
                     emotionPopw.dismiss();
                     break;
                 case R.id.single:
                     selectemotion.setText("单身");
+                    sendEmotion("单身");
                     emotionPopw.dismiss();
                     break;
                 case R.id.loving:
                     selectemotion.setText("恋爱中");
+                    sendEmotion("恋爱中");
                     emotionPopw.dismiss();
                     break;
                 case R.id.married:
                     selectemotion.setText("已婚");
+                    sendEmotion("已婚");
                     emotionPopw.dismiss();
                     break;
                 case R.id.canael:
@@ -360,6 +651,71 @@ public class EditUserActivity extends BaseActivity {
             }
         }
     };
+
+    private void sendEmotion(String emotion) {
+        JSONObject jsonObject_sendNickname = new JSONObject();
+        try {
+            jsonObject_sendNickname.put("Protocol", "UserInfo");
+            jsonObject_sendNickname.put("Cmd", "Set");
+            jsonObject_sendNickname.put("UserId", userId);
+            jsonObject_sendNickname.put("Name", "情感");
+            jsonObject_sendNickname.put("Data", emotion);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_sendNickname.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_nickname = new JSONObject(response);
+                                                            String msg = object_nickname.getString("Msg");
+//                                                            Toast.makeText(NicknameActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
 
     @Override
     protected void onDestroy() {
