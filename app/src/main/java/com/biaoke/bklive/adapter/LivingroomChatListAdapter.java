@@ -47,7 +47,12 @@ public class LivingroomChatListAdapter extends RecyclerView.Adapter<LivingroomCh
 
     @Override
     public void onBindViewHolder(ChatListViewHolder holder, int position) {
-        glideUtis.glideCircle(mList.get(position).getImageUrl(), holder.ivUserHeadLiving, true);
+        if (mList.get(position).getImageUrl().isEmpty()) {
+            //头像地址为空，设置默认头像
+            glideUtis.glideCircle("http://server-test.bk5977.com:8800/BK/icon.png", holder.ivUserHeadLiving, true);
+        } else {
+            glideUtis.glideCircle(mList.get(position).getImageUrl(), holder.ivUserHeadLiving, true);
+        }
         holder.tvLevelLiving.setText("lv." + mList.get(position).getLevel());
         //根据用户等级设置等级背景颜色
         if (mList.get(position).getLevel().isEmpty()) {

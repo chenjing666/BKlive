@@ -40,6 +40,7 @@ import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.HeadBean;
 import com.biaoke.bklive.bean.LivingroomChatListBean;
 import com.biaoke.bklive.eventbus.Event_chatroom;
+import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.websocket.WebSocketService;
@@ -48,6 +49,7 @@ import com.pili.pldroid.player.widget.PLVideoView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -98,10 +100,13 @@ public class PLVideoViewActivity extends BaseActivity {
     LinearLayout inputMessageLivingroom;
     @BindView(R.id.iv_livingroom_upvot)
     ImageView ivLivingroomUpvot;
-    //    @BindView(R.id.bottom_bar)
-//    BottomPanelFragment bottomBar;
+    @BindView(R.id.myNickname)
+    TextView myNickname;
+    @BindView(R.id.online_people)
+    TextView onlinePeople;
+    @BindView(R.id.btn_follow)
+    Button btnFollow;
     private PLVideoView mVideoView;
-    //    private List<live_item> recyclerDataList = new ArrayList<>();
     private String path2;
     private VideoHeadImgAdapter videoHeadImgAdapter;
     private List<HeadBean> list = new ArrayList<HeadBean>();
@@ -112,7 +117,6 @@ public class PLVideoViewActivity extends BaseActivity {
     @BindView(R.id.gift_layout)
     GiftLayout giftLayout;
     //websocket
-//    private BottomPanelFragment bottomBar;
     private String ChatroomId;
     private List<LivingroomChatListBean> chatList = new ArrayList<>();
     private LivingroomChatListAdapter livingroomChatListAdapter;
@@ -122,8 +126,13 @@ public class PLVideoViewActivity extends BaseActivity {
     private String mNickName;
     private PopupWindow popupWindow_living_share, popupWindow_living_gift;
     private String IconUrl;
-    private String Level;//view数组
+    private String Level;
+    //view数组
     private List<View> viewList;
+    private String userId;
+    private String accessKey;
+    private String msg_addFollow;
+    private String Charm;
 
 
     @Override
@@ -136,10 +145,12 @@ public class PLVideoViewActivity extends BaseActivity {
         EventBus.getDefault().register(this);//注册
         ChatroomId = getIntent().getStringExtra("chatroomId");
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
-//        String UserId = sharedPreferences_user.getString("userId", "");
+        userId = sharedPreferences_user.getString("userId", "");
+        accessKey = sharedPreferences_user.getString("AccessKey", "");
         mNickName = sharedPreferences_user.getString("mNickName", "");
         IconUrl = sharedPreferences_user.getString("mHeadimageUrl", "");
         Level = sharedPreferences_user.getString("mLevel", "");
+        Charm = sharedPreferences_user.getString("mCharm", "");
         path2 = getIntent().getStringExtra("path");
         mVideoView = (PLVideoView) findViewById(R.id.PLVideoView);
         mVideoView.setKeepScreenOn(true);//设置屏幕常亮
@@ -168,16 +179,24 @@ public class PLVideoViewActivity extends BaseActivity {
                 return false;
             }
         });
+        myNickname.setText(mNickName);
+        tvCharmLivingShow.setText(Charm);
+        tvBkId.setText(userId);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
+                    joinInWeb();//获取长连接
+                    Thread.sleep(100);
+                    queryFollow();//查询是否关注
+                    joinChatRoom();//加入聊天室
+                    Thread.sleep(1000);
+                    GetChatRomCount();//读取聊天室人数
+                    GetChatRomList();//读取聊天室用户列表
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
-                joinInWeb();//获取长连接
-                joinChatRoom();//加入聊天室
             }
         }).start();
     }
@@ -194,14 +213,186 @@ public class PLVideoViewActivity extends BaseActivity {
                     chatRecyclerview.setAdapter(livingroomChatListAdapter);
                     break;
                 case 1:
-
+                    Toast.makeText(PLVideoViewActivity.this, "AK认证失败，请重新登录", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
+                    btnFollow.setVisibility(View.GONE);
+                    break;
+                case 3:
+                    Toast.makeText(PLVideoViewActivity.this, msg_addFollow, Toast.LENGTH_SHORT).show();
+                    btnFollow.setVisibility(View.GONE);
                     break;
             }
         }
     };
 
+    //查询是否关注
+//{"Protocol":"Fans","Cmd":"IsFans","MastId":"1001","SlaveId":"1002","AccessKey":"bk5977"}
+    private void queryFollow() {
+        JSONObject jsonobject_follow = new JSONObject();
+        try {
+            jsonobject_follow.put("Protocol", "Fans");
+            jsonobject_follow.put("Cmd", "IsFans");
+            jsonobject_follow.put("MastId", ChatroomId);
+            jsonobject_follow.put("SlaveId", userId);
+            jsonobject_follow.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonobject_follow.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.FOLLOW)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_follow = new JSONObject(response);
+                                                            String result_follow = object_follow.getString("Result");
+                                                            if (result_follow.equals("0")) {
+                                                                String msg_follow = object_follow.getString("Msg");
+                                                                Message message_follow = new Message();
+                                                                message_follow.what = 1;
+                                                                handler.sendMessage(message_follow);
+                                                            } else if (result_follow.equals("1")) {
+                                                                boolean isFollow = object_follow.getBoolean("Data");
+                                                                if (isFollow) {
+                                                                    Message message_isfollow = new Message();
+                                                                    message_isfollow.what = 2;
+                                                                    handler.sendMessage(message_isfollow);
+                                                                }
+//                                                                else {
+//                                                                    Message message_isfollow = new Message();
+//                                                                    message_isfollow.what = 3;
+//                                                                    handler.sendMessage(message_isfollow);
+//                                                                }
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
+
+    //关注添加关注
+//    {"Protocol":"Fans","Cmd":"Add","MastId":"1001","SlaveId":"1002","AccessKey":"bk5977"}
+    private void addFollow() {
+        JSONObject jsonobject_addfollow = new JSONObject();
+        try {
+            jsonobject_addfollow.put("Protocol", "Fans");
+            jsonobject_addfollow.put("Cmd", "Add");
+            jsonobject_addfollow.put("MastId", ChatroomId);
+            jsonobject_addfollow.put("SlaveId", userId);
+            jsonobject_addfollow.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonobject_addfollow.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.FOLLOW)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_follow = new JSONObject(response);
+                                                            String result_follow = object_follow.getString("Result");
+                                                            msg_addFollow = object_follow.getString("Msg");
+                                                            if (result_follow.equals("1")) {
+                                                                Message message_isfollow = new Message();
+                                                                message_isfollow.what = 3;
+                                                                handler.sendMessage(message_isfollow);
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
+
+
+    //websocket错误信息提示
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void onEvent_chatroom_errorMsg(Event_chatroom_errorMsg errorMsg) {
+        String errormsg = errorMsg.getMsg();
+        Toast.makeText(this, errormsg, Toast.LENGTH_SHORT).show();
+    }
+
+
+    //收到的聊天室消息
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void onEvent_chatroom(Event_chatroom msg) {
         String mmsg = msg.getMsg();
@@ -227,17 +418,28 @@ public class PLVideoViewActivity extends BaseActivity {
                             Log.e("播放端mNickName", mNickName);
                             try {
                                 JSONObject object_joinchat = new JSONObject(response);
-                                String joinchat = object_joinchat.getString("Msg");
-
+                                String cmd = object_joinchat.getString("Cmd");
                                 if (mNickName.isEmpty()) {
                                     mNickName = "游客";
                                 }
-                                if (joinchat.equals("加入聊天室成功")) {
+                                //获取聊天室人数
+                                if (cmd.equals("GetChatRomCount")) {
+                                    int ChatRomCount = object_joinchat.getInt("ChatRomCount");
+                                    onlinePeople.setText("观众：" + ChatRomCount);
+                                } else if (cmd.equals("GetChatRomList")) {//获取聊天室用户ID
+                                    String Result = object_joinchat.getString("Result");
+                                    if (Result.equals("1")) {
+                                        JSONArray jsonArray_list = new JSONArray(object_joinchat.getString("Data"));
+                                        for (int i = 0; i < jsonArray_list.length(); i++) {
+                                            String allUser = jsonArray_list.get(i).toString();//获取聊天室用户ID
+                                            //下面显示用户头像列表操作
+
+                                        }
+                                    }
+                                } else if (cmd.equals("AddChatRom")) {
+                                    String joinchat = object_joinchat.getString("Msg");
                                     //提示某某加入聊天室
                                     livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, "加入聊天室");
-                                    chatList.add(livingroomChatListBean_chatmsg);
-                                } else if (!joinchat.equals("认证成功")) {
-                                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", "", joinchat);
                                     chatList.add(livingroomChatListBean_chatmsg);
                                 }
                                 LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, true);
@@ -257,24 +459,47 @@ public class PLVideoViewActivity extends BaseActivity {
                 JSONObject object_chatMsg = new JSONObject(mmsg);
                 //处理接收到的聊天信息
                 String cmd = object_chatMsg.getString("Cmd");
-                String NickName = object_chatMsg.getString("NickName");
-                String IconUrl = object_chatMsg.getString("IconUrl");
-                String Level = object_chatMsg.getString("Level");
-                String Msg_chat = object_chatMsg.getString("Msg");
-                if (Msg_chat.equals("加入聊天室成功")) {
-                    //提示某某加入聊天室
-                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, "加入聊天室");
+                //获取聊天室人数
+//                if (cmd.equals("GetChatRomCount")) {
+////                    {"Protocol":"ChatRom","Cmd":"GetChatRomCount","Result":"1","ChatRomId":"10012","ChatRomCount":2}
+//                    int ChatRomCount = object_chatMsg.getInt("ChatRomCount");
+//                    onlinePeople.setText("观众：" + ChatRomCount);
+//                } else if (cmd.equals("GetChatRomList")) {//获取聊天室用户ID
+////                    {"Protocol":"ChatRom","Cmd":"GetChatRomList","Result":"1","ChatRomId":"10012","Data":["1001","1001"]}
+////                    Data:
+////                    "10014",//UserId
+////                            "guest"
+//                    String Result = object_chatMsg.getString("Result");
+//                    if (Result.equals("1")) {
+//                        JSONArray jsonArray_list = new JSONArray(object_chatMsg.getString("Data"));
+//                        for (int i = 0; i < jsonArray_list.length(); i++) {
+//                            String allUser = jsonArray_list.get(i).toString();//获取聊天室用户ID
+//                            //下面显示用户头像列表操作
+//
+//                        }
+//                    }
+//                }
+                if (cmd.equals("chat")) {
+                    String NickName = object_chatMsg.getString("NickName");
+                    String IconUrl = object_chatMsg.getString("IconUrl");
+                    String Level = object_chatMsg.getString("Level");
+                    String Msg_chat = object_chatMsg.getString("Msg");
+                    livingroomChatListBean_chatmsg = new LivingroomChatListBean(IconUrl, Level, NickName, Msg_chat);
                     chatList.add(livingroomChatListBean_chatmsg);
+                    Message msgg = new Message();
+                    msgg.what = 0;
+                    handler.sendMessage(msgg);
                 } else if (cmd.equals("sys")) {
-                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", "系统消息", Msg_chat);
+                    String Msg_sys = object_chatMsg.getString("Msg");
+                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", "系统消息", Msg_sys);
                     chatList.add(livingroomChatListBean_chatmsg);
-                } else if (!IconUrl.isEmpty()) {
-                livingroomChatListBean_chatmsg = new LivingroomChatListBean(IconUrl, Level, NickName, Msg_chat);
-                    chatList.add(livingroomChatListBean_chatmsg);
+                    LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, true);
+                    layoutManager_chatmessage.setAutoMeasureEnabled(false);
+                    chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
+                    livingroomChatSysAdapter = new LivingroomChatSysAdapter(PLVideoViewActivity.this, chatList);
+                    livingroomChatSysAdapter.bind(chatList);
+                    chatRecyclerview.setAdapter(livingroomChatSysAdapter);
                 }
-                Message msgg = new Message();
-                msgg.what = 0;
-                handler.sendMessage(msgg);
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -282,17 +507,81 @@ public class PLVideoViewActivity extends BaseActivity {
         }
     }
 
+    //退出聊天室
+    private void quitChatRoom() {
+        JSONObject jsonObject_quit = new JSONObject();
+        try {
+            jsonObject_quit.put("Protocol", "ChatRom");
+            jsonObject_quit.put("UserId", "ExitChatRom");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        WebSocketService.sendMsg(jsonObject_quit.toString());
+    }
+
+    //读聊天室用户列表
+    private void GetChatRomList() {
+        JSONObject jsonObject_roomlist = new JSONObject();
+        try {
+            jsonObject_roomlist.put("Protocol", "ChatRom");
+            jsonObject_roomlist.put("Cmd", "GetChatRomList");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_roomlist.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
+    }
+
+    //读聊天室在线人数
+    private void GetChatRomCount() {
+        JSONObject jsonObject_roomcount = new JSONObject();
+        try {
+            jsonObject_roomcount.put("Protocol", "ChatRom");
+            jsonObject_roomcount.put("Cmd", "GetChatRomCount");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_roomcount.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
+    }
+
 
     //获取socket长连接
     private void joinInWeb() {
-        SharedPreferences sharedPreferences_accesskey = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
-        String AccessKey = sharedPreferences_accesskey.getString("AccessKey", "");
-        String useId = sharedPreferences_accesskey.getString("userId", "");
+//        String useId = sharedPreferences_accesskey.getString("userId", "");
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("Protocol", "Logging");
-            jsonObject.put("UserId", useId);
-            jsonObject.put("AccessKey", AccessKey);
+            jsonObject.put("UserId", userId);
+            jsonObject.put("AccessKey", accessKey);
             jsonObject.put("PwdModel", "3");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -384,9 +673,12 @@ public class PLVideoViewActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    @OnClick({R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share, R.id.input_send})
+    @OnClick({R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share, R.id.input_send})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.btn_follow:
+                addFollow();
+                break;
             case R.id.living_close:
                 finish();
                 break;
@@ -406,9 +698,12 @@ public class PLVideoViewActivity extends BaseActivity {
                 popupWindow_living_share.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.input_send:
-                Toast.makeText(this, "点击了发信息", Toast.LENGTH_SHORT).show();
-                chatRoomMessage();
-                inputEditor.getText().clear();
+                if (inputEditor.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(this, "消息为空", Toast.LENGTH_SHORT).show();
+                } else {
+                    chatRoomMessage();
+                    inputEditor.getText().clear();
+                }
                 break;
         }
     }
@@ -433,6 +728,36 @@ public class PLVideoViewActivity extends BaseActivity {
         viewList.add(gift_view3);
         GiftPagerAdapter giftadapter = new GiftPagerAdapter();
         viewPager_gift.setAdapter(giftadapter);
+        boolean select_only = true;
+        //666开始
+        final ImageView imageView_gift_lll = (ImageView) gift_view1.findViewById(R.id.gift_png_lll);
+        imageView_gift_lll.setBackgroundResource(R.drawable.gift_666);
+        final AnimationDrawable anim_lll = (AnimationDrawable) imageView_gift_lll.getBackground();
+        final ImageView imageView_gift_livingroom_lll = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_lll);
+        final LinearLayout linearLayout_lll = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_lll);
+        final TextView textView_lll = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_lll);
+        linearLayout_lll.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_lll.isSelected()) {
+                    linearLayout_lll.setSelected(true);
+                    textView_lll.setSelected(true);
+                    textView_lll.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_lll.setVisibility(View.GONE);
+                    imageView_gift_lll.setVisibility(View.VISIBLE);
+                    anim_lll.start();
+                } else {
+                    linearLayout_lll.setSelected(false);
+                    textView_lll.setSelected(false);
+                    textView_lll.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_lll.setVisibility(View.VISIBLE);
+                    imageView_gift_lll.setVisibility(View.GONE);
+                    anim_lll.stop();
+                }
+            }
+        });
+        //666结束
+
         //棒棒糖开始
         final ImageView imageView_gift_bbt = (ImageView) gift_view1.findViewById(R.id.gift_png_bbt);
         imageView_gift_bbt.setBackgroundResource(R.drawable.gift_bangbangtang);
@@ -443,7 +768,6 @@ public class PLVideoViewActivity extends BaseActivity {
         linearLayout_bbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(PLVideoViewActivity.this, "变色啊", Toast.LENGTH_SHORT).show();
                 if (!linearLayout_bbt.isSelected()) {
                     linearLayout_bbt.setSelected(true);
                     textView_bbt.setSelected(true);
@@ -562,11 +886,15 @@ public class PLVideoViewActivity extends BaseActivity {
         }
     }
 
+    //发聊天室消息
     private void chatRoomMessage() {
         //            {"Protocol":"ChatRom","Cmd":"chat","ChatRomId":"10012","Cmd":"Msg","UserId":"1002","NickName":"","IconUrl":"","Level":"0","Msg":"消息内容"}
 //        {"Protocol":"ChatRom","Cmd":"chat","NickName":"","IconUrl":"","Level":"0","Msg":"消息内容"}
         JSONObject object_chatroomMsg = new JSONObject();
         String mMsg = inputEditor.getText().toString().trim();
+        if (Level.isEmpty()) {
+            Level = "1";
+        }
         try {
             object_chatroomMsg.put("Protocol", "ChatRom");
             object_chatroomMsg.put("Cmd", "chat");
@@ -599,6 +927,7 @@ public class PLVideoViewActivity extends BaseActivity {
 
     }
 
+    //直播间观众视角分享
     private void sharePopw() {
         final View livingshareView = LayoutInflater.from(this).inflate(R.layout.share_livingroom, null);
         popupWindow_living_share = new PopupWindow(livingshareView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

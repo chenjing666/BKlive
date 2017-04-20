@@ -18,18 +18,18 @@
         android:layout_gravity="center">
 
         <LinearLayout
+            android:layout_height="@dimen/y70"
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:gravity="center_horizontal"
+            android:layout_marginTop="@dimen/y60"
+            android:gravity="center"
             android:orientation="horizontal"
             android:weightSum="100">
 
             <LinearLayout
                 android:layout_width="0dp"
-                android:layout_height="50dp"
-                android:layout_marginTop="10dp"
+                android:layout_height="@dimen/y70"
                 android:layout_weight="40"
-                android:background="#e0000000"
+                android:background="@drawable/livingroom_livetitle"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:paddingRight="5dp"
@@ -42,8 +42,8 @@
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="40dp"
-                        android:layout_height="40dp"
+                        android:layout_width="@dimen/y60"
+                        android:layout_height="@dimen/y60"
                         android:scaleType="centerCrop"
                         android:src="@mipmap/ic_launcher" />
                 </LinearLayout>
@@ -51,40 +51,45 @@
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="45"
+                    android:layout_weight="50"
                     android:gravity="center"
                     android:orientation="vertical">
 
                     <TextView
+                        android:id="@+id/myNickname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="我的名字"
+                        android:singleLine="true"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/x20" />
 
                     <TextView
+                        android:id="@+id/online_people"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="观众：3000"
                         android:textColor="@android:color/white"
-                        android:textSize="12sp" />
+                        android:textSize="@dimen/x18" />
                 </LinearLayout>
 
                 <Button
+                    android:id="@+id/btn_follow"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginBottom="@dimen/y10"
                     android:layout_marginTop="@dimen/y10"
-                    android:layout_weight="30"
+                    android:layout_weight="25"
                     android:background="@color/background_color"
                     android:text="关注"
-                    android:textSize="12sp" />
+                    android:textSize="@dimen/x20" />
             </LinearLayout>
 
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/video_headimg_xrv"
                 android:layout_width="0dp"
-                android:layout_height="match_parent"
+                android:layout_height="@dimen/y70"
+                android:gravity="center_vertical"
                 android:layout_weight="60"
                 android:scrollbars="none" />
 
@@ -101,7 +106,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="@dimen/y140"
+        android:layout_marginTop="@dimen/y150"
         android:orientation="horizontal">
 
         <LinearLayout
@@ -155,6 +160,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/x40"
                 android:text="1236231"
                 android:textColor="#ffffff"
                 android:textSize="@dimen/x28" />
@@ -179,8 +185,7 @@
         android:layout_width="@dimen/x450"
         android:layout_height="@dimen/y260"
         android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/y110"
-        >
+        android:layout_marginBottom="@dimen/y110">
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/chat_recyclerview"

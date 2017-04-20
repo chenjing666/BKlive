@@ -1,7 +1,7 @@
 package com.biaoke.bklive.message;
 
 /**
- * Created by Holiday on 2017/2/21.
+ * Created by hasee on 2017/2/21.
  * 网络连接地址
  */
 public class Api {
@@ -26,4 +26,6 @@ public class Api {
     public final static String VIDEO_LIVE = ADDRESS + "/BK/Explore.php";//发现页面视频接口
 
     public final static String BANNER = ADDRESS + "/BK/BannerUp.php";//发现页面轮播图接口
+
+    public final static String FOLLOW = ADDRESS + "/BK/Fans.php";//关注接口
 }

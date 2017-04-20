@@ -72,6 +72,7 @@ public class FoundFragment extends Fragment {
 
     //websocket
     private Intent websocketServiceIntent;
+    private String type;
 
     @Nullable
     @Override
@@ -251,21 +252,22 @@ public class FoundFragment extends Fragment {
         @Override
         public void onItemClick(View view, int postion) {
             String chatroomId = recyclerDataList.get(postion).getUserId();
-            Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
-            intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
-            intent_video.putExtra("chatroomId", chatroomId);
-            startActivity(intent_video);
             SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor_chatroomId = sharedPreferences_chatroomId.edit();
             editor_chatroomId.putString("chatroomId", chatroomId);
             editor_chatroomId.commit();
-            websocketServiceIntent = new Intent(getActivity(), WebSocketService.class);
-            getActivity().startService(websocketServiceIntent);
-
-            WebSocketService.webSocketConnect();
-//            Message msg = new Message();
-//            msg.what = 0;
-//            handler.sendMessage(msg);
+            if (type.equals("live")) {
+                Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
+                intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
+                intent_video.putExtra("chatroomId", chatroomId);
+                startActivity(intent_video);
+                websocketServiceIntent = new Intent(getActivity(), WebSocketService.class);
+                getActivity().startService(websocketServiceIntent);
+                WebSocketService.webSocketConnect();
+            } else {
+                //跳转短视频视频播放，暂未开通
+                Toast.makeText(getActivity(), "暂未开通", Toast.LENGTH_SHORT).show();
+            }
         }
     };
 
@@ -526,8 +528,8 @@ public class FoundFragment extends Fragment {
                                                                 String videoUrl = jsonobject.getString("VideoUrl");
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
-                                                                String Type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, Type);
+                                                                type = jsonobject.getString("Type");
+                                                                live_item liveItem = new live_item(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
                                                                 recyclerDataList.add(liveItem);
                                                             }
 

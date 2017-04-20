@@ -136,7 +136,7 @@ public class MainActivity extends BaseActivity {
     private String mNickName;
     private String mLevel;
     private String mExperience;
-    private String mIncome;
+    private String mCharm;
     private String mDiamond;
     private String mLiveNum;
     private String mVideoNum;
@@ -197,7 +197,7 @@ public class MainActivity extends BaseActivity {
                         JSONObject jsonObject_user = new JSONObject();
                         try {
                             jsonObject_user.put("Protocol", "UserInfo");
-                            jsonObject_user.put("Cmd", "1");
+                            jsonObject_user.put("Cmd", "GetAll");
                             jsonObject_user.put("UserId", UserId);
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -211,12 +211,6 @@ public class MainActivity extends BaseActivity {
         });
         bottomBar.setSelectedState(0);
         init();//主页面
-//        SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
-//        editor_userinfo.putString("mNickName",mNickName);
-//        editor_userinfo.putString("mLevel",mLevel);
-//        editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
-//        editor_userinfo.commit();
-
     }
 
 
@@ -235,7 +229,20 @@ public class MainActivity extends BaseActivity {
                     SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
                     editor_userinfo.putString("mNickName",mNickName);
                     editor_userinfo.putString("mLevel",mLevel);
+                    editor_userinfo.putString("mCharm", mCharm);
                     editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
+                    editor_userinfo.putString("mExperience", mExperience);
+                    editor_userinfo.putString("mDiamond", mDiamond);
+                    editor_userinfo.putString("mLiveNum", mLiveNum);
+                    editor_userinfo.putString("mVideoNum", mVideoNum);
+                    editor_userinfo.putString("mSex", mSex);
+                    editor_userinfo.putString("mAge", mAge);
+                    editor_userinfo.putString("mEmotion", mEmotion);
+                    editor_userinfo.putString("mHometown", mHometown);
+                    editor_userinfo.putString("mWork", mWork);
+                    editor_userinfo.putString("mFollow", mFollow);
+                    editor_userinfo.putString("mFans", mFans);
+                    editor_userinfo.putString("mSignture", mSignture);
                     editor_userinfo.commit();
                     break;
             }
@@ -599,11 +606,11 @@ public class MainActivity extends BaseActivity {
                                                             mNickName = jsonobject.getString("NickName");
                                                             mLevel = jsonobject.getString("Level");
                                                             mExperience = jsonobject.getString("经验");
-                                                            mIncome = jsonobject.getString("魅力");
+                                                            mCharm = jsonobject.getString("魅力");
                                                             mDiamond = jsonobject.getString("钻石");
                                                             mLiveNum = jsonobject.getString("直播");
                                                             mVideoNum = jsonobject.getString("点播");
-                                                            mHeadimageUrl = jsonobject.getString("头像");
+                                                            mHeadimageUrl = jsonobject.getString("IconUrl");
                                                             mSex = jsonobject.getString("性别");
                                                             mAge = jsonobject.getString("年龄");
                                                             mEmotion = jsonobject.getString("情感");

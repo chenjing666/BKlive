@@ -15,73 +15,247 @@
         <!--<RelativeLayout-->
             <!--android:layout_width="@dimen/x142"-->
             <!--android:layout_height="@dimen/y174">-->
-            <LinearLayout
-                android:id="@+id/ll_gift_bbt"
+        <LinearLayout
+            android:id="@+id/ll_gift_lll"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@drawable/gift_edge_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gift_livingroom_lll"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gift_edge_selector"
+                android:src="@drawable/liuliuliu" />
+
+            <ImageView
+                android:id="@+id/gift_png_lll"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/gift_bg_exp_lll"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
-                android:orientation="vertical">
+                android:text="+50经验值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="六六六"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
 
                 <ImageView
-                    android:id="@+id/gift_livingroom_bbt"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:src="@drawable/bangbangtang" />
-
-                <ImageView
-                    android:id="@+id/gift_png_bbt"
-                    android:layout_width="@dimen/x152"
-                    android:layout_height="@dimen/y104"
-                    android:visibility="gone" />
-
-                <TextView
-                    android:id="@+id/gift_bg_exp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:background="@drawable/gift_exp_selector"
-                    android:gravity="center"
-                    android:text="+50经验值"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/x10" />
+                    android:src="@drawable/diamond_yellow" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="棒棒糖"
-                    android:textColor="@color/white"
-                    android:textSize="@dimen/x20" />
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:gravity="center"
-                    android:orientation="horizontal">
-
-                    <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:src="@drawable/diamond_yellow" />
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="1250"
-                        android:textColor="#787878"
-                        android:textSize="@dimen/x18" />
-                </LinearLayout>
+                    android:text="1250"
+                    android:textColor="#787878"
+                    android:textSize="@dimen/x18" />
             </LinearLayout>
-            <!--<TextView-->
-                <!--android:layout_width="@dimen/x142"-->
-                <!--android:layout_height="@dimen/y174"-->
-                <!--android:background="@drawable/gift_edge_selected"-->
-                <!--android:gravity="center"-->
-                <!--android:orientation="vertical"/>-->
-        <!--</RelativeLayout>-->
+        </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/ll_gift_xhh"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gift_livingroom_xhh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/xiaohonghua" />
+
+            <ImageView
+                android:id="@+id/gift_png_xhh"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/gift_bg_exp_xhh"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_exp_selector"
+                android:gravity="center"
+                android:text="+50经验值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="小红花"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diamond_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1250"
+                    android:textColor="#787878"
+                    android:textSize="@dimen/x18" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/ll_gift_bbt"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gift_livingroom_bbt"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/bangbangtang" />
+
+            <ImageView
+                android:id="@+id/gift_png_bbt"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/gift_bg_exp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_exp_selector"
+                android:gravity="center"
+                android:text="+50经验值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="棒棒糖"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diamond_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1250"
+                    android:textColor="#787878"
+                    android:textSize="@dimen/x18" />
+            </LinearLayout>
+        </LinearLayout>
+        <!--<TextView-->
+        <!--android:layout_width="@dimen/x142"-->
+        <!--android:layout_height="@dimen/y174"-->
+        <!--android:background="@drawable/gift_edge_selected"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="vertical"/>-->
+        <!--</RelativeLayout>-->
+        <LinearLayout
+            android:id="@+id/ll_gift_lsj"
+            android:background="@drawable/gift_edge_selector"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gift_livingroom_lsj"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/laosiji" />
+
+            <ImageView
+                android:id="@+id/gift_png_lsj"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:id="@+id/gift_bg_exp_lsj"
+                android:background="@drawable/gift_exp_selector"
+                android:text="+50经验值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="老司机"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diamond_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1250"
+                    android:textColor="#787878"
+                    android:textSize="@dimen/x18" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout
             android:id="@+id/ll_gift_lsxg"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:background="@drawable/gift_edge_selector"
             android:gravity="center"
@@ -136,122 +310,21 @@
             </LinearLayout>
         </LinearLayout>
 
-        <LinearLayout
-            android:id="@+id/ll_gift_lsj"
-            android:background="@drawable/gift_edge_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
 
-            <ImageView
-                android:id="@+id/gift_livingroom_lsj"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/laosiji" />
-            <ImageView
-                android:id="@+id/gift_png_lsj"
-                android:layout_width="@dimen/x152"
-                android:layout_height="@dimen/y104"
-                android:visibility="gone" />
+    </LinearLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:id="@+id/gift_bg_exp_lsj"
-                android:background="@drawable/gift_exp_selector"
-                android:text="+50经验值"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="老司机"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x20" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/diamond_yellow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1250"
-                    android:textColor="#787878"
-                    android:textSize="@dimen/x18" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/ll_gift_lll"
-            android:background="@drawable/gift_edge_selector"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/gift_livingroom_lll"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/liuliuliu" />
-            <ImageView
-                android:id="@+id/gift_png_lll"
-                android:layout_width="@dimen/x152"
-                android:layout_height="@dimen/y104"
-                android:visibility="gone" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:text="+50经验值"
-                android:id="@+id/gift_bg_exp_lll"
-                android:background="@drawable/gift_exp_selector"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="六六六"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x20" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/diamond_yellow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1250"
-                    android:textColor="#787878"
-                    android:textSize="@dimen/x18" />
-            </LinearLayout>
-        </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y174"
+        android:layout_marginBottom="@dimen/y10"
+        android:gravity="center"
+        android:orientation="horizontal">
 
         <LinearLayout
             android:id="@+id/ll_gift_ppx"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:background="@drawable/gift_edge_selector"
-            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
@@ -261,11 +334,13 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/pipixia" />
+
             <ImageView
                 android:id="@+id/gift_png_ppx"
                 android:layout_width="@dimen/x152"
                 android:layout_height="@dimen/y104"
                 android:visibility="gone" />
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -303,158 +378,9 @@
             </LinearLayout>
         </LinearLayout>
 
-    </LinearLayout>
-
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y174"
-        android:layout_marginBottom="@dimen/y10"
-        android:gravity="center"
-        android:orientation="horizontal">
-
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/wen" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
-                android:gravity="center"
-                android:text="+50经验值"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="吻"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x20" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/diamond_yellow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1250"
-                    android:textColor="#787878"
-                    android:textSize="@dimen/x18" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/xiaohonghua" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
-                android:gravity="center"
-                android:text="+50经验值"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="小红花"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x20" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/diamond_yellow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1250"
-                    android:textColor="#787878"
-                    android:textSize="@dimen/x18" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:orientation="vertical">
-
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/yaobaobao" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
-                android:gravity="center"
-                android:text="+50经验值"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x10" />
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="要抱抱"
-                android:textColor="@color/white"
-                android:textSize="@dimen/x20" />
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:src="@drawable/diamond_yellow" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="1250"
-                    android:textColor="#787878"
-                    android:textSize="@dimen/x18" />
-            </LinearLayout>
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
+            android:layout_weight="1"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
@@ -499,22 +425,32 @@
                     android:textSize="@dimen/x18" />
             </LinearLayout>
         </LinearLayout>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_k"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gift_edge_selector"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_k"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/keng" />
 
+            <ImageView
+                android:id="@+id/gift_png_k"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_k"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -546,6 +482,123 @@
                     android:textSize="@dimen/x18" />
             </LinearLayout>
         </LinearLayout>
+        <LinearLayout
+            android:id="@+id/ll_gift_w"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gift_edge_selector"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gift_livingroom_w"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/wen" />
+
+            <ImageView
+                android:id="@+id/gift_png_w"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/gift_bg_exp_w"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_exp_selector"
+                android:gravity="center"
+                android:text="+50经验值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="吻"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diamond_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1250"
+                    android:textColor="#787878"
+                    android:textSize="@dimen/x18" />
+            </LinearLayout>
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:id="@+id/ll_gift_ybb"
+            android:layout_width="0dp"
+            android:layout_weight="1"
+            android:background="@drawable/gift_edge_selector"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:orientation="vertical">
+
+            <ImageView
+                android:id="@+id/gift_livingroom_ybb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:src="@drawable/yaobaobao" />
+
+            <ImageView
+                android:id="@+id/gift_png_ybb"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
+            <TextView
+                android:id="@+id/gift_bg_exp_ybb"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/gift_exp_selector"
+                android:gravity="center"
+                android:text="+50经验值"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x10" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="要抱抱"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x20" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <ImageView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/diamond_yellow" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="1250"
+                    android:textColor="#787878"
+                    android:textSize="@dimen/x18" />
+            </LinearLayout>
+        </LinearLayout>
+
 
     </LinearLayout>
 </LinearLayout>

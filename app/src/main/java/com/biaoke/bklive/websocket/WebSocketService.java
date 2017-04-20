@@ -14,6 +14,7 @@ import android.util.Log;
 import android.widget.Toast;
 
 import com.biaoke.bklive.eventbus.Event_chatroom;
+import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
 import com.biaoke.bklive.message.Api;
 
 import de.greenrobot.event.EventBus;
@@ -70,6 +71,12 @@ public class WebSocketService extends Service {
                 public void onClose(int code, String reason) {
                     super.onClose(code, reason);
                     Log.d(TAG, "关闭code = " + code + "关闭reason = " + reason);
+                    if (code == 2) {
+                        EventBus.getDefault().post(new Event_chatroom_errorMsg("连接服务器失败"));
+                    } else if (code == 3) {
+                        //退出聊天室
+                        EventBus.getDefault().post(new Event_chatroom_errorMsg("退出聊天室"));
+                    }
                 }
             }, options);
         } catch (WebSocketException e) {
