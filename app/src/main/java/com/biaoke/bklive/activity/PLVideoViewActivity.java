@@ -514,7 +514,7 @@ public class PLVideoViewActivity extends BaseActivity {
     }
 
     //退出聊天室
-    private void quitChatRoom() {
+    private void exitChatRoom() {
         JSONObject jsonObject_quit = new JSONObject();
         try {
             jsonObject_quit.put("Protocol", "ChatRom");
@@ -522,7 +522,22 @@ public class PLVideoViewActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        WebSocketService.sendMsg(jsonObject_quit.toString());
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_quit.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
     }
 
     //读聊天室用户列表

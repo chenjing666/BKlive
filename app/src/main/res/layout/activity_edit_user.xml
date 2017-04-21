@@ -162,7 +162,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
-            android:layout_marginEnd="@dimen/x150"
+            android:layout_marginEnd="@dimen/x135"
             android:text="123456"
             android:textColor="@color/background_color" />
 

@@ -18,8 +18,160 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_gravity="center" />
+
+        <LinearLayout
+            android:id="@+id/ll_livingroom_header"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y70"
+            android:layout_marginTop="@dimen/y60"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:weightSum="100">
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="@dimen/y70"
+                android:layout_weight="35"
+                android:background="@drawable/livingroom_livetitle"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingRight="5dp"
+                android:weightSum="100">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="25"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:id="@+id/livingroom_user_image"
+                        android:layout_width="@dimen/y60"
+                        android:layout_height="@dimen/y60"
+                        android:scaleType="centerCrop"
+                        android:src="@mipmap/ic_launcher" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="75"
+                    android:gravity="center"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/myNickname"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:singleLine="true"
+                        android:text="我的名字"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/x20" />
+
+                    <TextView
+                        android:id="@+id/online_people"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="观众：3000"
+                        android:textColor="@android:color/white"
+                        android:textSize="@dimen/x18" />
+                </LinearLayout>
+
+            </LinearLayout>
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/video_headimg_xrv"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/y70"
+                android:layout_weight="65"
+                android:gravity="center_vertical"
+                android:scrollbars="none" />
+
+            <ImageView
+                android:id="@+id/living_close"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:background="@drawable/livecamera_close" />
+        </LinearLayout>
     </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
 
+    <LinearLayout
+        android:id="@+id/ll_livingroom_headtwo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y150"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_living_charm"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x15"
+                android:text="魅力"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+
+            <TextView
+                android:id="@+id/tv_charm_living_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:text="123651231"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+
+            <ImageView
+                android:id="@+id/charm_more"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/charm_more" />
+        </LinearLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_vertical">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/x20"
+                android:background="@drawable/livingroom_manage"
+                android:layout_toLeftOf="@+id/tv_livingroom_manage" />
+
+            <TextView
+                android:id="@+id/tv_livingroom_manage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="@dimen/x40"
+                android:text="进入房间管理"
+                android:textColor="#ffffff"
+                android:textSize="@dimen/x28" />
+        </RelativeLayout>
+
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_chat_recyclerview_living"
+        android:layout_width="@dimen/x450"
+        android:layout_height="@dimen/y260"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/y110">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/chat_recyclerview_living"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+    </RelativeLayout>
     <RelativeLayout
         android:id="@+id/liveDescription"
         android:layout_width="match_parent"

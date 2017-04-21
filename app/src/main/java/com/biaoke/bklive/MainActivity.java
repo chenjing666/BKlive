@@ -574,24 +574,6 @@ public class MainActivity extends BaseActivity {
         viewpagerMain.setCurrentItem((Integer) view.getTag(), false);
     }
 
-
-    private Handler myHandler = new Handler() {
-
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 1:
-                    SharedPreferences sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
-                    SharedPreferences.Editor editor = sharedPreferences.edit();
-                    editor.putBoolean("isLogin", true);
-                    editor.commit();
-
-                    break;
-                case 2:
-                    break;
-            }
-        }
-    };
-
     //获取用户信息
     public void UserInfoHttp(String url, String path) {
         OkHttpUtils
@@ -646,7 +628,7 @@ public class MainActivity extends BaseActivity {
                                                             mVideoNum = jsonobject.getString("点播");
                                                             mHeadimageUrl = jsonobject.getString("IconUrl");
                                                             mSex = jsonobject.getString("性别");
-                                                            mAge = jsonobject.getString("年龄");
+                                                            mAge = jsonobject.getString("生日");
                                                             mEmotion = jsonobject.getString("情感");
                                                             mHometown = jsonobject.getString("家乡");
                                                             mWork = jsonobject.getString("职业");

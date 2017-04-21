@@ -136,6 +136,7 @@ public class EditUserActivity extends BaseActivity {
     public String uptoken = null;
     public String sendFileName;
     private GlideUtis glideUtis_header;
+    private File file;
 
     public EditUserActivity() {
         Configuration config = new Configuration.Builder()
@@ -309,7 +310,7 @@ public class EditUserActivity extends BaseActivity {
                                                             mVideoNum = jsonobject.getString("点播");
                                                             mHeadimageUrl = jsonobject.getString("IconUrl");
                                                             mSex = jsonobject.getString("性别");
-                                                            mAge = jsonobject.getString("年龄");
+                                                            mAge = jsonobject.getString("生日");
                                                             mEmotion = jsonobject.getString("情感");
                                                             mHometown = jsonobject.getString("家乡");
                                                             mWork = jsonobject.getString("职业");
@@ -683,10 +684,11 @@ public class EditUserActivity extends BaseActivity {
      * @param data
      */
     protected void setImageToView(Intent data) {
+        file = new File("/mnt/sdcard/pic/01.jpg");
         Bundle extras = data.getExtras();
         if (extras != null) {
             Bitmap photo = extras.getParcelable("data");
-            photo = HeaderImageUtils.toRoundBitmap(photo, tempUri); // 这个时候的图片已经被处理成圆形的了
+//            photo = HeaderImageUtils.toRoundBitmap(photo, tempUri); // 这个时候的图片已经被处理成圆形的了
             editUserHeader.setImageBitmap(photo);
             uploadPic(photo);
         }
@@ -697,9 +699,10 @@ public class EditUserActivity extends BaseActivity {
         // ... 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
         // 注意这里得到的图片已经是圆形图片了
         // bitmap是没有做个圆形处理的，但已经被裁剪了
-        String imagePath = HeaderImageUtils.savePhoto(bitmap, Environment
-                .getExternalStorageDirectory().getAbsolutePath(), String
-                .valueOf(System.currentTimeMillis()));
+//        String imagePath = HeaderImageUtils.savePhoto(bitmap,
+//                Environment.getExternalStorageDirectory().getAbsolutePath(), String.valueOf(System.currentTimeMillis()));
+        String imagePath = HeaderImageUtils.savePhoto(bitmap,
+                Environment.getExternalStorageDirectory().getAbsolutePath(), sendFileName);
         Log.e("imagePath", imagePath + "");
 
         //(七牛)设定需要添加的自定义变量为Map<String, String>类型 并且放到UploadOptions第一个参数里面
@@ -715,10 +718,11 @@ public class EditUserActivity extends BaseActivity {
                         public void complete(String key, ResponseInfo info, JSONObject jsonObject) {
                             Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + jsonObject);
                             if (info.isOK()) {
-                                Toast.makeText(EditUserActivity.this, "头像上传成功", Toast.LENGTH_SHORT).show();
+//                                Toast.makeText(EditUserActivity.this, "头像上传成功", Toast.LENGTH_SHORT).show();
+                                Log.i("qiniu", "头像上传成功");
                             }
                         }
-                    }, new UploadOptions(map, null, false,
+                    }, new UploadOptions(null, null, false,
                             new UpProgressHandler() {
                                 @Override
                                 public void progress(String s, double v) {
@@ -739,6 +743,7 @@ public class EditUserActivity extends BaseActivity {
         try {
             jsonObject_uptoken.put("Protocol", "Upload");
             jsonObject_uptoken.put("Cmd", "icon");
+            jsonObject_uptoken.put("Ext", "png");
             jsonObject_uptoken.put("UserId", userId);
             jsonObject_uptoken.put("AccessKey", accessKey);
         } catch (JSONException e) {

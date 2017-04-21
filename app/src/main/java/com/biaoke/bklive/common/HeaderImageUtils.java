@@ -34,12 +34,13 @@ public class HeaderImageUtils {
 				dir.mkdirs();
 			}
 
-			File photoFile = new File(path, photoName + ".png");
+//			File photoFile = new File(path, photoName + ".png");
+			File photoFile = new File(path, photoName);
 			FileOutputStream fileOutputStream = null;
 			try {
 				fileOutputStream = new FileOutputStream(photoFile);
 				if (photoBitmap != null) {
-					if (photoBitmap.compress(Bitmap.CompressFormat.PNG, 100,
+					if (photoBitmap.compress(Bitmap.CompressFormat.JPEG, 100,//图片格式
 							fileOutputStream)) { // 转换完成
 						localPath = photoFile.getPath();
 						fileOutputStream.flush();

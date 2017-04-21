@@ -107,7 +107,8 @@
         <activity android:name=".user.activity.ContributionActivity" />
         <activity android:name=".user.activity.LevelActivity" />
         <activity android:name=".user.activity.MyVedioActivity" />
-        <activity android:name=".user.activity.IdentificationActivity"></activity>
+        <activity android:name=".user.activity.IdentificationActivity" />
+        <activity android:name=".activity.LivingEndActivity"></activity>
     </application>
 
 </manifest>
