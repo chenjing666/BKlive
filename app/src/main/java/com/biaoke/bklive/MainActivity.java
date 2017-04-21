@@ -48,6 +48,7 @@ import com.biaoke.bklive.user.activity.LoginActivity;
 import com.biaoke.bklive.user.activity.MyVedioActivity;
 import com.biaoke.bklive.user.activity.SetActivity;
 import com.biaoke.bklive.user.bean.User;
+import com.biaoke.bklive.utils.GlideUtis;
 import com.pkmmte.view.CircularImageView;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -122,6 +123,20 @@ public class MainActivity extends BaseActivity {
     ImageView livePutvideo;
     @BindView(R.id.sl_user)
     ScrollView slUser;
+    @BindView(R.id.tv_follow)
+    TextView tvFollow;
+    @BindView(R.id.tv_game)
+    TextView tvGame;
+    @BindView(R.id.tv_found)
+    TextView tvFound;
+    @BindView(R.id.tv_samecity)
+    TextView tvSamecity;
+    @BindView(R.id.ll_main1)
+    LinearLayout llMain1;
+    @BindView(R.id.iv_sex_user)
+    ImageView ivSexUser;
+    @BindView(R.id.tv_user_signture)
+    TextView tvUserSignture;
     private PopupWindow popupWindow_vedio, popupWindow_login;
     private ImageView imageView_qq;
     private String APPID = "1106047080";
@@ -151,6 +166,7 @@ public class MainActivity extends BaseActivity {
     private String mSignture;
     private String Msg;
     private SharedPreferences sharedPreferences_user;
+    private GlideUtis glideUtis_header_user;
 
 
     @Override
@@ -158,6 +174,7 @@ public class MainActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         ButterKnife.bind(this);
+        glideUtis_header_user = new GlideUtis(this);
         //6.0之后开启相机的权限
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
             requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
@@ -205,12 +222,29 @@ public class MainActivity extends BaseActivity {
                         Log.e("主页面获取用户ID", jsonObject_user.toString());
                         UserInfoHttp(Api.ENCRYPT64, jsonObject_user.toString());
                     }
+//                    setUserInfo();
                 }
 
             }
         });
         bottomBar.setSelectedState(0);
         init();//主页面
+    }
+
+    private void setUserInfo() {
+        diamondSend.setText(mDiamond);
+        glideUtis_header_user.glideCircle(mHeadimageUrl, ivUserHead, true);
+        tvUserName.setText(mNickName);
+        if (mSex.equals("男")) {
+            ivSexUser.setImageResource(R.drawable.man);
+        } else {
+            ivSexUser.setImageResource(R.drawable.female);
+        }
+        userId.setText(UserId);
+        tvUserSignture.setText(mSignture);
+        tvLiveNum.setText(mLiveNum);
+        tvFollowNum.setText(mFollow);
+        tvFanNum.setText(mFans);
     }
 
 
@@ -225,12 +259,11 @@ public class MainActivity extends BaseActivity {
                     Toast.makeText(MainActivity.this, Msg, Toast.LENGTH_SHORT).show();
                     break;
                 case 3:
-
-                    SharedPreferences.Editor editor_userinfo=sharedPreferences_user.edit();
-                    editor_userinfo.putString("mNickName",mNickName);
-                    editor_userinfo.putString("mLevel",mLevel);
+                    SharedPreferences.Editor editor_userinfo = sharedPreferences_user.edit();
+                    editor_userinfo.putString("mNickName", mNickName);
+                    editor_userinfo.putString("mLevel", mLevel);
                     editor_userinfo.putString("mCharm", mCharm);
-                    editor_userinfo.putString("mHeadimageUrl",mHeadimageUrl);
+                    editor_userinfo.putString("mHeadimageUrl", mHeadimageUrl);
                     editor_userinfo.putString("mExperience", mExperience);
                     editor_userinfo.putString("mDiamond", mDiamond);
                     editor_userinfo.putString("mLiveNum", mLiveNum);
@@ -244,6 +277,7 @@ public class MainActivity extends BaseActivity {
                     editor_userinfo.putString("mFans", mFans);
                     editor_userinfo.putString("mSignture", mSignture);
                     editor_userinfo.commit();
+                    setUserInfo();
                     break;
             }
         }
@@ -619,8 +653,8 @@ public class MainActivity extends BaseActivity {
                                                             mFollow = jsonobject.getString("关注" + "");
                                                             mFans = jsonobject.getString("粉丝" + "");
                                                             mSignture = jsonobject.getString("签名" + "");
-                                                            Message message_userinfo=new Message();
-                                                            message_userinfo.what=3;
+                                                            Message message_userinfo = new Message();
+                                                            message_userinfo.what = 3;
                                                             mHandler.sendMessage(message_userinfo);
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();

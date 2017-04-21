@@ -127,7 +127,7 @@ public class ShortVedioActivity extends BaseActivity {
         Configuration config = new Configuration.Builder()
                 // recorder 分片上传时，已上传片记录器
                 // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
-                .recorder(recorder, keyGen)
+//                .recorder(recorder, keyGen)
                 .zone(Zone.httpsAutoZone)
                 .build();
         // 实例化一个上传的实例

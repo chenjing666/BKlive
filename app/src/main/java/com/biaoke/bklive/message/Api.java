@@ -28,4 +28,6 @@ public class Api {
     public final static String BANNER = ADDRESS + "/BK/BannerUp.php";//发现页面轮播图接口
 
     public final static String FOLLOW = ADDRESS + "/BK/Fans.php";//关注接口
+
+    public final static String UPLOAD = ADDRESS + "/BK/Upload.php";//发现页面视频接口
 }

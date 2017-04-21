@@ -52,8 +52,8 @@
 
         <ImageView
             android:id="@+id/edit_user_header"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x160"
+            android:layout_height="@dimen/y160"
             android:layout_alignParentEnd="true"
             android:layout_centerVertical="true"
             android:layout_marginEnd="@dimen/x150"

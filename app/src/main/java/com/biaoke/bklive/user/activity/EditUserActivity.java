@@ -36,7 +36,16 @@ import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.eventbus.Event_mywork;
 import com.biaoke.bklive.user.eventbus.Event_nickname;
 import com.biaoke.bklive.user.eventbus.Event_signture;
+import com.biaoke.bklive.utils.GlideUtis;
 import com.lljjcoder.citypickerview.widget.CityPicker;
+import com.qiniu.android.common.Zone;
+import com.qiniu.android.http.ResponseInfo;
+import com.qiniu.android.storage.Configuration;
+import com.qiniu.android.storage.UpCancellationSignal;
+import com.qiniu.android.storage.UpCompletionHandler;
+import com.qiniu.android.storage.UpProgressHandler;
+import com.qiniu.android.storage.UploadManager;
+import com.qiniu.android.storage.UploadOptions;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -45,6 +54,7 @@ import org.json.JSONObject;
 
 import java.io.File;
 import java.util.Calendar;
+import java.util.HashMap;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -121,6 +131,26 @@ public class EditUserActivity extends BaseActivity {
     private String mFans;
     private String mSignture;
     private SharedPreferences sharedPreferences_user;
+    private String accessKey;
+    private UploadManager uploadManager;
+    public String uptoken = null;
+    public String sendFileName;
+    private GlideUtis glideUtis_header;
+
+    public EditUserActivity() {
+        Configuration config = new Configuration.Builder()
+                // recorder 分片上传时，已上传片记录器
+                // keyGen 分片上传时，生成标识符，用于片记录器区分是那个文件的上传记录
+//            .recorder(recorder, keyGen)
+                .connectTimeout(10) // 链接超时。默认10秒
+                .zone(Zone.httpsAutoZone)
+                .build();
+        // 实例化一个上传的实例
+        uploadManager = new UploadManager(config);
+    }
+
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,44 +158,184 @@ public class EditUserActivity extends BaseActivity {
         setContentView(R.layout.activity_edit_user);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
+        glideUtis_header = new GlideUtis(this);
         //获取本地保存的用户信息
-        getUserInfo();
-    }
-
-    @Override
-    protected void onStart() {
-        super.onStart();
-        //设置用户信息
-        setUserInfo();
-    }
-
-    //获取用户信息
-    private void getUserInfo() {
         sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID
         userId = sharedPreferences_user.getString("userId", "");
-        mNickName = sharedPreferences_user.getString("mNickName", "");
-        mHeadimageUrl = sharedPreferences_user.getString("mHeadimageUrl", "");
-        mLevel = sharedPreferences_user.getString("mLevel", "");
-        mCharm = sharedPreferences_user.getString("mCharm", "");
-        mExperience = sharedPreferences_user.getString("mExperience", "");
-        mDiamond = sharedPreferences_user.getString("mDiamond", "");
-        mLiveNum = sharedPreferences_user.getString("mLiveNum", "");
-        mVideoNum = sharedPreferences_user.getString("mVideoNum", "");
+        //获取秘钥，以后基本都要用
+        accessKey = sharedPreferences_user.getString("AccessKey", "");
         mSex = sharedPreferences_user.getString("mSex", "");
-        mAge = sharedPreferences_user.getString("mAge", "");
-        mEmotion = sharedPreferences_user.getString("mEmotion", "");
-        mHometown = sharedPreferences_user.getString("mHometown", "");
-        mWork = sharedPreferences_user.getString("mWork", "");
-        mFollow = sharedPreferences_user.getString("mFollow", "");
-        mFans = sharedPreferences_user.getString("mFans", "");
-        mSignture = sharedPreferences_user.getString("mSignture", "");
+//        getUserInfo();
+        JSONObject jsonObject_user = new JSONObject();
+        try {
+            jsonObject_user.put("Protocol", "UserInfo");
+            jsonObject_user.put("Cmd", "GetAll");
+            jsonObject_user.put("UserId", userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("主页面获取用户ID", jsonObject_user.toString());
+        UserInfoHttp(Api.ENCRYPT64, jsonObject_user.toString());
+    }
+
+    private Handler myHandler = new Handler() {
+
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    SharedPreferences.Editor editor_userinfo = sharedPreferences_user.edit();
+                    editor_userinfo.putString("mNickName", mNickName);
+                    editor_userinfo.putString("mLevel", mLevel);
+                    editor_userinfo.putString("mCharm", mCharm);
+                    editor_userinfo.putString("mHeadimageUrl", mHeadimageUrl);
+                    editor_userinfo.putString("mExperience", mExperience);
+                    editor_userinfo.putString("mDiamond", mDiamond);
+                    editor_userinfo.putString("mLiveNum", mLiveNum);
+                    editor_userinfo.putString("mVideoNum", mVideoNum);
+                    editor_userinfo.putString("mSex", mSex);
+                    editor_userinfo.putString("mAge", mAge);
+                    editor_userinfo.putString("mEmotion", mEmotion);
+                    editor_userinfo.putString("mHometown", mHometown);
+                    editor_userinfo.putString("mWork", mWork);
+                    editor_userinfo.putString("mFollow", mFollow);
+                    editor_userinfo.putString("mFans", mFans);
+                    editor_userinfo.putString("mSignture", mSignture);
+                    editor_userinfo.commit();
+                    setUserInfo();
+                    break;
+                case 1:
+                    int user_age = yearnow - (int) message.obj;
+                    tvAge.setText(user_age + "");
+                    break;
+                case 2:
+                    String birthday = (String) message.obj;
+                    sendBirthday(birthday);
+                    break;
+            }
+        }
+    };
+
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+        JSONObject jsonObject_user = new JSONObject();
+        try {
+            jsonObject_user.put("Protocol", "UserInfo");
+            jsonObject_user.put("Cmd", "GetAll");
+            jsonObject_user.put("UserId", userId);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("onrestart获取用户ID", jsonObject_user.toString());
+        UserInfoHttp(Api.ENCRYPT64, jsonObject_user.toString());
+    }
+
+    //获取用户本地信息
+//    private void getUserInfo() {
+//        sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID
+//        userId = sharedPreferences_user.getString("userId", "");
+//        mNickName = sharedPreferences_user.getString("mNickName", "");
+//        mHeadimageUrl = sharedPreferences_user.getString("mHeadimageUrl", "");
+//        mLevel = sharedPreferences_user.getString("mLevel", "");
+//        mCharm = sharedPreferences_user.getString("mCharm", "");
+//        mExperience = sharedPreferences_user.getString("mExperience", "");
+//        mDiamond = sharedPreferences_user.getString("mDiamond", "");
+//        mLiveNum = sharedPreferences_user.getString("mLiveNum", "");
+//        mVideoNum = sharedPreferences_user.getString("mVideoNum", "");
+//        mSex = sharedPreferences_user.getString("mSex", "");
+//        mAge = sharedPreferences_user.getString("mAge", "");
+//        mEmotion = sharedPreferences_user.getString("mEmotion", "");
+//        mHometown = sharedPreferences_user.getString("mHometown", "");
+//        mWork = sharedPreferences_user.getString("mWork", "");
+//        mFollow = sharedPreferences_user.getString("mFollow", "");
+//        mFans = sharedPreferences_user.getString("mFans", "");
+//        mSignture = sharedPreferences_user.getString("mSignture", "");
+//        //获取秘钥，以后基本都要用
+//        accessKey = sharedPreferences_user.getString("AccessKey", "");
+//    }
+
+    //修改后从服务器获取用户信息
+    public void UserInfoHttp(String url, String path) {
+        OkHttpUtils
+                .postString()
+                .url(url)
+                .content(path)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.d("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.d("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        Log.d("用户编辑页面", response);
+                                                        try {
+                                                            JSONObject jsonobject = new JSONObject(response);
+                                                            mNickName = jsonobject.getString("NickName");
+                                                            mLevel = jsonobject.getString("Level");
+                                                            mExperience = jsonobject.getString("经验");
+                                                            mCharm = jsonobject.getString("魅力");
+                                                            mDiamond = jsonobject.getString("钻石");
+                                                            mLiveNum = jsonobject.getString("直播");
+                                                            mVideoNum = jsonobject.getString("点播");
+                                                            mHeadimageUrl = jsonobject.getString("IconUrl");
+                                                            mSex = jsonobject.getString("性别");
+                                                            mAge = jsonobject.getString("年龄");
+                                                            mEmotion = jsonobject.getString("情感");
+                                                            mHometown = jsonobject.getString("家乡");
+                                                            mWork = jsonobject.getString("职业");
+                                                            mFollow = jsonobject.getString("关注" + "");
+                                                            mFans = jsonobject.getString("粉丝" + "");
+                                                            mSignture = jsonobject.getString("签名" + "");
+                                                            Message message_userinfo = new Message();
+                                                            message_userinfo.what = 0;
+                                                            myHandler.sendMessage(message_userinfo);
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
     }
 
     //设置用户信息
     private void setUserInfo() {
+        glideUtis_header.glideCircle(mHeadimageUrl, editUserHeader, true);
         tvNickName.setText(mNickName);
         editBkid.setText(userId);
-        tvSex.setText(mSex);
+        tvSex.setText(mSex + "");
         if (mSex.equals("男")) {
             ivSex.setImageResource(R.drawable.man);
         } else {
@@ -175,6 +345,7 @@ public class EditUserActivity extends BaseActivity {
         selectemotion.setText(mEmotion);
         btnHome.setText(mHometown);
         btnWork.setText(mWork);
+        tvAge.setText(mAge);
     }
     @Override
     protected String getPowerBarColors() {
@@ -184,19 +355,6 @@ public class EditUserActivity extends BaseActivity {
     Calendar c = Calendar.getInstance();
     int yearnow = c.get(Calendar.YEAR);
 
-    private Handler myHandler = new Handler() {
-
-        public void handleMessage(Message message) {
-            switch (message.what) {
-                case 1:
-                    int user_age = yearnow - (int) message.obj;
-                    tvAge.setText(user_age + "");
-                    break;
-                case 2:
-                    break;
-            }
-        }
-    };
 
     @OnClick({R.id.back, R.id.edit_head, R.id.edit_nickname, R.id.edit_sex, R.id.edit_signture, R.id.edit_impression, R.id.edit_age, R.id.edit_emotion, R.id.edit_hometown, R.id.edit_work})
     public void onClick(View view) {
@@ -206,6 +364,8 @@ public class EditUserActivity extends BaseActivity {
                 break;
             case R.id.edit_head:
                 headPopupWindow(view);
+                //获取uptoken
+                getUptoken();
                 break;
             case R.id.edit_nickname:
                 Intent intent_nickname = new Intent(this, NicknameActivity.class);
@@ -227,10 +387,16 @@ public class EditUserActivity extends BaseActivity {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 //                        tvAge.setText(String.format("%d-%d-%d", year, monthOfYear + 1, dayOfMonth));
+                        Log.d("出生日期", String.format("%d-%d-%d", year, monthOfYear + 1, dayOfMonth));
+                        String date = String.format("%d-%d-%d", year, monthOfYear + 1, dayOfMonth);
                         Message msg = Message.obtain();
-                        msg.what = 1;
-                        msg.obj = year;   //从这里把你想传递的数据放进去就行了
+                        Message message = Message.obtain();
+                        message.what = 1;
+                        message.obj = year;
+                        msg.what = 2;
+                        msg.obj = date;   //从这里把你想传递的数据放进去就行了
                         myHandler.sendMessage(msg);
+                        myHandler.sendMessage(message);
                     }
                 }, 2000, 1, 2).show();
 
@@ -289,7 +455,75 @@ public class EditUserActivity extends BaseActivity {
             jsonObject_sendNickname.put("Protocol", "UserInfo");
             jsonObject_sendNickname.put("Cmd", "Set");
             jsonObject_sendNickname.put("UserId", userId);
+            jsonObject_sendNickname.put("AccessKey", accessKey);
             jsonObject_sendNickname.put("Name", "家乡");
+            jsonObject_sendNickname.put("Data", home);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        Log.e("修改昵称", jsonObject_sendNickname.toString());
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_sendNickname.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_nickname = new JSONObject(response);
+                                                            String msg = object_nickname.getString("Msg");
+//                                                            Toast.makeText(NicknameActivity.this, msg, Toast.LENGTH_SHORT).show();
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
+
+    private void sendBirthday(String home) {
+        JSONObject jsonObject_sendNickname = new JSONObject();
+        try {
+            jsonObject_sendNickname.put("Protocol", "UserInfo");
+            jsonObject_sendNickname.put("Cmd", "Set");
+            jsonObject_sendNickname.put("UserId", userId);
+            jsonObject_sendNickname.put("AccessKey", accessKey);
+            jsonObject_sendNickname.put("Name", "年龄");
             jsonObject_sendNickname.put("Data", home);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -463,17 +697,106 @@ public class EditUserActivity extends BaseActivity {
         // ... 可以在这里把Bitmap转换成file，然后得到file的url，做文件上传操作
         // 注意这里得到的图片已经是圆形图片了
         // bitmap是没有做个圆形处理的，但已经被裁剪了
-
         String imagePath = HeaderImageUtils.savePhoto(bitmap, Environment
                 .getExternalStorageDirectory().getAbsolutePath(), String
                 .valueOf(System.currentTimeMillis()));
         Log.e("imagePath", imagePath + "");
+
+        //(七牛)设定需要添加的自定义变量为Map<String, String>类型 并且放到UploadOptions第一个参数里面
+        HashMap<String, String> map = new HashMap<String, String>();
+        map.put("x:phone", userId);//（qiniu）
+//        String mykey = "x:phone";
         if (imagePath != null) {
             // 拿着imagePath上传了
+            //
+            uploadManager.put(imagePath, sendFileName, uptoken,
+                    new UpCompletionHandler() {
+                        @Override
+                        public void complete(String key, ResponseInfo info, JSONObject jsonObject) {
+                            Log.i("qiniu", key + ",\r\n " + info + ",\r\n " + jsonObject);
+                            if (info.isOK()) {
+                                Toast.makeText(EditUserActivity.this, "头像上传成功", Toast.LENGTH_SHORT).show();
+                            }
+                        }
+                    }, new UploadOptions(map, null, false,
+                            new UpProgressHandler() {
+                                @Override
+                                public void progress(String s, double v) {
 
+                                }
+                            }, new UpCancellationSignal() {
+                        @Override
+                        public boolean isCancelled() {
+                            return false;
+                        }
+                    }));
         }
     }
 
+    //获取上传凭证uptoken
+    private void getUptoken() {
+        JSONObject jsonObject_uptoken = new JSONObject();
+        try {
+            jsonObject_uptoken.put("Protocol", "Upload");
+            jsonObject_uptoken.put("Cmd", "icon");
+            jsonObject_uptoken.put("UserId", userId);
+            jsonObject_uptoken.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_uptoken.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.e("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.UPLOAD)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.e("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.e("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_uptoken = new JSONObject(response);
+                                                            uptoken = object_uptoken.getString("Token");
+                                                            sendFileName = object_uptoken.getString("FileName");
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
 
     private void sexPop() {
         final View sex_View = LayoutInflater.from(this).inflate(R.layout.sex_select, null);
@@ -513,19 +836,20 @@ public class EditUserActivity extends BaseActivity {
     };
 
     private void sendSex(String sex) {
-        JSONObject jsonObject_sendNickname = new JSONObject();
+        JSONObject jsonObject_sendSex = new JSONObject();
         try {
-            jsonObject_sendNickname.put("Protocol", "UserInfo");
-            jsonObject_sendNickname.put("Cmd", "Set");
-            jsonObject_sendNickname.put("UserId", userId);
-            jsonObject_sendNickname.put("Name", "性别");
-            jsonObject_sendNickname.put("Data", sex);
+            jsonObject_sendSex.put("Protocol", "UserInfo");
+            jsonObject_sendSex.put("Cmd", "Set");
+            jsonObject_sendSex.put("UserId", userId);
+            jsonObject_sendSex.put("AccessKey", accessKey);
+            jsonObject_sendSex.put("Name", "性别");
+            jsonObject_sendSex.put("Data", sex);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         OkHttpUtils.postString()
                 .url(Api.ENCRYPT64)
-                .content(jsonObject_sendNickname.toString())
+                .content(jsonObject_sendSex.toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
                 .execute(new StringCallback() {
@@ -653,19 +977,20 @@ public class EditUserActivity extends BaseActivity {
     };
 
     private void sendEmotion(String emotion) {
-        JSONObject jsonObject_sendNickname = new JSONObject();
+        JSONObject jsonObject_sendEmotion = new JSONObject();
         try {
-            jsonObject_sendNickname.put("Protocol", "UserInfo");
-            jsonObject_sendNickname.put("Cmd", "Set");
-            jsonObject_sendNickname.put("UserId", userId);
-            jsonObject_sendNickname.put("Name", "情感");
-            jsonObject_sendNickname.put("Data", emotion);
+            jsonObject_sendEmotion.put("Protocol", "UserInfo");
+            jsonObject_sendEmotion.put("Cmd", "Set");
+            jsonObject_sendEmotion.put("UserId", userId);
+            jsonObject_sendEmotion.put("AccessKey", accessKey);
+            jsonObject_sendEmotion.put("Name", "情感");
+            jsonObject_sendEmotion.put("Data", emotion);
         } catch (JSONException e) {
             e.printStackTrace();
         }
         OkHttpUtils.postString()
                 .url(Api.ENCRYPT64)
-                .content(jsonObject_sendNickname.toString())
+                .content(jsonObject_sendEmotion.toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
                 .execute(new StringCallback() {

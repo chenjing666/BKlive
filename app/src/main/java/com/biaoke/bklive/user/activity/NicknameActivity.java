@@ -37,6 +37,7 @@ public class NicknameActivity extends BaseActivity {
     @BindView(R.id.btn_save)
     Button btnSave;
     private String userId;
+    private String accessKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class NicknameActivity extends BaseActivity {
         ButterKnife.bind(this);
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
         userId = sharedPreferences_user.getString("userId", "");
+        accessKey = sharedPreferences_user.getString("AccessKey", "");
     }
 
     @Override
@@ -75,6 +77,7 @@ public class NicknameActivity extends BaseActivity {
             jsonObject_sendNickname.put("Protocol", "UserInfo");
             jsonObject_sendNickname.put("Cmd", "Set");
             jsonObject_sendNickname.put("UserId", userId);
+            jsonObject_sendNickname.put("AccessKey", accessKey);
             jsonObject_sendNickname.put("Name", "NickName");
             jsonObject_sendNickname.put("Data", etNickName.getText().toString().trim());
         } catch (JSONException e) {
@@ -120,6 +123,7 @@ public class NicknameActivity extends BaseActivity {
 
                                                     @Override
                                                     public void onResponse(String response, int id) {
+                                                        Log.e("修改昵称返回信息",response);
                                                         try {
                                                             JSONObject object_nickname = new JSONObject(response);
                                                             String msg = object_nickname.getString("Msg");
