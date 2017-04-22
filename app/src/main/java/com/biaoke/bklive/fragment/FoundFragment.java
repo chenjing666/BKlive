@@ -65,7 +65,7 @@ public class FoundFragment extends Fragment {
     private liveItemAdapter liveItemAdapter;
     private ImageView imageView;
     private String useId;
-    private String page = "0";
+    private int page = 0;
     private String BannerUp;
     private List<Banner> bannerList;
     private JSONObject jsonObject_content;
@@ -89,7 +89,7 @@ public class FoundFragment extends Fragment {
         try {
             jsonObject_content.put("Protocol", "Explore");
             jsonObject_content.put("UserId", useId);
-            jsonObject_content.put("Page", page);
+            jsonObject_content.put("Page", page + "");
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -123,6 +123,7 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
+                page=0;
                 refreshData();
             }
         });
@@ -237,14 +238,15 @@ public class FoundFragment extends Fragment {
     }
 
     private void initLoadMoreData() {
-        page += page;
+        page = page+1;
         try {
             jsonObject_content.put("Protocol", "Explore");
             jsonObject_content.put("UserId", useId);
-            jsonObject_content.put("Page", page);
+            jsonObject_content.put("Page", page + "");
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        Log.e("pagepage----",page+"");
         getVideo(jsonObject_content.toString());
     }
 
@@ -256,6 +258,8 @@ public class FoundFragment extends Fragment {
             SharedPreferences.Editor editor_chatroomId = sharedPreferences_chatroomId.edit();
             editor_chatroomId.putString("chatroomId", chatroomId);
             editor_chatroomId.commit();
+
+//            getActivity().finish();//找错专用
             if (type.equals("live")) {
                 Intent intent_video = new Intent(getActivity(), PLVideoViewActivity.class);
                 intent_video.putExtra("path", recyclerDataList.get(postion).getVideoUrl());

@@ -743,7 +743,7 @@ public class EditUserActivity extends BaseActivity {
         try {
             jsonObject_uptoken.put("Protocol", "Upload");
             jsonObject_uptoken.put("Cmd", "icon");
-            jsonObject_uptoken.put("Ext", "png");
+            jsonObject_uptoken.put("Ext", "jpg");
             jsonObject_uptoken.put("UserId", userId);
             jsonObject_uptoken.put("AccessKey", accessKey);
         } catch (JSONException e) {

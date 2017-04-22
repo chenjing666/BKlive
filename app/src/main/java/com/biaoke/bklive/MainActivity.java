@@ -203,7 +203,7 @@ public class MainActivity extends BaseActivity {
                     boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
                     if (!isLogin) {
                         loginPopupWindow();
-                        popupWindow_login.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, 260, 260);
+                        popupWindow_login.showAtLocation(getWindow().getDecorView(), Gravity.BOTTOM, (int) getResources().getDimension(R.dimen.y100), (int) getResources().getDimension(R.dimen.y100));
                     } else {
                         mainHead.setVisibility(View.GONE);
                         mine.setVisibility(View.VISIBLE);

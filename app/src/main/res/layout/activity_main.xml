@@ -154,6 +154,7 @@
                             android:layout_centerVertical="true"
                             android:drawableEnd="@drawable/user_diamond"
                             android:text="送出"
+                            android:gravity="center_vertical"
                             android:textColor="@color/white"
                             android:textSize="@dimen/x22" />
 

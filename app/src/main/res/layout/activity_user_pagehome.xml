@@ -1,0 +1,177 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.biaoke.bklive.user.activity.UserPagehomeActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/background_color"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back" />
+        <!--图片资源缺失，等待补充-->
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentEnd="true"
+            android:background="@drawable/livingroom_manage_room"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/search_more" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="正在直播"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x22" />
+        </LinearLayout>
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y400"
+        android:background="@color/background_color"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y10">
+
+            <RelativeLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp_10"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/tv_diamond_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:drawableEnd="@drawable/user_diamond"
+                    android:gravity="center_vertical"
+                    android:text="送出"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/x22" />
+
+                <TextView
+                    android:id="@+id/diamond_send"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_toEndOf="@+id/tv_diamond_send"
+                    android:text="222222"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/x30" />
+            </RelativeLayout>
+
+            <com.pkmmte.view.CircularImageView
+                android:id="@+id/iv_user_head_homepage"
+                android:layout_width="@dimen/x180"
+                android:layout_height="@dimen/y180"
+                android:layout_centerHorizontal="true"
+                android:scaleType="centerInside"
+                android:src="@drawable/head_default"
+                app:border="true"
+                app:border_color="#16f5f5f5"
+                app:border_width="6dp"
+                app:selector="true"
+                app:selector_color="#4D000000"
+                app:selector_stroke_color="#16f5f5f5"
+                app:selector_stroke_width="6dp"
+                app:shadow="false" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/y135"
+                android:background="@drawable/bk_contribution_level" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="@dimen/y147"
+                android:text="lv.106"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x22" />
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:layout_width="@dimen/x140"
+                android:layout_height="@dimen/y50"
+                android:layout_centerInParent="true"
+                android:background="@drawable/info_user_anchor2" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_centerVertical="true"
+                android:layout_marginStart="@dimen/x350"
+                android:text="小公主"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x18" />
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/tv_userName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/y4"
+                android:text="帅气的大飞"
+                android:textColor="@color/white"
+                android:textSize="@dimen/x23" />
+
+            <ImageView
+                android:id="@+id/iv_sex_user"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/man" />
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/tv_user_signture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_marginTop="@dimen/y9"
+            android:text="打遍天下无敌手"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x23" />
+
+    </LinearLayout>
+</LinearLayout>

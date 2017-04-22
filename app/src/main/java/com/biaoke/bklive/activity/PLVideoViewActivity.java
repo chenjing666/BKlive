@@ -1,6 +1,7 @@
 package com.biaoke.bklive.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -43,6 +44,8 @@ import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
+import com.biaoke.bklive.user.activity.ContributionActivity;
+import com.biaoke.bklive.user.activity.UserPagehomeActivity;
 import com.biaoke.bklive.utils.GlideUtis;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.pili.pldroid.player.PLMediaPlayer;
@@ -128,7 +131,7 @@ public class PLVideoViewActivity extends BaseActivity {
     //系统提示
     private LivingroomChatSysAdapter livingroomChatSysAdapter;
     private String mNickName;
-    private PopupWindow popupWindow_living_share, popupWindow_living_gift;
+    private PopupWindow popupWindow_living_share, popupWindow_living_gift, popupWindow_livingroom_anchor;
     private String IconUrl;
     private String Level;
     //view数组
@@ -694,9 +697,17 @@ public class PLVideoViewActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    @OnClick({R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share, R.id.input_send})
+    @OnClick({R.id.ll_charm_more, R.id.livingroom_user_image, R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share, R.id.input_send})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.ll_charm_more:
+                Intent intent_contribution = new Intent(PLVideoViewActivity.this, ContributionActivity.class);
+                startActivity(intent_contribution);
+                break;
+            case R.id.livingroom_user_image:
+                AnchorPopWindow();
+                popupWindow_livingroom_anchor.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                break;
             case R.id.btn_follow:
                 addFollow();
                 break;
@@ -728,6 +739,43 @@ public class PLVideoViewActivity extends BaseActivity {
                 break;
         }
     }
+
+    private void AnchorPopWindow() {
+        final View anchorView = LayoutInflater.from(this).inflate(R.layout.popw_userinfo_anchor, null);
+        popupWindow_livingroom_anchor = new PopupWindow(anchorView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        LinearLayout linearLayout_expression_more = (LinearLayout) anchorView.findViewById(R.id.ll_expression_more);
+        linearLayout_expression_more.setOnClickListener(anchorListen);
+        TextView textView_homepage = (TextView) anchorView.findViewById(R.id.user_homepage);
+        textView_homepage.setOnClickListener(anchorListen);
+        popupWindow_livingroom_anchor.setTouchable(true);
+        popupWindow_livingroom_anchor.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
+        popupWindow_livingroom_anchor.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
+    }
+
+    private View.OnClickListener anchorListen = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.ll_expression_more:
+                    Intent intent_expression = new Intent(PLVideoViewActivity.this, ExpressionActivity.class);
+                    startActivity(intent_expression);
+//                    popupWindow_livingroom_anchor.dismiss();
+                    break;
+                case R.id.user_homepage:
+                    Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
+                    startActivity(intent_userhomepage);
+                    popupWindow_livingroom_anchor.dismiss();
+                    finish();
+                    break;
+            }
+        }
+    };
 
     //礼物popwindow
     private void giftPop() {

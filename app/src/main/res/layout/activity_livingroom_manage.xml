@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:clipToPadding="false"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical"
+    tools:context="com.biaoke.bklive.activity.LivingroomManageActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y100"
+        android:background="@color/background_color"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/back_manage"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:padding="@dimen/x20"
+            android:scaleType="centerCrop"
+            android:src="@drawable/back" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="房间管理"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x34" />
+
+        <TextView
+            android:id="@+id/tv_list_administrator"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x20"
+            android:text="管理员列表"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x24" />
+    </RelativeLayout>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerview_liveManage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y800">
+
+    </android.support.v7.widget.RecyclerView>
+
+    <Button
+        android:id="@+id/btn_outof_Livingroom"
+        android:layout_width="@dimen/x600"
+        android:layout_height="@dimen/y100"
+        android:layout_gravity="center"
+        android:layout_marginTop="@dimen/y80"
+        android:background="@drawable/buttonstyle"
+        android:text="踢出直播间"
+        android:textColor="@color/background_color" />
+</LinearLayout>

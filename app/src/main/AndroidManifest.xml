@@ -108,7 +108,11 @@
         <activity android:name=".user.activity.LevelActivity" />
         <activity android:name=".user.activity.MyVedioActivity" />
         <activity android:name=".user.activity.IdentificationActivity" />
-        <activity android:name=".activity.LivingEndActivity"></activity>
+        <activity android:name=".activity.LivingEndActivity" />
+        <activity android:name=".activity.LivingroomManageActivity" />
+        <activity android:name=".activity.AdministratorActivity" />
+        <activity android:name=".activity.ExpressionActivity" />
+        <activity android:name=".user.activity.UserPagehomeActivity"></activity>
     </application>
 
 </manifest>

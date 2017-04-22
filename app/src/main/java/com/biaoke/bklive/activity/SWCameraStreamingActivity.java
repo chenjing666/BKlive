@@ -493,12 +493,19 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             mMediaStreamingManager.stopStreaming();
         }
         WebSocketService.closeWebsocket(true);
+        Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
+        startActivity(intent_livingEnd);
+        finish();
         super.onBackPressed();
     }
 
-    @OnClick({R.id.living_close, R.id.charm_more, R.id.iv_chatbarrage, R.id.input_sendmsg, R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
+    @OnClick({R.id.tv_livingroom_manage, R.id.living_close, R.id.charm_more, R.id.iv_chatbarrage, R.id.input_sendmsg, R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.tv_livingroom_manage:
+                Intent intent_livingManage = new Intent(SWCameraStreamingActivity.this, LivingroomManageActivity.class);
+                startActivity(intent_livingManage);
+                break;
             case R.id.living_close:
                 Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
                 startActivity(intent_livingEnd);
@@ -528,8 +535,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 llLivingroomHeader.setVisibility(View.VISIBLE);
                 llLivingroomHeadtwo.setVisibility(View.VISIBLE);
                 rlChatRecyclerviewLiving.setVisibility(View.VISIBLE);
-                Message msg_live_ok=new Message();
-                msg_live_ok.what=3;
+                Message msg_live_ok = new Message();
+                msg_live_ok.what = 3;
                 mHandler.sendMessage(msg_live_ok);
                 break;
             case R.id.live_cancel:
