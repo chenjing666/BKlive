@@ -50,6 +50,7 @@ import com.biaoke.bklive.utils.GlideUtis;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
+import com.pkmmte.view.CircularImageView;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -92,16 +93,16 @@ public class PLVideoViewActivity extends BaseActivity {
     ImageView ivLivingroomShare;
     @BindView(R.id.BottomPanel_send)
     RelativeLayout BottomPanelSend;
-    @BindView(R.id.iv_chatbarrage)
-    ImageView ivChatbarrage;
-    @BindView(R.id.input_editor)
-    EditText inputEditor;
-    @BindView(R.id.input_bar)
-    RelativeLayout inputBar;
-    @BindView(R.id.input_send)
-    TextView inputSend;
-    @BindView(R.id.input_message_livingroom)
-    LinearLayout inputMessageLivingroom;
+    //    @BindView(R.id.iv_chatbarrage)
+//    ImageView ivChatbarrage;
+    //    @BindView(R.id.input_editor)
+//    EditText inputEditor;
+//    @BindView(R.id.input_bar)
+//    RelativeLayout inputBar;
+    //    @BindView(R.id.input_send)
+//    TextView inputSend;
+//    @BindView(R.id.input_message_livingroom)
+//    LinearLayout inputMessageLivingroom;
     @BindView(R.id.iv_livingroom_upvot)
     ImageView ivLivingroomUpvot;
     @BindView(R.id.myNickname)
@@ -131,7 +132,7 @@ public class PLVideoViewActivity extends BaseActivity {
     //系统提示
     private LivingroomChatSysAdapter livingroomChatSysAdapter;
     private String mNickName;
-    private PopupWindow popupWindow_living_share, popupWindow_living_gift, popupWindow_livingroom_anchor;
+    private PopupWindow popupWindow_living_share, popupWindow_living_gift, popupWindow_livingroom_message, popupWindow_livingroom_anchor, popupWindow_livingroom_common;
     private String IconUrl;
     private String Level;
     //view数组
@@ -140,6 +141,9 @@ public class PLVideoViewActivity extends BaseActivity {
     private String accessKey;
     private String msg_addFollow;
     private String Charm;
+    private EditText inputEditor;
+    private String userlistId;
+    private String userlistHeadurl;
 
 
     @Override
@@ -150,6 +154,7 @@ public class PLVideoViewActivity extends BaseActivity {
         setContentView(R.layout.activity_plvideo_view);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
+        list.clear();//清空用户列表
         ChatroomId = getIntent().getStringExtra("chatroomId");
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
         userId = sharedPreferences_user.getString("userId", "");
@@ -175,7 +180,7 @@ public class PLVideoViewActivity extends BaseActivity {
                 mVideoView.start();
             }
         });
-        addHeadimg();
+//        addHeadimg();
         rootLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -200,7 +205,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     Thread.sleep(100);
                     queryFollow();//查询是否关注
                     joinChatRoom();//加入聊天室
-                    Thread.sleep(1000);
+                    Thread.sleep(300);
                     GetChatRomCount();//读取聊天室人数
                     GetChatRomList();//读取聊天室用户列表
                 } catch (InterruptedException e) {
@@ -440,10 +445,22 @@ public class PLVideoViewActivity extends BaseActivity {
                                     if (Result.equals("1")) {
                                         JSONArray jsonArray_list = new JSONArray(object_joinchat.getString("Data"));
                                         for (int i = 0; i < jsonArray_list.length(); i++) {
-                                            String allUser = jsonArray_list.get(i).toString();//获取聊天室用户ID
-                                            //下面显示用户头像列表操作
-
+                                            JSONObject object_list = jsonArray_list.getJSONObject(i);
+                                            String allUser = object_list.getString("UserId");//获取聊天室用户ID
+                                            String IconUrl = object_list.getString("IconUrl");
+                                            list.add(new HeadBean(IconUrl, allUser));
                                         }
+                                        //下面显示用户头像列表操作
+//                                        Log.d("用户头像ID", allUser);
+//                                        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+                                        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PLVideoViewActivity.this);
+                                        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+                                        videoHeadimgXrv.setLayoutManager(linearLayoutManager);
+                                        //设置适配器
+                                        videoHeadImgAdapter = new VideoHeadImgAdapter(PLVideoViewActivity.this, list);
+                                        videoHeadimgXrv.setAdapter(videoHeadImgAdapter);
+                                        videoHeadImgAdapter.setOnItemClickListener(headimagelisten);
+
                                     }
                                 } else if (cmd.equals("AddChatRom")) {
                                     String joinchat = object_joinchat.getString("Msg");
@@ -515,6 +532,16 @@ public class PLVideoViewActivity extends BaseActivity {
             }
         }
     }
+
+    private VideoHeadImgAdapter.OnItemClickListener headimagelisten = new VideoHeadImgAdapter.OnItemClickListener() {
+        @Override
+        public void onItemClick(View view, int postion) {
+            userlistId = list.get(postion).getUserId();
+            userlistHeadurl = list.get(postion).getImgUrl();
+            CommonPopWindow();
+            popupWindow_livingroom_common.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+        }
+    };
 
     //退出聊天室
     private void exitChatRoom() {
@@ -642,25 +669,59 @@ public class PLVideoViewActivity extends BaseActivity {
                 });
     }
 
-    private void addHeadimg() {
-        //设置布局管理器
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
-        videoHeadimgXrv.setLayoutManager(linearLayoutManager);
-        //设置适配器
-        videoHeadImgAdapter = new VideoHeadImgAdapter(this, list);
-        videoHeadimgXrv.setAdapter(videoHeadImgAdapter);
+//    private void addHeadimg() {
+//        //设置布局管理器
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
+//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
+//        linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
+//        videoHeadimgXrv.setLayoutManager(linearLayoutManager);
+//        //设置适配器
+//        videoHeadImgAdapter = new VideoHeadImgAdapter(this, list);
+//        videoHeadimgXrv.setAdapter(videoHeadImgAdapter);
+//        videoHeadImgAdapter.setOnItemClickListener(headimagelisten);
+//    }
 
+
+    private void CommonPopWindow() {
+        final View anchorView = LayoutInflater.from(this).inflate(R.layout.popw_userinfo_common, null);
+        popupWindow_livingroom_common = new PopupWindow(anchorView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        TextView textView_homepage = (TextView) anchorView.findViewById(R.id.tv_user_homepage);
+        textView_homepage.setOnClickListener(commonListen);
+        CircularImageView circularImageView = (CircularImageView) anchorView.findViewById(R.id.iv_user_head);
+        glideUtis.glideCircle(userlistHeadurl, circularImageView, true);
+        popupWindow_livingroom_common.setTouchable(true);
+        popupWindow_livingroom_common.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
+        popupWindow_livingroom_common.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
+
+    private View.OnClickListener commonListen = new View.OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            switch (v.getId()) {
+                case R.id.tv_user_homepage:
+                    Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
+                    startActivity(intent_userhomepage);
+                    popupWindow_livingroom_common.dismiss();
+                    finish();
+                    break;
+            }
+        }
+    };
+
 
     @Override
     protected void onPause() {
@@ -697,7 +758,7 @@ public class PLVideoViewActivity extends BaseActivity {
         super.onBackPressed();
     }
 
-    @OnClick({R.id.ll_charm_more, R.id.livingroom_user_image, R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share, R.id.input_send})
+    @OnClick({R.id.ll_charm_more, R.id.livingroom_user_image, R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share})
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.ll_charm_more:
@@ -718,8 +779,10 @@ public class PLVideoViewActivity extends BaseActivity {
 
                 break;
             case R.id.tv_sendmessage:
-                BottomPanelSend.setVisibility(View.GONE);
-                inputMessageLivingroom.setVisibility(View.VISIBLE);
+                MessagePopWindow();
+                popupWindow_livingroom_message.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+//                BottomPanelSend.setVisibility(View.GONE);
+//                inputMessageLivingroom.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_livingroom_gift:
                 giftPop();
@@ -729,15 +792,44 @@ public class PLVideoViewActivity extends BaseActivity {
                 sharePopw();
                 popupWindow_living_share.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
-            case R.id.input_send:
+//            case R.id.input_send:
+//                if (inputEditor.getText().toString().trim().isEmpty()) {
+//                    Toast.makeText(this, "消息为空", Toast.LENGTH_SHORT).show();
+//                } else {
+//                    chatRoomMessage();
+//                    inputEditor.getText().clear();
+//                }
+//                break;
+        }
+    }
+
+    private void MessagePopWindow() {
+        final View messageView = LayoutInflater.from(this).inflate(R.layout.send_chatmessage, null);
+        popupWindow_livingroom_message = new PopupWindow(messageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        inputEditor = (EditText) messageView.findViewById(R.id.input_editor);
+        TextView inputSend = (TextView) messageView.findViewById(R.id.input_send);
+        inputSend.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
                 if (inputEditor.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(this, "消息为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(PLVideoViewActivity.this, "消息为空", Toast.LENGTH_SHORT).show();
                 } else {
                     chatRoomMessage();
                     inputEditor.getText().clear();
                 }
-                break;
-        }
+            }
+        });
+        ImageView ivChatbarrage = (ImageView) messageView.findViewById(R.id.iv_chatbarrage);
+
+        popupWindow_livingroom_message.setTouchable(true);
+        popupWindow_livingroom_message.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                return false;
+            }
+        });
+        popupWindow_livingroom_message.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
 
     private void AnchorPopWindow() {
@@ -768,6 +860,7 @@ public class PLVideoViewActivity extends BaseActivity {
 //                    popupWindow_livingroom_anchor.dismiss();
                     break;
                 case R.id.user_homepage:
+//                    finish();
                     Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
                     startActivity(intent_userhomepage);
                     popupWindow_livingroom_anchor.dismiss();

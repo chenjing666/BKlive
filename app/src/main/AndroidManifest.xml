@@ -112,7 +112,8 @@
         <activity android:name=".activity.LivingroomManageActivity" />
         <activity android:name=".activity.AdministratorActivity" />
         <activity android:name=".activity.ExpressionActivity" />
-        <activity android:name=".user.activity.UserPagehomeActivity"></activity>
+        <activity android:name=".user.activity.UserPagehomeActivity" />
+        <activity android:name=".activity.ShortVideoActivity"></activity>
     </application>
 
 </manifest>

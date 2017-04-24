@@ -1,12 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     tools:context="com.biaoke.bklive.user.activity.UserPagehomeActivity">
 
+    <LinearLayout
+        android:id="@+id/ll_anchor_data"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/y100"
@@ -14,7 +18,7 @@
         android:orientation="horizontal">
 
         <ImageView
-            android:id="@+id/back_manage"
+            android:id="@+id/back_userhome"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
@@ -22,32 +26,38 @@
             android:scaleType="centerCrop"
             android:src="@drawable/back" />
         <!--图片资源缺失，等待补充-->
-        <LinearLayout
+        <ImageView
+            android:layout_height="wrap_content"
             android:layout_width="wrap_content"
-            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
             android:layout_alignParentEnd="true"
-            android:background="@drawable/livingroom_manage_room"
-            android:gravity="center"
-            android:orientation="horizontal">
+            android:background="@drawable/yonghuziliao_zhengzaizhibo" />
+        <!--<LinearLayout-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="match_parent"-->
+        <!--android:layout_alignParentEnd="true"-->
+        <!--android:background="@drawable/livingroom_manage_room"-->
+        <!--android:gravity="center"-->
+        <!--android:orientation="horizontal">-->
 
-            <ImageView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/search_more" />
+        <!--<ImageView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:background="@drawable/search_more" />-->
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="正在直播"
-                android:textColor="@color/black"
-                android:textSize="@dimen/x22" />
-        </LinearLayout>
+        <!--<TextView-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:text="正在直播"-->
+        <!--android:textColor="@color/black"-->
+        <!--android:textSize="@dimen/x22" />-->
+        <!--</LinearLayout>-->
 
     </RelativeLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y400"
+        android:layout_height="@dimen/y430"
         android:background="@color/background_color"
         android:orientation="vertical">
 
@@ -86,8 +96,8 @@
 
             <com.pkmmte.view.CircularImageView
                 android:id="@+id/iv_user_head_homepage"
-                android:layout_width="@dimen/x180"
-                android:layout_height="@dimen/y180"
+                android:layout_width="@dimen/x160"
+                android:layout_height="@dimen/y160"
                 android:layout_centerHorizontal="true"
                 android:scaleType="centerInside"
                 android:src="@drawable/head_default"
@@ -104,14 +114,14 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/y135"
+                android:layout_marginTop="@dimen/y115"
                 android:background="@drawable/bk_contribution_level" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
-                android:layout_marginTop="@dimen/y147"
+                android:layout_marginTop="@dimen/y127"
                 android:text="lv.106"
                 android:textColor="@color/white"
                 android:textSize="@dimen/x22" />
@@ -173,5 +183,135 @@
             android:textColor="@color/white"
             android:textSize="@dimen/x23" />
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/y80"
+            android:layout_marginTop="@dimen/y10"
+            android:background="@color/background_color"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+
+            <TextView
+                android:id="@+id/anchor_homepage"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:text="主页"
+                android:textColor="@drawable/colortextview"
+                android:textSize="@dimen/x30" />
+
+            <RelativeLayout
+                android:id="@+id/anchor_video"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="10"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <View
+                    android:layout_width="@dimen/x6"
+                    android:layout_height="@dimen/y40"
+                    android:background="#8670e5" />
+
+                <TextView
+                    android:id="@+id/tv_anchor_video"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:layout_marginStart="@dimen/x10"
+                    android:text="视频"
+                    android:textColor="@drawable/colortextview"
+                    android:textSize="@dimen/x30" />
+
+                <View
+                    android:layout_width="@dimen/x6"
+                    android:layout_height="@dimen/y40"
+                    android:layout_alignParentEnd="true"
+                    android:background="#8670e5" />
+            </RelativeLayout>
+
+            <TextView
+                android:id="@+id/anchor_live"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="8"
+                android:gravity="center"
+                android:text="直播"
+                android:textColor="@drawable/colortextview"
+                android:textSize="@dimen/x30" />
+
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
+    </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/rl_to_replace"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/ll_anchor_data">
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y108"
+        android:layout_alignParentBottom="true"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/anchor_homepage_follow"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/living_userdata_add"
+                android:text="关注"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/anchor_privatemessage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/info_user_privatemessage"
+                android:text="私信"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="8"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/anchor_defriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/info_user_defriend"
+                android:text="拉黑"
+                android:textColor="@color/background_color"
+                android:textSize="@dimen/x34" />
+
+        </LinearLayout>
+
+    </LinearLayout>
+</RelativeLayout>

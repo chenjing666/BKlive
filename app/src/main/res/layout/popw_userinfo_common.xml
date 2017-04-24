@@ -17,17 +17,30 @@
             android:layout_marginTop="@dimen/y20">
 
             <ImageView
-                android:id="@+id/livingroom_data_defriend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/x20"
+                android:background="@drawable/livingroom_data_manage" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/livingroom_data_defriend"
+                android:layout_marginStart="@dimen/x23"
+                android:text="管理"
+                android:textSize="@dimen/x18" />
+            <ImageView
+                android:id="@+id/livingroom_data_defriend"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x110"
                 android:background="@drawable/livingroom_data_defriend" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/livingroom_data_defriend"
-                android:layout_marginStart="@dimen/x22"
+                android:layout_marginStart="@dimen/x112"
                 android:text="拉黑"
                 android:textSize="@dimen/x18" />
 
@@ -35,14 +48,14 @@
                 android:id="@+id/livingroom_data_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/x110"
+                android:layout_marginStart="@dimen/x200"
                 android:background="@drawable/livingroom_data_tip" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/livingroom_data_defriend"
-                android:layout_marginStart="@dimen/x113"
+                android:layout_marginStart="@dimen/x203"
                 android:text="举报"
                 android:textSize="@dimen/x18" />
 
@@ -122,7 +135,7 @@
                 android:layout_width="@dimen/x140"
                 android:layout_height="@dimen/y50"
                 android:layout_centerInParent="true"
-                android:background="@drawable/info_user_anchor2" />
+                android:background="@drawable/ziliao_huiyuan" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -140,7 +153,7 @@
             android:layout_gravity="center_horizontal"
             android:layout_marginTop="@dimen/y14"
             android:text="吃喝玩乐"
-            android:textColor="@drawable/back"
+            android:textColor="@color/black"
             android:textSize="@dimen/x22" />
 
         <LinearLayout
@@ -305,10 +318,11 @@
                     android:background="#8670e5" />
 
                 <ImageView
+                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginStart="@dimen/x30"
-                    android:background="@drawable/livingroom_add_follow" />
+                    android:background="@drawable/at" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -326,6 +340,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_user_homepage"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"

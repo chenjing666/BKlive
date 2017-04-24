@@ -21,6 +21,7 @@ import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.activity.PLVideoViewActivity;
+import com.biaoke.bklive.activity.ShortVideoActivity;
 import com.biaoke.bklive.adapter.liveItemAdapter;
 import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
@@ -72,7 +73,6 @@ public class FoundFragment extends Fragment {
 
     //websocket
     private Intent websocketServiceIntent;
-    private String type;
 
     @Nullable
     @Override
@@ -253,6 +253,8 @@ public class FoundFragment extends Fragment {
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
+            String type=recyclerDataList.get(postion).getType();
+            Log.e("----视频类型----", type);
             String chatroomId = recyclerDataList.get(postion).getUserId();
             SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
             SharedPreferences.Editor editor_chatroomId = sharedPreferences_chatroomId.edit();
@@ -270,7 +272,10 @@ public class FoundFragment extends Fragment {
                 WebSocketService.webSocketConnect();
             } else {
                 //跳转短视频视频播放，暂未开通
-                Toast.makeText(getActivity(), "暂未开通", Toast.LENGTH_SHORT).show();
+                Intent intent_shortvideo = new Intent(getActivity(), ShortVideoActivity.class);
+                intent_shortvideo.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
+                startActivity(intent_shortvideo);
+//                Toast.makeText(getActivity(), "暂未开通", Toast.LENGTH_SHORT).show();
             }
         }
     };
@@ -532,7 +537,7 @@ public class FoundFragment extends Fragment {
                                                                 String videoUrl = jsonobject.getString("VideoUrl");
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
-                                                                type = jsonobject.getString("Type");
+                                                                String type = jsonobject.getString("Type");
                                                                 live_item liveItem = new live_item(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
                                                                 recyclerDataList.add(liveItem);
                                                             }

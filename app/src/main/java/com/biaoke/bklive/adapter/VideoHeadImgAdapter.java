@@ -48,8 +48,16 @@ public class VideoHeadImgAdapter extends RecyclerView.Adapter<VideoHeadImgAdapte
     }
 
     @Override
-    public void onBindViewHolder(ViewHoldeer holder, int position) {
+    public void onBindViewHolder(final ViewHoldeer holder, final int position) {
         glideUtis.glideCircle(mList.get(position).getImgUrl(), holder.itemHeadImgIv, true);
+        if (onItemClickListener != null) {
+            holder.itemView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    onItemClickListener.onItemClick(holder.itemView, position);
+                }
+            });
+        }
     }
 
     @Override
@@ -65,5 +73,19 @@ public class VideoHeadImgAdapter extends RecyclerView.Adapter<VideoHeadImgAdapte
             super(itemView);
             ButterKnife.bind(this, itemView);
         }
+    }
+
+    // ###################################   item的点击事件（接口回调） ##############
+    public interface OnItemClickListener {
+
+        void onItemClick(View view, int postion);
+
+    }
+
+    private VideoHeadImgAdapter.OnItemClickListener onItemClickListener;
+
+    //对外提供一个监听的方法
+    public void setOnItemClickListener(VideoHeadImgAdapter.OnItemClickListener onItemClickListener) {
+        this.onItemClickListener = onItemClickListener;
     }
 }
