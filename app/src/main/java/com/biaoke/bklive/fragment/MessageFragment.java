@@ -25,7 +25,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.Unbinder;
-import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
 
@@ -51,15 +50,6 @@ public class MessageFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_privatemessage, container, false);
         unbinder = ButterKnife.bind(this, view);
-        EventBus.getDefault().register(getActivity());//注册
-//        privateMessageBean = new PrivateMessageBean("", "", "", "", "", "", "");
-//        mList.add(privateMessageBean);
-//        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true);
-//        linearLayoutManager.setAutoMeasureEnabled(false);
-//        recyclerviewPrivateMessage.setLayoutManager(linearLayoutManager);
-//        privateMessageAdapter = new PrivateMessageAdapter(getActivity(), mList);
-//        privateMessageAdapter.bind(mList);
-//        recyclerviewPrivateMessage.setAdapter(privateMessageAdapter);
         return view;
     }
 
@@ -112,6 +102,5 @@ public class MessageFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-        EventBus.getDefault().register(getActivity());
     }
 }

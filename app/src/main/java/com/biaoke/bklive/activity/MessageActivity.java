@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
+import com.biaoke.bklive.eventbus.Event_privatemessage;
 import com.biaoke.bklive.fragment.GossipFragment;
 import com.biaoke.bklive.fragment.MessageFragment;
 import com.biaoke.bklive.fragment.PrivateMessageFragment;
@@ -19,6 +20,9 @@ import butterknife.BindView;
 import butterknife.BindViews;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import de.greenrobot.event.EventBus;
+import de.greenrobot.event.Subscribe;
+import de.greenrobot.event.ThreadMode;
 
 public class MessageActivity extends BaseActivity {
 
@@ -34,6 +38,7 @@ public class MessageActivity extends BaseActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_message);
         ButterKnife.bind(this);
+        EventBus.getDefault().register(this);//注册
         initView();
         backMessage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -104,5 +109,16 @@ public class MessageActivity extends BaseActivity {
         }
         view.setSelected(true);
         viewpagerMessage.setCurrentItem((Integer) view.getTag(), false);
+    }
+
+    @Subscribe(threadMode = ThreadMode.MainThread)
+    public void Event_privateMessage(Event_privatemessage privatemessage) {
+        String privateMsg = privatemessage.getMsg();//json格式的信息
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        EventBus.getDefault().unregister(this);
     }
 }

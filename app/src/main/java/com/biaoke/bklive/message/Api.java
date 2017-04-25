@@ -30,4 +30,7 @@ public class Api {
     public final static String FOLLOW = ADDRESS + "/BK/Fans.php";//关注接口
 
     public final static String UPLOAD = ADDRESS + "/BK/Upload.php";//发现页面视频接口
+
+    public final static String VIDEOLIST = ADDRESS + "/BK/GetVideoList.php";//视频列表接口
+
 }
