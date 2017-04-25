@@ -52,7 +52,7 @@
                 android:background="@color/gray_light" />
 
             <RelativeLayout
-                android:id="@+id/bk_income"
+                android:id="@+id/bk_expression"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/y100"
                 android:background="@color/white"
@@ -68,14 +68,16 @@
                     android:textSize="@dimen/x28" />
 
                 <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
+                    android:gravity="center"
+                    android:layout_width="@dimen/x122"
+                    android:layout_height="@dimen/y44"
                     android:layout_alignParentEnd="true"
                     android:layout_centerVertical="true"
-                    android:layout_marginEnd="@dimen/x200"
-                    android:text="放印象"
+                    android:layout_marginEnd="@dimen/x140"
+                    android:text="添加印象"
+                    android:background="@drawable/hotstyle2"
                     android:textColor="#222222"
-                    android:textSize="@dimen/x28" />
+                    android:textSize="@dimen/x23" />
 
                 <ImageView
                     android:layout_width="wrap_content"
@@ -111,6 +113,7 @@
                     android:layout_toLeftOf="@+id/tv_zhankong">
 
                     <TextView
+                        android:id="@+id/tv_age"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -153,6 +156,7 @@
                     android:layout_toLeftOf="@+id/tv_zhankong2">
 
                     <TextView
+                        android:id="@+id/tv_emotion"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -195,6 +199,7 @@
                     android:layout_toLeftOf="@+id/tv_zhankong3">
 
                     <TextView
+                        android:id="@+id/tv_hometown"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -237,6 +242,7 @@
                     android:layout_toLeftOf="@+id/tv_zhankong4">
 
                     <TextView
+                        android:id="@+id/tv_work"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -279,6 +285,7 @@
                     android:layout_toLeftOf="@+id/tv_zhankong5">
 
                     <TextView
+                        android:id="@+id/tv_bkid"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"
@@ -321,6 +328,7 @@
                     android:layout_toLeftOf="@+id/tv_zhankong6">
 
                     <TextView
+                        android:id="@+id/tv_signture"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentEnd="true"

@@ -144,6 +144,25 @@ public class PLVideoViewActivity extends BaseActivity {
     private EditText inputEditor;
     private String userlistId;
     private String userlistHeadurl;
+    //主播信息
+    private String yNickName;
+    private String yLevel;
+    private String yExperience;
+    private String yCharm;
+    private String yDiamond;
+    private String yLiveNum;
+    private String yVideoNum;
+    private String yHeadimageUrl;
+    private String ySex;
+    private String yAge;
+    private String yEmotion;
+    private String yHometown;
+    private String yWork;
+    private String yFollow;
+    private String yFans;
+    private String ySignture;
+    private String ySendgift;
+    //主播信息
 
 
     @Override
@@ -156,6 +175,16 @@ public class PLVideoViewActivity extends BaseActivity {
         EventBus.getDefault().register(this);//注册
         list.clear();//清空用户列表
         ChatroomId = getIntent().getStringExtra("chatroomId");
+        JSONObject jsonObject_yuser = new JSONObject();
+        try {
+            jsonObject_yuser.put("Protocol", "UserInfo");
+            jsonObject_yuser.put("Cmd", "GetAll");
+            jsonObject_yuser.put("UserId", ChatroomId);
+            Log.e("发送主播信息", jsonObject_yuser.toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        UserInfoHttp(Api.ENCRYPT64, jsonObject_yuser.toString());
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID，直播要取
         userId = sharedPreferences_user.getString("userId", "");
         accessKey = sharedPreferences_user.getString("AccessKey", "");
@@ -192,15 +221,15 @@ public class PLVideoViewActivity extends BaseActivity {
             }
         });
         glideUtis = new GlideUtis(this);
-        glideUtis.glideCircle(IconUrl, livingroomUserImage, true);
-        myNickname.setText(mNickName);
-        tvCharmLivingShow.setText(Charm);
-        tvBkId.setText(userId);
+//        glideUtis.glideCircle(yHeadimageUrl, livingroomUserImage, true);
+//        myNickname.setText(yNickName);
+//        tvCharmLivingShow.setText(yCharm);
+//        tvBkId.setText(ChatroomId);
         new Thread(new Runnable() {
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
+                    Thread.sleep(500);
                     joinInWeb();//获取长连接
                     Thread.sleep(100);
                     queryFollow();//查询是否关注
@@ -235,6 +264,12 @@ public class PLVideoViewActivity extends BaseActivity {
                 case 3:
                     Toast.makeText(PLVideoViewActivity.this, msg_addFollow, Toast.LENGTH_SHORT).show();
                     btnFollow.setVisibility(View.GONE);
+                    break;
+                case 4:
+                    glideUtis.glideCircle(yHeadimageUrl, livingroomUserImage, true);
+                    myNickname.setText(yNickName);
+                    tvCharmLivingShow.setText(yCharm);
+                    tvBkId.setText(ChatroomId);
                     break;
             }
         }
@@ -538,6 +573,16 @@ public class PLVideoViewActivity extends BaseActivity {
         public void onItemClick(View view, int postion) {
             userlistId = list.get(postion).getUserId();
             userlistHeadurl = list.get(postion).getImgUrl();
+            JSONObject jsonObject_yuser = new JSONObject();
+            try {
+                jsonObject_yuser.put("Protocol", "UserInfo");
+                jsonObject_yuser.put("Cmd", "GetAll");
+                jsonObject_yuser.put("UserId", userlistId);
+                Log.e("发送用户列表信息", jsonObject_yuser.toString());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
             CommonPopWindow();
             popupWindow_livingroom_common.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         }
@@ -689,7 +734,7 @@ public class PLVideoViewActivity extends BaseActivity {
 //        videoHeadImgAdapter.setOnItemClickListener(headimagelisten);
 //    }
 
-
+    //用户列表信息
     private void CommonPopWindow() {
         final View anchorView = LayoutInflater.from(this).inflate(R.layout.popw_userinfo_common, null);
         popupWindow_livingroom_common = new PopupWindow(anchorView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -697,6 +742,35 @@ public class PLVideoViewActivity extends BaseActivity {
         textView_homepage.setOnClickListener(commonListen);
         CircularImageView circularImageView = (CircularImageView) anchorView.findViewById(R.id.iv_user_head);
         glideUtis.glideCircle(userlistHeadurl, circularImageView, true);
+
+        TextView textView_level = (TextView) anchorView.findViewById(R.id.textview_level);
+        textView_level.setText("lv." + yLevel);
+        TextView textView_nickname = (TextView) anchorView.findViewById(R.id.tv_userName);
+        textView_nickname.setText(yNickName);
+        ImageView imageView_sex = (ImageView) anchorView.findViewById(R.id.iv_sex_user);
+        if (ySex.equals("男")) {
+            imageView_sex.setImageResource(R.drawable.man);
+        } else {
+            imageView_sex.setImageResource(R.drawable.female);
+        }
+        TextView textView_bkID = (TextView) anchorView.findViewById(R.id.user_id);
+        textView_bkID.setText(ChatroomId);
+        TextView textView_signture = (TextView) anchorView.findViewById(R.id.tv_people_signture);
+        textView_signture.setText(ySignture);
+
+        TextView textView_follow = (TextView) anchorView.findViewById(R.id.tv_follow_people);
+        textView_follow.setText(yFollow);
+        TextView textView_fans = (TextView) anchorView.findViewById(R.id.tv_fans_people);
+        textView_fans.setText(yFans);
+        TextView textView_send = (TextView) anchorView.findViewById(R.id.tv_sendgift_people);
+        textView_send.setText(ySendgift);
+        TextView textView_charm = (TextView) anchorView.findViewById(R.id.tv_charm_people);
+        textView_charm.setText(yCharm);
+
+        LinearLayout linearLayout_addFollow = (LinearLayout) anchorView.findViewById(R.id.ll_follow_people);
+        linearLayout_addFollow.setOnClickListener(commonListen);
+
+
         popupWindow_livingroom_common.setTouchable(true);
         popupWindow_livingroom_common.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -714,9 +788,13 @@ public class PLVideoViewActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.tv_user_homepage:
                     Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
+                    intent_userhomepage.putExtra("ChatroomId", userlistId);
                     startActivity(intent_userhomepage);
                     popupWindow_livingroom_common.dismiss();
                     finish();
+                    break;
+                case R.id.ll_follow_people:
+                    addFollow();
                     break;
             }
         }
@@ -839,6 +917,36 @@ public class PLVideoViewActivity extends BaseActivity {
         linearLayout_expression_more.setOnClickListener(anchorListen);
         TextView textView_homepage = (TextView) anchorView.findViewById(R.id.user_homepage);
         textView_homepage.setOnClickListener(anchorListen);
+        ImageView imageView_anchorHead = (ImageView) anchorView.findViewById(R.id.iv_user_head);
+        glideUtis.glideCircle(yHeadimageUrl, imageView_anchorHead, true);
+        TextView textView_level = (TextView) anchorView.findViewById(R.id.textView);
+        textView_level.setText("lv." + yLevel);
+        TextView textView_nickname = (TextView) anchorView.findViewById(R.id.tv_userName);
+        textView_nickname.setText(yNickName);
+        ImageView imageView_sex = (ImageView) anchorView.findViewById(R.id.iv_sex_user);
+        if (ySex.equals("男")) {
+            imageView_sex.setImageResource(R.drawable.man);
+        } else {
+            imageView_sex.setImageResource(R.drawable.female);
+        }
+        TextView textView_bkID = (TextView) anchorView.findViewById(R.id.user_id);
+        textView_bkID.setText(ChatroomId);
+        TextView textView_signture = (TextView) anchorView.findViewById(R.id.tv_anchor_signture);
+        textView_signture.setText(ySignture);
+
+        TextView textView_follow = (TextView) anchorView.findViewById(R.id.tv_follow);
+        textView_follow.setText(yFollow);
+        TextView textView_fans = (TextView) anchorView.findViewById(R.id.tv_fans);
+        textView_fans.setText(yFans);
+        TextView textView_send = (TextView) anchorView.findViewById(R.id.tv_sendgift);
+        textView_send.setText(ySendgift);
+        TextView textView_charm = (TextView) anchorView.findViewById(R.id.tv_charm);
+        textView_charm.setText(yCharm);
+
+        LinearLayout linearLayout_addFollow = (LinearLayout) anchorView.findViewById(R.id.ll_add_follow);
+        linearLayout_addFollow.setOnClickListener(anchorListen);
+
+
         popupWindow_livingroom_anchor.setTouchable(true);
         popupWindow_livingroom_anchor.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -862,9 +970,13 @@ public class PLVideoViewActivity extends BaseActivity {
                 case R.id.user_homepage:
 //                    finish();
                     Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
+                    intent_userhomepage.putExtra("ChatroomId", ChatroomId);
                     startActivity(intent_userhomepage);
                     popupWindow_livingroom_anchor.dismiss();
                     finish();
+                    break;
+                case R.id.ll_add_follow:
+                    addFollow();
                     break;
             }
         }
@@ -1116,4 +1228,81 @@ public class PLVideoViewActivity extends BaseActivity {
             }
         }
     };
+
+
+    //获取用户信息
+    public void UserInfoHttp(String url, String path) {
+        OkHttpUtils
+                .postString()
+                .url(url)
+                .content(path)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.d("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.d("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        Log.d("成功===成功的返回", response);
+                                                        try {
+                                                            JSONObject jsonobject = new JSONObject(response);
+                                                            yNickName = jsonobject.getString("NickName");
+                                                            yLevel = jsonobject.getString("Level");
+                                                            yExperience = jsonobject.getString("经验");
+                                                            yCharm = jsonobject.getString("魅力");
+                                                            yDiamond = jsonobject.getString("钻石");
+                                                            yLiveNum = jsonobject.getString("直播");
+                                                            yVideoNum = jsonobject.getString("点播");
+                                                            yHeadimageUrl = jsonobject.getString("IconUrl");
+                                                            ySex = jsonobject.getString("性别");
+                                                            yAge = jsonobject.getString("生日");
+                                                            yEmotion = jsonobject.getString("情感");
+                                                            yHometown = jsonobject.getString("家乡");
+                                                            yWork = jsonobject.getString("职业");
+                                                            yFollow = jsonobject.getString("关注" + "");
+                                                            yFans = jsonobject.getString("粉丝" + "");
+                                                            ySignture = jsonobject.getString("签名" + "");
+                                                            ySendgift = jsonobject.getString("消费");
+                                                            Message message_userinfo = new Message();
+                                                            message_userinfo.what = 4;
+                                                            handler.sendMessage(message_userinfo);
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
 }

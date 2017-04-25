@@ -2,6 +2,7 @@ package com.biaoke.bklive.activity;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
@@ -489,14 +490,27 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 
     @Override
     public void onBackPressed() {
-        if (mMediaStreamingManager != null) {
-            mMediaStreamingManager.stopStreaming();
-        }
-        WebSocketService.closeWebsocket(true);
-        Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
-        startActivity(intent_livingEnd);
-        finish();
-        super.onBackPressed();
+        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+        builder.setMessage("确认取消直播？")
+                .setCancelable(false)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (mMediaStreamingManager != null) {
+                            mMediaStreamingManager.stopStreaming();
+                        }
+                        WebSocketService.closeWebsocket(true);
+                        Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
+                        startActivity(intent_livingEnd);
+                        finish();
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
+//        super.onBackPressed();
     }
 
     @OnClick({R.id.tv_livingroom_manage, R.id.living_close, R.id.charm_more, R.id.iv_chatbarrage, R.id.input_sendmsg, R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
@@ -507,9 +521,23 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 startActivity(intent_livingManage);
                 break;
             case R.id.living_close:
-                Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
-                startActivity(intent_livingEnd);
-                finish();
+                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                builder.setMessage("确认取消直播？")
+                        .setCancelable(false)
+                        .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
+                                startActivity(intent_livingEnd);
+                                finish();
+                            }
+                        }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.cancel();
+                    }
+                }).show();
+//                AlertDialog alert = builder.create();
                 break;
             case R.id.charm_more:
                 break;

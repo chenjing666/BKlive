@@ -75,7 +75,7 @@ public class WebSocketService extends Service {
                         EventBus.getDefault().post(new Event_chatroom_errorMsg("连接服务器失败"));
                     } else if (code == 3) {
                         //退出聊天室
-                        EventBus.getDefault().post(new Event_chatroom_errorMsg("退出聊天室"));
+                        EventBus.getDefault().post(new Event_chatroom_errorMsg("您已退出聊天室"));
                     }
                 }
             }, options);

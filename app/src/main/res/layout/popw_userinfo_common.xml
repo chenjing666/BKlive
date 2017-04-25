@@ -129,7 +129,8 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:visibility="gone">
 
             <ImageView
                 android:layout_width="@dimen/x140"
@@ -148,6 +149,7 @@
         </RelativeLayout>
 
         <TextView
+            android:id="@+id/tv_people_signture"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
@@ -176,6 +178,7 @@
                     android:textSize="@dimen/x28" />
 
                 <TextView
+                    android:id="@+id/tv_follow_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -199,6 +202,7 @@
                     android:textSize="@dimen/x28" />
 
                 <TextView
+                    android:id="@+id/tv_fans_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -229,6 +233,7 @@
                     android:textSize="@dimen/x28" />
 
                 <TextView
+                    android:id="@+id/tv_sendgift_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -252,6 +257,7 @@
                     android:textSize="@dimen/x28" />
 
                 <TextView
+                    android:id="@+id/tv_charm_people"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentEnd="true"
@@ -271,6 +277,7 @@
             android:orientation="horizontal">
 
             <LinearLayout
+                android:id="@+id/ll_follow_people"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="10"
@@ -380,6 +387,7 @@
             android:background="@drawable/bk_contribution_level" />
 
         <TextView
+            android:id="@+id/textview_level"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"

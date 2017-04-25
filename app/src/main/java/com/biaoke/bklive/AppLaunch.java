@@ -23,8 +23,8 @@ public class AppLaunch extends Application {
         QueuedWork.isUseThreadPool = false;
         UMShareAPI.get(this);
         {
-            PlatformConfig.setWeixin("wxdc1e388c3822c80b", "3baf1193c85774b3fd9d18447d76cab0");
-            PlatformConfig.setSinaWeibo("3921700954", "04b48b094faeb16683c32669824ebdad","http://sns.whalecloud.com");
+            PlatformConfig.setWeixin("wx393fb4ea2ce1243b", "6725feca1c9c58ad76c2a023ae5c6110");
+            PlatformConfig.setSinaWeibo("53400529", "87045c1fed3f93ef5fda9429352a2333","http://sns.whalecloud.com");
             PlatformConfig.setQQZone("1106024311", "FGnkSQttl6C4Wdd6");
         }
     }
