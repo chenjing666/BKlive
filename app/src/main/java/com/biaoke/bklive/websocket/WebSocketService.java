@@ -15,13 +15,21 @@ import android.widget.Toast;
 
 import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
+import com.biaoke.bklive.eventbus.Event_privatemessage;
 import com.biaoke.bklive.message.Api;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import de.greenrobot.event.EventBus;
 import de.tavendo.autobahn.WebSocketConnection;
 import de.tavendo.autobahn.WebSocketException;
 import de.tavendo.autobahn.WebSocketHandler;
 import de.tavendo.autobahn.WebSocketOptions;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 /**
  * Created by hasee on 2017/4/13.
@@ -36,6 +44,7 @@ public class WebSocketService extends Service {
     //    private static String websocketHost = "ws://server-test.bk5977.com:8282";
     private static WebSocketOptions options = new WebSocketOptions();
     private static boolean isExitApp = false;
+    private static String allMessage;
 
     //发消息
     public static void sendMsg(String s) {
@@ -63,7 +72,13 @@ public class WebSocketService extends Service {
                 @Override
                 public void onTextMessage(String payload) {
                     Log.d(TAG, "收到消息 = " + payload);
+                    allMessage = payload;
+                    String isMsg = payload.substring(0, 1);
+                    if (!isMsg.equals("{")) {
+                        MessageType(payload);
+                    } else {
                     EventBus.getDefault().post(new Event_chatroom(payload));
+                    }
                 }
 
                 //websocket关闭时候的回调
@@ -136,6 +151,37 @@ public class WebSocketService extends Service {
         if (connectionReceiver != null) {
             unregisterReceiver(connectionReceiver);
         }
+    }
+
+    public static void MessageType(String content) {
+        OkHttpUtils.postString()
+                .url(Api.UNENCRYPT64)
+                .content(content)
+                .mediaType(MediaType.parse(""))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        try {
+                            JSONObject object = new JSONObject(response);
+                            String Protocol = object.getString("Protocol");
+                            if (Protocol.equals("UserMsg")) {
+                                //私信解密再发送私信页面
+                                EventBus.getDefault().post(new Event_privatemessage(response));
+                            } else {
+                                //如果以后时间充足，这个地方也发送解密过的
+                                EventBus.getDefault().post(new Event_chatroom(allMessage));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
     }
 
 }

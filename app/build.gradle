@@ -87,6 +87,7 @@ dependencies {
     compile files('libs/SocialSDK_Sina_Full.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/autobahn-0.5.0.jar')
+    //弹幕
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -101,8 +102,7 @@ dependencies {
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'com.github.florent37:viewanimator:1.0.4'
     compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    //弹幕
-    compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
 }

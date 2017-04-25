@@ -500,6 +500,7 @@ public class PLVideoViewActivity extends BaseActivity {
 
 
     //收到的聊天室消息
+    //如果以后时间充足，这个地方接收解密过的
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void onEvent_chatroom(Event_chatroom msg) {
         String mmsg = msg.getMsg();

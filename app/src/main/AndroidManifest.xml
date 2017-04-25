@@ -113,7 +113,8 @@
         <activity android:name=".activity.AdministratorActivity" />
         <activity android:name=".activity.ExpressionActivity" />
         <activity android:name=".user.activity.UserPagehomeActivity" />
-        <activity android:name=".activity.ShortVideoActivity"></activity>
+        <activity android:name=".activity.ShortVideoActivity" />
+        <activity android:name=".activity.PrivateMsgActivity"></activity>
     </application>
 
 </manifest>
