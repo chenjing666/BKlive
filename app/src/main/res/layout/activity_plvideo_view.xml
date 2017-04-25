@@ -104,6 +104,11 @@
 
     </com.pili.pldroid.player.widget.PLVideoView>
 
+    <master.flame.danmaku.ui.widget.DanmakuView
+        android:id="@+id/danmaku_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y600"
+        android:layout_marginTop="@dimen/y200" />
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"

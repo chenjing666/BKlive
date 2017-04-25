@@ -103,4 +103,6 @@ dependencies {
     compile 'com.android.support:recyclerview-v7:25.0.1'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //弹幕
+    compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
 }

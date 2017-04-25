@@ -5,8 +5,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
 import android.graphics.drawable.ColorDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -60,6 +62,7 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,6 +70,14 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import master.flame.danmaku.controller.DrawHandler;
+import master.flame.danmaku.danmaku.model.BaseDanmaku;
+import master.flame.danmaku.danmaku.model.DanmakuTimer;
+import master.flame.danmaku.danmaku.model.IDanmakus;
+import master.flame.danmaku.danmaku.model.android.DanmakuContext;
+import master.flame.danmaku.danmaku.model.android.Danmakus;
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
+import master.flame.danmaku.ui.widget.DanmakuView;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
@@ -163,7 +174,17 @@ public class PLVideoViewActivity extends BaseActivity {
     private String ySignture;
     private String ySendgift;
     //主播信息
-
+    //弹幕相关
+    private boolean showDanmaku;
+    private DanmakuView danmakuView;
+    private DanmakuContext danmakuContext;
+    private BaseDanmakuParser parser = new BaseDanmakuParser() {
+        @Override
+        protected IDanmakus parse() {
+            return new Danmakus();
+        }
+    };
+    //弹幕结束
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -242,6 +263,43 @@ public class PLVideoViewActivity extends BaseActivity {
                 }
             }
         }).start();
+
+        danmakuView = (DanmakuView) findViewById(R.id.danmaku_view);
+        danmakuView.enableDanmakuDrawingCache(true);
+        danmakuView.setCallback(new DrawHandler.Callback() {
+            @Override
+            public void prepared() {
+                showDanmaku = true;
+                danmakuView.start();
+                generateSomeDanmaku();//测试用随机弹幕
+            }
+
+            @Override
+            public void updateTimer(DanmakuTimer timer) {
+
+            }
+
+            @Override
+            public void danmakuShown(BaseDanmaku danmaku) {
+
+            }
+
+            @Override
+            public void drawingFinished() {
+
+            }
+        });
+        danmakuContext = DanmakuContext.create();
+        danmakuView.prepare(parser, danmakuContext);
+
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {
+                    onWindowFocusChanged(true);
+                }
+            }
+        });
     }
 
     private Handler handler = new Handler() {
@@ -805,12 +863,18 @@ public class PLVideoViewActivity extends BaseActivity {
     protected void onPause() {
         super.onPause();
         mVideoView.pause();
+        if (danmakuView != null && danmakuView.isPrepared()) {
+            danmakuView.pause();
+        }
     }
 
     @Override
     protected void onResume() {
         super.onResume();
         mVideoView.start();
+        if (danmakuView != null && danmakuView.isPrepared() && danmakuView.isPaused()) {
+            danmakuView.resume();
+        }
     }
 
     @Override
@@ -818,6 +882,11 @@ public class PLVideoViewActivity extends BaseActivity {
         super.onDestroy();
         mVideoView.stopPlayback();
         EventBus.getDefault().unregister(this);//释放
+        showDanmaku = false;
+        if (danmakuView != null) {
+            danmakuView.release();
+            danmakuView = null;
+        }
     }
 
     @Override
@@ -1178,6 +1247,7 @@ public class PLVideoViewActivity extends BaseActivity {
             object_chatroomMsg.put("IconUrl", IconUrl);
             object_chatroomMsg.put("Level", Level);
             object_chatroomMsg.put("Msg", mMsg);
+            addDanmaku(mMsg, true);//发弹幕信息
             Log.e("发消息内容", object_chatroomMsg.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -1199,6 +1269,70 @@ public class PLVideoViewActivity extends BaseActivity {
                     }
                 });
 
+    }
+
+    /**
+     * 向弹幕View中添加一条弹幕
+     *
+     * @param content    弹幕的具体内容
+     * @param withBorder 弹幕是否有边框
+     */
+    private void addDanmaku(String content, boolean withBorder) {
+        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        danmaku.text = content;
+        danmaku.padding = 5;
+        danmaku.textSize = sp2px(20);
+        danmaku.textColor = Color.WHITE;
+        danmaku.setTime(danmakuView.getCurrentTime());
+        if (withBorder) {
+            danmaku.borderColor = Color.GREEN;
+        }
+        danmakuView.addDanmaku(danmaku);
+    }
+
+    /**
+     * sp转px的方法。
+     */
+    public int sp2px(float spValue) {
+        final float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    /**
+     * 随机生成一些弹幕内容以供测试
+     */
+    private void generateSomeDanmaku() {
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (showDanmaku) {
+                    int time = new Random().nextInt(300);
+                    String content = "" + time + time;
+                    addDanmaku(content, false);
+                    try {
+                        Thread.sleep(time);
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }).start();
+    }
+
+    //页面加载之后立即执行的方法
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
     }
 
     //直播间观众视角分享
