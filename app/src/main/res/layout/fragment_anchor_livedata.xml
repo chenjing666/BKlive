@@ -1,62 +1,67 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<android.support.design.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_height="match_parent">
 
-    <ScrollView
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main.appbar"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:fitsSystemWindows="true"
+        android:background="@color/white"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="@dimen/y100"
+            android:orientation="horizontal"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/y100"
-                android:orientation="horizontal">
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/video_replay" />
 
-                <ImageView
-                    android:layout_gravity="center_vertical"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="@dimen/x30"
-                    android:background="@drawable/video_replay" />
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/x20"
+                android:text="共"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/x20"
-                    android:text="共"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/x26" />
+            <TextView
+                android:id="@+id/livenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/x20"
+                android:text="509"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x40" />
 
-                <TextView
-                    android:id="@+id/livenum"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/x20"
-                    android:text="509"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/x40" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center_vertical"
-                    android:layout_marginStart="@dimen/x20"
-                    android:text="精彩回放"
-                    android:textColor="@color/black"
-                    android:textSize="@dimen/x26" />
-            </LinearLayout>
-
-
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:layout_marginStart="@dimen/x20"
+                android:text="精彩回放"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
         </LinearLayout>
-    </ScrollView>
+    </android.support.design.widget.AppBarLayout>
 
 
-</LinearLayout>
+    <com.xlibs.xrv.view.XRecyclerView
+        android:id="@+id/recyclerview_livenum"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:overScrollMode="never"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
+
+    </com.xlibs.xrv.view.XRecyclerView>
+</android.support.design.widget.CoordinatorLayout>
