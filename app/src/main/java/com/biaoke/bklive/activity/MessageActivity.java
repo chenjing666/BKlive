@@ -32,6 +32,7 @@ public class MessageActivity extends BaseActivity {
     ViewPager viewpagerMessage;
     @BindView(R.id.back_message)
     ImageView backMessage;
+    private Fragment fragment_priMsg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,6 +41,8 @@ public class MessageActivity extends BaseActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
         initView();
+        fragment_priMsg=new PrivateMessageFragment();
+        new PrivateMessageFragment.getMsg();
         backMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -47,6 +50,10 @@ public class MessageActivity extends BaseActivity {
             }
         });
     }
+
+
+
+
     //初始化视图
     private void initView() {
         viewpagerMessage.setAdapter(myMessageAdapter);
