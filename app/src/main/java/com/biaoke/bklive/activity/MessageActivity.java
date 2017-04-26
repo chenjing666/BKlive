@@ -7,6 +7,7 @@ import android.support.v4.view.ViewPager;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
@@ -32,8 +33,9 @@ public class MessageActivity extends BaseActivity {
     ViewPager viewpagerMessage;
     @BindView(R.id.back_message)
     ImageView backMessage;
-    private Fragment fragment_priMsg;
-
+    private GossipFragment mGossipFragment;
+    private PrivateMessageFragment mPrivateMessageFragment;
+    private MessageFragment mMessageFragment;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -41,14 +43,21 @@ public class MessageActivity extends BaseActivity {
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
         initView();
-        fragment_priMsg=new PrivateMessageFragment();
-        new PrivateMessageFragment.getMsg();
         backMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 finish();
             }
         });
+        if(mGossipFragment==null){
+            mGossipFragment=new GossipFragment();
+        }
+        if(mPrivateMessageFragment==null){
+            mPrivateMessageFragment=new PrivateMessageFragment();
+        }
+        if(mMessageFragment==null){
+            mMessageFragment=new MessageFragment();
+        }
     }
 
 
@@ -93,11 +102,11 @@ public class MessageActivity extends BaseActivity {
         public Fragment getItem(int position) {
             switch (position) {
                 case 0:
-                    return new GossipFragment();
+                    return mGossipFragment;
                 case 1:
-                    return new PrivateMessageFragment();
+                    return mPrivateMessageFragment;
                 case 2:
-                    return new MessageFragment();
+                    return mMessageFragment;
             }
             return null;
         }
@@ -121,6 +130,8 @@ public class MessageActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void Event_privateMessage(Event_privatemessage privatemessage) {
         String privateMsg = privatemessage.getMsg();//json格式的信息
+        //如果是私信发送通知到PrivateMessageFragment
+        mPrivateMessageFragment.setMag(privateMsg);
     }
 
     @Override

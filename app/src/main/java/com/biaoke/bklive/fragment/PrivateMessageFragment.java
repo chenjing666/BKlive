@@ -6,6 +6,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -53,8 +54,13 @@ public class PrivateMessageFragment extends Fragment {
         return view;
     }
 
-    public static class getMsg {
-
+    /**
+     * 接受数据信息
+     *
+     * @param data
+     */
+    public  void setMag(String data) {
+        Log.d("PrivateMessageFragment", data);
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread)
