@@ -60,6 +60,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Map;
+import java.util.Set;
 
 import butterknife.BindView;
 import butterknife.BindViews;
@@ -168,6 +169,7 @@ public class MainActivity extends BaseActivity {
     private SharedPreferences sharedPreferences_user;
     private GlideUtis glideUtis_header_user;
     private String currentTime = System.currentTimeMillis() + "";//用于更换头像地址
+    private String msg_um;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -251,6 +253,9 @@ public class MainActivity extends BaseActivity {
     Handler mHandler = new Handler() {
         public void handleMessage(Message message) {
             switch (message.what) {
+                case 0:
+                    Toast.makeText(MainActivity.this, msg_um, Toast.LENGTH_SHORT).show();
+                    break;
                 case 1:
                     Intent intent_prepare = new Intent(MainActivity.this, SWCameraStreamingActivity.class);
                     startActivity(intent_prepare);
@@ -278,6 +283,16 @@ public class MainActivity extends BaseActivity {
                     editor_userinfo.putString("mSignture", mSignture);
                     editor_userinfo.commit();
                     setUserInfo();
+                    break;
+                case 4:
+//                    UMShareAPI.get(MainActivity.this).doOauthVerify(MainActivity.this, SHARE_MEDIA.WEIXIN,
+//                    UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.QQ, umAuthListener);
+                    break;
+                case 5:
+//                    UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.SINA, umAuthListener);
+                    break;
+                case 6:
+//                    UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
                     break;
             }
         }
@@ -366,6 +381,7 @@ public class MainActivity extends BaseActivity {
             public void onClick(View v) {
                 popupWindow_login.dismiss();
                 UMShareAPI.get(MainActivity.this).doOauthVerify(MainActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
+
             }
         });
         ImageView imageView_phone = (ImageView) contentView.findViewById(R.id.phone_login);
@@ -741,7 +757,27 @@ public class MainActivity extends BaseActivity {
         @Override
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             Toast.makeText(getApplicationContext(), "Authorize succeed", Toast.LENGTH_SHORT).show();
-
+            if (platform == SHARE_MEDIA.WEIXIN) {
+                //转换为set
+                Set<String> keySet = data.keySet();
+                //遍历循环，得到里面的key值----用户名，头像....
+                for (String string : keySet) {
+                    //打印下
+                    Log.d("微信的信息————", string);
+                    //得到openid后执行该方法 sendWeChat(openid);
+                }
+//                Message message_youmeng = new Message();
+//                message_youmeng.what = 6;
+//                mHandler.sendMessage(message_youmeng);
+            } else if (platform == SHARE_MEDIA.QQ) {
+//                Message message_youmeng = new Message();
+//                message_youmeng.what = 4;
+//                mHandler.sendMessage(message_youmeng);
+            } else if (platform == SHARE_MEDIA.SINA) {
+//                Message message_youmeng = new Message();
+//                message_youmeng.what = 5;
+//                mHandler.sendMessage(message_youmeng);
+            }
         }
 
         @Override
@@ -754,6 +790,74 @@ public class MainActivity extends BaseActivity {
             Toast.makeText(getApplicationContext(), "Authorize cancel", Toast.LENGTH_SHORT).show();
         }
     };
+
+    //微信登录上传服务器{"Protocol":"LoggingApi","Cmd":"weixin","OpenID":"123"}
+    private void sendWeChat(String openid) {
+        JSONObject jsonObject_wechat = new JSONObject();
+        try {
+            jsonObject_wechat.put("Protocol", "LoggingApi");
+            jsonObject_wechat.put("Cmd", "weixin");
+            jsonObject_wechat.put("OpenID", openid);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils
+                .postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_wechat.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.LOGIN_UM)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.d("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.d("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        Log.d("成功===成功的返回", response);
+                                                        try {
+                                                            JSONObject jsonobject = new JSONObject(response);
+                                                            msg_um = jsonobject.getString("Msg");
+                                                            Message message_youmeng = new Message();
+                                                            message_youmeng.what = 0;
+                                                            mHandler.sendMessage(message_youmeng);
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {

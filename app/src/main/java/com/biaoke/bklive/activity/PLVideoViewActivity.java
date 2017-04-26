@@ -651,13 +651,70 @@ public class PLVideoViewActivity extends BaseActivity {
         JSONObject jsonObject_quit = new JSONObject();
         try {
             jsonObject_quit.put("Protocol", "ChatRom");
-            jsonObject_quit.put("UserId", "ExitChatRom");
+            jsonObject_quit.put("Cmd", "ExitChatRom");
         } catch (JSONException e) {
             e.printStackTrace();
         }
         OkHttpUtils.postString()
                 .url(Api.ENCRYPT64)
                 .content(jsonObject_quit.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
+    }
+
+    //管理员删除用户禁言
+    private void DeBlockUserSpeaking() {
+        JSONObject jsonObject_deblock = new JSONObject();
+        try {
+            jsonObject_deblock.put("Protocol", "ChatRom");
+            jsonObject_deblock.put("Cmd", "AddBlockUser");
+            jsonObject_deblock.put("BlockUserId", "id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_deblock.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
+    }
+
+    //管理员设置用户禁言
+    private void BlockUserSpeaking() {
+        JSONObject jsonObject_block = new JSONObject();
+        try {
+            jsonObject_block.put("Protocol", "ChatRom");
+            jsonObject_block.put("Cmd", "AddBlockUser");
+            jsonObject_block.put("BlockUserId", "id");
+            jsonObject_block.put("Minute", "20");
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonObject_block.toString())
                 .mediaType(MediaType.parse("application/json; charset=utf-8"))
                 .build()
                 .execute(new StringCallback() {
@@ -881,6 +938,7 @@ public class PLVideoViewActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mVideoView.stopPlayback();
+        exitChatRoom();//退出聊天室
         EventBus.getDefault().unregister(this);//释放
         showDanmaku = false;
         if (danmakuView != null) {

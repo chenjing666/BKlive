@@ -15,6 +15,8 @@ public class Api {
 
     public final static String LOGIN = ADDRESS + "/BK/Logging.php";//登陆接口
 
+    public final static String LOGIN_UM = ADDRESS + "/BK/LoggingApi.php";//登陆接口
+
     public final static String REGISTER = ADDRESS + "/BK/Register.php";//注册接口
 
     public final static String LIVEPUT = ADDRESS + "/BK/Live.php";//直播接口
