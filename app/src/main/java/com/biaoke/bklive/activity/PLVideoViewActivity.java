@@ -304,7 +304,7 @@ public class PLVideoViewActivity extends BaseActivity {
             }
         });
 
-        PLVideoView.setOnClickListener(new View.OnClickListener() {
+        danmakuView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (inputMessageLivingroom.getVisibility() == View.VISIBLE) {
@@ -968,7 +968,7 @@ public class PLVideoViewActivity extends BaseActivity {
                 break;
         }
     }
-    
+
     private void AnchorPopWindow() {
         final View anchorView = LayoutInflater.from(this).inflate(R.layout.popw_userinfo_anchor, null);
         popupWindow_livingroom_anchor = new PopupWindow(anchorView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);

@@ -3,7 +3,11 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
+    <RelativeLayout
+        android:layout_alignParentBottom="true"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
         android:id="@+id/live_screeen"
         android:layout_width="@dimen/x140"
         android:layout_height="@dimen/y140"
@@ -34,4 +38,5 @@
         android:layout_below="@+id/live_camera"
         android:layout_centerHorizontal="true"
         android:background="@drawable/live_unputvedio" />
+    </RelativeLayout>
 </RelativeLayout>

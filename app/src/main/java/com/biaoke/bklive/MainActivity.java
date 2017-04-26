@@ -295,7 +295,7 @@ public class MainActivity extends BaseActivity {
             case R.id.live_putvideo:
                 llBottomBar.setVisibility(View.GONE);
                 showPopWindow();
-                setBackgroundAlpha(0.5f, MainActivity.this);
+                setBackgroundAlpha(0.6f, MainActivity.this);
                 popupWindow_vedio.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.iv_message:
@@ -396,7 +396,7 @@ public class MainActivity extends BaseActivity {
 
     private void showPopWindow() {
         final View contentView = LayoutInflater.from(this).inflate(R.layout.live_style, null);
-        popupWindow_vedio = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
+        popupWindow_vedio = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
         ImageView imageView_unput = (ImageView) contentView.findViewById(R.id.live_unputvideo);
         imageView_unput.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -426,6 +426,25 @@ public class MainActivity extends BaseActivity {
                 llBottomBar.setVisibility(View.VISIBLE);
             }
         });
+        popupWindow_vedio.setTouchable(true);
+        popupWindow_vedio.setTouchInterceptor(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(View arg0, MotionEvent arg1) {
+                // TODO Auto-generated method stub
+                setBackgroundAlpha(1.0f, MainActivity.this);
+                popupWindow_vedio.dismiss();
+                llBottomBar.setVisibility(View.VISIBLE);
+                return false;
+            }
+        });
+        popupWindow_vedio.setOnDismissListener(new PopupWindow.OnDismissListener() {
+            @Override
+            public void onDismiss() {
+                setBackgroundAlpha(1.0f, MainActivity.this);
+                llBottomBar.setVisibility(View.VISIBLE);
+            }
+        });
+        popupWindow_vedio.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
 
     //通过ID判断是否可以发布直播，不符合要实名认证

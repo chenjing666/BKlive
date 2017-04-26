@@ -245,7 +245,8 @@
         android:layout_alignParentStart="true"
         android:layout_marginBottom="@dimen/y10"
         android:background="#e2e2e2"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <RelativeLayout
             android:id="@+id/rl_barage_switch"
