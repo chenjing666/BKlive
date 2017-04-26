@@ -69,7 +69,7 @@ public class AnchorLivedataFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_anchor_livedata, container, false);
         unbinder = ButterKnife.bind(this, view);
         SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
-        chatroomId = sharedPreferences_chatroomId.getString("chatroomId", "");
+        chatroomId = sharedPreferences_chatroomId.getString("ChatroomId", "");
 //获取用户点播信息
         JSONObject jsonObject_user = new JSONObject();
         try {

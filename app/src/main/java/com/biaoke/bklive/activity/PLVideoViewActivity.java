@@ -208,7 +208,7 @@ public class PLVideoViewActivity extends BaseActivity {
         try {
             jsonObject_yuser.put("Protocol", "UserInfo");
             jsonObject_yuser.put("Cmd", "GetAll");
-            jsonObject_yuser.put("UserId", ChatroomId);
+            jsonObject_yuser.put("UserId", ChatroomId);//主播信息
             Log.e("发送主播信息", jsonObject_yuser.toString());
         } catch (JSONException e) {
             e.printStackTrace();
@@ -640,7 +640,7 @@ public class PLVideoViewActivity extends BaseActivity {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
+            UserInfoHttp(Api.ENCRYPT64, jsonObject_yuser.toString());
             CommonPopWindow();
             popupWindow_livingroom_common.showAtLocation(view, Gravity.BOTTOM, 0, 0);
         }
@@ -869,7 +869,7 @@ public class PLVideoViewActivity extends BaseActivity {
             imageView_sex.setImageResource(R.drawable.female);
         }
         TextView textView_bkID = (TextView) anchorView.findViewById(R.id.user_id);
-        textView_bkID.setText(ChatroomId);
+        textView_bkID.setText(userlistId);
         TextView textView_signture = (TextView) anchorView.findViewById(R.id.tv_people_signture);
         textView_signture.setText(ySignture);
 
@@ -903,6 +903,10 @@ public class PLVideoViewActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.tv_user_homepage:
                     Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
+                    SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences_user.edit();
+                    editor.putString("ChatroomId", userlistId);
+                    editor.commit();
                     intent_userhomepage.putExtra("ChatroomId", userlistId);
                     startActivity(intent_userhomepage);
                     popupWindow_livingroom_common.dismiss();
@@ -1087,6 +1091,10 @@ public class PLVideoViewActivity extends BaseActivity {
                 case R.id.user_homepage:
 //                    finish();
                     Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
+                    SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences_user.edit();
+                    editor.putString("ChatroomId", ChatroomId);
+                    editor.commit();
                     intent_userhomepage.putExtra("ChatroomId", ChatroomId);
                     startActivity(intent_userhomepage);
                     popupWindow_livingroom_anchor.dismiss();

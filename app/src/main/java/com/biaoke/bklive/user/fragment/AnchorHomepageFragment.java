@@ -93,7 +93,7 @@ public class AnchorHomepageFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_anchor_homepage, container, false);
         unbinder = ButterKnife.bind(this, view);
         SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
-        chatroomId = sharedPreferences_chatroomId.getString("chatroomId", "");
+        chatroomId = sharedPreferences_chatroomId.getString("ChatroomId", "");
         JSONObject jsonObject_yuser = new JSONObject();
         try {
             jsonObject_yuser.put("Protocol", "UserInfo");
