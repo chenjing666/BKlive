@@ -104,16 +104,16 @@ public class PLVideoViewActivity extends BaseActivity {
     ImageView ivLivingroomShare;
     @BindView(R.id.BottomPanel_send)
     RelativeLayout BottomPanelSend;
-    //    @BindView(R.id.iv_chatbarrage)
-//    ImageView ivChatbarrage;
-    //    @BindView(R.id.input_editor)
-//    EditText inputEditor;
-//    @BindView(R.id.input_bar)
-//    RelativeLayout inputBar;
-    //    @BindView(R.id.input_send)
-//    TextView inputSend;
-//    @BindView(R.id.input_message_livingroom)
-//    LinearLayout inputMessageLivingroom;
+    @BindView(R.id.iv_chatbarrage)
+    ImageView ivChatbarrage;
+    @BindView(R.id.input_editor)
+    EditText inputEditor;
+    @BindView(R.id.input_bar)
+    RelativeLayout inputBar;
+    @BindView(R.id.input_send)
+    TextView inputSend;
+    @BindView(R.id.input_message_livingroom)
+    LinearLayout inputMessageLivingroom;
     @BindView(R.id.iv_livingroom_upvot)
     ImageView ivLivingroomUpvot;
     @BindView(R.id.myNickname)
@@ -124,6 +124,14 @@ public class PLVideoViewActivity extends BaseActivity {
     Button btnFollow;
     @BindView(R.id.livingroom_user_image)
     ImageView livingroomUserImage;
+    @BindView(R.id.ll_charm_more)
+    LinearLayout llCharmMore;
+    @BindView(R.id.barrage_switch_close)
+    ImageView barrageSwitchClose;
+    @BindView(R.id.barrage_switch_open)
+    ImageView barrageSwitchOpen;
+    @BindView(R.id.rl_barage_switch)
+    RelativeLayout rlBarageSwitch;
     private GlideUtis glideUtis;
     private PLVideoView mVideoView;
     private String path2;
@@ -152,7 +160,7 @@ public class PLVideoViewActivity extends BaseActivity {
     private String accessKey;
     private String msg_addFollow;
     private String Charm;
-    private EditText inputEditor;
+    //    private EditText inputEditor;
     private String userlistId;
     private String userlistHeadurl;
     //主播信息
@@ -230,7 +238,6 @@ public class PLVideoViewActivity extends BaseActivity {
                 mVideoView.start();
             }
         });
-//        addHeadimg();
         rootLayout.setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
@@ -242,10 +249,6 @@ public class PLVideoViewActivity extends BaseActivity {
             }
         });
         glideUtis = new GlideUtis(this);
-//        glideUtis.glideCircle(yHeadimageUrl, livingroomUserImage, true);
-//        myNickname.setText(yNickName);
-//        tvCharmLivingShow.setText(yCharm);
-//        tvBkId.setText(ChatroomId);
         new Thread(new Runnable() {
             @Override
             public void run() {
@@ -270,8 +273,8 @@ public class PLVideoViewActivity extends BaseActivity {
             @Override
             public void prepared() {
                 showDanmaku = true;
-                danmakuView.start();
-                generateSomeDanmaku();//测试用随机弹幕
+//                danmakuView.start();
+//                generateSomeDanmaku();//测试用随机弹幕
             }
 
             @Override
@@ -297,6 +300,16 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onSystemUiVisibilityChange(int visibility) {
                 if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {
                     onWindowFocusChanged(true);
+                }
+            }
+        });
+
+        PLVideoView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputMessageLivingroom.getVisibility() == View.VISIBLE) {
+                    inputMessageLivingroom.setVisibility(View.GONE);
+                    BottomPanelSend.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -579,26 +592,6 @@ public class PLVideoViewActivity extends BaseActivity {
                 JSONObject object_chatMsg = new JSONObject(mmsg);
                 //处理接收到的聊天信息
                 String cmd = object_chatMsg.getString("Cmd");
-                //获取聊天室人数
-//                if (cmd.equals("GetChatRomCount")) {
-////                    {"Protocol":"ChatRom","Cmd":"GetChatRomCount","Result":"1","ChatRomId":"10012","ChatRomCount":2}
-//                    int ChatRomCount = object_chatMsg.getInt("ChatRomCount");
-//                    onlinePeople.setText("观众：" + ChatRomCount);
-//                } else if (cmd.equals("GetChatRomList")) {//获取聊天室用户ID
-////                    {"Protocol":"ChatRom","Cmd":"GetChatRomList","Result":"1","ChatRomId":"10012","Data":["1001","1001"]}
-////                    Data:
-////                    "10014",//UserId
-////                            "guest"
-//                    String Result = object_chatMsg.getString("Result");
-//                    if (Result.equals("1")) {
-//                        JSONArray jsonArray_list = new JSONArray(object_chatMsg.getString("Data"));
-//                        for (int i = 0; i < jsonArray_list.length(); i++) {
-//                            String allUser = jsonArray_list.get(i).toString();//获取聊天室用户ID
-//                            //下面显示用户头像列表操作
-//
-//                        }
-//                    }
-//                }
                 if (cmd.equals("chat")) {
                     String NickName = object_chatMsg.getString("NickName");
                     String IconUrl = object_chatMsg.getString("IconUrl");
@@ -606,13 +599,19 @@ public class PLVideoViewActivity extends BaseActivity {
                     String Msg_chat = object_chatMsg.getString("Msg");
                     livingroomChatListBean_chatmsg = new LivingroomChatListBean(IconUrl, Level, NickName, Msg_chat);
                     chatList.add(livingroomChatListBean_chatmsg);
+                    addDanmaku(Msg_chat, true);//弹幕
                     Message msgg = new Message();
                     msgg.what = 0;
                     handler.sendMessage(msgg);
                 } else if (cmd.equals("sys")) {
                     String Msg_sys = object_chatMsg.getString("Msg");
-                    livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", "系统消息", Msg_sys);
-                    chatList.add(livingroomChatListBean_chatmsg);
+                    if (Msg_sys.equals("进入直播间")) {
+                        livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, Msg_sys);
+                        chatList.add(livingroomChatListBean_chatmsg);
+                    } else {
+                        livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", "系统消息", Msg_sys);
+                        chatList.add(livingroomChatListBean_chatmsg);
+                    }
                     LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, true);
                     layoutManager_chatmessage.setAutoMeasureEnabled(false);
                     chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
@@ -902,13 +901,32 @@ public class PLVideoViewActivity extends BaseActivity {
 
     @Override
     public void onBackPressed() {
-        WebSocketService.closeWebsocket(true);
-        super.onBackPressed();
+        if (inputMessageLivingroom.getVisibility() == View.VISIBLE) {
+            inputMessageLivingroom.setVisibility(View.GONE);
+            BottomPanelSend.setVisibility(View.VISIBLE);
+        } else {
+            WebSocketService.closeWebsocket(true);
+            finish();
+        }
+//        super.onBackPressed();
     }
 
-    @OnClick({R.id.ll_charm_more, R.id.livingroom_user_image, R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share})
+    @OnClick({R.id.rl_barage_switch, R.id.input_send, R.id.ll_charm_more, R.id.livingroom_user_image, R.id.btn_follow, R.id.living_close, R.id.charm_more, R.id.tv_sendmessage, R.id.iv_livingroom_gift, R.id.iv_livingroom_share})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rl_barage_switch:
+                if (!ivChatbarrage.isSelected()) {
+                    ivChatbarrage.setSelected(true);
+                    barrageSwitchClose.setVisibility(View.GONE);
+                    barrageSwitchOpen.setVisibility(View.VISIBLE);
+                    danmakuView.start();
+                } else {
+                    ivChatbarrage.setSelected(false);
+                    barrageSwitchClose.setVisibility(View.VISIBLE);
+                    barrageSwitchOpen.setVisibility(View.GONE);
+                    danmakuView.stop();
+                }
+                break;
             case R.id.ll_charm_more:
                 Intent intent_contribution = new Intent(PLVideoViewActivity.this, ContributionActivity.class);
                 startActivity(intent_contribution);
@@ -927,10 +945,10 @@ public class PLVideoViewActivity extends BaseActivity {
 
                 break;
             case R.id.tv_sendmessage:
-                MessagePopWindow();
-                popupWindow_livingroom_message.showAtLocation(view, Gravity.BOTTOM, 0, 0);
-//                BottomPanelSend.setVisibility(View.GONE);
-//                inputMessageLivingroom.setVisibility(View.VISIBLE);
+//                MessagePopWindow();//用popw弹出聊天框，位置没法随时改变
+//                popupWindow_livingroom_message.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                BottomPanelSend.setVisibility(View.GONE);
+                inputMessageLivingroom.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_livingroom_gift:
                 giftPop();
@@ -940,46 +958,17 @@ public class PLVideoViewActivity extends BaseActivity {
                 sharePopw();
                 popupWindow_living_share.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
-//            case R.id.input_send:
-//                if (inputEditor.getText().toString().trim().isEmpty()) {
-//                    Toast.makeText(this, "消息为空", Toast.LENGTH_SHORT).show();
-//                } else {
-//                    chatRoomMessage();
-//                    inputEditor.getText().clear();
-//                }
-//                break;
-        }
-    }
-
-    private void MessagePopWindow() {
-        final View messageView = LayoutInflater.from(this).inflate(R.layout.send_chatmessage, null);
-        popupWindow_livingroom_message = new PopupWindow(messageView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        inputEditor = (EditText) messageView.findViewById(R.id.input_editor);
-        TextView inputSend = (TextView) messageView.findViewById(R.id.input_send);
-        inputSend.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+            case R.id.input_send:
                 if (inputEditor.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(PLVideoViewActivity.this, "消息为空", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "消息为空", Toast.LENGTH_SHORT).show();
                 } else {
                     chatRoomMessage();
                     inputEditor.getText().clear();
                 }
-            }
-        });
-        ImageView ivChatbarrage = (ImageView) messageView.findViewById(R.id.iv_chatbarrage);
-
-        popupWindow_livingroom_message.setTouchable(true);
-        popupWindow_livingroom_message.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                // TODO Auto-generated method stub
-                return false;
-            }
-        });
-        popupWindow_livingroom_message.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
+                break;
+        }
     }
-
+    
     private void AnchorPopWindow() {
         final View anchorView = LayoutInflater.from(this).inflate(R.layout.popw_userinfo_anchor, null);
         popupWindow_livingroom_anchor = new PopupWindow(anchorView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
@@ -1248,7 +1237,7 @@ public class PLVideoViewActivity extends BaseActivity {
             object_chatroomMsg.put("IconUrl", IconUrl);
             object_chatroomMsg.put("Level", Level);
             object_chatroomMsg.put("Msg", mMsg);
-            addDanmaku(mMsg, true);//发弹幕信息
+//            addDanmaku(mMsg, true);//测试发弹幕信息
             Log.e("发消息内容", object_chatroomMsg.toString());
         } catch (JSONException e) {
             e.printStackTrace();

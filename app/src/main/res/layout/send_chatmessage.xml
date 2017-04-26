@@ -3,64 +3,64 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <!--//聊天输入-->
-    <LinearLayout
-        android:id="@+id/input_message_livingroom"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/y90"
-        android:layout_marginBottom="@dimen/y10"
-        android:background="#e2e2e2"
-        android:orientation="horizontal">
+    <!--<LinearLayout-->
+        <!--android:id="@+id/input_message_livingroom"-->
+        <!--android:layout_width="match_parent"-->
+        <!--android:layout_height="@dimen/y90"-->
+        <!--android:layout_marginBottom="@dimen/y10"-->
+        <!--android:background="#e2e2e2"-->
+        <!--android:orientation="horizontal">-->
 
-        <RelativeLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center">
+        <!--<RelativeLayout-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center">-->
 
-            <ImageView
-                android:id="@+id/iv_chatbarrage"
-                android:layout_width="@dimen/x90"
-                android:layout_height="@dimen/y66"
-                android:layout_marginEnd="@dimen/x10"
-                android:layout_marginStart="@dimen/x20"
-                android:background="@drawable/livingroom_beauty_open" />
+            <!--<ImageView-->
+                <!--android:id="@+id/iv_chatbarrage"-->
+                <!--android:layout_width="@dimen/x90"-->
+                <!--android:layout_height="@dimen/y66"-->
+                <!--android:layout_marginEnd="@dimen/x10"-->
+                <!--android:layout_marginStart="@dimen/x20"-->
+                <!--android:background="@drawable/livingroom_beauty_open" />-->
 
-            <ImageView
-                android:layout_width="@dimen/x56"
-                android:layout_height="@dimen/y56"
-                android:layout_marginStart="@dimen/x20"
-                android:layout_marginTop="@dimen/y4"
-                android:background="@drawable/livingroom_chatbarrage_switch" />
-        </RelativeLayout>
+            <!--<ImageView-->
+                <!--android:layout_width="@dimen/x56"-->
+                <!--android:layout_height="@dimen/y56"-->
+                <!--android:layout_marginStart="@dimen/x20"-->
+                <!--android:layout_marginTop="@dimen/y4"-->
+                <!--android:background="@drawable/livingroom_chatbarrage_switch" />-->
+        <!--</RelativeLayout>-->
 
-        <RelativeLayout
-            android:id="@+id/input_bar"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical">
+        <!--<RelativeLayout-->
+            <!--android:id="@+id/input_bar"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_gravity="center_vertical">-->
 
-            <EditText
-                android:id="@+id/input_editor"
-                android:layout_width="@dimen/x500"
-                android:layout_height="@dimen/y80"
-                android:layout_centerInParent="true"
-                android:background="@drawable/livingroom_edittext"
-                android:gravity="center"
-                android:hint="说点什么吧"
-                android:maxLines="4"
-                android:textColor="#beb5dd"
-                android:textSize="@dimen/x32" />
+            <!--<EditText-->
+                <!--android:id="@+id/input_editor"-->
+                <!--android:layout_width="@dimen/x500"-->
+                <!--android:layout_height="@dimen/y80"-->
+                <!--android:layout_centerInParent="true"-->
+                <!--android:background="@drawable/livingroom_edittext"-->
+                <!--android:gravity="center"-->
+                <!--android:hint="说点什么吧"-->
+                <!--android:maxLines="4"-->
+                <!--android:textColor="#beb5dd"-->
+                <!--android:textSize="@dimen/x32" />-->
 
-        </RelativeLayout>
+        <!--</RelativeLayout>-->
 
-        <TextView
-            android:id="@+id/input_send"
-            android:layout_width="@dimen/x82"
-            android:layout_height="@dimen/y70"
-            android:layout_gravity="center_vertical"
-            android:background="@drawable/input_send_button"
-            android:gravity="center"
-            android:text="@string/rc_send"
-            android:textColor="#ffffff"
-            android:textSize="@dimen/x28" />
-    </LinearLayout>
+        <!--<TextView-->
+            <!--android:id="@+id/input_send"-->
+            <!--android:layout_width="@dimen/x82"-->
+            <!--android:layout_height="@dimen/y70"-->
+            <!--android:layout_gravity="center_vertical"-->
+            <!--android:background="@drawable/input_send_button"-->
+            <!--android:gravity="center"-->
+            <!--android:text="@string/rc_send"-->
+            <!--android:textColor="#ffffff"-->
+            <!--android:textSize="@dimen/x28" />-->
+    <!--</LinearLayout>-->
 </RelativeLayout>

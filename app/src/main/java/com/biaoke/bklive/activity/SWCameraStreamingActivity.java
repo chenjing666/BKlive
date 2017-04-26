@@ -225,6 +225,17 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 }
             }
         }).start();
+        cameraPreviewSurfaceView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputMessageLiveroom.getVisibility() == View.VISIBLE) {
+                    inputMessageLiveroom.setVisibility(View.GONE);
+                    bottomBarLiving.setVisibility(View.VISIBLE);
+                } else {
+//                    inputMessageLiveroom.setVisibility(View.GONE);
+                }
+            }
+        });
     }
 
     private Handler mHandler = new Handler() {
@@ -490,6 +501,10 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 
     @Override
     public void onBackPressed() {
+        if (inputMessageLiveroom.getVisibility() == View.VISIBLE) {
+            inputMessageLiveroom.setVisibility(View.GONE);
+            bottomBarLiving.setVisibility(View.VISIBLE);
+        } else {
         android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
         builder.setMessage("确认取消直播？")
                 .setCancelable(false)
@@ -511,6 +526,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             }
         }).show();
 //        super.onBackPressed();
+        }
     }
 
     @OnClick({R.id.tv_livingroom_manage, R.id.living_close, R.id.charm_more, R.id.iv_chatbarrage, R.id.input_sendmsg, R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
@@ -544,7 +560,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             case R.id.iv_chatbarrage:
                 break;
             case R.id.input_sendmsg:
-                Toast.makeText(this, "点击了发信息", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "点击了发信息", Toast.LENGTH_SHORT).show();
                 if (inputEditorLive.getText().toString().trim().isEmpty()) {
                     Toast.makeText(this, "消息为空", Toast.LENGTH_SHORT).show();
                 } else {
