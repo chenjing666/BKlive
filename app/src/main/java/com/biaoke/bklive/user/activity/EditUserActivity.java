@@ -137,6 +137,7 @@ public class EditUserActivity extends BaseActivity {
     public String sendFileName;
     private GlideUtis glideUtis_header;
     private File file;
+    private String currentTime = System.currentTimeMillis() + "";//用于更换头像地址
 
     public EditUserActivity() {
         Configuration config = new Configuration.Builder()
@@ -308,7 +309,7 @@ public class EditUserActivity extends BaseActivity {
                                                             mDiamond = jsonobject.getString("钻石");
                                                             mLiveNum = jsonobject.getString("直播");
                                                             mVideoNum = jsonobject.getString("点播");
-                                                            mHeadimageUrl = jsonobject.getString("IconUrl");
+                                                            mHeadimageUrl = jsonobject.getString("IconUrl") + "?" + currentTime;
                                                             mSex = jsonobject.getString("性别");
                                                             mAge = jsonobject.getString("生日");
                                                             mEmotion = jsonobject.getString("情感");

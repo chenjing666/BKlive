@@ -167,7 +167,7 @@ public class MainActivity extends BaseActivity {
     private String Msg;
     private SharedPreferences sharedPreferences_user;
     private GlideUtis glideUtis_header_user;
-
+    private String currentTime = System.currentTimeMillis() + "";//用于更换头像地址
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -396,7 +396,7 @@ public class MainActivity extends BaseActivity {
 
     private void showPopWindow() {
         final View contentView = LayoutInflater.from(this).inflate(R.layout.live_style, null);
-        popupWindow_vedio = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT, true);
+        popupWindow_vedio = new PopupWindow(contentView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         ImageView imageView_unput = (ImageView) contentView.findViewById(R.id.live_unputvideo);
         imageView_unput.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -427,16 +427,16 @@ public class MainActivity extends BaseActivity {
             }
         });
         popupWindow_vedio.setTouchable(true);
-        popupWindow_vedio.setTouchInterceptor(new View.OnTouchListener() {
-            @Override
-            public boolean onTouch(View arg0, MotionEvent arg1) {
-                // TODO Auto-generated method stub
-                setBackgroundAlpha(1.0f, MainActivity.this);
-                popupWindow_vedio.dismiss();
-                llBottomBar.setVisibility(View.VISIBLE);
-                return false;
-            }
-        });
+//        popupWindow_vedio.setTouchInterceptor(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View arg0, MotionEvent arg1) {
+//                // TODO Auto-generated method stub
+//                setBackgroundAlpha(1.0f, MainActivity.this);
+//                popupWindow_vedio.dismiss();
+//                llBottomBar.setVisibility(View.VISIBLE);
+//                return false;
+//            }
+//        });
         popupWindow_vedio.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -645,7 +645,7 @@ public class MainActivity extends BaseActivity {
                                                             mDiamond = jsonobject.getString("钻石");
                                                             mLiveNum = jsonobject.getString("直播");
                                                             mVideoNum = jsonobject.getString("点播");
-                                                            mHeadimageUrl = jsonobject.getString("IconUrl");
+                                                            mHeadimageUrl = jsonobject.getString("IconUrl") + "?"+currentTime;
                                                             mSex = jsonobject.getString("性别");
                                                             mAge = jsonobject.getString("生日");
                                                             mEmotion = jsonobject.getString("情感");
