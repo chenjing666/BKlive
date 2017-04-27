@@ -77,7 +77,20 @@ public class WebSocketService extends Service {
                     if (!isMsg.equals("{")) {
                         MessageType(payload);
                     } else {
-                    EventBus.getDefault().post(new Event_chatroom(payload));
+                        try {
+                            JSONObject object = new JSONObject(payload);
+                            String Protocol = object.getString("Protocol");
+                            if (Protocol.equals("UserMsg")) {
+                                //私信解密再发送私信页面
+                                EventBus.getDefault().post(new Event_privatemessage(payload));
+                            } else if (Protocol.equals("ChatRom")) {
+                                //如果以后时间充足，这个地方也发送解密过的
+                                EventBus.getDefault().post(new Event_chatroom(payload));
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+//                    EventBus.getDefault().post(new Event_chatroom(payload));
                     }
                 }
 
@@ -173,7 +186,7 @@ public class WebSocketService extends Service {
                             if (Protocol.equals("UserMsg")) {
                                 //私信解密再发送私信页面
                                 EventBus.getDefault().post(new Event_privatemessage(response));
-                            } else {
+                            } else if (Protocol.equals("ChatRom")) {
                                 //如果以后时间充足，这个地方也发送解密过的
                                 EventBus.getDefault().post(new Event_chatroom(allMessage));
                             }

@@ -31,10 +31,115 @@
             android:textSize="@dimen/x34" />
     </RelativeLayout>
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recyclerview_msg"
+    <RelativeLayout
+        android:id="@+id/ll_add_follow_priMsg"
+        android:layout_height="@dimen/y60"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:background="@color/gray_light">
 
-    </android.support.v7.widget.RecyclerView>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x40"
+            android:text="关注即可不错过TA的最新动态"
+            android:textColor="@color/background_color"
+            android:textSize="@dimen/x28" />
+
+        <Button
+            android:id="@+id/add_follow_priMsg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_margin="@dimen/x5"
+            android:background="@color/background_color"
+            android:text="关注"
+            android:textColor="@color/white"
+            android:textSize="@dimen/x28" />
+
+    </RelativeLayout>
+    <!--<android.support.v7.widget.RecyclerView-->
+    <!--android:id="@+id/recyclerview_msg"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="@dimen/y938">-->
+
+    <!--</android.support.v7.widget.RecyclerView>-->
+
+    <ListView
+        android:id="@+id/listview_priMsg"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y878">
+
+    </ListView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y90"
+        android:background="#e2e2e2"
+        android:orientation="horizontal">
+
+        <!--<RelativeLayout-->
+        <!--android:id="@+id/rl_barage_switch"-->
+        <!--android:layout_width="wrap_content"-->
+        <!--android:layout_height="wrap_content"-->
+        <!--android:layout_gravity="center"-->
+        <!--android:visibility="gone">-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/iv_chatbarrage"-->
+        <!--android:layout_width="@dimen/x90"-->
+        <!--android:layout_height="@dimen/y66"-->
+        <!--android:layout_marginEnd="@dimen/x10"-->
+        <!--android:layout_marginStart="@dimen/x20"-->
+        <!--android:background="@drawable/barrage_selector" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/barrage_switch_close"-->
+        <!--android:layout_width="@dimen/x56"-->
+        <!--android:layout_height="@dimen/y56"-->
+        <!--android:layout_marginStart="@dimen/x20"-->
+        <!--android:layout_marginTop="@dimen/y4"-->
+        <!--android:background="@drawable/livingroom_chatbarrage_switch" />-->
+
+        <!--<ImageView-->
+        <!--android:id="@+id/barrage_switch_open"-->
+        <!--android:layout_width="@dimen/x56"-->
+        <!--android:layout_height="@dimen/y56"-->
+        <!--android:layout_marginStart="@dimen/x55"-->
+        <!--android:layout_marginTop="@dimen/y4"-->
+        <!--android:background="@drawable/livingroom_chatbarrage_switch"-->
+        <!--android:visibility="gone" />-->
+        <!--</RelativeLayout>-->
+
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical">
+
+            <EditText
+                android:id="@+id/input_editor_priMsg"
+                android:layout_width="@dimen/x600"
+                android:layout_height="@dimen/y80"
+                android:layout_centerInParent="true"
+                android:layout_marginStart="@dimen/x30"
+                android:background="@drawable/livingroom_edittext"
+                android:gravity="center"
+                android:maxLines="4"
+                android:textColor="#beb5dd"
+                android:textSize="@dimen/x32" />
+
+        </RelativeLayout>
+
+        <TextView
+            android:id="@+id/input_send_priMsg"
+            android:layout_width="@dimen/x82"
+            android:layout_height="@dimen/y70"
+            android:layout_gravity="center_vertical"
+            android:background="@drawable/input_send_button"
+            android:gravity="center"
+            android:text="@string/rc_send"
+            android:textColor="#ffffff"
+            android:textSize="@dimen/x28" />
+    </LinearLayout>
+
 </LinearLayout>

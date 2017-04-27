@@ -42,6 +42,7 @@ public class PrivateMessageFragment extends Fragment {
     private String msg;
     private String fromUserId;
     private String iconUrl;
+    private String nickName;
 
     @Nullable
     @Override
@@ -58,21 +59,29 @@ public class PrivateMessageFragment extends Fragment {
      */
     public  void setMag(String data) {
         Log.d("PrivateMessageFragment", data);
+//        {"Protocol":"UserMsg","Cmd":"p2p","FromUserId":"1174","Level":"0","NickName":"游客MTE3NA==",
+//                "IconUrl":"http:\/\/omy78z02r.bkt.clouddn.com\/icon-1174-up.jpg","ToUserId":"1183","Msg":"消息内容","Time":1493276389,"性别":"男"}
         try {
             JSONObject jsonObject = new JSONObject(data);
             iconUrl = jsonObject.getString("IconUrl");
-            String Level = jsonObject.getString("等级");
-            String NickName = jsonObject.getString("NickName");
+            String Level = jsonObject.getString("Level");
+            nickName = jsonObject.getString("NickName");
             msg = jsonObject.getString("Msg");
-            String Time = jsonObject.getString("Time");
+            long Time = jsonObject.getLong("Time");
             String Sex = jsonObject.getString("性别");
 
             fromUserId = jsonObject.getString("FromUserId");
             String ToUserId = jsonObject.getString("ToUserId");
-            fromId.add(fromUserId);
+
+//            for (int i = 0; i < fromId.size(); i++) {
+//                if (!fromUserId.equals(fromId.get(i))) {
+                    fromId.add(fromUserId);
+//                }
+//            }
             for (int i = 0; i < fromId.size(); i++) {
-                if (!fromUserId.equals(fromId.get(i))) {
-                    privateMessageBean = new PrivateMessageBean(iconUrl, Level, NickName, msg, Time, "?", Sex);
+                Log.d("PrivateMessageFragment", fromId.size() + "");
+                if (fromUserId.equals(fromId.get(i))) {
+                    privateMessageBean = new PrivateMessageBean(iconUrl, Level, nickName, msg, Time, "?", Sex);
                     mList.add(privateMessageBean);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true);
                     linearLayoutManager.setAutoMeasureEnabled(false);
@@ -129,6 +138,7 @@ public class PrivateMessageFragment extends Fragment {
             Intent intent = new Intent(getActivity(), PrivateMsgActivity.class);
             intent.putExtra("fromUserId", fromUserId);
             intent.putExtra("iconUrl", iconUrl);
+            intent.putExtra("nickName", nickName);
             startActivity(intent);
         }
     };

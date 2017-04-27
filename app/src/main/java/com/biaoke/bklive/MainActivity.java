@@ -1,8 +1,10 @@
 package com.biaoke.bklive;
 
 import android.Manifest;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Build;
@@ -12,6 +14,7 @@ import android.os.Message;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.Gravity;
 import android.view.LayoutInflater;
@@ -49,6 +52,7 @@ import com.biaoke.bklive.user.activity.MyVedioActivity;
 import com.biaoke.bklive.user.activity.SetActivity;
 import com.biaoke.bklive.user.bean.User;
 import com.biaoke.bklive.utils.GlideUtis;
+import com.biaoke.bklive.websocket.WebSocketService;
 import com.pkmmte.view.CircularImageView;
 import com.umeng.socialize.UMAuthListener;
 import com.umeng.socialize.UMShareAPI;
@@ -170,6 +174,9 @@ public class MainActivity extends BaseActivity {
     private GlideUtis glideUtis_header_user;
     private String currentTime = System.currentTimeMillis() + "";//用于更换头像地址
     private String msg_um;
+
+    //websocket
+    private Intent websocketServiceIntent;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -314,8 +321,12 @@ public class MainActivity extends BaseActivity {
                 popupWindow_vedio.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.iv_message:
+                //进入信息页面
                 Intent intent_message = new Intent(this, MessageActivity.class);
                 startActivity(intent_message);
+                websocketServiceIntent = new Intent(this, WebSocketService.class);
+                startService(websocketServiceIntent);
+                WebSocketService.webSocketConnect();
                 break;
             case R.id.iv_search:
                 Intent intent_search = new Intent(this, SearchActivity.class);
@@ -354,6 +365,40 @@ public class MainActivity extends BaseActivity {
                 startActivity(intent_set);
                 break;
         }
+    }
+
+    private BroadcastReceiver imReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            String action = intent.getAction();
+            if (WebSocketService.WEBSOCKET_ACTION.equals(action)) {
+                Bundle bundle = intent.getExtras();
+                if (bundle != null) {
+                    String msg = bundle.getString("message");
+                    if (!TextUtils.isEmpty(msg))
+                        getMessage(msg);
+                }
+
+            }
+        }
+    };
+
+    protected void getMessage(String msg) {
+//        messageTv.setText("");
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        IntentFilter filter = new IntentFilter(WebSocketService.WEBSOCKET_ACTION);
+        registerReceiver(imReceiver, filter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        unregisterReceiver(imReceiver);
     }
 
     //登录弹窗，第三方登录
