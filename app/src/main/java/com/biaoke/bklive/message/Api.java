@@ -35,4 +35,6 @@ public class Api {
 
     public final static String VIDEOLIST = ADDRESS + "/BK/Video.php";//视频列表接口
 
+    public final static String GPS = ADDRESS + "/BK/UpGps.php";//上传当前坐标接口
+
 }

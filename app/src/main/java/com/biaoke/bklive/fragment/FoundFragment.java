@@ -1,15 +1,21 @@
 package com.biaoke.bklive.fragment;
 
+import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
+import android.location.Location;
+import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
+import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -27,6 +33,8 @@ import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
+import com.biaoke.bklive.user.mylocation.Constants;
+import com.biaoke.bklive.user.mylocation.LMLocationListener;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.lidroid.xutils.BitmapUtils;
 import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
@@ -42,6 +50,8 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -73,6 +83,14 @@ public class FoundFragment extends Fragment {
 
     //websocket
     private Intent websocketServiceIntent;
+    private String accessKey;
+    //地理信息定位
+    private LocationManager locationManager;
+    private LMLocationListener listener[] = {
+            new LMLocationListener(),
+            new LMLocationListener()
+    };
+    private Timer timer;
 
     @Nullable
     @Override
@@ -85,6 +103,11 @@ public class FoundFragment extends Fragment {
 
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
+        accessKey = sharedPreferences.getString("AccessKey", "");
+        boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
+        if (isLogin) {
+            getLocation();
+        }
         jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
@@ -123,11 +146,119 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page=0;
+                page = 0;
                 refreshData();
             }
         });
         return view;
+    }
+
+    //获取地理信息
+    private void getLocation() {
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001);
+        } else {
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, listener[0]);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1F, listener[1]);
+        }
+//        getActivity().runOnUiThread(new Runnable() {
+//            @Override
+//            public void run() {
+//                final Location location = listener[0].current();
+//                if (location != null) {
+//                    Log.e("我的位置", location.getLatitude() + " : " + location.getLongitude());//维度getLatitude
+//                    sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
+//                }
+//            }
+//        });
+
+        timer = new Timer();
+        timer.scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                for (int i = 0; i < 1; i++) {
+                    final Location location = listener[i].current();
+                    if (location != null) {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.e("我的位置", location.getLatitude() + " : " + location.getLongitude());//维度getLatitude
+//                                try {
+//                                    Thread.sleep(5000);
+                                sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+
+                            }
+                        });
+                    }
+                }
+                Log.d(Constants.TAG, "No location received yet.");
+            }
+        }, 10000, 1000);
+
+    }
+
+    //    {"Protocol":"UpGps","UserId":"1001","wd":"33.955879","jd":"118.343085","AccessKey":"bk5977"}
+    private void sendMyLocation(String wd, String jd) {
+        JSONObject object_location = new JSONObject();
+        try {
+            object_location.put("Protocol", "UpGps");
+            object_location.put("UserId", useId);
+            object_location.put("wd", wd);
+            object_location.put("jd", jd);
+            object_location.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(object_location.toString())
+                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.GPS)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        Log.d("上传位置信息成功的返回", response);
+                                    }
+                                });
+                    }
+                });
+    }
+
+    //定位
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1001) {
+            //默认给定全部的权限
+            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
+                    ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
+                return;
+            }
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, listener[0]);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1f, listener[1]);
+        }
     }
 
     private void showBanner() {
@@ -238,7 +369,7 @@ public class FoundFragment extends Fragment {
     }
 
     private void initLoadMoreData() {
-        page = page+1;
+        page = page + 1;
         try {
             jsonObject_content.put("Protocol", "Explore");
             jsonObject_content.put("UserId", useId);
@@ -246,14 +377,14 @@ public class FoundFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        Log.e("pagepage----",page+"");
+        Log.e("pagepage----", page + "");
         getVideo(jsonObject_content.toString());
     }
 
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
-            String type=recyclerDataList.get(postion).getType();
+            String type = recyclerDataList.get(postion).getType();
             Log.e("----视频类型----", type);
             String chatroomId = recyclerDataList.get(postion).getUserId();
             SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
@@ -275,10 +406,77 @@ public class FoundFragment extends Fragment {
                 Intent intent_shortvideo = new Intent(getActivity(), ShortVideoActivity.class);
                 intent_shortvideo.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
                 startActivity(intent_shortvideo);
+                //添加视频点击
+                setPv(recyclerDataList.get(postion).getId());
 //                Toast.makeText(getActivity(), "暂未开通", Toast.LENGTH_SHORT).show();
             }
         }
     };
+
+    //    设置播放次数
+//    {"Protocol":"Video","Cmd":"SetPv","UserId":"1174","Id":"0","AccessKey":"bk5977"}
+    private void setPv(String videoId) {
+        JSONObject object_identification = new JSONObject();
+        try {
+            object_identification.put("Protocol", "Video");
+            object_identification.put("Cmd", "SetPv");
+            object_identification.put("UserId", useId);
+            object_identification.put("Id", videoId);//视频的编号
+            object_identification.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(object_identification.toString())
+                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.LIVE_CAMERA)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
 
 
     //轮播图
@@ -528,6 +726,7 @@ public class FoundFragment extends Fragment {
 //                                                                    "Type":"vod"	//live 直播 vod视频
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
+                                                                String videoid = jsonobject.getString("Id");//获取视频的编号
                                                                 String UserId_video = jsonobject.getString("UserId");
                                                                 String NickName = jsonobject.getString("NickName");
                                                                 String IconUrl = jsonobject.getString("IconUrl");//用户头像
@@ -538,7 +737,7 @@ public class FoundFragment extends Fragment {
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
                                                                 String type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
+                                                                live_item liveItem = new live_item(videoid, UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
                                                                 recyclerDataList.add(liveItem);
                                                             }
 
@@ -622,4 +821,6 @@ public class FoundFragment extends Fragment {
                     }
                 });
     }
+
+
 }

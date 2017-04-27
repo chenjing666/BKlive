@@ -82,6 +82,7 @@ public class PrivateMessageFragment extends Fragment {
                 Log.d("PrivateMessageFragment", fromId.size() + "");
                 if (fromUserId.equals(fromId.get(i))) {
                     privateMessageBean = new PrivateMessageBean(iconUrl, Level, nickName, msg, Time, "?", Sex);
+                    Log.d("PrivateMessageFragment", privateMessageBean.toString());
                     mList.add(privateMessageBean);
                     LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true);
                     linearLayoutManager.setAutoMeasureEnabled(false);

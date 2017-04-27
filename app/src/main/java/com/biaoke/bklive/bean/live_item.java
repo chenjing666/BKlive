@@ -17,6 +17,7 @@ public class live_item {
 //                                                                    "HV":"H"	//H 竖屏 V 横屏
 //                                                                    "Type":"1"	//1 直播 2视频
 //    private String Protocol;
+    private String Id;
     private String UserId;
     private String NickName;
     private String IconUrl;
@@ -28,8 +29,17 @@ public class live_item {
     private String HV;
     private String Type;
 
-    public live_item( String userId, String nickName, String iconUrl, String exp, String title, String snapshotUrl, String videoUrl, String format, String HV, String type) {
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
+    }
+
+    public live_item(String id,String userId, String nickName, String iconUrl, String exp, String title, String snapshotUrl, String videoUrl, String format, String HV, String type) {
 //        Protocol = protocol;
+        Id=id;
         UserId = userId;
         NickName = nickName;
         IconUrl = iconUrl;
@@ -45,6 +55,7 @@ public class live_item {
     @Override
     public String toString() {
         return "live_item{" +
+                ", Id='" + Id + '\'' +
                 ", UserId='" + UserId + '\'' +
                 ", NickName='" + NickName + '\'' +
                 ", IconUrl='" + IconUrl + '\'' +
