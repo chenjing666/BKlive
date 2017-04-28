@@ -48,6 +48,7 @@
         android:textSize="@dimen/x34" />
 
     <TextView
+        android:id="@+id/charm_income"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
@@ -66,6 +67,7 @@
         android:textSize="@dimen/x30" />
 
     <TextView
+        android:id="@+id/income_money"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"

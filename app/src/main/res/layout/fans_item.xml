@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="horizontal">
+
+    <RelativeLayout
+        android:layout_width="@dimen/x150"
+        android:layout_height="@dimen/y150"
+        android:background="@color/white">
+
+        <ImageView
+            android:id="@+id/fans_message_head"
+            android:layout_width="@dimen/x121"
+            android:layout_height="@dimen/y121"
+            android:layout_centerInParent="true"
+            android:background="@drawable/logo_72" />
+
+        <ImageView
+            android:id="@+id/fanslevel_imagecolor"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/bk_contribution_level" />
+
+        <TextView
+            android:id="@+id/fans_level"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true"
+            android:layout_marginBottom="@dimen/y26"
+            android:text="lv.22"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x22" />
+    </RelativeLayout>
+
+    <LinearLayout
+        android:layout_width="@dimen/x400"
+        android:layout_height="@dimen/y150"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y28"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/fans_nickname"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="海贼王去哪个"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x28" />
+
+            <ImageView
+                android:id="@+id/fans_sex"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/x10"
+                android:background="@drawable/man" />
+        </LinearLayout>
+
+        <TextView
+            android:id="@+id/fans_signture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="你瞅啥，瞅你咋的"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x34" />
+    </LinearLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y150"
+        android:background="@color/white">
+
+        <Button
+            android:id="@+id/btn_follow"
+            android:layout_width="@dimen/x136"
+            android:layout_height="@dimen/y80"
+            android:layout_centerInParent="true"
+            android:background="@drawable/addfollow_selector"
+            android:text="关注"
+            android:textSize="@dimen/x22" />
+    </RelativeLayout>
+
+
+</LinearLayout>

@@ -8,6 +8,11 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.biaoke.bklive.R;
+import com.xlibs.xrv.view.XRecyclerView;
+
+import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 
 /**
@@ -15,10 +20,21 @@ import com.biaoke.bklive.R;
  */
 
 public class FollowFragment extends Fragment {
+    @BindView(R.id.recyclerview_follow)
+    XRecyclerView recyclerviewFollow;
+    Unbinder unbinder;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_shop,container,false);
+        View view = inflater.inflate(R.layout.fragment_follow, container, false);
+        unbinder = ButterKnife.bind(this, view);
         return view;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

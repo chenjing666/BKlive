@@ -48,6 +48,9 @@ import com.biaoke.bklive.user.activity.IdentificationActivity;
 import com.biaoke.bklive.user.activity.IncomeActivity;
 import com.biaoke.bklive.user.activity.LevelActivity;
 import com.biaoke.bklive.user.activity.LoginActivity;
+import com.biaoke.bklive.user.activity.MyFansActivity;
+import com.biaoke.bklive.user.activity.MyFollowActivity;
+import com.biaoke.bklive.user.activity.MyLiveActivity;
 import com.biaoke.bklive.user.activity.MyVedioActivity;
 import com.biaoke.bklive.user.activity.SetActivity;
 import com.biaoke.bklive.user.bean.User;
@@ -142,6 +145,12 @@ public class MainActivity extends BaseActivity {
     ImageView ivSexUser;
     @BindView(R.id.tv_user_signture)
     TextView tvUserSignture;
+    @BindView(R.id.live_mine)
+    LinearLayout liveMine;
+    @BindView(R.id.follow_mine)
+    LinearLayout followMine;
+    @BindView(R.id.fans_mine)
+    LinearLayout fansMine;
     private PopupWindow popupWindow_vedio, popupWindow_login;
     private ImageView imageView_qq;
     private String APPID = "1106047080";
@@ -311,9 +320,23 @@ public class MainActivity extends BaseActivity {
         return AppConsts.POWER_BAR_BACKGROUND;
     }
 
-    @OnClick({R.id.live_putvideo, R.id.iv_message, R.id.iv_search, R.id.btn_edit, R.id.bk_contribution, R.id.bk_income, R.id.bk_mydiamond, R.id.bk_level, R.id.bk_vedio, R.id.bk_identification, R.id.bk_set})
+    @OnClick({R.id.live_mine, R.id.follow_mine, R.id.fans_mine,R.id.live_putvideo, R.id.iv_message, R.id.iv_search, R.id.btn_edit, R.id.bk_contribution, R.id.bk_income, R.id.bk_mydiamond, R.id.bk_level, R.id.bk_vedio, R.id.bk_identification, R.id.bk_set})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.live_mine:
+                SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                SharedPreferences.Editor editor = sharedPreferences_user.edit();
+                editor.putString("ChatroomId", UserId);
+                editor.commit();
+                Intent intent_mylive = new Intent(this, MyLiveActivity.class);
+                startActivity(intent_mylive);
+                break;
+            case R.id.follow_mine:
+                startActivity(new Intent(MainActivity.this, MyFollowActivity.class));
+                break;
+            case R.id.fans_mine:
+                startActivity(new Intent(MainActivity.this, MyFansActivity.class));
+                break;
             case R.id.live_putvideo:
                 llBottomBar.setVisibility(View.GONE);
                 showPopWindow();
@@ -706,7 +729,7 @@ public class MainActivity extends BaseActivity {
                                                             mDiamond = jsonobject.getString("钻石");
                                                             mLiveNum = jsonobject.getString("直播");
                                                             mVideoNum = jsonobject.getString("点播");
-                                                            mHeadimageUrl = jsonobject.getString("IconUrl") + "?"+currentTime;
+                                                            mHeadimageUrl = jsonobject.getString("IconUrl") + "?" + currentTime;
                                                             mSex = jsonobject.getString("性别");
                                                             mAge = jsonobject.getString("生日");
                                                             mEmotion = jsonobject.getString("情感");

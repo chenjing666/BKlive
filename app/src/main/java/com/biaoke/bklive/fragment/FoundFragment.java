@@ -86,11 +86,9 @@ public class FoundFragment extends Fragment {
     private String accessKey;
     //地理信息定位
     private LocationManager locationManager;
-    private LMLocationListener listener[] = {
-            new LMLocationListener(),
-            new LMLocationListener()
-    };
+    private LMLocationListener listener[] = {new LMLocationListener(), new LMLocationListener()};
     private Timer timer;
+    private int count = 0;
 
     @Nullable
     @Override
@@ -105,12 +103,11 @@ public class FoundFragment extends Fragment {
         useId = sharedPreferences.getString("userId", "");
         accessKey = sharedPreferences.getString("AccessKey", "");
         boolean isLogin = sharedPreferences.getBoolean("isLogin", false);
-        if (isLogin) {
-            getLocation();
-        }
+
         jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
+            jsonObject_content.put("Cmd", "FaXian");
             jsonObject_content.put("UserId", useId);
             jsonObject_content.put("Page", page + "");
         } catch (JSONException e) {
@@ -150,6 +147,10 @@ public class FoundFragment extends Fragment {
                 refreshData();
             }
         });
+        //上传位置信息
+        if (isLogin) {
+            getLocation();
+        }
         return view;
     }
 
@@ -163,17 +164,6 @@ public class FoundFragment extends Fragment {
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, listener[0]);
             locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1F, listener[1]);
         }
-//        getActivity().runOnUiThread(new Runnable() {
-//            @Override
-//            public void run() {
-//                final Location location = listener[0].current();
-//                if (location != null) {
-//                    Log.e("我的位置", location.getLatitude() + " : " + location.getLongitude());//维度getLatitude
-//                    sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
-//                }
-//            }
-//        });
-
         timer = new Timer();
         timer.scheduleAtFixedRate(new TimerTask() {
             @Override
@@ -184,21 +174,21 @@ public class FoundFragment extends Fragment {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override
                             public void run() {
+                                count++;
+                                if (count == 1) {
+                                    sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
+                                }
                                 Log.e("我的位置", location.getLatitude() + " : " + location.getLongitude());//维度getLatitude
-//                                try {
-//                                    Thread.sleep(5000);
-                                sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-
+                                if (count == 2) {
+                                    timer.cancel();
+                                }
                             }
                         });
                     }
                 }
                 Log.d(Constants.TAG, "No location received yet.");
             }
-        }, 10000, 1000);
+        }, 1, 1000);
 
     }
 
@@ -372,6 +362,7 @@ public class FoundFragment extends Fragment {
         page = page + 1;
         try {
             jsonObject_content.put("Protocol", "Explore");
+            jsonObject_content.put("Cmd", "FaXian");
             jsonObject_content.put("UserId", useId);
             jsonObject_content.put("Page", page + "");
         } catch (JSONException e) {

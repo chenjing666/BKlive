@@ -1,7 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.biaoke.bklive">
-
     //获取地理位置信息
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
@@ -37,7 +36,8 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <!--<service android:name=".websocket.WebSocketService" />//注册WS-->
+
+        <!-- <service android:name=".websocket.WebSocketService" />//注册WS -->
 
         <activity android:name=".MainActivity">
             <intent-filter>
@@ -118,7 +118,10 @@
         <activity android:name=".activity.ExpressionActivity" />
         <activity android:name=".user.activity.UserPagehomeActivity" />
         <activity android:name=".activity.ShortVideoActivity" />
-        <activity android:name=".activity.PrivateMsgActivity"></activity>
+        <activity android:name=".activity.PrivateMsgActivity" />
+        <activity android:name=".user.activity.MyFansActivity" />
+        <activity android:name=".user.activity.MyFollowActivity" />
+        <activity android:name=".user.activity.MyLiveActivity"></activity>
     </application>
 
 </manifest>
