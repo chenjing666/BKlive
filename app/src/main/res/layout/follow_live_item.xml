@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y360">
+
+        <ImageView
+            android:id="@+id/item_live_Thumbnail"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <ImageView
+            android:id="@+id/item_live_state"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/y15"
+            android:background="@drawable/iv_living"
+            android:visibility="gone" />
+
+        <TextView
+            android:id="@+id/follow_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="@dimen/y10"
+            android:layout_marginStart="@dimen/x50"
+            android:text="标题"
+            android:textSize="@dimen/x34" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:background="@color/white"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y90">
+
+        <ImageView
+            android:id="@+id/video_userhead"
+            android:layout_width="@dimen/x70"
+            android:layout_height="@dimen/y70"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x20"
+            android:background="@drawable/logo_72" />
+
+        <TextView
+            android:id="@+id/video_user_nickname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginStart="@dimen/x100"
+            android:text="kkkk"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x26" />
+
+        <ImageView
+            android:id="@+id/addfollow"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x200"
+            android:background="@drawable/comment_details_heart" />
+
+        <TextView
+            android:id="@+id/addfollow_num"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x140"
+            android:text="666"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x26" />
+
+        <LinearLayout
+            android:id="@+id/ll_online"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x20"
+            android:gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/main_look" />
+
+            <TextView
+                android:id="@+id/people_online"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="666"
+                android:textColor="@color/black"
+                android:textSize="@dimen/x26" />
+        </LinearLayout>
+    </RelativeLayout>
+</LinearLayout>
