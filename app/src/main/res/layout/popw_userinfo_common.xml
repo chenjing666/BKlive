@@ -305,6 +305,7 @@
             </LinearLayout>
 
             <TextView
+                android:id="@+id/tv_user_private_msg"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="8"

@@ -163,6 +163,7 @@ public class PLVideoViewActivity extends BaseActivity {
     //    private EditText inputEditor;
     private String userlistId;
     private String userlistHeadurl;
+    private String userlistName;
     //主播信息
     private String yNickName;
     private String yLevel;
@@ -555,7 +556,8 @@ public class PLVideoViewActivity extends BaseActivity {
                                             JSONObject object_list = jsonArray_list.getJSONObject(i);
                                             String allUser = object_list.getString("UserId");//获取聊天室用户ID
                                             String IconUrl = object_list.getString("IconUrl");
-                                            list.add(new HeadBean(IconUrl, allUser));
+                                            String userListNickname = object_list.getString("NickName");
+                                            list.add(new HeadBean(IconUrl, allUser, userListNickname));
                                         }
                                         //下面显示用户头像列表操作
 //                                        Log.d("用户头像ID", allUser);
@@ -626,11 +628,13 @@ public class PLVideoViewActivity extends BaseActivity {
         }
     }
 
+
     private VideoHeadImgAdapter.OnItemClickListener headimagelisten = new VideoHeadImgAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
             userlistId = list.get(postion).getUserId();
             userlistHeadurl = list.get(postion).getImgUrl();
+            userlistName = list.get(postion).getUserlistnickName();
             JSONObject jsonObject_yuser = new JSONObject();
             try {
                 jsonObject_yuser.put("Protocol", "UserInfo");
@@ -855,6 +859,8 @@ public class PLVideoViewActivity extends BaseActivity {
         popupWindow_livingroom_common = new PopupWindow(anchorView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         TextView textView_homepage = (TextView) anchorView.findViewById(R.id.tv_user_homepage);
         textView_homepage.setOnClickListener(commonListen);
+        TextView textView_private_msg = (TextView) anchorView.findViewById(R.id.tv_user_private_msg);
+        textView_private_msg.setOnClickListener(commonListen);
         CircularImageView circularImageView = (CircularImageView) anchorView.findViewById(R.id.iv_user_head);
         glideUtis.glideCircle(userlistHeadurl, circularImageView, true);
 
@@ -914,6 +920,13 @@ public class PLVideoViewActivity extends BaseActivity {
                     break;
                 case R.id.ll_follow_people:
                     addFollow();
+                    break;
+                case R.id.tv_user_private_msg:
+                    Intent intent = new Intent(PLVideoViewActivity.this, PrivateMsgActivity.class);
+                    intent.putExtra("fromUserId", userlistId);
+                    intent.putExtra("iconUrl", userlistHeadurl);
+                    intent.putExtra("nickName", userlistName);
+                    startActivity(intent);
                     break;
             }
         }
@@ -1038,6 +1051,8 @@ public class PLVideoViewActivity extends BaseActivity {
         linearLayout_expression_more.setOnClickListener(anchorListen);
         TextView textView_homepage = (TextView) anchorView.findViewById(R.id.user_homepage);
         textView_homepage.setOnClickListener(anchorListen);
+        TextView textView_pri_msg = (TextView) anchorView.findViewById(R.id.tv_anchor_private_msg);
+        textView_pri_msg.setOnClickListener(anchorListen);
         ImageView imageView_anchorHead = (ImageView) anchorView.findViewById(R.id.iv_user_head);
         glideUtis.glideCircle(yHeadimageUrl, imageView_anchorHead, true);
         TextView textView_level = (TextView) anchorView.findViewById(R.id.textView);
@@ -1102,6 +1117,13 @@ public class PLVideoViewActivity extends BaseActivity {
                     break;
                 case R.id.ll_add_follow:
                     addFollow();
+                    break;
+                case R.id.tv_anchor_private_msg:
+                    Intent intent = new Intent(PLVideoViewActivity.this, PrivateMsgActivity.class);
+                    intent.putExtra("fromUserId", ChatroomId);
+                    intent.putExtra("iconUrl", yHeadimageUrl);
+                    intent.putExtra("nickName", yNickName);
+                    startActivity(intent);
                     break;
             }
         }

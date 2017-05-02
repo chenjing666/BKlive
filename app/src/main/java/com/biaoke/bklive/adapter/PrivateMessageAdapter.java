@@ -78,9 +78,9 @@ public class PrivateMessageAdapter extends RecyclerView.Adapter<PrivateMessageAd
 //        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
 //        String stdTime = sdf.format(new Date(mList.get(position).getCurrentTime()));
 
-        long time = mList.get(position).getCurrentTime();//转换为分钟
-        long minute = time / 60;
-        long currentTime = System.currentTimeMillis() / (1000 * 60);
+        int time = mList.get(position).getCurrentTime();//转换为分钟
+        int minute = time / 60;
+        int currentTime = (int) (System.currentTimeMillis() / (1000 * 60));
         if ((currentTime - minute) < 60) {
             holder.endmessageTime.setText((currentTime - minute) + "分钟前");
         } else if ((currentTime - minute) < 1440) {

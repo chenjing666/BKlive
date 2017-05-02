@@ -9,7 +9,7 @@ public class PrivateMessageBean {
     private String Level;
     private String NickName;
     private String Message;
-    private long CurrentTime;
+    private int CurrentTime;
     private String MsgNum;
     private String Sex;
 
@@ -34,7 +34,7 @@ public class PrivateMessageBean {
                 '}';
     }
 
-    public PrivateMessageBean(String imageUrl, String level, String nickName, String message, long currentTime, String msgNum, String sex) {
+    public PrivateMessageBean(String imageUrl, String level, String nickName, String message, int currentTime, String msgNum, String sex) {
         ImageUrl = imageUrl;
         Level = level;
         NickName = nickName;
@@ -76,11 +76,11 @@ public class PrivateMessageBean {
         Message = message;
     }
 
-    public long getCurrentTime() {
+    public int getCurrentTime() {
         return CurrentTime;
     }
 
-    public void setCurrentTime(long currentTime) {
+    public void setCurrentTime(int currentTime) {
         CurrentTime = currentTime;
     }
 

@@ -2,6 +2,8 @@ package com.biaoke.bklive.fragment;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
@@ -52,6 +54,23 @@ public class PrivateMessageFragment extends Fragment {
         return view;
     }
 
+
+    Handler mhandler = new Handler() {
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+                    linearLayoutManager.setAutoMeasureEnabled(false);
+                    recyclerviewPrivateMessage.setLayoutManager(linearLayoutManager);
+                    privateMessageAdapter = new PrivateMessageAdapter(getActivity(), mList);
+                    privateMessageAdapter.bind(mList);
+                    privateMessageAdapter.setOnItemClickListener(listen);
+                    recyclerviewPrivateMessage.setAdapter(privateMessageAdapter);
+                    break;
+            }
+        }
+    };
+
     /**
      * 接受数据信息
      *
@@ -67,7 +86,7 @@ public class PrivateMessageFragment extends Fragment {
             String Level = jsonObject.getString("Level");
             nickName = jsonObject.getString("NickName");
             msg = jsonObject.getString("Msg");
-            long Time = jsonObject.getLong("Time");
+            int Time = jsonObject.getInt("Time");
             String Sex = jsonObject.getString("性别");
 
             fromUserId = jsonObject.getString("FromUserId");
@@ -80,58 +99,22 @@ public class PrivateMessageFragment extends Fragment {
 //            }
             for (int i = 0; i < fromId.size(); i++) {
                 Log.d("PrivateMessageFragment", fromId.size() + "");
-                if (fromUserId.equals(fromId.get(i))) {
-                    privateMessageBean = new PrivateMessageBean(iconUrl, Level, nickName, msg, Time, "?", Sex);
-                    Log.d("PrivateMessageFragment", privateMessageBean.toString());
-                    mList.add(privateMessageBean);
-                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true);
-                    linearLayoutManager.setAutoMeasureEnabled(false);
-                    recyclerviewPrivateMessage.setLayoutManager(linearLayoutManager);
-                    privateMessageAdapter = new PrivateMessageAdapter(getActivity(), mList);
-                    privateMessageAdapter.bind(mList);
-                    privateMessageAdapter.setOnItemClickListener(listen);
-                    recyclerviewPrivateMessage.setAdapter(privateMessageAdapter);
+//                if (fromUserId.equals(fromId.get(i))) {
+                privateMessageBean = new PrivateMessageBean(iconUrl, Level, nickName, msg, Time, "?", Sex);
+                Log.d("PrivateMessageFragment", privateMessageBean.toString());
+                mList.add(privateMessageBean);
+                Message message = new Message();
+                message.what = 0;
+                mhandler.sendMessage(message);
                 }
-            }
+//            }
+            Log.e("私信fragment", iconUrl + Level + nickName + msg + Time + "?" + Sex);
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
 
     }
-
-//    @Subscribe(threadMode = ThreadMode.MainThread)
-//    public void Event_privateMessage(Event_privatemessage privatemessage) {
-//        String privateMsg = privatemessage.getMsg();//json格式的信息
-//        try {
-//            JSONObject jsonObject = new JSONObject(privateMsg);
-//            iconUrl = jsonObject.getString("IconUrl");
-//            String Level = jsonObject.getString("等级");
-//            String NickName = jsonObject.getString("NickName");
-//            msg = jsonObject.getString("Msg");
-//            String Time = jsonObject.getString("Time");
-//            String Sex = jsonObject.getString("性别");
-//
-//            fromUserId = jsonObject.getString("FromUserId");
-//            String ToUserId = jsonObject.getString("ToUserId");
-//            fromId.add(fromUserId);
-//            for (int i = 0; i < fromId.size(); i++) {
-//                if (!fromUserId.equals(fromId.get(i))) {
-//                    privateMessageBean = new PrivateMessageBean(iconUrl, Level, NickName, msg, Time, "?", Sex);
-//                    mList.add(privateMessageBean);
-//                    LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true);
-//                    linearLayoutManager.setAutoMeasureEnabled(false);
-//                    recyclerviewPrivateMessage.setLayoutManager(linearLayoutManager);
-//                    privateMessageAdapter = new PrivateMessageAdapter(getActivity(), mList);
-//                    privateMessageAdapter.bind(mList);
-//                    privateMessageAdapter.setOnItemClickListener(listen);
-//                    recyclerviewPrivateMessage.setAdapter(privateMessageAdapter);
-//                }
-//            }
-//        } catch (JSONException e) {
-//            e.printStackTrace();
-//        }
-//    }
 
     private PrivateMessageAdapter.OnItemClickListener listen = new PrivateMessageAdapter.OnItemClickListener() {
         @Override
