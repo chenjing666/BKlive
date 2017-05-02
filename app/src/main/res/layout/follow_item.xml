@@ -85,7 +85,7 @@
             android:layout_height="@dimen/y80"
             android:layout_centerInParent="true"
             android:background="@drawable/addfollow_selector"
-            android:text="关注"
+            android:text="已关注"
             android:textSize="@dimen/x22" />
     </RelativeLayout>
 
