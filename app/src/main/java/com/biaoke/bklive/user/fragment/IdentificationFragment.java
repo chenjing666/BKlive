@@ -96,6 +96,7 @@ public class IdentificationFragment extends Fragment {
     // Fragment管理对象
     private FragmentManager manager;
     private FragmentTransaction ft;
+    private JSONObject jsonObject_content;
 
     public IdentificationFragment() {
         Configuration config = new Configuration.Builder()
@@ -129,7 +130,7 @@ public class IdentificationFragment extends Fragment {
                     IdentificationingFragment identificationingFragment = new IdentificationingFragment();
                     ft = manager.beginTransaction();
                     ft.replace(R.id.replace_fragment, identificationingFragment);
-                    ft.addToBackStack(null);
+//                    ft.addToBackStack(null);
                     ft.commit();
                     break;
 
@@ -168,7 +169,20 @@ public class IdentificationFragment extends Fragment {
                 String name = etPutName.getText().toString().trim();
 //                Log.e("上传状态", name + cbAgreeBk.isSelected());
                 if ((!name.isEmpty()) && cbAgreeBk.isSelected()) {
-                    Toast.makeText(getActivity(), "可以上传", Toast.LENGTH_SHORT).show();
+//      {"Protocol":"UserInfo","Cmd":"SetCard","UserId":"1001","Name":"字段名","Data":"值","AccessKey":"bk5977"}
+                    jsonObject_content = new JSONObject();
+                    try {
+                        jsonObject_content.put("Protocol", "UserInfo");
+                        jsonObject_content.put("Cmd", "SetCard");
+                        jsonObject_content.put("UserId", userId);
+                        jsonObject_content.put("Name", "姓名");
+                        jsonObject_content.put("Data", name);
+                        jsonObject_content.put("AccessKey", accessKey);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    upLoadUserName(jsonObject_content.toString());
+//                    Toast.makeText(getActivity(), "可以上传", Toast.LENGTH_SHORT).show();
                     //未完待续
                 } else {
                     Toast.makeText(getActivity(), "协议或姓名为空", Toast.LENGTH_SHORT).show();
@@ -182,6 +196,60 @@ public class IdentificationFragment extends Fragment {
                 }
                 break;
         }
+    }
+
+    private void upLoadUserName(String content) {
+        OkHttpUtils
+                .postString()
+                .url(Api.ENCRYPT64)
+                .content(content)
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.USERINFO_USER)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+                                        Log.d("失败的返回", e.getMessage());
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+//                                        Log.d("成功的返回", response);
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+                                                        Log.d("失败的返回", e.getMessage());
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        Log.d("成功的返回", response);
+                                                        Message message = new Message();
+                                                        message.what = 0;
+                                                        handler.sendMessage(message);
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
     }
 
     private void headPopupWindow(View v) {

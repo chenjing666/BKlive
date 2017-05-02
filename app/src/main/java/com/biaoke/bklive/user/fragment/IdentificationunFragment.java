@@ -53,7 +53,7 @@ public class IdentificationunFragment extends Fragment {
         IdentificationFragment identificationFragment = new IdentificationFragment();
         ft = manager.beginTransaction();
         ft.replace(R.id.replace_fragment, identificationFragment);
-        ft.addToBackStack(null);
+//        ft.addToBackStack(null);//是否销毁的控制
         ft.commit();
     }
 }

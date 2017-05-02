@@ -129,7 +129,6 @@ public class PrivateMsgActivity extends BaseActivity {
             object_sendPriMsg.put("Protocol", "UserMsg");
             object_sendPriMsg.put("Cmd", "p2p");
             object_sendPriMsg.put("Msg", msg);
-//            object_sendPriMsg.put("Time", time);
             object_sendPriMsg.put("ToUserId", fromUserId);
         } catch (JSONException e) {
             e.printStackTrace();
