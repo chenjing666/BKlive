@@ -53,6 +53,7 @@ public class FollowLiveAdapter extends XRecyclerView.Adapter<FollowLiveAdapter.f
         FollowLiveBean followBean = list.get(position);
         glideutils.glide(followBean.getSnapshotUrl(), holder.itemLiveThumbnail, true);//封面
         glideutils.glideCircle(followBean.getIconUrl(), holder.videoUserhead, true);
+//        holder.itemLiveThumbnail.setMaxHeight((250 + (position % 3) * 30));
         if (followBean.getType().equals("live")) {
             holder.itemLiveState.setVisibility(View.VISIBLE);
         }

@@ -58,7 +58,7 @@ public class FollowFragment extends Fragment {
     private JSONObject jsonObject_content;
     private String useId;
     private String accessKey;
-    private int page = 0;
+    private int page = 1;
     private View mHeaderView;
     private View mFooterView;
     private ImageView imageView;
@@ -66,7 +66,6 @@ public class FollowFragment extends Fragment {
     private List<FollowLiveBean> mList = new ArrayList<>();
     //websocket
     private Intent websocketServiceIntent;
-    private String type;
 
     @Nullable
     @Override
@@ -96,8 +95,8 @@ public class FollowFragment extends Fragment {
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
         recyclerviewFollow.addHeaderView(mHeaderView, 80);
         recyclerviewFollow.addFootView(mFooterView, 50);
-        XLinearLayoutManager xLinearLayoutManager = new XLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, true);
-        xLinearLayoutManager.setAutoMeasureEnabled(false);
+        XLinearLayoutManager xLinearLayoutManager = new XLinearLayoutManager(getActivity(), LinearLayoutManager.VERTICAL, false);
+        xLinearLayoutManager.setAutoMeasureEnabled(true);
         recyclerviewFollow.setLayoutManager(xLinearLayoutManager);
         followLiveAdapter = new FollowLiveAdapter(getActivity(), mList);
         followLiveAdapter.bind(mList);
@@ -107,7 +106,7 @@ public class FollowFragment extends Fragment {
         recyclerviewFollow.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 0;
+                page = 1;
                 refreshData();
             }
         });
@@ -325,9 +324,9 @@ public class FollowFragment extends Fragment {
                                                                 String videoUrl = jsonobject.getString("VideoUrl");
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
-                                                                type = jsonobject.getString("Type");
+                                                                String type = jsonobject.getString("Type");
                                                                 if (type.equals("live")) {
-                                                                    String online = jsonobject.getString("Online");
+                                                                    String online = jsonobject.getString("OnLine");
                                                                     FollowLiveBean followLiveBean = new FollowLiveBean(videoid, UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type, online);
                                                                     mList.add(followLiveBean);
                                                                 } else {
