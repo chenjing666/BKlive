@@ -27,7 +27,6 @@ public class MyFansAdapter extends XRecyclerView.Adapter<MyFansAdapter.livenumVi
 
     private List<MyFansBean> mList;
     private Context context;
-    XRecyclerView xRecyclerView;
     GlideUtis glideUtis;
 
     public MyFansAdapter(Context context, List<MyFansBean> mList) {

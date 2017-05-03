@@ -1,8 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:background="@color/white">
     <RelativeLayout
+        android:id="@+id/bk_contribution_item"
         android:background="@color/white"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y140">
@@ -13,24 +15,64 @@
             android:gravity="center_vertical"
             android:orientation="horizontal">
 
-            <ImageView
+            <RelativeLayout
                 android:layout_width="@dimen/x80"
                 android:layout_height="@dimen/y80"
-                android:layout_marginStart="@dimen/x20"
-                android:background="@drawable/bk_contribution_second" />
-
-            <RelativeLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/x20">
 
                 <ImageView
+                    android:id="@+id/charm_board_second"
+                    android:layout_width="@dimen/x80"
+                    android:layout_height="@dimen/y80"
+                    android:background="@drawable/bk_contribution_second"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/charm_board_third"
+                    android:layout_width="@dimen/x80"
+                    android:layout_height="@dimen/y80"
+                    android:background="@drawable/bk_contribution_third"
+                    android:visibility="gone" />
+
+                <TextView
+                    android:id="@+id/tv_charm_board"
+                    android:layout_width="@dimen/x80"
+                    android:layout_height="@dimen/y80"
+                    android:gravity="center"
+                    android:text="NO.333"
+                    android:textColor="@color/black"
+                    android:textSize="@dimen/x22" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="@dimen/x125"
+                android:layout_height="match_parent"
+                android:layout_marginStart="@dimen/x20">
+
+                <ImageView
+                    android:id="@+id/charm_board_head"
+                    android:layout_width="@dimen/x120"
+                    android:layout_height="@dimen/y120"
+                    android:layout_centerInParent="true" />
+
+                <ImageView
+                    android:id="@+id/charm_board_head_second"
                     android:layout_width="@dimen/x120"
                     android:layout_height="@dimen/y120"
                     android:layout_centerInParent="true"
-                    android:background="@drawable/bk_contribution_second_edge" />
+                    android:background="@drawable/bk_contribution_second_edge"
+                    android:visibility="gone" />
+
+                <ImageView
+                    android:id="@+id/charm_board_head_third"
+                    android:layout_width="@dimen/x120"
+                    android:layout_height="@dimen/y120"
+                    android:layout_centerInParent="true"
+                    android:background="@drawable/bk_contribution_third_edge"
+                    android:visibility="gone" />
 
                 <TextView
+                    android:id="@+id/charm_board_level"
                     android:layout_width="@dimen/x60"
                     android:layout_height="@dimen/y40"
                     android:layout_centerHorizontal="true"

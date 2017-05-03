@@ -115,6 +115,7 @@ public class IdentificationFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_identification, container, false);
         unbinder = ButterKnife.bind(this, view);
+        manager = getFragmentManager();
         sharedPreferences_user = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);//首先获取用户ID
         userId = sharedPreferences_user.getString("userId", "");
         //获取秘钥，以后基本都要用
@@ -167,9 +168,7 @@ public class IdentificationFragment extends Fragment {
                 break;
             case R.id.btn_put_identification:
                 String name = etPutName.getText().toString().trim();
-//                Log.e("上传状态", name + cbAgreeBk.isSelected());
                 if ((!name.isEmpty()) && cbAgreeBk.isSelected()) {
-//      {"Protocol":"UserInfo","Cmd":"SetCard","UserId":"1001","Name":"字段名","Data":"值","AccessKey":"bk5977"}
                     jsonObject_content = new JSONObject();
                     try {
                         jsonObject_content.put("Protocol", "UserInfo");
@@ -182,8 +181,6 @@ public class IdentificationFragment extends Fragment {
                         e.printStackTrace();
                     }
                     upLoadUserName(jsonObject_content.toString());
-//                    Toast.makeText(getActivity(), "可以上传", Toast.LENGTH_SHORT).show();
-                    //未完待续
                 } else {
                     Toast.makeText(getActivity(), "协议或姓名为空", Toast.LENGTH_SHORT).show();
                 }
@@ -226,7 +223,6 @@ public class IdentificationFragment extends Fragment {
 
                                     @Override
                                     public void onResponse(String response, int id) {
-//                                        Log.d("成功的返回", response);
                                         OkHttpUtils.postString()
                                                 .url(Api.UNENCRYPT64)
                                                 .content(response)
