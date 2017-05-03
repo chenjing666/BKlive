@@ -121,7 +121,7 @@
         <activity android:name=".activity.PrivateMsgActivity" />
         <activity android:name=".user.activity.MyFansActivity" />
         <activity android:name=".user.activity.MyFollowActivity" />
-        <activity android:name=".user.activity.MyLiveActivity"></activity>
+        <activity android:name=".user.activity.MyLiveActivity" />
     </application>
 
 </manifest>

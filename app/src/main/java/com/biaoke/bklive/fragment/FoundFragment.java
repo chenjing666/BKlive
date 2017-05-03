@@ -179,7 +179,7 @@ public class FoundFragment extends Fragment {
                                     sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
                                 }
                                 Log.e("我的位置", location.getLatitude() + " : " + location.getLongitude());//维度getLatitude
-                                if (count == 2) {
+                                if (count == 1) {
                                     timer.cancel();
                                 }
                             }

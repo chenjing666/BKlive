@@ -37,4 +37,6 @@ public class Api {
 
     public final static String GPS = ADDRESS + "/BK/UpGps.php";//上传当前坐标接口
 
+    public final static String SEARCH = ADDRESS + "/BK/Search.php";//搜索接口
+
 }

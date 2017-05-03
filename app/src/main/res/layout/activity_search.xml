@@ -7,11 +7,53 @@
     android:clipToPadding="false"
     android:fitsSystemWindows="true"
     android:orientation="vertical"
+    android:background="@color/white"
     tools:context=".activity.SearchActivity">
 
     <include layout="@layout/fr_searhead" />
+    <!--<RelativeLayout-->
+    <!--android:layout_width="fill_parent"-->
+    <!--android:layout_height="@dimen/y100"-->
+    <!--android:background="@color/background_color">-->
+
+    <!--<EditText-->
+    <!--android:id="@+id/et_search"-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="36dp"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginLeft="10dp"-->
+    <!--android:layout_marginRight="10dp"-->
+    <!--android:layout_toStartOf="@+id/tv_cancle"-->
+    <!--android:background="@drawable/hotstyle"-->
+    <!--android:backgroundTint="#F1F1F1"-->
+    <!--android:drawablePadding="5dp"-->
+    <!--android:drawableStart="@drawable/search_right"-->
+    <!--android:gravity="start|center_vertical"-->
+    <!--android:hint="输入查询的关键字"-->
+    <!--android:imeOptions="actionSearch"-->
+    <!--android:paddingStart="10dp"-->
+    <!--android:singleLine="true"-->
+    <!--android:textColor="@color/tab_text_dark"-->
+    <!--android:textColorHint="@color/gray"-->
+    <!--android:textSize="@dimen/x30" />-->
+
+    <!--<TextView-->
+    <!--android:id="@+id/tv_cancle"-->
+    <!--android:layout_width="wrap_content"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:layout_alignParentEnd="true"-->
+    <!--android:layout_centerVertical="true"-->
+    <!--android:layout_marginEnd="20dp"-->
+    <!--android:layout_marginStart="14dp"-->
+    <!--android:text="@string/cancel_tv"-->
+    <!--android:textColor="@color/white"-->
+    <!--android:textSize="@dimen/x34" />-->
+
+    <!--</RelativeLayout>-->
+
 
     <RelativeLayout
+        android:id="@+id/rl_search_hot"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@color/background_color">
@@ -213,5 +255,38 @@
             android:text="清空全部搜索记录"
             android:textSize="@dimen/x30" />
     </LinearLayout>
+
+    <RelativeLayout
+        android:id="@+id/zhanwei"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </RelativeLayout>
+
+    <LinearLayout
+        android:id="@+id/ll_search_result"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/y20"
+            android:layout_marginStart="@dimen/x50"
+            android:layout_marginTop="@dimen/y20"
+            android:text="相关直播与视频"
+            android:textColor="@color/black"
+            android:textSize="@dimen/x28" />
+
+    </LinearLayout>
+
+    <com.xlibs.xrv.view.XRecyclerView
+        android:id="@+id/xrecyclerview_search"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </com.xlibs.xrv.view.XRecyclerView>
 
 </LinearLayout>
