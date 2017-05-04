@@ -1,5 +1,7 @@
 package com.biaoke.bklive.activity;
 
+import android.content.ClipData;
+import android.content.ClipboardManager;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -42,6 +44,7 @@ import com.biaoke.bklive.adapter.VideoHeadImgAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.HeadBean;
 import com.biaoke.bklive.bean.LivingroomChatListBean;
+import com.biaoke.bklive.bean.ShareVo;
 import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
 import com.biaoke.bklive.message.Api;
@@ -49,6 +52,8 @@ import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.activity.ContributionActivity;
 import com.biaoke.bklive.user.activity.UserPagehomeActivity;
 import com.biaoke.bklive.utils.GlideUtis;
+import com.biaoke.bklive.utils.ShareListener;
+import com.biaoke.bklive.utils.ShareUtils;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
@@ -195,6 +200,8 @@ public class PLVideoViewActivity extends BaseActivity {
     };
     private boolean select_only;
     //弹幕结束
+    private ClipboardManager mClipboardManager;//剪切板管理工具类
+    private ClipData mClipData;//剪切板Data对象
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -204,6 +211,7 @@ public class PLVideoViewActivity extends BaseActivity {
         setContentView(R.layout.activity_plvideo_view);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
+        mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         list.clear();//清空用户列表
         ChatroomId = getIntent().getStringExtra("chatroomId");
         JSONObject jsonObject_yuser = new JSONObject();
@@ -1584,6 +1592,20 @@ public class PLVideoViewActivity extends BaseActivity {
         popupWindow_living_share = new PopupWindow(livingshareView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         Button button_cancel = (Button) livingshareView.findViewById(R.id.btn_livingshare_cancel);
         button_cancel.setOnClickListener(shareListen);
+
+        ImageView imageView_wechat = (ImageView) livingshareView.findViewById(R.id.livingroom_share_wechat);
+        imageView_wechat.setOnClickListener(shareListen);
+        ImageView imageView_qq = (ImageView) livingshareView.findViewById(R.id.livingroom_share_qq);
+        imageView_qq.setOnClickListener(shareListen);
+        ImageView imageView_qqq = (ImageView) livingshareView.findViewById(R.id.livingroom_share_qqq);
+        imageView_qqq.setOnClickListener(shareListen);
+        ImageView imageView_sina = (ImageView) livingshareView.findViewById(R.id.livingroom_share_sina);
+        imageView_sina.setOnClickListener(shareListen);
+        ImageView imageView_friend = (ImageView) livingshareView.findViewById(R.id.livingroom_share_friend);
+        imageView_friend.setOnClickListener(shareListen);
+        ImageView imageView_copy = (ImageView) livingshareView.findViewById(R.id.livingroom_copyadress);
+        imageView_copy.setOnClickListener(shareListen);
+
         popupWindow_living_share.setTouchable(true);
         popupWindow_living_share.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -1601,6 +1623,91 @@ public class PLVideoViewActivity extends BaseActivity {
             switch (v.getId()) {
                 case R.id.btn_livingshare_cancel:
                     popupWindow_living_share.dismiss();
+                    break;
+                case R.id.livingroom_share_wechat://暂缺分享链接
+                    //分享到微信
+                    ShareUtils.getInstance().showShareViewWeChat(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+                    break;
+                case R.id.livingroom_copyadress:
+                    //创建一个新的文本clip对象
+                    mClipData = ClipData.newPlainText("label", "要复制出去的链接");
+                    //把clip对象放在剪贴板中
+                    mClipboardManager.setPrimaryClip(mClipData);
+                    Toast.makeText(getApplicationContext(), "复制成功！",
+                            Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.livingroom_share_qq:
+                    ShareUtils.getInstance().showShareViewQQ(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+
+                    break;
+                case R.id.livingroom_share_qqq:
+
+                    break;
+                case R.id.livingroom_share_sina:
+                    ShareUtils.getInstance().showShareViewSina(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
+                    break;
+                case R.id.livingroom_share_friend:
+
                     break;
             }
         }

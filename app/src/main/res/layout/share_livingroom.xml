@@ -161,7 +161,7 @@
                 android:layout_below="@+id/livingroom_copyadress"
                 android:layout_centerHorizontal="true"
                 android:layout_marginTop="@dimen/y13"
-                android:text="空间"
+                android:text="复制链接"
                 android:textColor="@color/black"
                 android:textSize="@dimen/x26" />
         </RelativeLayout>

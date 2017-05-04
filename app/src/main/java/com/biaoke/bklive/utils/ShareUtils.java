@@ -66,7 +66,7 @@ public class ShareUtils {
 
     }
 
-    //4号添加
+    //4号添加分享微信
     public void showShareViewWeChat(final Activity activity, final ShareVo shareVo, ShareListener listener) {
         mListener = listener;
         mActivity = activity;
@@ -88,12 +88,33 @@ public class ShareUtils {
 
     }
 
-    //4号添加
+    //4号添加分享QQ
     public void showShareViewQQ(final Activity activity, final ShareVo shareVo, ShareListener listener) {
         mListener = listener;
         mActivity = activity;
         new ShareAction(activity)
                 .setDisplayList(SHARE_MEDIA.QQ)
+                .setShareboardclickCallback(new ShareBoardlistener() {
+                    @Override
+                    public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
+                        UMWeb web = new UMWeb(shareVo.getLinkUrl());
+                        web.setTitle(shareVo.getTitle());
+                        web.setDescription(shareVo.getContent());
+                        web.setThumb(new UMImage(activity, shareVo.getImgUrl()));
+                        new ShareAction(activity).withMedia(web)
+                                .setPlatform(share_media)
+                                .setCallback(umShareListener)
+                                .share();
+                    }
+                }).open();
+
+    }
+    //4号添加分享QQ
+    public void showShareViewSina(final Activity activity, final ShareVo shareVo, ShareListener listener) {
+        mListener = listener;
+        mActivity = activity;
+        new ShareAction(activity)
+                .setDisplayList(SHARE_MEDIA.SINA)
                 .setShareboardclickCallback(new ShareBoardlistener() {
                     @Override
                     public void onclick(SnsPlatform snsPlatform, SHARE_MEDIA share_media) {
