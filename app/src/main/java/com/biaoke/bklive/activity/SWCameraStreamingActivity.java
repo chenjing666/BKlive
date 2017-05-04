@@ -1,6 +1,7 @@
 package com.biaoke.bklive.activity;
 
 import android.annotation.SuppressLint;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -34,14 +35,19 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
+import com.biaoke.bklive.activity.room.GiftLayout;
+import com.biaoke.bklive.activity.room.PeriscopeLayout;
 import com.biaoke.bklive.adapter.LivingroomChatListAdapter;
 import com.biaoke.bklive.adapter.LivingroomChatSysAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.LivingroomChatListBean;
+import com.biaoke.bklive.bean.ShareVo;
 import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.utils.GlideUtis;
+import com.biaoke.bklive.utils.ShareListener;
+import com.biaoke.bklive.utils.ShareUtils;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.qiniu.pili.droid.streaming.AVCodecType;
 import com.qiniu.pili.droid.streaming.CameraStreamingSetting;
@@ -141,6 +147,10 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     LinearLayout llLivingroomHeadtwo;
     @BindView(R.id.rl_chat_recyclerview_living)
     RelativeLayout rlChatRecyclerviewLiving;
+    @BindView(R.id.gift_layout)
+    GiftLayout giftLayout;
+    @BindView(R.id.periscope_layout)
+    PeriscopeLayout periscopeLayout;
 
     private MediaStreamingManager mMediaStreamingManager;
     private String liveUrl = null;
@@ -209,7 +219,15 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         glideUtis.glideCircle(IconUrl, livingroomUserImage, true);
         myNickname.setText(mNickName);
         tvCharmLivingShow.setText(Charm);
-
+        //4号添加点赞动态
+        livingLivingroomUpvot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //根布局点赞
+                periscopeLayout.addHeart();
+                giftLayout.showLeftGiftVeiw(SWCameraStreamingActivity.this, mNickName, IconUrl);//礼物文字显示,后期送礼物用到
+            }
+        });
 
         new Thread(new Runnable() {
             @Override
@@ -505,26 +523,26 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             inputMessageLiveroom.setVisibility(View.GONE);
             bottomBarLiving.setVisibility(View.VISIBLE);
         } else {
-        android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
-        builder.setMessage("确认取消直播？")
-                .setCancelable(false)
-                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        if (mMediaStreamingManager != null) {
-                            mMediaStreamingManager.stopStreaming();
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setMessage("确认取消直播？")
+                    .setCancelable(false)
+                    .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                        @Override
+                        public void onClick(DialogInterface dialog, int which) {
+                            if (mMediaStreamingManager != null) {
+                                mMediaStreamingManager.stopStreaming();
+                            }
+                            WebSocketService.closeWebsocket(true);
+                            Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
+                            startActivity(intent_livingEnd);
+                            finish();
                         }
-                        WebSocketService.closeWebsocket(true);
-                        Intent intent_livingEnd = new Intent(SWCameraStreamingActivity.this, LivingEndActivity.class);
-                        startActivity(intent_livingEnd);
-                        finish();
-                    }
-                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-            }
-        }).show();
+                    }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            }).show();
 //        super.onBackPressed();
         }
     }
@@ -537,7 +555,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 startActivity(intent_livingManage);
                 break;
             case R.id.living_close:
-                android.app.AlertDialog.Builder builder = new android.app.AlertDialog.Builder(this);
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
                 builder.setMessage("确认取消直播？")
                         .setCancelable(false)
                         .setPositiveButton("确定", new DialogInterface.OnClickListener() {
@@ -772,6 +790,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         popupWindow_living_share = new PopupWindow(livingshareView, ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         Button button_cancel = (Button) livingshareView.findViewById(R.id.btn_livingshare_cancel);
         button_cancel.setOnClickListener(shareListen);
+        ImageView imageView_wechat = (ImageView) livingshareView.findViewById(R.id.livingroom_share_wechat);
+        imageView_wechat.setOnClickListener(shareListen);
         popupWindow_living_share.setTouchable(true);
         popupWindow_living_share.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -789,6 +809,30 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             switch (v.getId()) {
                 case R.id.btn_livingshare_cancel:
                     popupWindow_living_share.dismiss();
+                    break;
+                case R.id.livingroom_share_wechat://暂缺分享链接
+                    //分享到微信
+                    ShareUtils.getInstance().showShareViewWeChat(SWCameraStreamingActivity.this, new ShareVo(""), new ShareListener() {
+                        @Override
+                        public void onStart() {
+
+                        }
+
+                        @Override
+                        public void onSuccess() {
+
+                        }
+
+                        @Override
+                        public void onFailure() {
+
+                        }
+
+                        @Override
+                        public void onCancel() {
+
+                        }
+                    });
                     break;
             }
         }

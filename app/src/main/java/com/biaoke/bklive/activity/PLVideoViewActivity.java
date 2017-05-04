@@ -193,6 +193,7 @@ public class PLVideoViewActivity extends BaseActivity {
             return new Danmakus();
         }
     };
+    private boolean select_only;
     //弹幕结束
 
     @Override
@@ -243,8 +244,8 @@ public class PLVideoViewActivity extends BaseActivity {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
                 //根布局点赞
-                periscopeLayout.addHeart();
-                giftLayout.showLeftGiftVeiw(PLVideoViewActivity.this, "你的名字", "http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg");
+                periscopeLayout.addHeart();//只显示点赞动画
+//                giftLayout.showLeftGiftVeiw(PLVideoViewActivity.this, mNickName, IconUrl);
 
                 return false;
             }
@@ -1149,7 +1150,7 @@ public class PLVideoViewActivity extends BaseActivity {
         viewList.add(gift_view3);
         GiftPagerAdapter giftadapter = new GiftPagerAdapter();
         viewPager_gift.setAdapter(giftadapter);
-        boolean select_only = true;
+        select_only = true;
         //666开始
         final ImageView imageView_gift_lll = (ImageView) gift_view1.findViewById(R.id.gift_png_lll);
         imageView_gift_lll.setBackgroundResource(R.drawable.gift_666);
@@ -1234,6 +1235,170 @@ public class PLVideoViewActivity extends BaseActivity {
                 }
             }
         });//蓝瘦香菇结束
+
+        //小红花开始
+        final ImageView imageView_gift_xhh = (ImageView) gift_view1.findViewById(R.id.gift_png_xhh);
+        imageView_gift_xhh.setBackgroundResource(R.drawable.gift_xiaohonghua);
+        final AnimationDrawable anim_xhh = (AnimationDrawable) imageView_gift_xhh.getBackground();
+        final ImageView imageView_gift_livingroom_xhh = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_xhh);
+        final LinearLayout linearLayout_xhh = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_xhh);
+        final TextView textView_xhh = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_xhh);
+        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_xhh.isSelected()) {
+                    linearLayout_xhh.setSelected(true);
+                    textView_xhh.setSelected(true);
+                    textView_xhh.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_xhh.setVisibility(View.GONE);
+                    imageView_gift_xhh.setVisibility(View.VISIBLE);
+                    anim_xhh.start();
+                } else {
+                    linearLayout_xhh.setSelected(false);
+                    textView_xhh.setSelected(false);
+                    textView_xhh.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_xhh.setVisibility(View.VISIBLE);
+                    imageView_gift_xhh.setVisibility(View.GONE);
+                    anim_xhh.stop();
+                }
+            }
+        });//小红花结束
+
+        //老司机开始
+        final ImageView imageView_gift_lsj = (ImageView) gift_view1.findViewById(R.id.gift_png_lsj);
+        imageView_gift_lsj.setBackgroundResource(R.drawable.gift_laosiji);
+        final AnimationDrawable anim_lsj = (AnimationDrawable) imageView_gift_lsj.getBackground();
+        final ImageView imageView_gift_livingroom_lsj = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_lsj);
+        final LinearLayout linearLayout_lsj = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_lsj);
+        final TextView textView_lsj = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_lsj);
+        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_lsj.isSelected()) {
+                    linearLayout_lsj.setSelected(true);
+                    textView_lsj.setSelected(true);
+                    textView_lsj.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_lsj.setVisibility(View.GONE);
+                    imageView_gift_lsj.setVisibility(View.VISIBLE);
+                    anim_lsj.start();
+                } else {
+                    linearLayout_lsj.setSelected(false);
+                    textView_lsj.setSelected(false);
+                    textView_lsj.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_lsj.setVisibility(View.VISIBLE);
+                    imageView_gift_lsj.setVisibility(View.GONE);
+                    anim_lsj.stop();
+                }
+            }
+        });//老司机结束
+        //皮皮虾开始
+        final ImageView imageView_gift_ppx = (ImageView) gift_view1.findViewById(R.id.gift_png_ppx);
+        imageView_gift_ppx.setBackgroundResource(R.drawable.gift_pipixia);
+        final AnimationDrawable anim_ppx = (AnimationDrawable) imageView_gift_ppx.getBackground();
+        final ImageView imageView_gift_livingroom_ppx = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_ppx);
+        final LinearLayout linearLayout_ppx = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_ppx);
+        final TextView textView_ppx = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_ppx);
+        linearLayout_ppx.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_ppx.isSelected()) {
+                    linearLayout_ppx.setSelected(true);
+                    textView_ppx.setSelected(true);
+                    textView_ppx.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_ppx.setVisibility(View.GONE);
+                    imageView_gift_ppx.setVisibility(View.VISIBLE);
+                    anim_ppx.start();
+                } else {
+                    linearLayout_ppx.setSelected(false);
+                    textView_ppx.setSelected(false);
+                    textView_ppx.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_ppx.setVisibility(View.VISIBLE);
+                    imageView_gift_ppx.setVisibility(View.GONE);
+                    anim_ppx.stop();
+                }
+            }
+        });//皮皮虾结束
+        //坑开始
+        final ImageView imageView_gift_k = (ImageView) gift_view1.findViewById(R.id.gift_png_k);
+        imageView_gift_k.setBackgroundResource(R.drawable.gift_keng);
+        final AnimationDrawable anim_k = (AnimationDrawable) imageView_gift_k.getBackground();
+        final ImageView imageView_gift_livingroom_k = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_k);
+        final LinearLayout linearLayout_k = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_k);
+        final TextView textView_k = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_k);
+        linearLayout_k.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_k.isSelected()) {
+                    linearLayout_k.setSelected(true);
+                    textView_k.setSelected(true);
+                    textView_k.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_k.setVisibility(View.GONE);
+                    imageView_gift_k.setVisibility(View.VISIBLE);
+                    anim_k.start();
+                } else {
+                    linearLayout_k.setSelected(false);
+                    textView_k.setSelected(false);
+                    textView_k.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_k.setVisibility(View.VISIBLE);
+                    imageView_gift_k.setVisibility(View.GONE);
+                    anim_k.stop();
+                }
+            }
+        });//坑结束
+        //吻开始
+        final ImageView imageView_gift_w = (ImageView) gift_view1.findViewById(R.id.gift_png_w);
+        imageView_gift_w.setBackgroundResource(R.drawable.gift_wen);
+        final AnimationDrawable anim_w = (AnimationDrawable) imageView_gift_w.getBackground();
+        final ImageView imageView_gift_livingroom_w = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_w);
+        final LinearLayout linearLayout_w = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_w);
+        final TextView textView_w = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_w);
+        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_w.isSelected()) {
+                    linearLayout_w.setSelected(true);
+                    textView_w.setSelected(true);
+                    textView_w.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_w.setVisibility(View.GONE);
+                    imageView_gift_w.setVisibility(View.VISIBLE);
+                    anim_w.start();
+                } else {
+                    linearLayout_w.setSelected(false);
+                    textView_w.setSelected(false);
+                    textView_w.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_w.setVisibility(View.VISIBLE);
+                    imageView_gift_w.setVisibility(View.GONE);
+                    anim_w.stop();
+                }
+            }
+        });//吻结束
+        //要抱抱开始
+        final ImageView imageView_gift_ybb = (ImageView) gift_view1.findViewById(R.id.gift_png_ybb);
+        imageView_gift_ybb.setBackgroundResource(R.drawable.gift_yaobaobao);
+        final AnimationDrawable anim_ybb = (AnimationDrawable) imageView_gift_ybb.getBackground();
+        final ImageView imageView_gift_livingroom_ybb = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_ybb);
+        final LinearLayout linearLayout_ybb = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_ybb);
+        final TextView textView_ybb = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_ybb);
+        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (!linearLayout_ybb.isSelected()) {
+                    linearLayout_ybb.setSelected(true);
+                    textView_ybb.setSelected(true);
+                    textView_ybb.setTextColor(getResources().getColor(R.color.black));
+                    imageView_gift_livingroom_ybb.setVisibility(View.GONE);
+                    imageView_gift_ybb.setVisibility(View.VISIBLE);
+                    anim_ybb.start();
+                } else {
+                    linearLayout_ybb.setSelected(false);
+                    textView_ybb.setSelected(false);
+                    textView_ybb.setTextColor(getResources().getColor(R.color.white));
+                    imageView_gift_livingroom_ybb.setVisibility(View.VISIBLE);
+                    imageView_gift_ybb.setVisibility(View.GONE);
+                    anim_ybb.stop();
+                }
+            }
+        });//要抱抱结束
 
 
         //圆点指示器

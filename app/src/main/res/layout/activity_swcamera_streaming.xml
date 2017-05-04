@@ -329,7 +329,18 @@
             android:textSize="15dp" />
     </RelativeLayout>
 
+    <com.biaoke.bklive.activity.room.GiftLayout
+        android:id="@+id/gift_layout"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y300"
+        android:layout_centerVertical="true" />
 
+    <com.biaoke.bklive.activity.room.PeriscopeLayout
+        android:id="@+id/periscope_layout"
+        android:layout_width="@dimen/x160"
+        android:layout_height="@dimen/y400"
+        android:layout_above="@+id/living_livingroom_upvot"
+        android:layout_alignParentEnd="true" />
     <ImageView
         android:id="@+id/living_livingroom_upvot"
         android:layout_width="@dimen/x120"

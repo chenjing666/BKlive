@@ -13,17 +13,26 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_mmd"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_mmd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/memeda" />
 
+            <ImageView
+                android:id="@+id/gift_png_mmd"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
             <TextView
+                android:id="@+id/gift_bg_exp_mmd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -60,23 +69,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_adyh"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_adyh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/aideyanhua" />
 
             <ImageView
+                android:id="@+id/gift_png_adyh"
                 android:layout_width="@dimen/x152"
                 android:layout_height="@dimen/y104"
-                android:background="@drawable/gift_aideyanhua"
                 android:visibility="gone" />
 
             <TextView
+                android:id="@+id/gift_bg_exp_adyh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -113,17 +126,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_mghc"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_mghc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/meiguihuacong" />
 
+            <ImageView
+                android:id="@+id/gift_png_mghc"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_mghc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -160,17 +183,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_sjx"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_sjx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/shuijingxie" />
 
+            <ImageView
+                android:id="@+id/gift_png_sjx"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_sjx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -207,17 +240,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_qdyz"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_qdyz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/qingdingyisheng" />
 
+            <ImageView
+                android:id="@+id/gift_png_qdyz"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_qdyz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -263,17 +306,27 @@
         android:orientation="horizontal">
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_lxy"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_lxy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/liuxing" />
 
+            <ImageView
+                android:id="@+id/gift_png_lxy"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_lxy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -310,17 +363,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_lbjn"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_lbjn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/lanbojini" />
 
+            <ImageView
+                android:id="@+id/gift_png_lbjn"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_lbjn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -357,17 +420,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_waqh"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_waqh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/weiaiqihang" />
 
+            <ImageView
+                android:id="@+id/gift_png_waqh"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_waqh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
@@ -404,17 +477,27 @@
         </LinearLayout>
 
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:id="@+id/ll_gift_lmcb"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
 
             <ImageView
+                android:id="@+id/gift_livingroom_lmcb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:src="@drawable/langmanchengbao" />
 
+            <ImageView
+                android:id="@+id/gift_png_lmcb"
+                android:layout_width="@dimen/x152"
+                android:layout_height="@dimen/y104"
+                android:visibility="gone" />
+
             <TextView
+                android:id="@+id/gift_bg_exp_lmcb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@drawable/liwu_jinyanzhi"
