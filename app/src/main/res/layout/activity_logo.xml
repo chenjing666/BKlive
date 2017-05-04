@@ -13,6 +13,6 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/logo_192"
+        android:background="@drawable/logo_welcome_480"
         android:scaleType="centerCrop" />
 </RelativeLayout>
