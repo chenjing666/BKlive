@@ -13,6 +13,7 @@ import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
+import com.biaoke.bklive.common.CountDownTimerUtils;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.bean.User;
@@ -106,6 +107,11 @@ public class RegisterActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.pin_send:
+                //添加验证码倒计时
+                //new倒计时对象,总共的时间,每隔多少秒更新一次时间
+                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(pinSend, 60000, 1000);
+                mCountDownTimerUtils.start();
+                //----
                 JSONObject jsonObject = new JSONObject();
                 name = putPhonenum.getText().toString().trim();
                 if (!VerifyUtils.verifyMobileNo(name)) {
