@@ -39,7 +39,9 @@
 
         <!-- <service android:name=".websocket.WebSocketService" />//注册WS -->
 
-        <activity android:name=".MainActivity">
+        <activity android:name=".MainActivity" />
+
+        <activity android:name=".LogoActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -122,6 +124,7 @@
         <activity android:name=".user.activity.MyFansActivity" />
         <activity android:name=".user.activity.MyFollowActivity" />
         <activity android:name=".user.activity.MyLiveActivity" />
+
     </application>
 
 </manifest>
