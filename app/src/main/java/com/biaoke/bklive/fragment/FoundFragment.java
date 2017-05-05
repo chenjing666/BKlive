@@ -17,9 +17,11 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
+import com.biaoke.bklive.activity.BkShopActivity;
 import com.biaoke.bklive.activity.PLVideoViewActivity;
 import com.biaoke.bklive.activity.ShortVideoActivity;
 import com.biaoke.bklive.adapter.liveItemAdapter;
@@ -45,6 +47,7 @@ import java.util.List;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 import butterknife.Unbinder;
 import okhttp3.Call;
 import okhttp3.MediaType;
@@ -60,6 +63,8 @@ public class FoundFragment extends Fragment {
     Unbinder unbinder;
     @BindView(R.id.recyclerview_found)
     XRecyclerView recyclerviewFound;
+    @BindView(R.id.bk_shoppingmarket)
+    LinearLayout bkShoppingmarket;
     private List<live_item> recyclerDataList = new ArrayList<>();
     private View mHeaderView;
     private View mFooterView;
@@ -77,6 +82,7 @@ public class FoundFragment extends Fragment {
     //地理信息定位
     private String wd;
     private String jd;
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -750,4 +756,9 @@ public class FoundFragment extends Fragment {
     }
 
 
+    @OnClick(R.id.bk_shoppingmarket)
+    public void onClick() {
+        Intent intent_shop = new Intent(getActivity(), BkShopActivity.class);
+        startActivity(intent_shop);
+    }
 }

@@ -310,7 +310,7 @@ public class CountDownProgressView extends TextView {
                 if (mProgressListener != null)
                     mProgressListener.onProgress(progress);
                 invalidate();
-                postDelayed(progressChangeTask, timeMillis / 160);//控制圆形时间
+                postDelayed(progressChangeTask, timeMillis / 180);//控制圆形时间
             } else
                 progress = validateProgress(progress);
         }
