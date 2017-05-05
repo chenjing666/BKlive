@@ -1,21 +1,15 @@
 package com.biaoke.bklive.fragment;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
-import android.content.pm.PackageManager;
 import android.graphics.drawable.AnimationDrawable;
-import android.location.Location;
-import android.location.LocationManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 import android.util.Log;
@@ -33,8 +27,6 @@ import com.biaoke.bklive.bean.Banner;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.imagecycleview.ImageCycleView;
 import com.biaoke.bklive.message.Api;
-import com.biaoke.bklive.user.mylocation.Constants;
-import com.biaoke.bklive.user.mylocation.LMLocationListener;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.lidroid.xutils.BitmapUtils;
 import com.xlibs.xrv.LayoutManager.XStaggeredGridLayoutManager;
@@ -50,8 +42,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -85,11 +75,8 @@ public class FoundFragment extends Fragment {
     private Intent websocketServiceIntent;
     private String accessKey;
     //地理信息定位
-    private LocationManager locationManager;
-    private LMLocationListener listener[] = {new LMLocationListener(), new LMLocationListener()};
-    private Timer timer;
-    private int count = 0;
-
+    private String wd;
+    private String jd;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -98,7 +85,8 @@ public class FoundFragment extends Fragment {
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
         }
-
+        wd = getActivity().getIntent().getStringExtra("wd");
+        jd = getActivity().getIntent().getStringExtra("jd");
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
         accessKey = sharedPreferences.getString("AccessKey", "");
@@ -148,49 +136,10 @@ public class FoundFragment extends Fragment {
             }
         });
         //上传位置信息
-        if (isLogin) {
-            getLocation();
-        }
+        sendMyLocation(wd, jd);
         return view;
     }
 
-    //获取地理信息
-    private void getLocation() {
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
-        if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(getActivity(), new String[]{Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.ACCESS_COARSE_LOCATION}, 1001);
-        } else {
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, listener[0]);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1F, listener[1]);
-        }
-        timer = new Timer();
-        timer.scheduleAtFixedRate(new TimerTask() {
-            @Override
-            public void run() {
-                for (int i = 0; i < 1; i++) {
-                    final Location location = listener[i].current();
-                    if (location != null) {
-                        getActivity().runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-                                count++;
-                                if (count == 1) {
-                                    sendMyLocation(location.getLatitude() + "", location.getLongitude() + "");
-                                }
-                                Log.e("我的位置", location.getLatitude() + " : " + location.getLongitude());//维度getLatitude
-                                if (count == 1) {
-                                    timer.cancel();
-                                }
-                            }
-                        });
-                    }
-                }
-                Log.d(Constants.TAG, "No location received yet.");
-            }
-        }, 1, 1000);
-
-    }
 
     //    {"Protocol":"UpGps","UserId":"1001","wd":"33.955879","jd":"118.343085","AccessKey":"bk5977"}
     private void sendMyLocation(String wd, String jd) {
@@ -237,19 +186,6 @@ public class FoundFragment extends Fragment {
                 });
     }
 
-    //定位
-    @Override
-    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
-        if (requestCode == 1001) {
-            //默认给定全部的权限
-            if (ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED &&
-                    ActivityCompat.checkSelfPermission(getActivity(), Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                return;
-            }
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1f, listener[0]);
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 1000, 1f, listener[1]);
-        }
-    }
 
     private void showBanner() {
         JSONObject jsonObject_banner = new JSONObject();

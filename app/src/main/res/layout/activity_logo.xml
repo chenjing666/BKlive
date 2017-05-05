@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/white"
@@ -10,9 +11,27 @@
 
     <ImageView
         android:id="@+id/logo_welcome"
+        android:layout_width="@dimen/x600"
+        android:layout_height="@dimen/y1100"
+        android:layout_centerInParent="true"
+        android:background="@drawable/logo_welcome_480" />
+
+    <ImageView
+        android:id="@+id/logo_welcome2"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerInParent="true"
-        android:background="@drawable/logo_welcome_480"
-        android:scaleType="centerCrop" />
+        android:background="@drawable/bangbangtang_00007"
+        android:visibility="gone" />
+
+    <com.biaoke.bklive.common.CountDownProgressView
+        android:id="@+id/countdownProgressView"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="@dimen/x10"
+        android:layout_marginTop="@dimen/y10"
+        android:textSize="@dimen/x26"
+        android:visibility="gone"
+        app:circSolidColor="#4541" />
 </RelativeLayout>
