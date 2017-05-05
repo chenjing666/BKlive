@@ -37,7 +37,7 @@ public class PrivateMessageFragment extends Fragment {
     @BindView(R.id.recyclerview_private_message)
     RecyclerView recyclerviewPrivateMessage;
     Unbinder unbinder;
-    private List<PrivateMessageBean> mList;
+    private List<PrivateMessageBean> mList = new ArrayList<>();
     private PrivateMessageBean privateMessageBean;
     private PrivateMessageAdapter privateMessageAdapter;
     private List<String> fromId = new ArrayList<>();
@@ -91,24 +91,20 @@ public class PrivateMessageFragment extends Fragment {
 
             fromUserId = jsonObject.getString("FromUserId");
             String ToUserId = jsonObject.getString("ToUserId");
-
-//            for (int i = 0; i < fromId.size(); i++) {
-//                if (!fromUserId.equals(fromId.get(i))) {
-                    fromId.add(fromUserId);
-//                }
+//            for (int i = 0; i <fromId.size(); i++) {
+//                if (!fromUserId.equals(fromId.get(i)))
+//                    fromId.add(fromUserId);
 //            }
-            for (int i = 0; i < fromId.size(); i++) {
+//            for (int i = 0; i < fromId.size(); i++) {
                 Log.d("PrivateMessageFragment", fromId.size() + "");
 //                if (fromUserId.equals(fromId.get(i))) {
                 privateMessageBean = new PrivateMessageBean(iconUrl, Level, nickName, msg, Time, "?", Sex);
-                Log.d("PrivateMessageFragment", privateMessageBean.toString());
                 mList.add(privateMessageBean);
                 Message message = new Message();
                 message.what = 0;
                 mhandler.sendMessage(message);
-                }
+//                }
 //            }
-            Log.e("私信fragment", iconUrl + Level + nickName + msg + Time + "?" + Sex);
         } catch (JSONException e) {
             e.printStackTrace();
         }

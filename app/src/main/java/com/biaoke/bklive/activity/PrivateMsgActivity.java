@@ -2,6 +2,7 @@ package com.biaoke.bklive.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -15,7 +16,11 @@ import com.biaoke.bklive.adapter.PriMsgAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.PriMsg;
 import com.biaoke.bklive.eventbus.Event_privatemessage;
+import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
+import com.biaoke.bklive.websocket.WebSocketService;
+import com.zhy.http.okhttp.OkHttpUtils;
+import com.zhy.http.okhttp.callback.StringCallback;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -29,6 +34,8 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import okhttp3.Call;
+import okhttp3.MediaType;
 
 public class PrivateMsgActivity extends BaseActivity {
 
@@ -77,6 +84,7 @@ public class PrivateMsgActivity extends BaseActivity {
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void Event_privateMessage(Event_privatemessage privatemessage) {
         String privateMsg = privatemessage.getMsg();//json格式的信息
+        Log.e("PrivateMsgActivity",privateMsg);
         try {
             JSONObject object_priMsg = new JSONObject(privateMsg);
             String priMsg_receive = object_priMsg.getString("Msg");
@@ -133,6 +141,22 @@ public class PrivateMsgActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(object_sendPriMsg.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+                        Log.d("失败的返回", e.getMessage());
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        WebSocketService.sendMsg(response);
+                    }
+                });
     }
 
 
