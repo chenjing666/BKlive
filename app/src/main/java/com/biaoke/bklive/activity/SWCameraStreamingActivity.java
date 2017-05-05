@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.content.pm.ActivityInfo;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
@@ -78,7 +79,6 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
-import de.tavendo.autobahn.WebSocketConnection;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Response;
@@ -185,13 +185,17 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     private ClipData mClipData;//剪切板Data对象
     //websocket
     private Intent websocketServiceIntent;
-    private WebSocketConnection webSocketConnection;
 
     private List<LivingroomChatListBean> chatList = new ArrayList<>();
     private LivingroomChatListAdapter livingroomChatListAdapter;
     private LivingroomChatListBean livingroomChatListBean_chatmsg;
     //系统提示
     private LivingroomChatSysAdapter livingroomChatSysAdapter;
+    private ImageView imageView_pick;
+    private ImageView imageView_camera_change;
+    private ImageView imageView_camera_t;
+    private ImageView imageView_camera_beauty;
+    private ImageView imageView_camera_flash;
 
     @SuppressLint("InlinedApi")
     @Override
@@ -240,13 +244,12 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             @Override
             public void run() {
                 try {
-                    if (webSocketConnection != null) {
                         Thread.sleep(1000);
                         joinInWeb();//获取长连接
 //                    Thread.sleep(100);
 //                    GetChatRomCount();//读取聊天室人数
 //                    GetChatRomList();//读取聊天室用户列表
-                    }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -924,10 +927,16 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     private void pickupPop() {
         final View contentView = LayoutInflater.from(this).inflate(R.layout.livingroom_popw_pickup, null);
         popupWindow_pickup = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
-        ImageView imageView_pick = (ImageView) contentView.findViewById(R.id.livingroom_pop_pickup);
+        imageView_pick = (ImageView) contentView.findViewById(R.id.livingroom_pop_pickup);
         imageView_pick.setOnClickListener(pickupPop);
-        ImageView imageView_camera_change = (ImageView) contentView.findViewById(R.id.camera_change);
+        imageView_camera_change = (ImageView) contentView.findViewById(R.id.camera_change);
         imageView_camera_change.setOnClickListener(pickupPop);
+        imageView_camera_t = (ImageView) contentView.findViewById(R.id.t_t);
+        imageView_camera_t.setOnClickListener(pickupPop);
+        imageView_camera_beauty = (ImageView) contentView.findViewById(R.id.camera_beauty);
+        imageView_camera_beauty.setOnClickListener(pickupPop);
+        imageView_camera_flash = (ImageView) contentView.findViewById(R.id.camera_flash);
+        imageView_camera_flash.setOnClickListener(pickupPop);
         popupWindow_pickup.setTouchable(true);
         popupWindow_pickup.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -937,20 +946,62 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 return false;
             }
         });
-//        popupWindow_pickup.setBackgroundDrawable(getResources().getDrawable(R.drawable.livingroom_edge));
         popupWindow_pickup.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
+
+    boolean isEncOrientationPort = false;
+    boolean isLighting = false;
+    //    boolean isCameraFront=true;
 
     private View.OnClickListener pickupPop = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                //闪光灯
+                case R.id.camera_flash:
+                    popupWindow_pickup.dismiss();
+                    if (!imageView_camera_flash.isSelected()) {
+                        imageView_camera_flash.setSelected(true);
+                    } else {
+                        imageView_camera_flash.setSelected(false);
+                    }
+                    if (!isLighting) {
+                        mMediaStreamingManager.turnLightOn();
+                        isLighting = true;
+                    } else {
+                        mMediaStreamingManager.turnLightOff();
+                        isLighting = false;
+                    }
+
+                    break;
                 case R.id.livingroom_pop_pickup:
                     popupWindow_pickup.dismiss();
                     ivLivingroomPickup.setVisibility(View.VISIBLE);
                     break;
+                //摄像头切换
                 case R.id.camera_change:
-                    cameraStreamingSetting.setCameraId(Camera.CameraInfo.CAMERA_FACING_BACK);//摄像头后置
+                    popupWindow_pickup.dismiss();
+                    if (!imageView_camera_change.isSelected()) {
+                        imageView_camera_change.setSelected(true);
+                    } else {
+                        imageView_camera_change.setSelected(false);
+                    }
+                    mMediaStreamingManager.switchCamera();
+                    break;
+                case R.id.t_t:
+                    //切换横竖屏直播
+                    popupWindow_pickup.dismiss();
+                    if (!imageView_camera_t.isSelected()) {
+                        imageView_camera_t.setSelected(true);
+                    } else {
+                        imageView_camera_t.setSelected(false);
+                    }
+                    setRequestedOrientation(isEncOrientationPort ? ActivityInfo.SCREEN_ORIENTATION_PORTRAIT : ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);
+                    mMediaStreamingManager.notifyActivityOrientationChanged();
+                    isEncOrientationPort = !isEncOrientationPort;
+                    break;
+                case R.id.camera_beauty:
+                    popupWindow_pickup.dismiss();
                     break;
             }
         }

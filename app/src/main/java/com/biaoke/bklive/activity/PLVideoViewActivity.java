@@ -75,7 +75,6 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
-import de.tavendo.autobahn.WebSocketConnection;
 import master.flame.danmaku.controller.DrawHandler;
 import master.flame.danmaku.danmaku.model.BaseDanmaku;
 import master.flame.danmaku.danmaku.model.DanmakuTimer;
@@ -204,7 +203,6 @@ public class PLVideoViewActivity extends BaseActivity {
     private ClipboardManager mClipboardManager;//剪切板管理工具类
     private ClipData mClipData;//剪切板Data对象
 
-    private WebSocketConnection webSocketConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -266,7 +264,6 @@ public class PLVideoViewActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                    if (webSocketConnection != null) {
                         Thread.sleep(500);
                         joinInWeb();//获取长连接
                         Thread.sleep(100);
@@ -275,7 +272,7 @@ public class PLVideoViewActivity extends BaseActivity {
                         Thread.sleep(300);
                         GetChatRomCount();//读取聊天室人数
                         GetChatRomList();//读取聊天室用户列表
-                    }
+
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

@@ -30,14 +30,14 @@ import java.util.Map;
  *
  * @author user
  */
-public class CrashHandler implements Thread.UncaughtExceptionHandler {
+public class CrashHandlerHasee implements Thread.UncaughtExceptionHandler {
 
-    public static final String TAG = "CrashHandler";
+    public static final String TAG = "CrashHandlerHasee";
 
     //系统默认的UncaughtException处理类
     private Thread.UncaughtExceptionHandler mDefaultHandler;
     //CrashHandler实例
-    private static CrashHandler INSTANCE = new CrashHandler();
+    private static CrashHandlerHasee INSTANCE = new CrashHandlerHasee();
     //程序的Context对象
     private Context mContext;
     //用来存储设备信息和异常信息
@@ -49,13 +49,13 @@ public class CrashHandler implements Thread.UncaughtExceptionHandler {
     /**
      * 保证只有一个CrashHandler实例
      */
-    private CrashHandler() {
+    private CrashHandlerHasee() {
     }
 
     /**
      * 获取CrashHandler实例 ,单例模式
      */
-    public static CrashHandler getInstance() {
+    public static CrashHandlerHasee getInstance() {
         return INSTANCE;
     }
 

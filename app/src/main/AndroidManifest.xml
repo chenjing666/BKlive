@@ -77,7 +77,9 @@
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.SearchActivity" />
         <activity android:name=".user.activity.MyworkActivity" />
-        <activity android:name=".activity.SWCameraStreamingActivity" />
+        <activity
+            android:name=".activity.SWCameraStreamingActivity"
+            android:configChanges="orientation|screenSize" />
         <activity
             android:name="com.qiniu.pili.droid.streaming.screen.ScreenCaptureRequestActivity"
             android:theme="@android:style/Theme.Translucent.NoTitleBar">

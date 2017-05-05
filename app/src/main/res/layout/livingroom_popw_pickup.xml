@@ -14,11 +14,12 @@
         android:orientation="vertical">
 
         <ImageView
+            android:id="@+id/t_t"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/y30"
             android:layout_weight="1"
-            android:background="@drawable/title_livingroom2" />
+            android:background="@drawable/title_switch" />
 
         <ImageView
             android:id="@+id/camera_flash"
@@ -26,7 +27,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/y30"
             android:layout_weight="1"
-            android:background="@drawable/livingroom_light" />
+            android:background="@drawable/flash_switch" />
 
         <ImageView
             android:id="@+id/camera_change"
@@ -34,7 +35,7 @@
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/y30"
             android:layout_weight="1"
-            android:background="@drawable/livingroom_camera_switch" />
+            android:background="@drawable/camera_switch" />
 
         <ImageView
             android:id="@+id/camera_beauty"
@@ -43,7 +44,7 @@
             android:layout_marginBottom="@dimen/y30"
             android:layout_marginTop="@dimen/y30"
             android:layout_weight="1"
-            android:background="@drawable/livingroom_beauty" />
+            android:background="@drawable/beauty_switch" />
     </LinearLayout>
     <ImageView
         android:id="@+id/livingroom_pop_pickup"
