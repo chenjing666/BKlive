@@ -21,6 +21,7 @@
             android:background="@drawable/title_livingroom2" />
 
         <ImageView
+            android:id="@+id/camera_flash"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/y30"
@@ -28,6 +29,7 @@
             android:background="@drawable/livingroom_light" />
 
         <ImageView
+            android:id="@+id/camera_change"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginTop="@dimen/y30"
@@ -35,6 +37,7 @@
             android:background="@drawable/livingroom_camera_switch" />
 
         <ImageView
+            android:id="@+id/camera_beauty"
             android:layout_width="wrap_content"
             android:layout_height="0dp"
             android:layout_marginBottom="@dimen/y30"

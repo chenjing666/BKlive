@@ -33,6 +33,7 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import de.tavendo.autobahn.WebSocketConnection;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
@@ -49,6 +50,7 @@ public class MessageActivity extends BaseActivity {
     private MessageFragment mMessageFragment;
     private String userId;
     private String accessKey;
+    private WebSocketConnection webSocketConnection;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,9 +82,11 @@ public class MessageActivity extends BaseActivity {
             public void run() {
                 try {
                     Thread.sleep(500);
-                    joinInWeb();//获取长连接
-                    Thread.sleep(100);
-                    getMsgBefore();//读取缓存信息
+                    if (webSocketConnection != null) {
+                        joinInWeb();//获取长连接
+                        Thread.sleep(100);
+                        getMsgBefore();//读取缓存信息
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }

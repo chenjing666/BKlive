@@ -78,6 +78,7 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import de.tavendo.autobahn.WebSocketConnection;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Response;
@@ -184,6 +185,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     private ClipData mClipData;//剪切板Data对象
     //websocket
     private Intent websocketServiceIntent;
+    private WebSocketConnection webSocketConnection;
 
     private List<LivingroomChatListBean> chatList = new ArrayList<>();
     private LivingroomChatListAdapter livingroomChatListAdapter;
@@ -238,11 +240,13 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             @Override
             public void run() {
                 try {
-                    Thread.sleep(1000);
-                    joinInWeb();//获取长连接
+                    if (webSocketConnection != null) {
+                        Thread.sleep(1000);
+                        joinInWeb();//获取长连接
 //                    Thread.sleep(100);
 //                    GetChatRomCount();//读取聊天室人数
 //                    GetChatRomList();//读取聊天室用户列表
+                    }
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -592,11 +596,11 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 }
                 break;
             case R.id.btn_start_live:
-//              获取直播推流地址
+                //获取直播推流地址
                 okhttputils();
                 //主播创建聊天室
                 createChatroom();
-//              隐藏直播描述，进入直播间
+                //隐藏直播描述，进入直播间
                 liveDescription.setVisibility(View.INVISIBLE);
                 bottomBarLiving.setVisibility(View.VISIBLE);
                 llLivingroomHeader.setVisibility(View.VISIBLE);
@@ -628,6 +632,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 ivLivingroomPickup.setVisibility(View.GONE);
                 break;
             case R.id.iv_livingroom_music:
+
                 break;
         }
     }
@@ -921,6 +926,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         popupWindow_pickup = new PopupWindow(contentView, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT, true);
         ImageView imageView_pick = (ImageView) contentView.findViewById(R.id.livingroom_pop_pickup);
         imageView_pick.setOnClickListener(pickupPop);
+        ImageView imageView_camera_change = (ImageView) contentView.findViewById(R.id.camera_change);
+        imageView_camera_change.setOnClickListener(pickupPop);
         popupWindow_pickup.setTouchable(true);
         popupWindow_pickup.setTouchInterceptor(new View.OnTouchListener() {
             @Override
@@ -941,6 +948,9 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 case R.id.livingroom_pop_pickup:
                     popupWindow_pickup.dismiss();
                     ivLivingroomPickup.setVisibility(View.VISIBLE);
+                    break;
+                case R.id.camera_change:
+                    cameraStreamingSetting.setCameraId(Camera.CameraInfo.CAMERA_FACING_BACK);//摄像头后置
                     break;
             }
         }

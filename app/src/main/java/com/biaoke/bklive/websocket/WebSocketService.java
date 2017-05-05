@@ -41,7 +41,6 @@ public class WebSocketService extends Service {
     public static final String WEBSOCKET_ACTION = "WEBSOCKET_ACTION";
     private BroadcastReceiver connectionReceiver;
     private static WebSocketConnection webSocketConnection;
-    //    private static String websocketHost = "ws://server-test.bk5977.com:8282";
     private static WebSocketOptions options = new WebSocketOptions();
     private static boolean isExitApp = false;
     private static String allMessage;
