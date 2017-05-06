@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+    android:oneshot="false">
+    <item
+        android:drawable="@drawable/wen_big00"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big01"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big02"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big03"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big04"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big05"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big06"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big07"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big08"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big09"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big10"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big11"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big12"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big13"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big14"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big15"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big16"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big17"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big18"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big19"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big20"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big21"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big22"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big23"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big24"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big25"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big26"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big27"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big28"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big29"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big30"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big31"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big32"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big33"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big34"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big35"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big36"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big37"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big38"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big39"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big40"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big41"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big42"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big43"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big44"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big45"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big46"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big47"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big48"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big49"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big50"
+        android:duration="50" />
+    <item
+        android:drawable="@drawable/wen_big51"
+        android:duration="50" />
+
+</animation-list>

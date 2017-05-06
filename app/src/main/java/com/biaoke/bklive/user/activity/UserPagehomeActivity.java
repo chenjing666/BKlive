@@ -1,6 +1,7 @@
 package com.biaoke.bklive.user.activity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -16,6 +17,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
+import com.biaoke.bklive.activity.PLVideoViewActivity;
+import com.biaoke.bklive.activity.PrivateMsgActivity;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
@@ -158,6 +161,11 @@ public class UserPagehomeActivity extends BaseActivity {
                 addFollow();
                 break;
             case R.id.anchor_privatemessage:
+                Intent intent = new Intent(UserPagehomeActivity.this, PrivateMsgActivity.class);
+                intent.putExtra("fromUserId", ChatroomId);
+                intent.putExtra("iconUrl", yHeadimageUrl);
+                intent.putExtra("nickName", yNickName);
+                startActivity(intent);
                 break;
             case R.id.anchor_defriend:
                 break;

@@ -137,6 +137,8 @@ public class PLVideoViewActivity extends BaseActivity {
     ImageView barrageSwitchOpen;
     @BindView(R.id.rl_barage_switch)
     RelativeLayout rlBarageSwitch;
+    @BindView(R.id.gift_wen_big)
+    ImageView giftWenBig;
     private GlideUtis glideUtis;
     private PLVideoView mVideoView;
     private String path2;
@@ -264,14 +266,14 @@ public class PLVideoViewActivity extends BaseActivity {
             @Override
             public void run() {
                 try {
-                        Thread.sleep(500);
-                        joinInWeb();//获取长连接
-                        Thread.sleep(100);
-                        queryFollow();//查询是否关注
-                        joinChatRoom();//加入聊天室
-                        Thread.sleep(300);
-                        GetChatRomCount();//读取聊天室人数
-                        GetChatRomList();//读取聊天室用户列表
+                    Thread.sleep(500);
+                    joinInWeb();//获取长连接
+                    Thread.sleep(100);
+                    queryFollow();//查询是否关注
+                    joinChatRoom();//加入聊天室
+                    Thread.sleep(300);
+                    GetChatRomCount();//读取聊天室人数
+                    GetChatRomList();//读取聊天室用户列表
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
@@ -1161,17 +1163,34 @@ public class PLVideoViewActivity extends BaseActivity {
         GiftPagerAdapter giftadapter = new GiftPagerAdapter();
         viewPager_gift.setAdapter(giftadapter);
         select_only = true;
+
+        //全屏动画
+
+        button_sendGift.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                giftWenBig.setVisibility(View.VISIBLE);
+                giftWenBig.setBackgroundResource(R.drawable.gift_wen);
+                final AnimationDrawable anim_wen_big = (AnimationDrawable) giftWenBig.getBackground();
+                anim_wen_big.start();
+
+            }
+        });
+
         //666开始
         final ImageView imageView_gift_lll = (ImageView) gift_view1.findViewById(R.id.gift_png_lll);
-        imageView_gift_lll.setBackgroundResource(R.drawable.gift_666);
-        final AnimationDrawable anim_lll = (AnimationDrawable) imageView_gift_lll.getBackground();
+        //5.6 只有设置动画背景不同，其他代码都是重复的，可以考虑之后替换，精简代码
+        //最多可以同时5个动画，再多就oom了
         final ImageView imageView_gift_livingroom_lll = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_lll);
         final LinearLayout linearLayout_lll = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_lll);
         final TextView textView_lll = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_lll);
         linearLayout_lll.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_lll.setBackgroundResource(R.drawable.gift_666);
+                final AnimationDrawable anim_lll = (AnimationDrawable) imageView_gift_lll.getBackground();
                 if (!linearLayout_lll.isSelected()) {
+
                     linearLayout_lll.setSelected(true);
                     textView_lll.setSelected(true);
                     textView_lll.setTextColor(getResources().getColor(R.color.black));
@@ -1179,6 +1198,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_lll.setVisibility(View.VISIBLE);
                     anim_lll.start();
                 } else {
+                    imageView_gift_lll.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lll.setSelected(false);
                     textView_lll.setSelected(false);
                     textView_lll.setTextColor(getResources().getColor(R.color.white));
@@ -1192,15 +1212,17 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //棒棒糖开始
         final ImageView imageView_gift_bbt = (ImageView) gift_view1.findViewById(R.id.gift_png_bbt);
-        imageView_gift_bbt.setBackgroundResource(R.drawable.gift_bangbangtang);
-        final AnimationDrawable anim_bbt = (AnimationDrawable) imageView_gift_bbt.getBackground();
+
         final ImageView imageView_gift_livingroom_bbt = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_bbt);
         final LinearLayout linearLayout_bbt = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_bbt);
         final TextView textView_bbt = (TextView) gift_view1.findViewById(R.id.gift_bg_exp);
         linearLayout_bbt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_bbt.setBackgroundResource(R.drawable.gift_bangbangtang);
+                final AnimationDrawable anim_bbt = (AnimationDrawable) imageView_gift_bbt.getBackground();
                 if (!linearLayout_bbt.isSelected()) {
+
                     linearLayout_bbt.setSelected(true);
                     textView_bbt.setSelected(true);
                     textView_bbt.setTextColor(getResources().getColor(R.color.black));
@@ -1208,6 +1230,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_bbt.setVisibility(View.VISIBLE);
                     anim_bbt.start();
                 } else {
+                    imageView_gift_bbt.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_bbt.setSelected(false);
                     textView_bbt.setSelected(false);
                     textView_bbt.setTextColor(getResources().getColor(R.color.white));
@@ -1220,15 +1243,17 @@ public class PLVideoViewActivity extends BaseActivity {
         //棒棒糖结束
         //蓝瘦香菇开始
         final ImageView imageView_gift_lsxg = (ImageView) gift_view1.findViewById(R.id.gift_png_lsxg);
-        imageView_gift_lsxg.setBackgroundResource(R.drawable.gift_lanshouxianggu);
-        final AnimationDrawable anim_lsxg = (AnimationDrawable) imageView_gift_lsxg.getBackground();
+
         final ImageView imageView_gift_livingroom_lsxg = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_lsxg);
         final LinearLayout linearLayout_lsxg = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_lsxg);
         final TextView textView_lsxg = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_lsxg);
         linearLayout_lsxg.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_lsxg.setBackgroundResource(R.drawable.gift_lanshouxianggu);
+                final AnimationDrawable anim_lsxg = (AnimationDrawable) imageView_gift_lsxg.getBackground();
                 if (!linearLayout_lsxg.isSelected()) {
+
                     linearLayout_lsxg.setSelected(true);
                     textView_lsxg.setSelected(true);
                     textView_lsxg.setTextColor(getResources().getColor(R.color.black));
@@ -1236,6 +1261,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_lsxg.setVisibility(View.VISIBLE);
                     anim_lsxg.start();
                 } else {
+                    imageView_gift_lsxg.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lsxg.setSelected(false);
                     textView_lsxg.setSelected(false);
                     textView_lsxg.setTextColor(getResources().getColor(R.color.white));
@@ -1248,15 +1274,17 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //小红花开始
         final ImageView imageView_gift_xhh = (ImageView) gift_view1.findViewById(R.id.gift_png_xhh);
-        imageView_gift_xhh.setBackgroundResource(R.drawable.gift_xiaohonghua);
-        final AnimationDrawable anim_xhh = (AnimationDrawable) imageView_gift_xhh.getBackground();
+
         final ImageView imageView_gift_livingroom_xhh = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_xhh);
         final LinearLayout linearLayout_xhh = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_xhh);
         final TextView textView_xhh = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_xhh);
         linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_xhh.setBackgroundResource(R.drawable.gift_xiaohonghua);
+                final AnimationDrawable anim_xhh = (AnimationDrawable) imageView_gift_xhh.getBackground();
                 if (!linearLayout_xhh.isSelected()) {
+
                     linearLayout_xhh.setSelected(true);
                     textView_xhh.setSelected(true);
                     textView_xhh.setTextColor(getResources().getColor(R.color.black));
@@ -1264,6 +1292,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_xhh.setVisibility(View.VISIBLE);
                     anim_xhh.start();
                 } else {
+                    imageView_gift_xhh.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_xhh.setSelected(false);
                     textView_xhh.setSelected(false);
                     textView_xhh.setTextColor(getResources().getColor(R.color.white));
@@ -1276,15 +1305,17 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //老司机开始
         final ImageView imageView_gift_lsj = (ImageView) gift_view1.findViewById(R.id.gift_png_lsj);
-        imageView_gift_lsj.setBackgroundResource(R.drawable.gift_laosiji);
-        final AnimationDrawable anim_lsj = (AnimationDrawable) imageView_gift_lsj.getBackground();
+
         final ImageView imageView_gift_livingroom_lsj = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_lsj);
         final LinearLayout linearLayout_lsj = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_lsj);
         final TextView textView_lsj = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_lsj);
-        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+        linearLayout_lsj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_lsj.setBackgroundResource(R.drawable.gift_laosiji);
+                final AnimationDrawable anim_lsj = (AnimationDrawable) imageView_gift_lsj.getBackground();
                 if (!linearLayout_lsj.isSelected()) {
+
                     linearLayout_lsj.setSelected(true);
                     textView_lsj.setSelected(true);
                     textView_lsj.setTextColor(getResources().getColor(R.color.black));
@@ -1292,6 +1323,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_lsj.setVisibility(View.VISIBLE);
                     anim_lsj.start();
                 } else {
+                    imageView_gift_lsj.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lsj.setSelected(false);
                     textView_lsj.setSelected(false);
                     textView_lsj.setTextColor(getResources().getColor(R.color.white));
@@ -1303,15 +1335,17 @@ public class PLVideoViewActivity extends BaseActivity {
         });//老司机结束
         //皮皮虾开始
         final ImageView imageView_gift_ppx = (ImageView) gift_view1.findViewById(R.id.gift_png_ppx);
-        imageView_gift_ppx.setBackgroundResource(R.drawable.gift_pipixia);
-        final AnimationDrawable anim_ppx = (AnimationDrawable) imageView_gift_ppx.getBackground();
+
         final ImageView imageView_gift_livingroom_ppx = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_ppx);
         final LinearLayout linearLayout_ppx = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_ppx);
         final TextView textView_ppx = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_ppx);
         linearLayout_ppx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_ppx.setBackgroundResource(R.drawable.gift_pipixia);
+                final AnimationDrawable anim_ppx = (AnimationDrawable) imageView_gift_ppx.getBackground();
                 if (!linearLayout_ppx.isSelected()) {
+
                     linearLayout_ppx.setSelected(true);
                     textView_ppx.setSelected(true);
                     textView_ppx.setTextColor(getResources().getColor(R.color.black));
@@ -1319,6 +1353,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_ppx.setVisibility(View.VISIBLE);
                     anim_ppx.start();
                 } else {
+                    imageView_gift_ppx.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_ppx.setSelected(false);
                     textView_ppx.setSelected(false);
                     textView_ppx.setTextColor(getResources().getColor(R.color.white));
@@ -1330,15 +1365,17 @@ public class PLVideoViewActivity extends BaseActivity {
         });//皮皮虾结束
         //坑开始
         final ImageView imageView_gift_k = (ImageView) gift_view1.findViewById(R.id.gift_png_k);
-        imageView_gift_k.setBackgroundResource(R.drawable.gift_keng);
-        final AnimationDrawable anim_k = (AnimationDrawable) imageView_gift_k.getBackground();
+
         final ImageView imageView_gift_livingroom_k = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_k);
         final LinearLayout linearLayout_k = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_k);
         final TextView textView_k = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_k);
         linearLayout_k.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_k.setBackgroundResource(R.drawable.gift_keng);
+                final AnimationDrawable anim_k = (AnimationDrawable) imageView_gift_k.getBackground();
                 if (!linearLayout_k.isSelected()) {
+
                     linearLayout_k.setSelected(true);
                     textView_k.setSelected(true);
                     textView_k.setTextColor(getResources().getColor(R.color.black));
@@ -1346,6 +1383,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_k.setVisibility(View.VISIBLE);
                     anim_k.start();
                 } else {
+                    imageView_gift_k.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_k.setSelected(false);
                     textView_k.setSelected(false);
                     textView_k.setTextColor(getResources().getColor(R.color.white));
@@ -1357,15 +1395,17 @@ public class PLVideoViewActivity extends BaseActivity {
         });//坑结束
         //吻开始
         final ImageView imageView_gift_w = (ImageView) gift_view1.findViewById(R.id.gift_png_w);
-        imageView_gift_w.setBackgroundResource(R.drawable.gift_wen);
-        final AnimationDrawable anim_w = (AnimationDrawable) imageView_gift_w.getBackground();
+
         final ImageView imageView_gift_livingroom_w = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_w);
         final LinearLayout linearLayout_w = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_w);
         final TextView textView_w = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_w);
-        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+        linearLayout_w.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_w.setBackgroundResource(R.drawable.gift_wen);
+                final AnimationDrawable anim_w = (AnimationDrawable) imageView_gift_w.getBackground();
                 if (!linearLayout_w.isSelected()) {
+
                     linearLayout_w.setSelected(true);
                     textView_w.setSelected(true);
                     textView_w.setTextColor(getResources().getColor(R.color.black));
@@ -1373,6 +1413,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_w.setVisibility(View.VISIBLE);
                     anim_w.start();
                 } else {
+                    imageView_gift_w.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_w.setSelected(false);
                     textView_w.setSelected(false);
                     textView_w.setTextColor(getResources().getColor(R.color.white));
@@ -1384,15 +1425,17 @@ public class PLVideoViewActivity extends BaseActivity {
         });//吻结束
         //要抱抱开始
         final ImageView imageView_gift_ybb = (ImageView) gift_view1.findViewById(R.id.gift_png_ybb);
-        imageView_gift_ybb.setBackgroundResource(R.drawable.gift_yaobaobao);
-        final AnimationDrawable anim_ybb = (AnimationDrawable) imageView_gift_ybb.getBackground();
+
         final ImageView imageView_gift_livingroom_ybb = (ImageView) gift_view1.findViewById(R.id.gift_livingroom_ybb);
         final LinearLayout linearLayout_ybb = (LinearLayout) gift_view1.findViewById(R.id.ll_gift_ybb);
         final TextView textView_ybb = (TextView) gift_view1.findViewById(R.id.gift_bg_exp_ybb);
-        linearLayout_xhh.setOnClickListener(new View.OnClickListener() {
+        linearLayout_ybb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_ybb.setBackgroundResource(R.drawable.gift_yaobaobao);
+                final AnimationDrawable anim_ybb = (AnimationDrawable) imageView_gift_ybb.getBackground();
                 if (!linearLayout_ybb.isSelected()) {
+
                     linearLayout_ybb.setSelected(true);
                     textView_ybb.setSelected(true);
                     textView_ybb.setTextColor(getResources().getColor(R.color.black));
@@ -1400,6 +1443,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_ybb.setVisibility(View.VISIBLE);
                     anim_ybb.start();
                 } else {
+                    imageView_gift_ybb.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_ybb.setSelected(false);
                     textView_ybb.setSelected(false);
                     textView_ybb.setTextColor(getResources().getColor(R.color.white));
@@ -1411,14 +1455,15 @@ public class PLVideoViewActivity extends BaseActivity {
         });//要抱抱结束
         //么么哒开始
         final ImageView imageView_gift_mmd = (ImageView) gift_view2.findViewById(R.id.gift_png_mmd);
-        imageView_gift_mmd.setBackgroundResource(R.drawable.gift_memeda);
-        final AnimationDrawable anim_mmd = (AnimationDrawable) imageView_gift_mmd.getBackground();
+
         final ImageView imageView_gift_livingroom_mmd = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_mmd);
         final LinearLayout linearLayout_mmd = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_mmd);
         final TextView textView_mmd = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_mmd);
         linearLayout_mmd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_mmd.setBackgroundResource(R.drawable.gift_memeda);
+                final AnimationDrawable anim_mmd = (AnimationDrawable) imageView_gift_mmd.getBackground();
                 if (!linearLayout_mmd.isSelected()) {
                     linearLayout_mmd.setSelected(true);
                     textView_mmd.setSelected(true);
@@ -1427,6 +1472,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_mmd.setVisibility(View.VISIBLE);
                     anim_mmd.start();
                 } else {
+                    imageView_gift_mmd.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_mmd.setSelected(false);
                     textView_mmd.setSelected(false);
                     textView_mmd.setTextColor(getResources().getColor(R.color.white));
@@ -1439,14 +1485,15 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //爱的烟花开始
         final ImageView imageView_gift_adyh = (ImageView) gift_view2.findViewById(R.id.gift_png_adyh);
-        imageView_gift_adyh.setBackgroundResource(R.drawable.gift_aideyanhua);
-        final AnimationDrawable anim_adyh = (AnimationDrawable) imageView_gift_adyh.getBackground();
+
         final ImageView imageView_gift_livingroom_adyh = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_adyh);
         final LinearLayout linearLayout_adyh = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_adyh);
         final TextView textView_adyh = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_adyh);
         linearLayout_adyh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_adyh.setBackgroundResource(R.drawable.gift_aideyanhua);
+                final AnimationDrawable anim_adyh = (AnimationDrawable) imageView_gift_adyh.getBackground();
                 if (!linearLayout_adyh.isSelected()) {
                     linearLayout_adyh.setSelected(true);
                     textView_adyh.setSelected(true);
@@ -1455,6 +1502,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_adyh.setVisibility(View.VISIBLE);
                     anim_adyh.start();
                 } else {
+                    imageView_gift_adyh.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_adyh.setSelected(false);
                     textView_adyh.setSelected(false);
                     textView_adyh.setTextColor(getResources().getColor(R.color.white));
@@ -1467,14 +1515,15 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //玫瑰花丛开始
         final ImageView imageView_gift_mghc = (ImageView) gift_view2.findViewById(R.id.gift_png_mghc);
-        imageView_gift_mghc.setBackgroundResource(R.drawable.gift_aideyanhua);
-        final AnimationDrawable anim_mghc = (AnimationDrawable) imageView_gift_mghc.getBackground();
+
         final ImageView imageView_gift_livingroom_mghc = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_mghc);
         final LinearLayout linearLayout_mghc = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_mghc);
         final TextView textView_mghc = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_mghc);
         linearLayout_mghc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_mghc.setBackgroundResource(R.drawable.gift_aideyanhua);
+                final AnimationDrawable anim_mghc = (AnimationDrawable) imageView_gift_mghc.getBackground();
                 if (!linearLayout_mghc.isSelected()) {
                     linearLayout_mghc.setSelected(true);
                     textView_mghc.setSelected(true);
@@ -1483,6 +1532,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_mghc.setVisibility(View.VISIBLE);
                     anim_mghc.start();
                 } else {
+                    imageView_gift_mghc.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_mghc.setSelected(false);
                     textView_mghc.setSelected(false);
                     textView_mghc.setTextColor(getResources().getColor(R.color.white));
@@ -1495,14 +1545,15 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //水晶鞋开始
         final ImageView imageView_gift_sjx = (ImageView) gift_view2.findViewById(R.id.gift_png_sjx);
-        imageView_gift_sjx.setBackgroundResource(R.drawable.gift_shuijingxie);
-        final AnimationDrawable anim_sjx = (AnimationDrawable) imageView_gift_sjx.getBackground();
+
         final ImageView imageView_gift_livingroom_sjx = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_sjx);
         final LinearLayout linearLayout_sjx = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_sjx);
         final TextView textView_sjx = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_sjx);
         linearLayout_sjx.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_sjx.setBackgroundResource(R.drawable.gift_shuijingxie);
+                final AnimationDrawable anim_sjx = (AnimationDrawable) imageView_gift_sjx.getBackground();
                 if (!linearLayout_sjx.isSelected()) {
                     linearLayout_sjx.setSelected(true);
                     textView_sjx.setSelected(true);
@@ -1511,6 +1562,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_sjx.setVisibility(View.VISIBLE);
                     anim_sjx.start();
                 } else {
+                    imageView_gift_sjx.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_sjx.setSelected(false);
                     textView_sjx.setSelected(false);
                     textView_sjx.setTextColor(getResources().getColor(R.color.white));
@@ -1523,14 +1575,15 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //情定一钻开始
         final ImageView imageView_gift_qdyz = (ImageView) gift_view2.findViewById(R.id.gift_png_qdyz);
-        imageView_gift_mghc.setBackgroundResource(R.drawable.gift_qingdingyizuan);
-        final AnimationDrawable anim_qdyz = (AnimationDrawable) imageView_gift_qdyz.getBackground();
+
         final ImageView imageView_gift_livingroom_qdyz = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_qdyz);
         final LinearLayout linearLayout_qdyz = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_qdyz);
         final TextView textView_qdyz = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_qdyz);
         linearLayout_qdyz.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_mghc.setBackgroundResource(R.drawable.gift_qingdingyizuan);
+                final AnimationDrawable anim_qdyz = (AnimationDrawable) imageView_gift_qdyz.getBackground();
                 if (!linearLayout_qdyz.isSelected()) {
                     linearLayout_qdyz.setSelected(true);
                     textView_qdyz.setSelected(true);
@@ -1539,6 +1592,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_qdyz.setVisibility(View.VISIBLE);
                     anim_qdyz.start();
                 } else {
+                    imageView_gift_qdyz.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_qdyz.setSelected(false);
                     textView_qdyz.setSelected(false);
                     textView_qdyz.setTextColor(getResources().getColor(R.color.white));
@@ -1551,14 +1605,15 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //流星雨开始
         final ImageView imageView_gift_lxy = (ImageView) gift_view2.findViewById(R.id.gift_png_lxy);
-        imageView_gift_lxy.setBackgroundResource(R.drawable.gift_liuxing);
-        final AnimationDrawable anim_lxy = (AnimationDrawable) imageView_gift_lxy.getBackground();
+
         final ImageView imageView_gift_livingroom_lxy = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_lxy);
         final LinearLayout linearLayout_lxy = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_lxy);
         final TextView textView_lxy = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_lxy);
         linearLayout_lxy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_lxy.setBackgroundResource(R.drawable.gift_liuxing);
+                final AnimationDrawable anim_lxy = (AnimationDrawable) imageView_gift_lxy.getBackground();
                 if (!linearLayout_lxy.isSelected()) {
                     linearLayout_lxy.setSelected(true);
                     textView_lxy.setSelected(true);
@@ -1567,6 +1622,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_lxy.setVisibility(View.VISIBLE);
                     anim_lxy.start();
                 } else {
+                    imageView_gift_lxy.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lxy.setSelected(false);
                     textView_lxy.setSelected(false);
                     textView_lxy.setTextColor(getResources().getColor(R.color.white));
@@ -1579,14 +1635,15 @@ public class PLVideoViewActivity extends BaseActivity {
 
         //兰博基尼开始
         final ImageView imageView_gift_lbjn = (ImageView) gift_view2.findViewById(R.id.gift_png_lbjn);
-        imageView_gift_lbjn.setBackgroundResource(R.drawable.gift_lanbojini);
-        final AnimationDrawable anim_lbjn = (AnimationDrawable) imageView_gift_lbjn.getBackground();
+
         final ImageView imageView_gift_livingroom_lbjn = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_lbjn);
         final LinearLayout linearLayout_lbjn = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_lbjn);
         final TextView textView_lbjn = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_lbjn);
         linearLayout_lbjn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_lbjn.setBackgroundResource(R.drawable.gift_lanbojini);
+                final AnimationDrawable anim_lbjn = (AnimationDrawable) imageView_gift_lbjn.getBackground();
                 if (!linearLayout_lbjn.isSelected()) {
                     linearLayout_lbjn.setSelected(true);
                     textView_lbjn.setSelected(true);
@@ -1595,6 +1652,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_lbjn.setVisibility(View.VISIBLE);
                     anim_lbjn.start();
                 } else {
+                    imageView_gift_lbjn.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lbjn.setSelected(false);
                     textView_lbjn.setSelected(false);
                     textView_lbjn.setTextColor(getResources().getColor(R.color.white));
@@ -1606,14 +1664,15 @@ public class PLVideoViewActivity extends BaseActivity {
         });//兰博基尼结束
         //为爱起航开始
         final ImageView imageView_gift_waqh = (ImageView) gift_view2.findViewById(R.id.gift_png_waqh);
-        imageView_gift_waqh.setBackgroundResource(R.drawable.gift_weiaiqihang);
-        final AnimationDrawable anim_waqh = (AnimationDrawable) imageView_gift_waqh.getBackground();
+
         final ImageView imageView_gift_livingroom_waqh = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_waqh);
         final LinearLayout linearLayout_waqh = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_waqh);
         final TextView textView_waqh = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_waqh);
         linearLayout_waqh.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_waqh.setBackgroundResource(R.drawable.gift_weiaiqihang);
+                final AnimationDrawable anim_waqh = (AnimationDrawable) imageView_gift_waqh.getBackground();
                 if (!linearLayout_waqh.isSelected()) {
                     linearLayout_waqh.setSelected(true);
                     textView_waqh.setSelected(true);
@@ -1622,6 +1681,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_waqh.setVisibility(View.VISIBLE);
                     anim_waqh.start();
                 } else {
+                    imageView_gift_waqh.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_waqh.setSelected(false);
                     textView_waqh.setSelected(false);
                     textView_waqh.setTextColor(getResources().getColor(R.color.white));
@@ -1633,14 +1693,15 @@ public class PLVideoViewActivity extends BaseActivity {
         });//为爱起航结束
         //浪漫城堡开始
         final ImageView imageView_gift_lmcb = (ImageView) gift_view2.findViewById(R.id.gift_png_lmcb);
-        imageView_gift_lmcb.setBackgroundResource(R.drawable.gift_langmanchengbao);
-        final AnimationDrawable anim_lmcb = (AnimationDrawable) imageView_gift_lmcb.getBackground();
+
         final ImageView imageView_gift_livingroom_lmcb = (ImageView) gift_view2.findViewById(R.id.gift_livingroom_lmcb);
         final LinearLayout linearLayout_lmcb = (LinearLayout) gift_view2.findViewById(R.id.ll_gift_lmcb);
         final TextView textView_lmcb = (TextView) gift_view2.findViewById(R.id.gift_bg_exp_lmcb);
         linearLayout_lmcb.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                imageView_gift_lmcb.setBackgroundResource(R.drawable.gift_langmanchengbao);
+                final AnimationDrawable anim_lmcb = (AnimationDrawable) imageView_gift_lmcb.getBackground();
                 if (!linearLayout_lmcb.isSelected()) {
                     linearLayout_lmcb.setSelected(true);
                     textView_lmcb.setSelected(true);
@@ -1649,6 +1710,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_lmcb.setVisibility(View.VISIBLE);
                     anim_lmcb.start();
                 } else {
+                    imageView_gift_lmcb.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lmcb.setSelected(false);
                     textView_lmcb.setSelected(false);
                     textView_lmcb.setTextColor(getResources().getColor(R.color.white));
@@ -1660,9 +1722,7 @@ public class PLVideoViewActivity extends BaseActivity {
         });//浪漫城堡结束
 
 
-
-
-        //圆点指示器
+//        圆点指示器
         Bitmap bitmap = BitmapFactory.decodeResource(getResources(), R.drawable.liwu_dian2);
         for (int i = 0; i < viewList.size(); i++) {
             Button bt = new Button(this);
