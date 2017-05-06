@@ -78,7 +78,7 @@ public class PrivateMsgActivity extends BaseActivity {
         msgUser.setText(nickName);
         initMsgs();//放几条测试数据
         priMsgAdapter = new PriMsgAdapter(PrivateMsgActivity.this, R.layout.pri_msg_item, msgList);
-
+        listviewPriMsg.setAdapter(priMsgAdapter);
     }
 
     @Subscribe(threadMode = ThreadMode.MainThread)
