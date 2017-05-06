@@ -13,7 +13,7 @@
         android:layout_width="match_parent"
         android:layout_height="@dimen/y60"
         android:layout_alignParentBottom="true"
-        android:background="#66666666"
+        android:background="@color/transparent"
         android:gravity="center_vertical">
 
         <LinearLayout

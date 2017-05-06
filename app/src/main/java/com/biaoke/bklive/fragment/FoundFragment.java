@@ -5,12 +5,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.graphics.drawable.AnimationDrawable;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.support.annotation.Nullable;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.LinearLayoutManager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -85,7 +89,9 @@ public class FoundFragment extends Fragment {
     private String wd;
     private String jd;
     private List<ImageCycleView.ImageInfo> list;
+    private int myPosition;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)//api23以上才能对xrecyclerview 进行滑动监听
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -123,7 +129,7 @@ public class FoundFragment extends Fragment {
         recyclerviewFound.addFootView(mFooterView, 50);
 
         //设置布局管理器,可以根据图片大小自适应
-        XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
+        final XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
         xGridLayoutManager.setAutoMeasureEnabled(false);
         recyclerviewFound.setLayoutManager(xGridLayoutManager);
         //设置适配器
@@ -144,10 +150,36 @@ public class FoundFragment extends Fragment {
                 refreshData();
             }
         });
-        //上传位置信息
+
+        int position = 0;
+        LinearLayoutManager layoutMgr = new LinearLayoutManager(getActivity());
+        int firstPosition = layoutMgr.findFirstVisibleItemPosition();
+        View v = layoutMgr.getChildAt(position - firstPosition);
+        if (Build.VERSION.SDK_INT > 22) {
+            Log.e("发现页面", "走了加载更多");
+            recyclerviewFound.setOnScrollChangeListener(new View.OnScrollChangeListener() {
+                @Override
+                public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
+                    int visibleItemCount = xGridLayoutManager.getChildCount();//显示在页面内的item
+                    int lineItemCount = xGridLayoutManager.getSpanCount();//每行的item
+                    int totalItemCount = xGridLayoutManager.getItemCount();//总的item
+//                    Log.e(visibleItemCount + "", totalItemCount + "---" + lineItemCount);
+                    recyclerviewFound.getFocusedChild();
+//                    Log.e("-----", recyclerviewFound.getChildAt(totalItemCount-4) + "在集合中返回指定位置的视图。");
+                    Log.e("myPosition",myPosition+"");
+                    int item=totalItemCount-myPosition;
+                    if (item==0||item==1||item==2||item==3||item==4||item==5||item==6||item==7) {
+                        Log.e("发现页面2", "走了加载更多");
+                        loadMoreData();
+                    }
+                }
+            });
+        }
+
         sendMyLocation(wd, jd);
         return view;
     }
+
 
 
     //    {"Protocol":"UpGps","UserId":"1001","wd":"33.955879","jd":"118.343085","AccessKey":"bk5977"}
@@ -195,7 +227,6 @@ public class FoundFragment extends Fragment {
                 });
     }
 
-
     private void showBanner() {
         JSONObject jsonObject_banner = new JSONObject();
         try {
@@ -222,17 +253,8 @@ public class FoundFragment extends Fragment {
                             return imageView;
                         }
                     });
-
                     break;
                 case 1:
-                    Log.e("lllll", bannerList.size() + "");
-                    new Thread(new Runnable() {
-                        @Override
-                        public void run() {
-                        }
-                    });
-                    break;
-                case 2:
                     break;
             }
         }
@@ -329,6 +351,7 @@ public class FoundFragment extends Fragment {
     private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
+            myPosition = postion;
             String type = recyclerDataList.get(postion).getType();
             Log.e("----视频类型----", type);
             String chatroomId = recyclerDataList.get(postion).getUserId();
@@ -427,10 +450,10 @@ public class FoundFragment extends Fragment {
     //轮播图
     private void myImagecycleview() {
         //		mImageCycleView.setAutoCycle(false); //关闭自动播放
-//        mImageCycleView.setCycleDelayed(2000);//设置自动轮播循环时间
+        mImageCycleView.setCycleDelayed(2000);//设置自动轮播循环时间
 //
-//		mImageCycleView.setIndicationStyle(ImageCycleView.IndicationStyle.COLOR,
-//				Color.BLUE, Color.RED, 1f);
+        mImageCycleView.setIndicationStyle(ImageCycleView.IndicationStyle.COLOR,
+                Color.LTGRAY, Color.BLUE, 1f);
 
 //		mImageCycleView.setIndicationStyle(ImageCycleView.IndicationStyle.IMAGE,
 //				R.drawable.dian_unfocus, R.drawable.dian_focus, 1f);
@@ -503,7 +526,7 @@ public class FoundFragment extends Fragment {
                                                                     JSONObject jsonobject = jsonArray_banner.getJSONObject(i);
                                                                     String ImgeUrl = jsonobject.getString("ImgeUrl");//轮播图片地址
                                                                     Log.e("轮播图地址", ImgeUrl);
-                                                                    list.add(new ImageCycleView.ImageInfo(ImgeUrl, i + "", ""));
+                                                                    list.add(new ImageCycleView.ImageInfo(ImgeUrl, "", ""));
                                                                     Message msg = new Message();
                                                                     msg.what = 0;
                                                                     handler.sendMessage(msg);
@@ -542,7 +565,7 @@ public class FoundFragment extends Fragment {
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
             @Override
             public void onClick(View imageView, ImageCycleView.ImageInfo imageInfo) {
-                Toast.makeText(getActivity(), "你点击了" + imageInfo.value.toString(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(getActivity(), "oo" + imageInfo.value.toString(), Toast.LENGTH_SHORT).show();
             }
         });
 

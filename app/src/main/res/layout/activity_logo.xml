@@ -23,7 +23,7 @@
         android:layout_centerInParent="true"
         android:background="@drawable/bangbangtang_00007"
         android:visibility="gone" />
-
+    <!--倒计时圆形指示器-->
     <com.biaoke.bklive.common.CountDownProgressView
         android:id="@+id/countdownProgressView"
         android:layout_width="40dp"
