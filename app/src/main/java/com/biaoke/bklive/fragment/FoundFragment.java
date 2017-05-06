@@ -17,7 +17,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.biaoke.bklive.R;
@@ -64,7 +63,10 @@ public class FoundFragment extends Fragment {
     @BindView(R.id.recyclerview_found)
     XRecyclerView recyclerviewFound;
     @BindView(R.id.bk_shoppingmarket)
-    LinearLayout bkShoppingmarket;
+    ImageView bkShoppingmarket;
+    @BindView(R.id.bk_shoppingmarket2)
+    ImageView bkShoppingmarket2;
+
     private List<live_item> recyclerDataList = new ArrayList<>();
     private View mHeaderView;
     private View mFooterView;
@@ -756,9 +758,14 @@ public class FoundFragment extends Fragment {
     }
 
 
-    @OnClick(R.id.bk_shoppingmarket)
-    public void onClick() {
-        Intent intent_shop = new Intent(getActivity(), BkShopActivity.class);
-        startActivity(intent_shop);
+    @OnClick({R.id.bk_shoppingmarket, R.id.bk_shoppingmarket2})
+    public void onClick(View view) {
+        switch (view.getId()) {
+            case R.id.bk_shoppingmarket:
+            case R.id.bk_shoppingmarket2:
+                Intent intent_shop = new Intent(getActivity(), BkShopActivity.class);
+                startActivity(intent_shop);
+                break;
+        }
     }
 }
