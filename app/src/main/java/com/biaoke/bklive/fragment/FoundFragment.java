@@ -84,6 +84,7 @@ public class FoundFragment extends Fragment {
     //地理信息定位
     private String wd;
     private String jd;
+    private List<ImageCycleView.ImageInfo> list;
 
     @Nullable
     @Override
@@ -211,8 +212,17 @@ public class FoundFragment extends Fragment {
         public void handleMessage(Message message) {
             switch (message.what) {
                 case 0:
-//                    joinInWeb();
-//                    WebSocketService.webSocketConnect();
+                    mImageCycleView.loadData(list, new ImageCycleView.LoadImageCallBack() {
+                        @Override
+                        public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
+                            //使用BitmapUtils,只能使用网络图片
+                            BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+                            ImageView imageView = new ImageView(getActivity());
+                            bitmapUtils.display(imageView, imageInfo.image.toString());
+                            return imageView;
+                        }
+                    });
+
                     break;
                 case 1:
                     Log.e("lllll", bannerList.size() + "");
@@ -425,7 +435,7 @@ public class FoundFragment extends Fragment {
 //		mImageCycleView.setIndicationStyle(ImageCycleView.IndicationStyle.IMAGE,
 //				R.drawable.dian_unfocus, R.drawable.dian_focus, 1f);
 
-        final List<ImageCycleView.ImageInfo> list = new ArrayList<ImageCycleView.ImageInfo>();
+        list = new ArrayList<ImageCycleView.ImageInfo>();
         bannerList = new ArrayList<>();
         //res图片资源
 //        list.add(new ImageCycleView.ImageInfo(R.drawable.a1, "111111111111", ""));
@@ -445,7 +455,6 @@ public class FoundFragment extends Fragment {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-//        getBanner(jsonObject_banner.toString());
         OkHttpUtils.postString()
                 .url(Api.ENCRYPT64)
                 .content(jsonObject_banner.toString())
@@ -493,14 +502,12 @@ public class FoundFragment extends Fragment {
                                                                 for (int i = 0; i < jsonArray_banner.length(); i++) {
                                                                     JSONObject jsonobject = jsonArray_banner.getJSONObject(i);
                                                                     String ImgeUrl = jsonobject.getString("ImgeUrl");//轮播图片地址
-//                                                                    Banner banner = new Banner(ImgeUrl);
-//                                                                    bannerList.add(banner);
                                                                     Log.e("轮播图地址", ImgeUrl);
                                                                     list.add(new ImageCycleView.ImageInfo(ImgeUrl, i + "", ""));
+                                                                    Message msg = new Message();
+                                                                    msg.what = 0;
+                                                                    handler.sendMessage(msg);
                                                                 }
-//                                                                Message msg = new Message();
-//                                                                msg.what = 1;
-//                                                                handler.sendMessage(msg);
                                                             }
 
                                                         } catch (JSONException e) {
@@ -520,16 +527,16 @@ public class FoundFragment extends Fragment {
 //            list.add(new ImageCycleView.ImageInfo(url, i + "", ""));
 //        }
         //使用网络加载图片
-        String url1 = "http://server-test.bk5977.com:8800/video/21.jpg";
-        String url2 = "http://server-test.bk5977.com:8800/video/22.jpg";
-        String url3 = "http://server-test.bk5977.com:8800/video/23.jpg";
-        String url4 = "http://server-test.bk5977.com:8800/video/22.jpg";
-        String url5 = "http://server-test.bk5977.com:8800/video/23.jpg";
-        list.add(new ImageCycleView.ImageInfo(url1, "11", "eeee"));
-        list.add(new ImageCycleView.ImageInfo(url2, "222", "rrrr"));
-        list.add(new ImageCycleView.ImageInfo(url3, "333", "tttt"));
-        list.add(new ImageCycleView.ImageInfo(url4, "222", "rrrr"));
-        list.add(new ImageCycleView.ImageInfo(url5, "333", "tttt"));
+//        String url1 = "http://server-test.bk5977.com:8800/video/21.jpg";
+//        String url2 = "http://server-test.bk5977.com:8800/video/22.jpg";
+//        String url3 = "http://server-test.bk5977.com:8800/video/23.jpg";
+//        String url4 = "http://server-test.bk5977.com:8800/video/22.jpg";
+//        String url5 = "http://server-test.bk5977.com:8800/video/23.jpg";
+//        list.add(new ImageCycleView.ImageInfo(url1, "11", "eeee"));
+//        list.add(new ImageCycleView.ImageInfo(url2, "222", "rrrr"));
+//        list.add(new ImageCycleView.ImageInfo(url3, "333", "tttt"));
+//        list.add(new ImageCycleView.ImageInfo(url4, "222", "rrrr"));
+//        list.add(new ImageCycleView.ImageInfo(url5, "333", "tttt"));
 
 
         mImageCycleView.setOnPageClickListener(new ImageCycleView.OnPageClickListener() {
@@ -539,9 +546,9 @@ public class FoundFragment extends Fragment {
             }
         });
 
-        mImageCycleView.loadData(list, new ImageCycleView.LoadImageCallBack() {
-            @Override
-            public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
+//        mImageCycleView.loadData(list, new ImageCycleView.LoadImageCallBack() {
+//            @Override
+//            public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
 
                 //本地图片
 //                ImageView imageView = new ImageView(getActivity());
@@ -560,12 +567,12 @@ public class FoundFragment extends Fragment {
 //                return smartImageView;
 
                 //使用BitmapUtils,只能使用网络图片
-                BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
-                ImageView imageView = new ImageView(getActivity());
-                bitmapUtils.display(imageView, imageInfo.image.toString());
-                return imageView;
-            }
-        });
+//                BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
+//                ImageView imageView = new ImageView(getActivity());
+//                bitmapUtils.display(imageView, imageInfo.image.toString());
+//                return imageView;
+//            }
+//        });
     }
 
     @Override
