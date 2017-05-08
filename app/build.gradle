@@ -25,6 +25,21 @@ android {
             keyPassword "android"
         }
     }
+//    main {
+//        manifest.srcFile ‘AndroidManifest.xml’
+//        Java.srcDirs = [‘src’]
+//        resources.srcDirs = [‘src’]
+//        aidl.srcDirs = [‘src’]
+//        renderscript.srcDirs = [‘src’]
+//        res.srcDirs = [‘res’]
+//        assets.srcDirs = [‘assets’]
+//        jniLibs.srcDirs = [‘libs’]
+//    }
+    repositories {
+        flatDir {
+            dirs '../../libs'
+        }
+    }
     buildTypes {
 //        release {
 //            // 是否进行混淆
@@ -105,4 +120,9 @@ dependencies {
     compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
+    //拉卡拉支付
+    compile files('../../libs/paymax.jar')
+    compile files('libs/alipaySdk-20161222.jar')
+    compile files('libs/libammsdk.jar')
+    compile(name: 'lkl-pay-sdk-release', ext: 'aar')
 }

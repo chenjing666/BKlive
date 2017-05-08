@@ -2,6 +2,7 @@ package com.biaoke.bklive;
 
 import android.app.Application;
 
+import com.lkl.pay.app.application.ApplicationController;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.umeng.socialize.Config;
 import com.umeng.socialize.PlatformConfig;
@@ -16,6 +17,8 @@ public class AppLaunch extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        //支付拉卡拉
+        ApplicationController.initData(this);
         //参数初始化化
         StreamingEnv.init(getApplicationContext());
         //开启debug模式，方便定位错误，具体错误检查方式可以查看http://dev.umeng.com/social/android/quick-integration的报错必看，正式发布，请关闭该模式

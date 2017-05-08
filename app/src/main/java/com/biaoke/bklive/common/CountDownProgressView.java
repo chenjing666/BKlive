@@ -146,12 +146,12 @@ public class CountDownProgressView extends TextView {
             }
 
             //TODO 文字颜色属性
-            if (typedArray.hasValue(R.styleable.CountDownProgress_textColor)) {
+            if (typedArray.hasValue(R.styleable.CountDownProgress_textColor_DaoJiShi)) {
                 //有这个属性索引 获取用户设置的颜色
-                textColor = typedArray.getColor(R.styleable.CountDownProgress_textColor, 0);
+                textColor = typedArray.getColor(R.styleable.CountDownProgress_textColor_DaoJiShi, 0);
             } else {
                 //没有这个属性索引 默认是白色
-                textColor = typedArray.getColor(R.styleable.CountDownProgress_textColor, Color.parseColor("#ffffff"));
+                textColor = typedArray.getColor(R.styleable.CountDownProgress_textColor_DaoJiShi, Color.parseColor("#ffffff"));
             }
 
             //TODO 进度条颜色属性

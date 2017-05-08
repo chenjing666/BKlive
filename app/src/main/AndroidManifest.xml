@@ -24,6 +24,19 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
+
+    //拉卡拉
+    <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE" />
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+    <uses-permission android:name="android.permission.WRITE_SETTINGS" />
+
+    <uses-feature android:name="android.hardware.camera" />
+
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -108,6 +121,80 @@
         <meta-data
             android:name="UMENG_APPKEY"
             android:value="58ef32f7f5ade44d62000f99" />
+
+
+        <!--注册微信-->
+        <activity
+            android:name="com.swwx.paymax.PaymentActivity"
+            android:launchMode="singleTop"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+        <activity-alias
+            android:name=".wxapi.WXPayEntryActivity"
+            android:exported="true"
+            android:targetActivity="com.swwx.paymax.PaymentActivity" />
+        <!--注册支付宝-->
+        <activity
+            android:name="com.alipay.sdk.app.H5PayActivity"
+            android:configChanges="orientation|keyboardHidden|navigation|screenSize"
+            android:exported="false"
+            android:screenOrientation="behind"
+            android:windowSoftInputMode="adjustResize|stateHidden" >
+        </activity>
+        <!--注册拉卡拉-->
+        <activity
+            android:name="com.lkl.pay.ui.activity.SDK_StartJarActivity"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Translucent" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.SDK_LoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.lkl.pay.ui.activity.SDK_MsgLoginActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.lkl.pay.ui.activity.cardPay.BindCreditCardActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.lkl.pay.ui.activity.cardPay.BindDebitCardActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.lkl.pay.ui.activity.cardPay.HtmlProtocolActivity"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.lkl.pay.ui.activity.cardPay.InputCardNoActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.cardPay.InputMessageCodeActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.forget.FindLoginPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.forget.SetLoginPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.register.SetPayPwdActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.payResult.SuccessActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.lkl.pay.ui.activity.payResult.FailureActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="cn.cloudcore.iprotect.plugin.CKbdActivity"
+            android:launchMode="singleTask"
+            android:configChanges="orientation"
+            android:theme="@android:style/Theme.Translucent"
+            />
+        <!--注册拉卡拉-->
+
+
 
         <activity android:name=".user.activity.IncomeActivity" />
         <activity android:name=".user.activity.DiamondActivity" />
