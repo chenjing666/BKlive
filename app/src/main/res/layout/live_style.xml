@@ -11,7 +11,7 @@
         android:layout_width="@dimen/x140"
         android:layout_height="@dimen/y140"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/live_screeen" />
+        android:background="@drawable/fabu_youxizhibo" />
 
     <ImageView
         android:id="@+id/live_camera"
@@ -19,7 +19,7 @@
         android:layout_height="@dimen/y140"
         android:layout_marginStart="@dimen/x60"
         android:layout_marginTop="@dimen/y100"
-        android:background="@drawable/live_camera" />
+        android:background="@drawable/fabu_xiuchangzhibo" />
 
     <ImageView
         android:id="@+id/vedio_short"
@@ -28,7 +28,7 @@
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="@dimen/x60"
         android:layout_marginTop="@dimen/y100"
-        android:background="@drawable/vedio_short" />
+        android:background="@drawable/fabu_miaopaishipin" />
 
     <ImageView
         android:id="@+id/live_unputvideo"

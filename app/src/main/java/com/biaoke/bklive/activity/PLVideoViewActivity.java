@@ -561,7 +561,8 @@ public class PLVideoViewActivity extends BaseActivity {
                                 if (cmd.equals("GetChatRomCount")) {
                                     int ChatRomCount = object_joinchat.getInt("ChatRomCount");
                                     onlinePeople.setText("观众：" + ChatRomCount);
-                                } else if (cmd.equals("GetChatRomList")) {//获取聊天室用户ID
+                                }
+                                if (cmd.equals("GetChatRomList")) {//获取聊天室用户ID
                                     String Result = object_joinchat.getString("Result");
                                     if (Result.equals("1")) {
                                         JSONArray jsonArray_list = new JSONArray(object_joinchat.getString("Data"));
@@ -569,11 +570,11 @@ public class PLVideoViewActivity extends BaseActivity {
                                             JSONObject object_list = jsonArray_list.getJSONObject(i);
                                             String allUser = object_list.getString("UserId");//获取聊天室用户ID
                                             String IconUrl = object_list.getString("IconUrl");
-                                            String userListNickname = object_list.getString("NickName");
-                                            list.add(new HeadBean(IconUrl, allUser, userListNickname));
+//                                            String userListNickname = object_list.getString("NickName");
+                                            list.add(new HeadBean(IconUrl, allUser, ""));
+                                            Log.d("GetChatRomList用户头像ID", allUser);
                                         }
                                         //下面显示用户头像列表操作
-//                                        Log.d("用户头像ID", allUser);
 //                                        list.add(new HeadBean("http://wmtp.net/wp-content/uploads/2017/02/0224_dongman_9.jpeg"));
                                         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(PLVideoViewActivity.this);
                                         linearLayoutManager.setOrientation(LinearLayoutManager.HORIZONTAL);
@@ -584,7 +585,8 @@ public class PLVideoViewActivity extends BaseActivity {
                                         videoHeadImgAdapter.setOnItemClickListener(headimagelisten);
 
                                     }
-                                } else if (cmd.equals("AddChatRom")) {
+                                }
+                                if (cmd.equals("AddChatRom")) {
                                     String joinchat = object_joinchat.getString("Msg");
                                     //提示某某加入聊天室
                                     livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, "加入聊天室");
@@ -618,7 +620,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     Message msgg = new Message();
                     msgg.what = 0;
                     handler.sendMessage(msgg);
-                } else if (cmd.equals("sys")) {
+                }
+                if (cmd.equals("sys")) {
                     String Msg_sys = object_chatMsg.getString("Msg");
                     if (Msg_sys.equals("进入直播间")) {
                         livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, Msg_sys);
@@ -874,6 +877,11 @@ public class PLVideoViewActivity extends BaseActivity {
         textView_homepage.setOnClickListener(commonListen);
         TextView textView_private_msg = (TextView) anchorView.findViewById(R.id.tv_user_private_msg);
         textView_private_msg.setOnClickListener(commonListen);
+        ImageView imageView_defriend = (ImageView) anchorView.findViewById(R.id.livingroom_data_defriend);
+        imageView_defriend.setOnClickListener(commonListen);
+        ImageView imageView_tip = (ImageView) anchorView.findViewById(R.id.livingroom_data_tip);
+        imageView_tip.setOnClickListener(commonListen);
+
         CircularImageView circularImageView = (CircularImageView) anchorView.findViewById(R.id.iv_user_head);
         glideUtis.glideCircle(userlistHeadurl, circularImageView, true);
 
@@ -920,6 +928,12 @@ public class PLVideoViewActivity extends BaseActivity {
         @Override
         public void onClick(View v) {
             switch (v.getId()) {
+                case R.id.livingroom_data_defriend:
+
+                    break;
+                case R.id.livingroom_data_tip:
+
+                    break;
                 case R.id.tv_user_homepage:
                     Intent intent_userhomepage = new Intent(PLVideoViewActivity.this, UserPagehomeActivity.class);
                     SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);

@@ -17,11 +17,11 @@
             android:layout_marginTop="@dimen/y20">
 
             <ImageView
+                android:id="@+id/anchor_manage"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="@dimen/x20"
-                android:background="@drawable/livingroom_data_manage"
-                android:visibility="gone"/>
+                android:background="@drawable/livingroom_data_manage" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -29,20 +29,20 @@
                 android:layout_below="@+id/livingroom_data_defriend"
                 android:layout_marginStart="@dimen/x23"
                 android:text="管理"
-                android:visibility="gone"
                 android:textSize="@dimen/x18" />
+
             <ImageView
                 android:id="@+id/livingroom_data_defriend"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/x20"
+                android:layout_marginStart="@dimen/x110"
                 android:background="@drawable/livingroom_data_defriend" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/livingroom_data_defriend"
-                android:layout_marginStart="@dimen/x23"
+                android:layout_marginStart="@dimen/x112"
                 android:text="拉黑"
                 android:textSize="@dimen/x18" />
 
@@ -50,14 +50,14 @@
                 android:id="@+id/livingroom_data_tip"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="@dimen/x110"
+                android:layout_marginStart="@dimen/x200"
                 android:background="@drawable/livingroom_data_tip" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@+id/livingroom_data_defriend"
-                android:layout_marginStart="@dimen/x112"
+                android:layout_marginStart="@dimen/x202"
                 android:text="举报"
                 android:textSize="@dimen/x18" />
 
@@ -328,9 +328,9 @@
                     android:background="#8670e5" />
 
                 <ImageView
-                    android:layout_gravity="center_vertical"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:layout_gravity="center_vertical"
                     android:layout_marginStart="@dimen/x30"
                     android:background="@drawable/at" />
 

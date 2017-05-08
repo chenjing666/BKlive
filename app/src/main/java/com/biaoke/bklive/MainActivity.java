@@ -186,6 +186,7 @@ public class MainActivity extends BaseActivity {
 
     //websocket
     private Intent websocketServiceIntent;
+    private String openid;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -271,6 +272,12 @@ public class MainActivity extends BaseActivity {
             switch (message.what) {
                 case 0:
                     Toast.makeText(MainActivity.this, msg_um, Toast.LENGTH_SHORT).show();
+                    SharedPreferences sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putBoolean("isLogin", true);
+                    user.setuId(UserId);
+                    editor.putString("userId",UserId);
+                    editor.commit();
                     break;
                 case 1:
                     Intent intent_prepare = new Intent(MainActivity.this, SWCameraStreamingActivity.class);
@@ -301,14 +308,7 @@ public class MainActivity extends BaseActivity {
                     setUserInfo();
                     break;
                 case 4:
-//                    UMShareAPI.get(MainActivity.this).doOauthVerify(MainActivity.this, SHARE_MEDIA.WEIXIN,
-//                    UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.QQ, umAuthListener);
-                    break;
-                case 5:
-//                    UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.SINA, umAuthListener);
-                    break;
-                case 6:
-//                    UMShareAPI.get(MainActivity.this).getPlatformInfo(MainActivity.this, SHARE_MEDIA.WEIXIN, umAuthListener);
+                    Toast.makeText(MainActivity.this, msg_um, Toast.LENGTH_SHORT).show();
                     break;
             }
         }
@@ -511,16 +511,6 @@ public class MainActivity extends BaseActivity {
             }
         });
         popupWindow_vedio.setTouchable(true);
-//        popupWindow_vedio.setTouchInterceptor(new View.OnTouchListener() {
-//            @Override
-//            public boolean onTouch(View arg0, MotionEvent arg1) {
-//                // TODO Auto-generated method stub
-//                setBackgroundAlpha(1.0f, MainActivity.this);
-//                popupWindow_vedio.dismiss();
-//                llBottomBar.setVisibility(View.VISIBLE);
-//                return false;
-//            }
-//        });
         popupWindow_vedio.setOnDismissListener(new PopupWindow.OnDismissListener() {
             @Override
             public void onDismiss() {
@@ -752,69 +742,8 @@ public class MainActivity extends BaseActivity {
                 });
     }
 
-    //******************************                 qq                 *****************************//
-//    private class BaseUiListener implements IUiListener {
-//        @Override
-//        public void onComplete(Object response) {
-//            Toast.makeText(getApplicationContext(), "登录成功", Toast.LENGTH_SHORT).show();
-//            Message msg = new Message();
-//            msg.what = 1;
-//            myHandler.sendMessage(msg);
-//            Log.e("tag", "response:" + response);
-//            JSONObject jo = (JSONObject) response;
-//
-//            try {
-//                openID = jo.getString("openid");
-//                String accessToken = jo.getString("access_token");
-//                String expires = jo.getString("expires_in");
-//                mTencent.setOpenId(openID);
-//                mTencent.setAccessToken(accessToken, expires);
-//                QQToken qqToken = mTencent.getQQToken();
-//                mInfo = new UserInfo(getApplicationContext(), qqToken);
-//                mInfo.getUserInfo(new IUiListener() {
-//                    @Override
-//                    public void onComplete(Object response) {
-//                        Log.e("BaseUiListener", "成功" + response.toString());
-//                    }
-//
-//                    @Override
-//                    public void onError(UiError uiError) {
-//                        Log.e("BaseUiListener", "失败" + uiError.toString());
-//                    }
-//
-//                    @Override
-//                    public void onCancel() {
-//                        Log.e("BaseUiListener", "取消");
-//                    }
-//                });
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-//        }
-//
-//        @Override
-//        public void onError(UiError uiError) {
-//            Toast.makeText(getApplicationContext(), "登录失败", Toast.LENGTH_SHORT).show();
-//        }
-//
-//        @Override
-//        public void onCancel() {
-//            Toast.makeText(getApplicationContext(), "登录取消", Toast.LENGTH_SHORT).show();
-//        }
-//    }
-//
-//
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-//        Log.d("TAG", "-->onActivityResult " + requestCode + " resultCode=" + resultCode);
-//        if (requestCode == Constants.REQUEST_LOGIN ||
-//                requestCode == Constants.REQUEST_APPBAR) {
-//            Tencent.onActivityResultData(requestCode, resultCode, data, mIUiListener);
-//        }
-//
-//        super.onActivityResult(requestCode, resultCode, data);
-//    }
 
+    private String plat;
     //*************************第三方登录*************************//
     private UMAuthListener umAuthListener = new UMAuthListener() {
         @Override
@@ -826,25 +755,27 @@ public class MainActivity extends BaseActivity {
         public void onComplete(SHARE_MEDIA platform, int action, Map<String, String> data) {
             Toast.makeText(getApplicationContext(), "Authorize succeed", Toast.LENGTH_SHORT).show();
             if (platform == SHARE_MEDIA.WEIXIN) {
+                plat = "weixin";
+                openid = data.get("openid");
+                sendWeChat(plat, openid);
                 //转换为set
                 Set<String> keySet = data.keySet();
+//                Log.d("微信的信息openid————", openid);
                 //遍历循环，得到里面的key值----用户名，头像....
                 for (String string : keySet) {
                     //打印下
                     Log.d("微信的信息————", string);
                     //得到openid后执行该方法 sendWeChat(openid);
+                    Log.d("微信的信息————", data.get(string));
                 }
-//                Message message_youmeng = new Message();
-//                message_youmeng.what = 6;
-//                mHandler.sendMessage(message_youmeng);
             } else if (platform == SHARE_MEDIA.QQ) {
-//                Message message_youmeng = new Message();
-//                message_youmeng.what = 4;
-//                mHandler.sendMessage(message_youmeng);
+                plat = "qq";
+                openid = data.get("uid");
+                sendWeChat(plat, openid);
             } else if (platform == SHARE_MEDIA.SINA) {
-//                Message message_youmeng = new Message();
-//                message_youmeng.what = 5;
-//                mHandler.sendMessage(message_youmeng);
+                plat = "sina";
+                openid = data.get("uid");
+                sendWeChat(plat, openid);
             }
         }
 
@@ -860,11 +791,11 @@ public class MainActivity extends BaseActivity {
     };
 
     //微信登录上传服务器{"Protocol":"LoggingApi","Cmd":"weixin","OpenID":"123"}
-    private void sendWeChat(String openid) {
+    private void sendWeChat(String platform, String openid) {
         JSONObject jsonObject_wechat = new JSONObject();
         try {
             jsonObject_wechat.put("Protocol", "LoggingApi");
-            jsonObject_wechat.put("Cmd", "weixin");
+            jsonObject_wechat.put("Cmd", platform);
             jsonObject_wechat.put("OpenID", openid);
         } catch (JSONException e) {
             e.printStackTrace();
@@ -913,9 +844,22 @@ public class MainActivity extends BaseActivity {
                                                         try {
                                                             JSONObject jsonobject = new JSONObject(response);
                                                             msg_um = jsonobject.getString("Msg");
-                                                            Message message_youmeng = new Message();
-                                                            message_youmeng.what = 0;
-                                                            mHandler.sendMessage(message_youmeng);
+                                                            String Result = jsonobject.getString("Result");
+                                                            UserId = jsonobject.getString("Id");
+                                                            String AccessKey=jsonobject.getString("AccessKey");
+                                                            SharedPreferences sharedPreferences_accesskey=getSharedPreferences("isLogin", Context.MODE_PRIVATE);
+                                                            SharedPreferences.Editor editor = sharedPreferences_accesskey.edit();
+                                                            editor.putString("AccessKey",AccessKey);
+                                                            editor.commit();
+                                                            if (Result.equals("1")) {
+                                                                Message message_youmeng = new Message();
+                                                                message_youmeng.what = 0;
+                                                                mHandler.sendMessage(message_youmeng);
+                                                            } else {
+                                                                Message message_unyoumeng = new Message();
+                                                                message_unyoumeng.what = 4;
+                                                                mHandler.sendMessage(message_unyoumeng);
+                                                            }
                                                         } catch (JSONException e) {
                                                             e.printStackTrace();
                                                         }
