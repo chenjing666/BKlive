@@ -1183,10 +1183,10 @@ public class PLVideoViewActivity extends BaseActivity {
         button_sendGift.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                giftWenBig.setVisibility(View.VISIBLE);
-                giftWenBig.setBackgroundResource(R.drawable.gift_wen);
-                final AnimationDrawable anim_wen_big = (AnimationDrawable) giftWenBig.getBackground();
-                anim_wen_big.start();
+//                giftWenBig.setVisibility(View.VISIBLE);
+//                giftWenBig.setBackgroundResource(R.drawable.gift_wen);
+//                final AnimationDrawable anim_wen_big = (AnimationDrawable) giftWenBig.getBackground();
+//                anim_wen_big.start();
 
             }
         });

@@ -156,7 +156,7 @@ public class ShortVedioActivity extends BaseActivity {
 
     @Override
     protected String getPowerBarColors() {
-        return AppConsts.POWER_BAR_WHITE;
+        return AppConsts.POWER_BAR_BACKGROUND;
     }
 
     private Handler mhandler = new Handler() {

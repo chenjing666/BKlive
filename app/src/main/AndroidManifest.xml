@@ -24,7 +24,6 @@
     <uses-permission android:name="android.permission.WAKE_LOCK" />
 
     <uses-feature android:name="android.hardware.camera.autofocus" />
-
     //拉卡拉
     <uses-permission android:name="android.permission.RECEIVE_USER_PRESENT" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
@@ -36,7 +35,6 @@
     <uses-permission android:name="android.permission.WRITE_SETTINGS" />
 
     <uses-feature android:name="android.hardware.camera" />
-
     <uses-feature
         android:glEsVersion="0x00020000"
         android:required="true" />
@@ -75,17 +73,17 @@
             android:noHistory="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
-
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
-
                 <data android:scheme="tencent1106047080" />
             </intent-filter>
         </activity>
         <activity
             android:name="com.tencent.connect.common.AssistActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity android:name=".user.activity.SetActivity" />
         <activity android:name=".activity.MessageActivity" />
         <activity android:name=".activity.SearchActivity" />
@@ -103,13 +101,20 @@
         <activity
             android:name=".WBShareActivity"
             android:configChanges="keyboardHidden|orientation"
-            android:screenOrientation="portrait">
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="com.sina.weibo.sdk.action.ACTION_SDK_REQ_ACTIVITY" />
-
                 <category android:name="android.intent.category.DEFAULT" />
             </intent-filter>
         </activity>
+        <activity
+            android:name="com.sina.weibo.sdk.component.WeiboSdkBrowser"
+            android:configChanges="keyboardHidden|orientation"
+            android:windowSoftInputMode="adjustResize"
+            android:exported="false" >
+        </activity>
+        <!--<service android:name="com.sina.weibo.sdk.net.DownloadService"-->
+            <!--android:exported="false"></service>-->
         //微信第三方
         <activity
             android:name=".wxapi.WXEntryActivity"
@@ -122,49 +127,43 @@
             android:name="UMENG_APPKEY"
             android:value="58ef32f7f5ade44d62000f99" />
 
-
-        <!--注册微信-->
+        <!-- 注册微信 -->
         <activity
             android:name="com.swwx.paymax.PaymentActivity"
             android:launchMode="singleTop"
             android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
         <activity-alias
             android:name=".wxapi.WXPayEntryActivity"
             android:exported="true"
             android:targetActivity="com.swwx.paymax.PaymentActivity" />
-        <!--注册支付宝-->
+        <!-- 注册支付宝 -->
         <activity
             android:name="com.alipay.sdk.app.H5PayActivity"
             android:configChanges="orientation|keyboardHidden|navigation|screenSize"
             android:exported="false"
             android:screenOrientation="behind"
-            android:windowSoftInputMode="adjustResize|stateHidden" >
-        </activity>
-        <!--注册拉卡拉-->
+            android:windowSoftInputMode="adjustResize|stateHidden"></activity>
+        <!-- 注册拉卡拉 -->
         <activity
             android:name="com.lkl.pay.ui.activity.SDK_StartJarActivity"
             android:screenOrientation="portrait"
             android:theme="@android:style/Theme.Translucent" />
         <activity
             android:name="com.lkl.pay.ui.activity.SDK_LoginActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.lkl.pay.ui.activity.SDK_MsgLoginActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.lkl.pay.ui.activity.cardPay.BindCreditCardActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.lkl.pay.ui.activity.cardPay.BindDebitCardActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.lkl.pay.ui.activity.cardPay.HtmlProtocolActivity"
-            android:screenOrientation="portrait" >
-        </activity>
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name="com.lkl.pay.ui.activity.cardPay.InputCardNoActivity"
             android:screenOrientation="portrait" />
@@ -188,13 +187,10 @@
             android:screenOrientation="portrait" />
         <activity
             android:name="cn.cloudcore.iprotect.plugin.CKbdActivity"
-            android:launchMode="singleTask"
             android:configChanges="orientation"
-            android:theme="@android:style/Theme.Translucent"
-            />
-        <!--注册拉卡拉-->
-
-
+            android:launchMode="singleTask"
+            android:theme="@android:style/Theme.Translucent" />
+        <!-- 注册拉卡拉 -->
 
         <activity android:name=".user.activity.IncomeActivity" />
         <activity android:name=".user.activity.DiamondActivity" />
@@ -212,7 +208,8 @@
         <activity android:name=".user.activity.MyFansActivity" />
         <activity android:name=".user.activity.MyFollowActivity" />
         <activity android:name=".user.activity.MyLiveActivity" />
-        <activity android:name=".activity.BkShopActivity"></activity>
+        <activity android:name=".activity.BkShopActivity" />
+        <activity android:name=".activity.PayActivity"></activity>
     </application>
 
 </manifest>

@@ -17,6 +17,9 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    defaultConfig {
+        multiDexEnabled true
+    }
     signingConfigs {
         debug {
             storeFile file('debug.keystore')
@@ -25,16 +28,7 @@ android {
             keyPassword "android"
         }
     }
-//    main {
-//        manifest.srcFile ‘AndroidManifest.xml’
-//        Java.srcDirs = [‘src’]
-//        resources.srcDirs = [‘src’]
-//        aidl.srcDirs = [‘src’]
-//        renderscript.srcDirs = [‘src’]
-//        res.srcDirs = [‘res’]
-//        assets.srcDirs = [‘assets’]
-//        jniLibs.srcDirs = [‘libs’]
-//    }
+
     repositories {
         flatDir {
             dirs '../../libs'
@@ -94,15 +88,21 @@ dependencies {
     //轮播图
     compile files('libs/open_sdk_r5781.jar')
     compile files('libs/SocialSDK_QQ_Full.jar')
-    compile files('libs/SocialSDK_WeiXin_Full.jar')
     compile files('libs/umeng_social_api.jar')
     compile files('libs/umeng_social_net.jar')
     compile files('libs/umeng_social_tool.jar')
-    compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
+//    compile files('libs/wechat-sdk-android-with-mta-1.1.6.jar')
     compile files('libs/SocialSDK_Sina_Full.jar')
     compile files('libs/weiboSDKCore_3.1.4.jar')
     compile files('libs/autobahn-0.5.0.jar')
     //弹幕
+
+    //拉卡拉支付
+    compile files('../../libs/paymax.jar')
+    compile files('libs/alipaySdk-20161222.jar')
+    compile files('libs/libammsdk.jar')
+    //加入它，微信集成就不要带支付功能了
+    compile(name: 'lkl-pay-sdk-release', ext: 'aar')
     compile 'com.android.support:support-v4:25.3.1'
     compile 'com.android.support:design:25.3.1'
     compile 'com.android.support:appcompat-v7:25.3.1'
@@ -120,9 +120,7 @@ dependencies {
     compile 'com.github.ctiao:DanmakuFlameMaster:0.5.3'
     testCompile 'junit:junit:4.12'
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
-    //拉卡拉支付
-    compile files('../../libs/paymax.jar')
-    compile files('libs/alipaySdk-20161222.jar')
-    compile files('libs/libammsdk.jar')
-    compile(name: 'lkl-pay-sdk-release', ext: 'aar')
+    compile files('libs/gson-2.2.4.jar')
+    compile files('libs/okhttp-2.0.0-RC1.jar')
+    compile files('libs/SocialSDK_WeChat_Simplify.jar')
 }

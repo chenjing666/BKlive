@@ -1,5 +1,6 @@
 package com.biaoke.bklive.user.activity;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -10,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.biaoke.bklive.R;
+import com.biaoke.bklive.activity.PayActivity;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -58,18 +60,39 @@ public class DiamondActivity extends AppCompatActivity {
                 finish();
                 break;
             case R.id.charge_diamond1:
+                Intent intentone = new Intent(this, PayActivity.class);
+                intentone.putExtra("money", chargeDiamond1.getText());
+                startActivity(intentone);
                 break;
             case R.id.charge_diamond6:
+                Intent intenttwo = new Intent(this, PayActivity.class);
+                intenttwo.putExtra("money", chargeDiamond6.getText());
+                startActivity(intenttwo);
                 break;
             case R.id.charge_diamond30:
+                Intent intentthree = new Intent(this, PayActivity.class);
+                intentthree.putExtra("money", chargeDiamond30.getText());
+                startActivity(intentthree);
                 break;
             case R.id.charge_diamond98:
+                Intent intentfour = new Intent(this, PayActivity.class);
+                intentfour.putExtra("money", chargeDiamond98.getText());
+                startActivity(intentfour);
                 break;
             case R.id.charge_diamond128:
+                Intent intentfive = new Intent(this, PayActivity.class);
+                intentfive.putExtra("money", chargeDiamond128.getText());
+                startActivity(intentfive);
                 break;
             case R.id.charge_diamond328:
+                Intent intentsix = new Intent(this, PayActivity.class);
+                intentsix.putExtra("money", chargeDiamond328.getText());
+                startActivity(intentsix);
                 break;
             case R.id.charge_diamond648:
+                Intent intentseven = new Intent(this, PayActivity.class);
+                intentseven.putExtra("money", chargeDiamond648.getText());
+                startActivity(intentseven);
                 break;
         }
     }

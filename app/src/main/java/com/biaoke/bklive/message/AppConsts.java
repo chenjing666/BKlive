@@ -15,6 +15,9 @@ public class AppConsts {
 
     public static final String POWER_BAR_WHITE = "#FFFFFF";//白色背景
     public static final String POWER_BAR_BLUE = "#5293e4";//蓝色背景
+    public static final String POWER_BAR_GRAY = "#808080";//灰色背景
+    public static final String POWER_BAR_GRAYLIGHT = "#D0D0D0";//淡灰色背景
+    public static final String POWER_BAR_GRAYLIGHT2 = "#b0b0b0";//淡灰色背景
     public static final String POWER_BAR_BACKGROUND2 = "#9d8ce5";//背景
     public static final String POWER_BAR_BACKGROUND = "#6f57d6";//背景
     public static final String POWER_BAR_BACKGROUND3 = "#9900ff";//背景
