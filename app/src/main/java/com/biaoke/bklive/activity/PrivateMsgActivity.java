@@ -2,6 +2,8 @@ package com.biaoke.bklive.activity;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -10,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.adapter.PriMsgAdapter;
@@ -61,6 +64,8 @@ public class PrivateMsgActivity extends BaseActivity {
     private String userId;
     private String mNickName;
     private String fromUserId;
+    private String msg_addFollow;
+    private String accessKey;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +79,32 @@ public class PrivateMsgActivity extends BaseActivity {
         SharedPreferences sharedPreferences_user = getSharedPreferences("isLogin", MODE_PRIVATE);
         mHeadImageUrl = sharedPreferences_user.getString("mHeadimageUrl", "");
         userId = sharedPreferences_user.getString("userId", "");
+        accessKey = sharedPreferences_user.getString("AccessKey", "");
         mNickName = sharedPreferences_user.getString("mNickName", "");
         msgUser.setText(nickName);
-        initMsgs();//放几条测试数据
+//        initMsgs();//放几条测试数据
+        queryFollow();//查询是否关注
         priMsgAdapter = new PriMsgAdapter(PrivateMsgActivity.this, R.layout.pri_msg_item, msgList);
         listviewPriMsg.setAdapter(priMsgAdapter);
     }
+
+    private Handler handler = new Handler() {
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 0:
+                    Toast.makeText(PrivateMsgActivity.this, msg_addFollow, Toast.LENGTH_SHORT).show();
+                    break;
+                case 1:
+
+                    break;
+                case 2:
+                    llAddFollowPriMsg.setVisibility(View.GONE);
+                    break;
+
+            }
+        }
+    };
+
 
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void Event_privateMessage(Event_privatemessage privatemessage) {
@@ -123,10 +148,163 @@ public class PrivateMsgActivity extends BaseActivity {
                 }
                 break;
             case R.id.add_follow_priMsg:
-
+                addFollow();
+                llAddFollowPriMsg.setVisibility(View.GONE);
                 break;
         }
 
+    }
+
+    //查询是否关注
+//{"Protocol":"Fans","Cmd":"IsFans","MastId":"1001","SlaveId":"1002","AccessKey":"bk5977"}
+    private void queryFollow() {
+        JSONObject jsonobject_follow = new JSONObject();
+        try {
+            jsonobject_follow.put("Protocol", "Fans");
+            jsonobject_follow.put("Cmd", "IsFans");
+            jsonobject_follow.put("MastId", fromUserId);
+            jsonobject_follow.put("SlaveId", userId);
+            jsonobject_follow.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonobject_follow.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.FOLLOW)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_follow = new JSONObject(response);
+                                                            String result_follow = object_follow.getString("Result");
+                                                            if (result_follow.equals("0")) {
+                                                                String msg_follow = object_follow.getString("Msg");
+                                                                Message message_follow = new Message();
+                                                                message_follow.what = 1;
+                                                                handler.sendMessage(message_follow);
+                                                            } else if (result_follow.equals("1")) {
+                                                                boolean isFollow = object_follow.getBoolean("Data");
+                                                                if (isFollow) {
+                                                                    Message message_isfollow = new Message();
+                                                                    message_isfollow.what = 2;
+                                                                    handler.sendMessage(message_isfollow);
+                                                                }
+                                                            }
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
+    }
+
+    //关注添加关注
+//    {"Protocol":"Fans","Cmd":"Add","MastId":"1001","SlaveId":"1002","AccessKey":"bk5977"}
+    private void addFollow() {
+        JSONObject jsonobject_addfollow = new JSONObject();
+        try {
+            jsonobject_addfollow.put("Protocol", "Fans");
+            jsonobject_addfollow.put("Cmd", "Add");
+            jsonobject_addfollow.put("MastId", fromUserId);
+            jsonobject_addfollow.put("SlaveId", userId);
+            jsonobject_addfollow.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(jsonobject_addfollow.toString())
+                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.FOLLOW)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json; charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject object_follow = new JSONObject(response);
+                                                            String result_follow = object_follow.getString("Result");
+                                                            msg_addFollow = object_follow.getString("Msg");
+                                                            if (result_follow.equals("1")) {
+                                                                Message message_isfollow = new Message();
+                                                                message_isfollow.what = 0;
+                                                                handler.sendMessage(message_isfollow);
+                                                            }
+
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
     }
 
     //发私信消息

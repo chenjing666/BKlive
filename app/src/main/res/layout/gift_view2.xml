@@ -7,7 +7,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y170"
+        android:layout_height="@dimen/y174"
         android:layout_marginBottom="@dimen/y10"
         android:gravity="center"
         android:orientation="horizontal">
@@ -16,6 +16,7 @@
             android:id="@+id/ll_gift_mmd"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -35,7 +36,7 @@
                 android:id="@+id/gift_bg_exp_mmd"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -72,6 +73,7 @@
             android:id="@+id/ll_gift_adyh"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -92,7 +94,7 @@
                 android:id="@+id/gift_bg_exp_adyh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -129,6 +131,7 @@
             android:id="@+id/ll_gift_mghc"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -149,7 +152,7 @@
                 android:id="@+id/gift_bg_exp_mghc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -186,6 +189,7 @@
             android:id="@+id/ll_gift_sjx"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -206,7 +210,7 @@
                 android:id="@+id/gift_bg_exp_sjx"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -243,6 +247,7 @@
             android:id="@+id/ll_gift_qdyz"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -263,7 +268,7 @@
                 android:id="@+id/gift_bg_exp_qdyz"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -300,7 +305,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y170"
+        android:layout_height="@dimen/y174"
         android:layout_marginBottom="@dimen/y10"
         android:gravity="center"
         android:orientation="horizontal">
@@ -309,6 +314,7 @@
             android:id="@+id/ll_gift_lxy"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -329,7 +335,7 @@
                 android:id="@+id/gift_bg_exp_lxy"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -366,6 +372,7 @@
             android:id="@+id/ll_gift_lbjn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -386,7 +393,7 @@
                 android:id="@+id/gift_bg_exp_lbjn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -423,6 +430,7 @@
             android:id="@+id/ll_gift_waqh"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -443,7 +451,7 @@
                 android:id="@+id/gift_bg_exp_waqh"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"
@@ -480,6 +488,7 @@
             android:id="@+id/ll_gift_lmcb"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
+            android:background="@drawable/gift_edge_selector"
             android:layout_weight="1"
             android:gravity="center"
             android:orientation="vertical">
@@ -500,7 +509,7 @@
                 android:id="@+id/gift_bg_exp_lmcb"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/liwu_jinyanzhi"
+                android:background="@drawable/gift_exp_selector"
                 android:gravity="center"
                 android:text="+50经验值"
                 android:textColor="@color/white"

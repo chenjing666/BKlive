@@ -44,7 +44,6 @@ import com.biaoke.bklive.adapter.VideoHeadImgAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.HeadBean;
 import com.biaoke.bklive.bean.LivingroomChatListBean;
-import com.biaoke.bklive.bean.ShareVo;
 import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.eventbus.Event_chatroom_errorMsg;
 import com.biaoke.bklive.message.Api;
@@ -52,12 +51,16 @@ import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.activity.ContributionActivity;
 import com.biaoke.bklive.user.activity.UserPagehomeActivity;
 import com.biaoke.bklive.utils.GlideUtis;
-import com.biaoke.bklive.utils.ShareListener;
-import com.biaoke.bklive.utils.ShareUtils;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.pili.pldroid.player.PLMediaPlayer;
 import com.pili.pldroid.player.widget.PLVideoView;
 import com.pkmmte.view.CircularImageView;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.StringCallback;
 
@@ -204,6 +207,7 @@ public class PLVideoViewActivity extends BaseActivity {
     //弹幕结束
     private ClipboardManager mClipboardManager;//剪切板管理工具类
     private ClipData mClipData;//剪切板Data对象
+    private UMImage thumb;
 
 
     @Override
@@ -341,7 +345,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     chatRecyclerview.setAdapter(livingroomChatListAdapter);
                     break;
                 case 1:
-                    Toast.makeText(PLVideoViewActivity.this, "AK认证失败，请重新登录", Toast.LENGTH_SHORT).show();
+//                    Toast.makeText(PLVideoViewActivity.this, "AK认证失败，请重新登录", Toast.LENGTH_SHORT).show();
                     break;
                 case 2:
                     btnFollow.setVisibility(View.GONE);
@@ -1203,7 +1207,7 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_lll.setBackgroundResource(R.drawable.gift_666);
                 final AnimationDrawable anim_lll = (AnimationDrawable) imageView_gift_lll.getBackground();
-                if (!linearLayout_lll.isSelected()) {
+                if ((!linearLayout_lll.isSelected()) && select_only) {
 
                     linearLayout_lll.setSelected(true);
                     textView_lll.setSelected(true);
@@ -1211,7 +1215,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lll.setVisibility(View.GONE);
                     imageView_gift_lll.setVisibility(View.VISIBLE);
                     anim_lll.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_lll.isSelected()) {
                     imageView_gift_lll.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lll.setSelected(false);
                     textView_lll.setSelected(false);
@@ -1219,6 +1224,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lll.setVisibility(View.VISIBLE);
                     imageView_gift_lll.setVisibility(View.GONE);
                     anim_lll.stop();
+                    select_only = true;
                 }
             }
         });
@@ -1235,7 +1241,7 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_bbt.setBackgroundResource(R.drawable.gift_bangbangtang);
                 final AnimationDrawable anim_bbt = (AnimationDrawable) imageView_gift_bbt.getBackground();
-                if (!linearLayout_bbt.isSelected()) {
+                if ((!linearLayout_bbt.isSelected()) && select_only) {
 
                     linearLayout_bbt.setSelected(true);
                     textView_bbt.setSelected(true);
@@ -1243,7 +1249,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_bbt.setVisibility(View.GONE);
                     imageView_gift_bbt.setVisibility(View.VISIBLE);
                     anim_bbt.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_bbt.isSelected()) {
                     imageView_gift_bbt.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_bbt.setSelected(false);
                     textView_bbt.setSelected(false);
@@ -1251,6 +1258,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_bbt.setVisibility(View.VISIBLE);
                     imageView_gift_bbt.setVisibility(View.GONE);
                     anim_bbt.stop();
+                    select_only = true;
                 }
             }
         });
@@ -1266,7 +1274,7 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_lsxg.setBackgroundResource(R.drawable.gift_lanshouxianggu);
                 final AnimationDrawable anim_lsxg = (AnimationDrawable) imageView_gift_lsxg.getBackground();
-                if (!linearLayout_lsxg.isSelected()) {
+                if (!linearLayout_lsxg.isSelected() && select_only) {
 
                     linearLayout_lsxg.setSelected(true);
                     textView_lsxg.setSelected(true);
@@ -1274,7 +1282,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lsxg.setVisibility(View.GONE);
                     imageView_gift_lsxg.setVisibility(View.VISIBLE);
                     anim_lsxg.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_lsxg.isSelected()) {
                     imageView_gift_lsxg.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lsxg.setSelected(false);
                     textView_lsxg.setSelected(false);
@@ -1282,6 +1291,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lsxg.setVisibility(View.VISIBLE);
                     imageView_gift_lsxg.setVisibility(View.GONE);
                     anim_lsxg.stop();
+                    select_only = true;
                 }
             }
         });//蓝瘦香菇结束
@@ -1297,7 +1307,7 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_xhh.setBackgroundResource(R.drawable.gift_xiaohonghua);
                 final AnimationDrawable anim_xhh = (AnimationDrawable) imageView_gift_xhh.getBackground();
-                if (!linearLayout_xhh.isSelected()) {
+                if (!linearLayout_xhh.isSelected() && select_only) {
 
                     linearLayout_xhh.setSelected(true);
                     textView_xhh.setSelected(true);
@@ -1305,7 +1315,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_xhh.setVisibility(View.GONE);
                     imageView_gift_xhh.setVisibility(View.VISIBLE);
                     anim_xhh.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_xhh.isSelected()) {
                     imageView_gift_xhh.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_xhh.setSelected(false);
                     textView_xhh.setSelected(false);
@@ -1313,6 +1324,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_xhh.setVisibility(View.VISIBLE);
                     imageView_gift_xhh.setVisibility(View.GONE);
                     anim_xhh.stop();
+                    select_only = true;
                 }
             }
         });//小红花结束
@@ -1328,7 +1340,7 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_lsj.setBackgroundResource(R.drawable.gift_laosiji);
                 final AnimationDrawable anim_lsj = (AnimationDrawable) imageView_gift_lsj.getBackground();
-                if (!linearLayout_lsj.isSelected()) {
+                if (!linearLayout_lsj.isSelected() && select_only) {
 
                     linearLayout_lsj.setSelected(true);
                     textView_lsj.setSelected(true);
@@ -1336,7 +1348,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lsj.setVisibility(View.GONE);
                     imageView_gift_lsj.setVisibility(View.VISIBLE);
                     anim_lsj.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_lsj.isSelected()) {
                     imageView_gift_lsj.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lsj.setSelected(false);
                     textView_lsj.setSelected(false);
@@ -1344,6 +1357,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lsj.setVisibility(View.VISIBLE);
                     imageView_gift_lsj.setVisibility(View.GONE);
                     anim_lsj.stop();
+                    select_only = true;
                 }
             }
         });//老司机结束
@@ -1358,15 +1372,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_ppx.setBackgroundResource(R.drawable.gift_pipixia);
                 final AnimationDrawable anim_ppx = (AnimationDrawable) imageView_gift_ppx.getBackground();
-                if (!linearLayout_ppx.isSelected()) {
-
+                if (!linearLayout_ppx.isSelected() && select_only) {
+                    select_only = false;
                     linearLayout_ppx.setSelected(true);
                     textView_ppx.setSelected(true);
                     textView_ppx.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_ppx.setVisibility(View.GONE);
                     imageView_gift_ppx.setVisibility(View.VISIBLE);
                     anim_ppx.start();
-                } else {
+                } else if (linearLayout_ppx.isSelected()) {
                     imageView_gift_ppx.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_ppx.setSelected(false);
                     textView_ppx.setSelected(false);
@@ -1374,6 +1388,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_ppx.setVisibility(View.VISIBLE);
                     imageView_gift_ppx.setVisibility(View.GONE);
                     anim_ppx.stop();
+                    select_only = true;
                 }
             }
         });//皮皮虾结束
@@ -1388,15 +1403,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_k.setBackgroundResource(R.drawable.gift_keng);
                 final AnimationDrawable anim_k = (AnimationDrawable) imageView_gift_k.getBackground();
-                if (!linearLayout_k.isSelected()) {
-
+                if (!linearLayout_k.isSelected() && select_only) {
+                    select_only = false;
                     linearLayout_k.setSelected(true);
                     textView_k.setSelected(true);
                     textView_k.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_k.setVisibility(View.GONE);
                     imageView_gift_k.setVisibility(View.VISIBLE);
                     anim_k.start();
-                } else {
+                } else if (linearLayout_k.isSelected()) {
                     imageView_gift_k.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_k.setSelected(false);
                     textView_k.setSelected(false);
@@ -1404,6 +1419,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_k.setVisibility(View.VISIBLE);
                     imageView_gift_k.setVisibility(View.GONE);
                     anim_k.stop();
+                    select_only = true;
                 }
             }
         });//坑结束
@@ -1418,15 +1434,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_w.setBackgroundResource(R.drawable.gift_wen);
                 final AnimationDrawable anim_w = (AnimationDrawable) imageView_gift_w.getBackground();
-                if (!linearLayout_w.isSelected()) {
-
+                if (!linearLayout_w.isSelected() && select_only) {
+                    select_only = false;
                     linearLayout_w.setSelected(true);
                     textView_w.setSelected(true);
                     textView_w.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_w.setVisibility(View.GONE);
                     imageView_gift_w.setVisibility(View.VISIBLE);
                     anim_w.start();
-                } else {
+                } else if (linearLayout_w.isSelected()) {
                     imageView_gift_w.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_w.setSelected(false);
                     textView_w.setSelected(false);
@@ -1434,6 +1450,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_w.setVisibility(View.VISIBLE);
                     imageView_gift_w.setVisibility(View.GONE);
                     anim_w.stop();
+                    select_only = true;
                 }
             }
         });//吻结束
@@ -1448,15 +1465,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_ybb.setBackgroundResource(R.drawable.gift_yaobaobao);
                 final AnimationDrawable anim_ybb = (AnimationDrawable) imageView_gift_ybb.getBackground();
-                if (!linearLayout_ybb.isSelected()) {
-
+                if (!linearLayout_ybb.isSelected() && select_only) {
+                    select_only = false;
                     linearLayout_ybb.setSelected(true);
                     textView_ybb.setSelected(true);
                     textView_ybb.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_ybb.setVisibility(View.GONE);
                     imageView_gift_ybb.setVisibility(View.VISIBLE);
                     anim_ybb.start();
-                } else {
+                } else if (linearLayout_ybb.isSelected()) {
                     imageView_gift_ybb.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_ybb.setSelected(false);
                     textView_ybb.setSelected(false);
@@ -1464,6 +1481,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_ybb.setVisibility(View.VISIBLE);
                     imageView_gift_ybb.setVisibility(View.GONE);
                     anim_ybb.stop();
+                    select_only = true;
                 }
             }
         });//要抱抱结束
@@ -1478,14 +1496,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_mmd.setBackgroundResource(R.drawable.gift_memeda);
                 final AnimationDrawable anim_mmd = (AnimationDrawable) imageView_gift_mmd.getBackground();
-                if (!linearLayout_mmd.isSelected()) {
+                if (!linearLayout_mmd.isSelected() && select_only) {
                     linearLayout_mmd.setSelected(true);
                     textView_mmd.setSelected(true);
                     textView_mmd.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_mmd.setVisibility(View.GONE);
                     imageView_gift_mmd.setVisibility(View.VISIBLE);
                     anim_mmd.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_mmd.isSelected()) {
                     imageView_gift_mmd.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_mmd.setSelected(false);
                     textView_mmd.setSelected(false);
@@ -1493,6 +1512,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_mmd.setVisibility(View.VISIBLE);
                     imageView_gift_mmd.setVisibility(View.GONE);
                     anim_mmd.stop();
+                    select_only = true;
                 }
             }
         });//么么哒结束
@@ -1508,14 +1528,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_adyh.setBackgroundResource(R.drawable.gift_aideyanhua);
                 final AnimationDrawable anim_adyh = (AnimationDrawable) imageView_gift_adyh.getBackground();
-                if (!linearLayout_adyh.isSelected()) {
+                if (!linearLayout_adyh.isSelected() && select_only) {
                     linearLayout_adyh.setSelected(true);
                     textView_adyh.setSelected(true);
                     textView_adyh.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_adyh.setVisibility(View.GONE);
                     imageView_gift_adyh.setVisibility(View.VISIBLE);
                     anim_adyh.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_adyh.isSelected()) {
                     imageView_gift_adyh.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_adyh.setSelected(false);
                     textView_adyh.setSelected(false);
@@ -1523,6 +1544,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_adyh.setVisibility(View.VISIBLE);
                     imageView_gift_adyh.setVisibility(View.GONE);
                     anim_adyh.stop();
+                    select_only = true;
                 }
             }
         });//爱的烟花结束
@@ -1536,16 +1558,17 @@ public class PLVideoViewActivity extends BaseActivity {
         linearLayout_mghc.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                imageView_gift_mghc.setBackgroundResource(R.drawable.gift_aideyanhua);
+                imageView_gift_mghc.setBackgroundResource(R.drawable.gift_meiguihuacong);
                 final AnimationDrawable anim_mghc = (AnimationDrawable) imageView_gift_mghc.getBackground();
-                if (!linearLayout_mghc.isSelected()) {
+                if (!linearLayout_mghc.isSelected() && select_only) {
                     linearLayout_mghc.setSelected(true);
                     textView_mghc.setSelected(true);
                     textView_mghc.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_mghc.setVisibility(View.GONE);
                     imageView_gift_mghc.setVisibility(View.VISIBLE);
                     anim_mghc.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_mghc.isSelected()) {
                     imageView_gift_mghc.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_mghc.setSelected(false);
                     textView_mghc.setSelected(false);
@@ -1553,6 +1576,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_mghc.setVisibility(View.VISIBLE);
                     imageView_gift_mghc.setVisibility(View.GONE);
                     anim_mghc.stop();
+                    select_only = true;
                 }
             }
         });//玫瑰花丛结束
@@ -1568,14 +1592,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_sjx.setBackgroundResource(R.drawable.gift_shuijingxie);
                 final AnimationDrawable anim_sjx = (AnimationDrawable) imageView_gift_sjx.getBackground();
-                if (!linearLayout_sjx.isSelected()) {
+                if (!linearLayout_sjx.isSelected() && select_only) {
                     linearLayout_sjx.setSelected(true);
                     textView_sjx.setSelected(true);
                     textView_sjx.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_sjx.setVisibility(View.GONE);
                     imageView_gift_sjx.setVisibility(View.VISIBLE);
                     anim_sjx.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_sjx.isSelected()) {
                     imageView_gift_sjx.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_sjx.setSelected(false);
                     textView_sjx.setSelected(false);
@@ -1583,6 +1608,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_sjx.setVisibility(View.VISIBLE);
                     imageView_gift_sjx.setVisibility(View.GONE);
                     anim_sjx.stop();
+                    select_only = true;
                 }
             }
         });//水晶鞋结束
@@ -1598,14 +1624,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_mghc.setBackgroundResource(R.drawable.gift_qingdingyizuan);
                 final AnimationDrawable anim_qdyz = (AnimationDrawable) imageView_gift_qdyz.getBackground();
-                if (!linearLayout_qdyz.isSelected()) {
+                if (!linearLayout_qdyz.isSelected() && select_only) {
                     linearLayout_qdyz.setSelected(true);
                     textView_qdyz.setSelected(true);
                     textView_qdyz.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_qdyz.setVisibility(View.GONE);
                     imageView_gift_qdyz.setVisibility(View.VISIBLE);
                     anim_qdyz.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_qdyz.isSelected()) {
                     imageView_gift_qdyz.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_qdyz.setSelected(false);
                     textView_qdyz.setSelected(false);
@@ -1613,6 +1640,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_qdyz.setVisibility(View.VISIBLE);
                     imageView_gift_qdyz.setVisibility(View.GONE);
                     anim_qdyz.stop();
+                    select_only = true;
                 }
             }
         });//情定一钻结束
@@ -1628,14 +1656,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_lxy.setBackgroundResource(R.drawable.gift_liuxing);
                 final AnimationDrawable anim_lxy = (AnimationDrawable) imageView_gift_lxy.getBackground();
-                if (!linearLayout_lxy.isSelected()) {
+                if (!linearLayout_lxy.isSelected() && select_only) {
                     linearLayout_lxy.setSelected(true);
                     textView_lxy.setSelected(true);
                     textView_lxy.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_lxy.setVisibility(View.GONE);
                     imageView_gift_lxy.setVisibility(View.VISIBLE);
                     anim_lxy.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_lxy.isSelected()) {
                     imageView_gift_lxy.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lxy.setSelected(false);
                     textView_lxy.setSelected(false);
@@ -1643,6 +1672,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lxy.setVisibility(View.VISIBLE);
                     imageView_gift_lxy.setVisibility(View.GONE);
                     anim_lxy.stop();
+                    select_only = true;
                 }
             }
         });//流星雨结束
@@ -1658,14 +1688,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_lbjn.setBackgroundResource(R.drawable.gift_lanbojini);
                 final AnimationDrawable anim_lbjn = (AnimationDrawable) imageView_gift_lbjn.getBackground();
-                if (!linearLayout_lbjn.isSelected()) {
+                if (!linearLayout_lbjn.isSelected() && select_only) {
                     linearLayout_lbjn.setSelected(true);
                     textView_lbjn.setSelected(true);
                     textView_lbjn.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_lbjn.setVisibility(View.GONE);
                     imageView_gift_lbjn.setVisibility(View.VISIBLE);
                     anim_lbjn.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_lbjn.isSelected()) {
                     imageView_gift_lbjn.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lbjn.setSelected(false);
                     textView_lbjn.setSelected(false);
@@ -1673,6 +1704,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lbjn.setVisibility(View.VISIBLE);
                     imageView_gift_lbjn.setVisibility(View.GONE);
                     anim_lbjn.stop();
+                    select_only = true;
                 }
             }
         });//兰博基尼结束
@@ -1687,14 +1719,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_waqh.setBackgroundResource(R.drawable.gift_weiaiqihang);
                 final AnimationDrawable anim_waqh = (AnimationDrawable) imageView_gift_waqh.getBackground();
-                if (!linearLayout_waqh.isSelected()) {
+                if (!linearLayout_waqh.isSelected() && select_only) {
                     linearLayout_waqh.setSelected(true);
                     textView_waqh.setSelected(true);
                     textView_waqh.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_waqh.setVisibility(View.GONE);
                     imageView_gift_waqh.setVisibility(View.VISIBLE);
                     anim_waqh.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_waqh.isSelected()) {
                     imageView_gift_waqh.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_waqh.setSelected(false);
                     textView_waqh.setSelected(false);
@@ -1702,6 +1735,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_waqh.setVisibility(View.VISIBLE);
                     imageView_gift_waqh.setVisibility(View.GONE);
                     anim_waqh.stop();
+                    select_only = true;
                 }
             }
         });//为爱起航结束
@@ -1716,14 +1750,15 @@ public class PLVideoViewActivity extends BaseActivity {
             public void onClick(View v) {
                 imageView_gift_lmcb.setBackgroundResource(R.drawable.gift_langmanchengbao);
                 final AnimationDrawable anim_lmcb = (AnimationDrawable) imageView_gift_lmcb.getBackground();
-                if (!linearLayout_lmcb.isSelected()) {
+                if (!linearLayout_lmcb.isSelected() && select_only) {
                     linearLayout_lmcb.setSelected(true);
                     textView_lmcb.setSelected(true);
                     textView_lmcb.setTextColor(getResources().getColor(R.color.black));
                     imageView_gift_livingroom_lmcb.setVisibility(View.GONE);
                     imageView_gift_lmcb.setVisibility(View.VISIBLE);
                     anim_lmcb.start();
-                } else {
+                    select_only = false;
+                } else if (linearLayout_lmcb.isSelected()) {
                     imageView_gift_lmcb.setBackgroundColor(getResources().getColor(R.color.transparent));
                     linearLayout_lmcb.setSelected(false);
                     textView_lmcb.setSelected(false);
@@ -1731,6 +1766,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     imageView_gift_livingroom_lmcb.setVisibility(View.VISIBLE);
                     imageView_gift_lmcb.setVisibility(View.GONE);
                     anim_lmcb.stop();
+                    select_only = true;
                 }
             }
         });//浪漫城堡结束
@@ -1944,6 +1980,12 @@ public class PLVideoViewActivity extends BaseActivity {
         popupWindow_living_share.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
 
+    //    UMImage image = new UMImage(PLVideoViewActivity.this, R.drawable.man);//资源文件
+//    UMImage thumb =  new UMImage(this, R.drawable.female);
+//    image.setThumb(thumb);
+//    image.compressStyle = UMImage.CompressStyle.SCALE;//大小压缩，默认为大小压缩，适合普通很大的图
+//    image.compressStyle = UMImage.CompressStyle.QUALITY;//质量压缩，适合长图的分享, 压缩格式设置：
+//    image.compressFormat = Bitmap.CompressFormat.PNG;//用户分享透明背景的图片可以设置这种方式，但是qq好友，微信朋友圈，不支持透明背景图片，会变成黑色
     private View.OnClickListener shareListen = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -1952,95 +1994,176 @@ public class PLVideoViewActivity extends BaseActivity {
                     popupWindow_living_share.dismiss();
                     break;
                 case R.id.livingroom_share_wechat://暂缺分享链接
+                    thumb = new UMImage(PLVideoViewActivity.this, R.drawable.logo_72);
+                    UMWeb web_wechat = new UMWeb("http://www.bk5977.com/");
+                    web_wechat.setTitle("骠客直播");//标题
+                    web_wechat.setThumb(thumb);  //缩略图
+                    web_wechat.setDescription("你丑你先睡，我美我直播");//描述
                     //分享到微信
-                    ShareUtils.getInstance().showShareViewWeChat(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
+                    new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN)
+                            .withMedia(web_wechat)
+                            .setCallback(umShareListener)
+                            .share();
+//                    ShareUtils.getInstance().showShareView(PLVideoViewActivity.this, new ShareVo("https://www.baidu.com/"), new ShareListener() {
+//                        @Override
+//                        public void onStart() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onSuccess() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//
+//                        }
+//                    });
                     break;
                 case R.id.livingroom_copyadress:
                     //创建一个新的文本clip对象
-                    mClipData = ClipData.newPlainText("label", "要复制出去的链接");
+                    mClipData = ClipData.newPlainText("label", "http://www.bk5977.com/");
                     //把clip对象放在剪贴板中
                     mClipboardManager.setPrimaryClip(mClipData);
                     Toast.makeText(getApplicationContext(), "复制成功！",
                             Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.livingroom_share_qq:
-                    ShareUtils.getInstance().showShareViewQQ(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
-                        @Override
-                        public void onStart() {
+                    thumb = new UMImage(PLVideoViewActivity.this, R.drawable.logo_72);
+                    UMWeb web_qq = new UMWeb("http://www.bk5977.com/");
+                    web_qq.setTitle("骠客直播");//标题
+                    web_qq.setThumb(thumb);  //缩略图
+                    web_qq.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.QQ)
+                            .withMedia(web_qq)
+                            .setCallback(umShareListener)
+                            .share();
 
-                        }
-
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
-
+//                    ShareUtils.getInstance().showShareViewQQ(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
+//                        @Override
+//                        public void onStart() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onSuccess() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//
+//                        }
+//                    });
                     break;
                 case R.id.livingroom_share_qqq:
+                    thumb = new UMImage(PLVideoViewActivity.this, R.drawable.logo_72);
+                    UMWeb web_qqq = new UMWeb("http://www.bk5977.com/");
+                    web_qqq.setTitle("骠客直播");//标题
+                    web_qqq.setThumb(thumb);  //缩略图
+                    web_qqq.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.QZONE)
+                            .withMedia(web_qqq)
+                            .setCallback(umShareListener)
+                            .share();
 
                     break;
                 case R.id.livingroom_share_sina:
-                    ShareUtils.getInstance().showShareViewSina(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
+                    thumb = new UMImage(PLVideoViewActivity.this, R.drawable.logo_72);
+                    UMWeb web_sina = new UMWeb("http://www.bk5977.com/");
+                    web_sina.setTitle("骠客直播");//标题
+                    web_sina.setThumb(thumb);  //缩略图
+                    web_sina.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.SINA)
+                            .withMedia(web_sina)
+                            .setCallback(umShareListener)
+                            .share();
+//                    ShareUtils.getInstance().showShareViewSina(PLVideoViewActivity.this, new ShareVo(""), new ShareListener() {
+//                        @Override
+//                        public void onStart() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onSuccess() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onFailure() {
+//
+//                        }
+//
+//                        @Override
+//                        public void onCancel() {
+//
+//                        }
+//                    });
                     break;
                 case R.id.livingroom_share_friend:
-
+                    thumb = new UMImage(PLVideoViewActivity.this, R.drawable.logo_72);
+                    UMWeb web_wc = new UMWeb("http://www.bk5977.com/");
+                    web_wc.setTitle("骠客直播");//标题
+                    web_wc.setThumb(thumb);  //缩略图
+                    web_wc.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .withMedia(web_wc)
+                            .setCallback(umShareListener)
+                            .share();
                     break;
             }
         }
     };
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
 
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+
+            Toast.makeText(PLVideoViewActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(PLVideoViewActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(PLVideoViewActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
+        }
+    };
     //获取用户信息
     public void UserInfoHttp(String url, String path) {
         OkHttpUtils

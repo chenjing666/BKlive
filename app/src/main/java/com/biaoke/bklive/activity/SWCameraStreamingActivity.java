@@ -46,14 +46,11 @@ import com.biaoke.bklive.adapter.VideoHeadImgAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.HeadBean;
 import com.biaoke.bklive.bean.LivingroomChatListBean;
-import com.biaoke.bklive.bean.ShareVo;
 import com.biaoke.bklive.eventbus.Event_chatroom;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.activity.UserPagehomeActivity;
 import com.biaoke.bklive.utils.GlideUtis;
-import com.biaoke.bklive.utils.ShareListener;
-import com.biaoke.bklive.utils.ShareUtils;
 import com.biaoke.bklive.websocket.WebSocketService;
 import com.pkmmte.view.CircularImageView;
 import com.qiniu.pili.droid.streaming.AVCodecType;
@@ -65,6 +62,12 @@ import com.qiniu.pili.droid.streaming.StreamingState;
 import com.qiniu.pili.droid.streaming.StreamingStateChangedListener;
 import com.qiniu.pili.droid.streaming.WatermarkSetting;
 import com.qiniu.pili.droid.streaming.widget.AspectFrameLayout;
+import com.umeng.socialize.ShareAction;
+import com.umeng.socialize.UMShareAPI;
+import com.umeng.socialize.UMShareListener;
+import com.umeng.socialize.bean.SHARE_MEDIA;
+import com.umeng.socialize.media.UMImage;
+import com.umeng.socialize.media.UMWeb;
 import com.zhy.http.okhttp.OkHttpUtils;
 import com.zhy.http.okhttp.callback.Callback;
 import com.zhy.http.okhttp.callback.StringCallback;
@@ -288,10 +291,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 try {
                         Thread.sleep(1000);
                         joinInWeb();//获取长连接
-//                    Thread.sleep(100);
-//                    GetChatRomCount();//读取聊天室人数
-//                    GetChatRomList();//读取聊天室用户列表
-
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -667,8 +666,9 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 inputMessageLiveroom.setVisibility(View.VISIBLE);
                 break;
             case R.id.iv_livingroom_private_message:
-                messagePop();
-                popupWindow_living_message.showAtLocation(view, Gravity.BOTTOM, 0, 0);
+                //直播室私信
+//                messagePop();
+//                popupWindow_living_message.showAtLocation(view, Gravity.BOTTOM, 0, 0);
                 break;
             case R.id.living_livingroom_share:
                 sharePopw();
@@ -1059,6 +1059,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         popupWindow_living_share.setBackgroundDrawable(new ColorDrawable(this.getResources().getColor(R.color.transparent)));
     }
 
+    private UMImage thumb;
     private View.OnClickListener shareListen = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
@@ -1068,90 +1069,112 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     break;
                 case R.id.livingroom_share_wechat://暂缺分享链接
                     //分享到微信
-                    ShareUtils.getInstance().showShareViewWeChat(SWCameraStreamingActivity.this, new ShareVo(""), new ShareListener() {
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
+                    thumb = new UMImage(SWCameraStreamingActivity.this, R.drawable.logo_72);
+                    UMWeb web_wechat = new UMWeb("http://www.bk5977.com/");
+                    web_wechat.setTitle("骠客直播");//标题
+                    web_wechat.setThumb(thumb);  //缩略图
+                    web_wechat.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.WEIXIN)
+                            .withMedia(web_wechat)
+                            .setCallback(umShareListener)
+                            .share();
                     break;
                 case R.id.livingroom_copyadress:
                     //创建一个新的文本clip对象
-                    mClipData = ClipData.newPlainText("label", "要复制出去的链接");
+                    mClipData = ClipData.newPlainText("label", "http://www.bk5977.com/");
                     //把clip对象放在剪贴板中
                     mClipboardManager.setPrimaryClip(mClipData);
                     Toast.makeText(getApplicationContext(), "复制成功！",
                             Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.livingroom_share_qq:
-                    ShareUtils.getInstance().showShareViewQQ(SWCameraStreamingActivity.this, new ShareVo(""), new ShareListener() {
-                        @Override
-                        public void onStart() {
+                    thumb = new UMImage(SWCameraStreamingActivity.this, R.drawable.logo_72);
+                    UMWeb web_qq = new UMWeb("http://www.bk5977.com/");
+                    web_qq.setTitle("骠客直播");//标题
+                    web_qq.setThumb(thumb);  //缩略图
+                    web_qq.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.QQ)
+                            .withMedia(web_qq)
+                            .setCallback(umShareListener)
+                            .share();
 
-                        }
-
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
 
                     break;
                 case R.id.livingroom_share_qqq:
-
+                    thumb = new UMImage(SWCameraStreamingActivity.this, R.drawable.logo_72);
+                    UMWeb web_qqq = new UMWeb("http://www.bk5977.com/");
+                    web_qqq.setTitle("骠客直播");//标题
+                    web_qqq.setThumb(thumb);  //缩略图
+                    web_qqq.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.QZONE)
+                            .withMedia(web_qqq)
+                            .setCallback(umShareListener)
+                            .share();
                     break;
                 case R.id.livingroom_share_sina:
-                    ShareUtils.getInstance().showShareViewSina(SWCameraStreamingActivity.this, new ShareVo(""), new ShareListener() {
-                        @Override
-                        public void onStart() {
-
-                        }
-
-                        @Override
-                        public void onSuccess() {
-
-                        }
-
-                        @Override
-                        public void onFailure() {
-
-                        }
-
-                        @Override
-                        public void onCancel() {
-
-                        }
-                    });
+                    thumb = new UMImage(SWCameraStreamingActivity.this, R.drawable.logo_72);
+                    UMWeb web_sina = new UMWeb("http://www.bk5977.com/");
+                    web_sina.setTitle("骠客直播");//标题
+                    web_sina.setThumb(thumb);  //缩略图
+                    web_sina.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.SINA)
+                            .withMedia(web_sina)
+                            .setCallback(umShareListener)
+                            .share();
                     break;
                 case R.id.livingroom_share_friend:
+                    thumb = new UMImage(SWCameraStreamingActivity.this, R.drawable.logo_72);
+                    UMWeb web_wc = new UMWeb("http://www.bk5977.com/");
+                    web_wc.setTitle("骠客直播");//标题
+                    web_wc.setThumb(thumb);  //缩略图
+                    web_wc.setDescription("你丑你先睡，我美我直播");//描述
+                    //分享到微信
+                    new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
+                            .withMedia(web_wc)
+                            .setCallback(umShareListener)
+                            .share();
 
                     break;
             }
+        }
+    };
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
+
+    }
+
+    private UMShareListener umShareListener = new UMShareListener() {
+        @Override
+        public void onStart(SHARE_MEDIA platform) {
+            //分享开始的回调
+        }
+
+        @Override
+        public void onResult(SHARE_MEDIA platform) {
+            Log.d("plat", "platform" + platform);
+
+            Toast.makeText(SWCameraStreamingActivity.this, platform + " 分享成功啦", Toast.LENGTH_SHORT).show();
+
+        }
+
+        @Override
+        public void onError(SHARE_MEDIA platform, Throwable t) {
+            Toast.makeText(SWCameraStreamingActivity.this, platform + " 分享失败啦", Toast.LENGTH_SHORT).show();
+            if (t != null) {
+                Log.d("throw", "throw:" + t.getMessage());
+            }
+        }
+
+        @Override
+        public void onCancel(SHARE_MEDIA platform) {
+            Toast.makeText(SWCameraStreamingActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
 
