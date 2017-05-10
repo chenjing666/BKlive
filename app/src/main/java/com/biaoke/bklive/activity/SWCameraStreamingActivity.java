@@ -9,9 +9,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.ActivityInfo;
+import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.hardware.Camera;
 import android.opengl.GLSurfaceView;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -86,6 +88,14 @@ import butterknife.OnClick;
 import de.greenrobot.event.EventBus;
 import de.greenrobot.event.Subscribe;
 import de.greenrobot.event.ThreadMode;
+import master.flame.danmaku.controller.DrawHandler;
+import master.flame.danmaku.danmaku.model.BaseDanmaku;
+import master.flame.danmaku.danmaku.model.DanmakuTimer;
+import master.flame.danmaku.danmaku.model.IDanmakus;
+import master.flame.danmaku.danmaku.model.android.DanmakuContext;
+import master.flame.danmaku.danmaku.model.android.Danmakus;
+import master.flame.danmaku.danmaku.parser.BaseDanmakuParser;
+import master.flame.danmaku.ui.widget.DanmakuView;
 import okhttp3.Call;
 import okhttp3.MediaType;
 import okhttp3.Response;
@@ -161,6 +171,14 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     GiftLayout giftLayout;
     @BindView(R.id.periscope_layout)
     PeriscopeLayout periscopeLayout;
+    @BindView(R.id.barrage_switch_close)
+    ImageView barrageSwitchClose;
+    @BindView(R.id.barrage_switch_open)
+    ImageView barrageSwitchOpen;
+    @BindView(R.id.danmaku_view)
+    DanmakuView danmakuView;
+    @BindView(R.id.rl_chatbarrage)
+    RelativeLayout rlChatbarrage;
 
     private MediaStreamingManager mMediaStreamingManager;
     private String liveUrl = null;
@@ -230,6 +248,15 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
     private PopupWindow popupWindow_livingroom_common;
     private String msg_addFollow;
     //主播信息
+    //弹幕相关
+    private boolean showDanmaku;
+    private DanmakuContext danmakuContext;
+    private BaseDanmakuParser parser = new BaseDanmakuParser() {
+        @Override
+        protected IDanmakus parse() {
+            return new Danmakus();
+        }
+    };
 
     @SuppressLint("InlinedApi")
     @Override
@@ -289,8 +316,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             @Override
             public void run() {
                 try {
-                        Thread.sleep(1000);
-                        joinInWeb();//获取长连接
+                    Thread.sleep(1000);
+                    joinInWeb();//获取长连接
                 } catch (InterruptedException e) {
                     e.printStackTrace();
                 }
@@ -304,6 +331,51 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     bottomBarLiving.setVisibility(View.VISIBLE);
                 } else {
 //                    inputMessageLiveroom.setVisibility(View.GONE);
+                }
+            }
+        });
+//        danmakuView = (DanmakuView) findViewById(R.id.danmaku_view);
+        danmakuView.enableDanmakuDrawingCache(true);
+        danmakuView.setCallback(new DrawHandler.Callback() {
+            @Override
+            public void prepared() {
+                showDanmaku = true;
+//                danmakuView.start();
+//                generateSomeDanmaku();//测试用随机弹幕
+            }
+
+            @Override
+            public void updateTimer(DanmakuTimer timer) {
+
+            }
+
+            @Override
+            public void danmakuShown(BaseDanmaku danmaku) {
+
+            }
+
+            @Override
+            public void drawingFinished() {
+
+            }
+        });
+        danmakuContext = DanmakuContext.create();
+        danmakuView.prepare(parser, danmakuContext);
+        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(new View.OnSystemUiVisibilityChangeListener() {
+            @Override
+            public void onSystemUiVisibilityChange(int visibility) {
+                if (visibility == View.SYSTEM_UI_FLAG_VISIBLE) {
+                    onWindowFocusChanged(true);
+                }
+            }
+        });
+
+        danmakuView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (inputMessageLiveroom.getVisibility() == View.VISIBLE) {
+                    inputMessageLiveroom.setVisibility(View.GONE);
+                    bottomBarLiving.setVisibility(View.VISIBLE);
                 }
             }
         });
@@ -604,9 +676,24 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         }
     }
 
-    @OnClick({R.id.tv_livingroom_manage, R.id.living_close, R.id.charm_more, R.id.iv_chatbarrage, R.id.input_sendmsg, R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message, R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
+    @OnClick({R.id.rl_chatbarrage, R.id.tv_livingroom_manage, R.id.living_close, R.id.charm_more, R.id.input_sendmsg,
+            R.id.btn_start_live, R.id.live_cancel, R.id.iv_livingroom_comments, R.id.iv_livingroom_private_message,
+            R.id.living_livingroom_share, R.id.iv_livingroom_pickup, R.id.iv_livingroom_music})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.rl_chatbarrage:
+                if (!ivChatbarrage.isSelected()) {
+                    ivChatbarrage.setSelected(true);
+                    barrageSwitchClose.setVisibility(View.GONE);
+                    barrageSwitchOpen.setVisibility(View.VISIBLE);
+                    danmakuView.start();
+                } else {
+                    ivChatbarrage.setSelected(false);
+                    barrageSwitchClose.setVisibility(View.VISIBLE);
+                    barrageSwitchOpen.setVisibility(View.GONE);
+                    danmakuView.stop();
+                }
+                break;
             case R.id.tv_livingroom_manage:
                 Intent intent_livingManage = new Intent(SWCameraStreamingActivity.this, LivingroomManageActivity.class);
                 startActivity(intent_livingManage);
@@ -631,8 +718,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
 //                AlertDialog alert = builder.create();
                 break;
             case R.id.charm_more:
-                break;
-            case R.id.iv_chatbarrage:
                 break;
             case R.id.input_sendmsg:
 //                Toast.makeText(this, "点击了发信息", Toast.LENGTH_SHORT).show();
@@ -742,8 +827,8 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                                         videoHeadimgXrv.setAdapter(videoHeadImgAdapter);
                                         videoHeadImgAdapter.setOnItemClickListener(headimagelisten);
 
-                                        }
                                     }
+                                }
 
                                 if (cmd.equals("AddChatRom")) {
                                     String joinchat = object_joinchat.getString("Msg");
@@ -775,6 +860,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     String Msg_chat = object_chatMsg.getString("Msg");
                     livingroomChatListBean_chatmsg = new LivingroomChatListBean(IconUrl, Level, NickName, Msg_chat);
                     chatList.add(livingroomChatListBean_chatmsg);
+                    addDanmaku(Msg_chat, true);//弹幕
                     Message msgg = new Message();
                     msgg.what = 2;
                     mHandler.sendMessage(msgg);
@@ -797,6 +883,48 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         }
     }
 
+    /**
+     * 向弹幕View中添加一条弹幕
+     *
+     * @param content    弹幕的具体内容
+     * @param withBorder 弹幕是否有边框
+     */
+    private void addDanmaku(String content, boolean withBorder) {
+        BaseDanmaku danmaku = danmakuContext.mDanmakuFactory.createDanmaku(BaseDanmaku.TYPE_SCROLL_RL);
+        danmaku.text = content;
+        danmaku.padding = 5;
+        danmaku.textSize = sp2px(20);
+        danmaku.textColor = Color.WHITE;
+        danmaku.setTime(danmakuView.getCurrentTime());
+        if (withBorder) {
+            danmaku.borderColor = Color.GREEN;
+        }
+        danmakuView.addDanmaku(danmaku);
+    }
+
+    /**
+     * sp转px的方法。
+     */
+    public int sp2px(float spValue) {
+        final float fontScale = getResources().getDisplayMetrics().scaledDensity;
+        return (int) (spValue * fontScale + 0.5f);
+    }
+
+    //页面加载之后立即执行的方法
+    @Override
+    public void onWindowFocusChanged(boolean hasFocus) {
+        super.onWindowFocusChanged(hasFocus);
+        if (hasFocus && Build.VERSION.SDK_INT >= 19) {
+            View decorView = getWindow().getDecorView();
+            decorView.setSystemUiVisibility(
+                    View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                            | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                            | View.SYSTEM_UI_FLAG_FULLSCREEN
+                            | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+        }
+    }
 
     private VideoHeadImgAdapter.OnItemClickListener headimagelisten = new VideoHeadImgAdapter.OnItemClickListener() {
         @Override
@@ -1094,7 +1222,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     web_qq.setTitle("骠客直播");//标题
                     web_qq.setThumb(thumb);  //缩略图
                     web_qq.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.QQ)
                             .withMedia(web_qq)
                             .setCallback(umShareListener)
@@ -1108,7 +1235,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     web_qqq.setTitle("骠客直播");//标题
                     web_qqq.setThumb(thumb);  //缩略图
                     web_qqq.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.QZONE)
                             .withMedia(web_qqq)
                             .setCallback(umShareListener)
@@ -1120,7 +1246,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     web_sina.setTitle("骠客直播");//标题
                     web_sina.setThumb(thumb);  //缩略图
                     web_sina.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.SINA)
                             .withMedia(web_sina)
                             .setCallback(umShareListener)
@@ -1132,7 +1257,6 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                     web_wc.setTitle("骠客直播");//标题
                     web_wc.setThumb(thumb);  //缩略图
                     web_wc.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(SWCameraStreamingActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                             .withMedia(web_wc)
                             .setCallback(umShareListener)

@@ -110,8 +110,8 @@ public class PrivateMsgActivity extends BaseActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        SharedPreferences sharedPreferences_message = getSharedPreferences("PriMsg", Context.MODE_APPEND);
-        privatemessage =sharedPreferences_message.getString("privatemessage","");
+//        SharedPreferences sharedPreferences_message = getSharedPreferences("PriMsg", Context.MODE_APPEND);
+//        privatemessage = sharedPreferences_message.getString(fromUserId, "");
 
     }
 
@@ -328,6 +328,11 @@ public class PrivateMsgActivity extends BaseActivity {
         } catch (JSONException e) {
             e.printStackTrace();
         }
+        //发消息的保存
+        SharedPreferences sharedPreferences_message = getSharedPreferences("PriMsg", Context.MODE_APPEND);
+        SharedPreferences.Editor editor_message = sharedPreferences_message.edit();
+        editor_message.putString(fromUserId + "to", object_sendPriMsg.toString());
+        editor_message.commit();
         OkHttpUtils.postString()
                 .url(Api.ENCRYPT64)
                 .content(object_sendPriMsg.toString())

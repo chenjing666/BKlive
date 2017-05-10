@@ -203,8 +203,8 @@ public class PLVideoViewActivity extends BaseActivity {
             return new Danmakus();
         }
     };
-    private boolean select_only;
     //弹幕结束
+    private boolean select_only;
     private ClipboardManager mClipboardManager;//剪切板管理工具类
     private ClipData mClipData;//剪切板Data对象
     private UMImage thumb;
@@ -2040,7 +2040,6 @@ public class PLVideoViewActivity extends BaseActivity {
                     web_qq.setTitle("骠客直播");//标题
                     web_qq.setThumb(thumb);  //缩略图
                     web_qq.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.QQ)
                             .withMedia(web_qq)
                             .setCallback(umShareListener)
@@ -2074,7 +2073,6 @@ public class PLVideoViewActivity extends BaseActivity {
                     web_qqq.setTitle("骠客直播");//标题
                     web_qqq.setThumb(thumb);  //缩略图
                     web_qqq.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.QZONE)
                             .withMedia(web_qqq)
                             .setCallback(umShareListener)
@@ -2087,7 +2085,6 @@ public class PLVideoViewActivity extends BaseActivity {
                     web_sina.setTitle("骠客直播");//标题
                     web_sina.setThumb(thumb);  //缩略图
                     web_sina.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.SINA)
                             .withMedia(web_sina)
                             .setCallback(umShareListener)
@@ -2120,7 +2117,6 @@ public class PLVideoViewActivity extends BaseActivity {
                     web_wc.setTitle("骠客直播");//标题
                     web_wc.setThumb(thumb);  //缩略图
                     web_wc.setDescription("你丑你先睡，我美我直播");//描述
-                    //分享到微信
                     new ShareAction(PLVideoViewActivity.this).setPlatform(SHARE_MEDIA.WEIXIN_CIRCLE)
                             .withMedia(web_wc)
                             .setCallback(umShareListener)

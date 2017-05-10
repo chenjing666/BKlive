@@ -95,7 +95,11 @@
                 android:background="@drawable/livecamera_close" />
         </LinearLayout>
     </com.qiniu.pili.droid.streaming.widget.AspectFrameLayout>
-
+    <master.flame.danmaku.ui.widget.DanmakuView
+        android:id="@+id/danmaku_view"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/y600"
+        android:layout_marginTop="@dimen/y200" />
     <LinearLayout
         android:id="@+id/ll_livingroom_headtwo"
         android:layout_width="match_parent"
@@ -408,6 +412,7 @@
         android:visibility="gone">
 
         <RelativeLayout
+            android:id="@+id/rl_chatbarrage"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center">
@@ -418,14 +423,24 @@
                 android:layout_height="@dimen/y66"
                 android:layout_marginEnd="@dimen/x10"
                 android:layout_marginStart="@dimen/x20"
-                android:background="@drawable/livingroom_beauty_open" />
+                android:background="@drawable/barrage_selector" />
 
             <ImageView
+                android:id="@+id/barrage_switch_close"
                 android:layout_width="@dimen/x56"
                 android:layout_height="@dimen/y56"
                 android:layout_marginStart="@dimen/x20"
                 android:layout_marginTop="@dimen/y4"
                 android:background="@drawable/livingroom_chatbarrage_switch" />
+
+            <ImageView
+                android:id="@+id/barrage_switch_open"
+                android:layout_width="@dimen/x56"
+                android:layout_height="@dimen/y56"
+                android:layout_marginStart="@dimen/x55"
+                android:layout_marginTop="@dimen/y4"
+                android:background="@drawable/livingroom_chatbarrage_switch"
+                android:visibility="gone" />
         </RelativeLayout>
 
         <RelativeLayout

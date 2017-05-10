@@ -80,9 +80,10 @@ public class PrivateMessageFragment extends Fragment {
      */
     public  void setMag(String data) {
         Log.d("PrivateMessageFragment", data);
+        //收到消息的保存
         SharedPreferences sharedPreferences_message = getActivity().getSharedPreferences("PriMsg", Context.MODE_APPEND);
         SharedPreferences.Editor editor_message = sharedPreferences_message.edit();
-        editor_message.putString("privatemessage", data);
+        editor_message.putString(fromUserId, data);
         editor_message.commit();
 //        {"Protocol":"UserMsg","Cmd":"p2p","FromUserId":"1174","Level":"0","NickName":"游客MTE3NA==",
 //                "IconUrl":"http:\/\/omy78z02r.bkt.clouddn.com\/icon-1174-up.jpg","ToUserId":"1183","Msg":"消息内容","Time":1493276389,"性别":"男"}
