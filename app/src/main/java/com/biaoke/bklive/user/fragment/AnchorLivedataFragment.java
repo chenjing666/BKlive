@@ -61,6 +61,8 @@ public class AnchorLivedataFragment extends Fragment {
     private JSONObject jsonObject_content;
     private String mLiveNum;
     private String mVideoNum;
+    private String accessKey;
+    private String useId;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Nullable
@@ -70,6 +72,8 @@ public class AnchorLivedataFragment extends Fragment {
         unbinder = ButterKnife.bind(this, view);
         SharedPreferences sharedPreferences_chatroomId = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         chatroomId = sharedPreferences_chatroomId.getString("ChatroomId", "");
+        accessKey = sharedPreferences_chatroomId.getString("AccessKey", "");
+        useId = sharedPreferences_chatroomId.getString("userId", "");
 //获取用户点播信息
         JSONObject jsonObject_user = new JSONObject();
         try {
@@ -135,6 +139,7 @@ public class AnchorLivedataFragment extends Fragment {
             Intent intent_shortvideo = new Intent(getActivity(), ShortVideoActivity.class);
             intent_shortvideo.putExtra("path", livenumList.get(postion).getVideoUrl());
             startActivity(intent_shortvideo);
+            setPv(livenumList.get(postion).getId());
         }
     };
 
@@ -233,6 +238,7 @@ public class AnchorLivedataFragment extends Fragment {
                                                             JSONArray jsonArray = new JSONArray(object.getString("Data"));
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
+                                                                String videoid = jsonobject.getString("Id");//获取视频的编号
                                                                 String UserId_video = jsonobject.getString("UserId");
                                                                 String Tag = jsonobject.getString("Tag");//搜索用的标签
                                                                 String Pv = jsonobject.getString("Pv");//观看次数
@@ -244,7 +250,7 @@ public class AnchorLivedataFragment extends Fragment {
                                                                 String videoUrl = jsonobject.getString("VideoUrl");
                                                                 String Format = jsonobject.getString("Format");
                                                                 String PubTime = jsonobject.getString("PubTime");
-                                                                LiveVideo_list liveVideo_list = new LiveVideo_list(UserId_video, Pv, Exp, HV, type, Title, SnapshotUrl, videoUrl, Format, PubTime);
+                                                                LiveVideo_list liveVideo_list = new LiveVideo_list(videoid, UserId_video, Pv, Exp, HV, type, Title, SnapshotUrl, videoUrl, Format, PubTime);
                                                                 livenumList.add(liveVideo_list);
                                                             }
 
@@ -263,6 +269,71 @@ public class AnchorLivedataFragment extends Fragment {
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
+    }
+
+    //    设置播放次数
+//    {"Protocol":"Video","Cmd":"SetPv","UserId":"1174","Id":"0","AccessKey":"bk5977"}
+    private void setPv(String videoId) {
+        JSONObject object_identification = new JSONObject();
+        try {
+            object_identification.put("Protocol", "Video");
+            object_identification.put("Cmd", "SetPv");
+            object_identification.put("UserId", useId);
+            object_identification.put("Id", videoId);//视频的编号
+            object_identification.put("AccessKey", accessKey);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        OkHttpUtils.postString()
+                .url(Api.ENCRYPT64)
+                .content(object_identification.toString())
+                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                .build()
+                .execute(new StringCallback() {
+                    @Override
+                    public void onError(Call call, Exception e, int id) {
+
+                    }
+
+                    @Override
+                    public void onResponse(String response, int id) {
+                        OkHttpUtils.postString()
+                                .url(Api.LIVE_CAMERA)
+                                .content(response)
+                                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                                .build()
+                                .execute(new StringCallback() {
+                                    @Override
+                                    public void onError(Call call, Exception e, int id) {
+
+                                    }
+
+                                    @Override
+                                    public void onResponse(String response, int id) {
+                                        OkHttpUtils.postString()
+                                                .url(Api.UNENCRYPT64)
+                                                .content(response)
+                                                .mediaType(MediaType.parse("application/json charset=utf-8"))
+                                                .build()
+                                                .execute(new StringCallback() {
+                                                    @Override
+                                                    public void onError(Call call, Exception e, int id) {
+
+                                                    }
+
+                                                    @Override
+                                                    public void onResponse(String response, int id) {
+                                                        try {
+                                                            JSONObject jsonObject = new JSONObject(response);
+                                                        } catch (JSONException e) {
+                                                            e.printStackTrace();
+                                                        }
+                                                    }
+                                                });
+                                    }
+                                });
+                    }
+                });
     }
 
     //获取用户信息

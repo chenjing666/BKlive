@@ -691,7 +691,8 @@ public class FoundFragment extends Fragment {
 //                                                                    "Type":"vod"	//live 直播 vod视频
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
-                                                                String videoid = jsonobject.getString("Id");//获取视频的编号
+//                                                                String videoid = jsonobject.getString("Id");//获取视频的编号
+                                                                //直播没有
                                                                 String UserId_video = jsonobject.getString("UserId");
                                                                 String NickName = jsonobject.getString("NickName");
                                                                 String IconUrl = jsonobject.getString("IconUrl");//用户头像
@@ -702,8 +703,14 @@ public class FoundFragment extends Fragment {
                                                                 String Format = jsonobject.getString("Format");
                                                                 String HV = jsonobject.getString("HV");
                                                                 String type = jsonobject.getString("Type");
-                                                                live_item liveItem = new live_item(videoid, UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
-                                                                recyclerDataList.add(liveItem);
+                                                                if (type.equals("live")) {
+                                                                    live_item liveItem = new live_item(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
+                                                                    recyclerDataList.add(liveItem);
+                                                                } else {
+                                                                    String videoid = jsonobject.getString("Id");//获取视频的编号
+                                                                    live_item liveItem = new live_item(videoid, UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type);
+                                                                    recyclerDataList.add(liveItem);
+                                                                }
                                                             }
 
                                                         } catch (JSONException e) {

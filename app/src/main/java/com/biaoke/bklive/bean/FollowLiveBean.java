@@ -51,6 +51,20 @@ public class FollowLiveBean {
         Online = online;
     }
 
+    public FollowLiveBean(String userId, String nickName, String iconUrl, String exp, String title, String snapshotUrl, String videoUrl, String format, String HV, String type, String online) {
+        UserId = userId;
+        NickName = nickName;
+        IconUrl = iconUrl;
+        Exp = exp;
+        Title = title;
+        SnapshotUrl = snapshotUrl;
+        VideoUrl = videoUrl;
+        Format = format;
+        this.HV = HV;
+        Type = type;
+        Online = online;
+    }
+
     public String getId() {
         return Id;
     }

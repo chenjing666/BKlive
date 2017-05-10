@@ -314,7 +314,7 @@ public class FollowFragment extends Fragment {
                                                             JSONArray jsonArray = new JSONArray(object.getString("Data"));
                                                             for (int i = 0; i < jsonArray.length(); i++) {
                                                                 JSONObject jsonobject = jsonArray.getJSONObject(i);
-                                                                String videoid = jsonobject.getString("Id");//获取视频的编号
+
                                                                 String UserId_video = jsonobject.getString("UserId");
                                                                 String NickName = jsonobject.getString("NickName");
                                                                 String IconUrl = jsonobject.getString("IconUrl");//用户头像
@@ -327,9 +327,10 @@ public class FollowFragment extends Fragment {
                                                                 String type = jsonobject.getString("Type");
                                                                 if (type.equals("live")) {
                                                                     String online = jsonobject.getString("OnLine");
-                                                                    FollowLiveBean followLiveBean = new FollowLiveBean(videoid, UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type, online);
+                                                                    FollowLiveBean followLiveBean = new FollowLiveBean(UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type, online);
                                                                     mList.add(followLiveBean);
                                                                 } else {
+                                                                    String videoid = jsonobject.getString("Id");//获取视频的编号
                                                                     FollowLiveBean followLiveBean = new FollowLiveBean(videoid, UserId_video, NickName, IconUrl, Exp, Title, SnapshotUrl, videoUrl, Format, HV, type, "");
                                                                     mList.add(followLiveBean);
                                                                 }

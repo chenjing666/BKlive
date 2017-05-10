@@ -5,6 +5,7 @@ package com.biaoke.bklive.user.bean;
  */
 
 public class LiveVideo_list {
+    private String Id;
     private String UserId;
     private String Exp;
     private String Pv;
@@ -19,7 +20,8 @@ public class LiveVideo_list {
     @Override
     public String toString() {
         return "LiveVideo_list{" +
-                "UserId='" + UserId + '\'' +
+                "Id='" + Id + '\'' +
+                ", UserId='" + UserId + '\'' +
                 ", Exp='" + Exp + '\'' +
                 ", Pv='" + Pv + '\'' +
                 ", HV='" + HV + '\'' +
@@ -30,6 +32,20 @@ public class LiveVideo_list {
                 ", Format='" + Format + '\'' +
                 ", PubTime='" + PubTime + '\'' +
                 '}';
+    }
+
+    public LiveVideo_list(String id, String userId, String exp, String pv, String HV, String type, String title, String snapshotUrl, String videoUrl, String format, String pubTime) {
+        Id = id;
+        UserId = userId;
+        Exp = exp;
+        Pv = pv;
+        this.HV = HV;
+        Type = type;
+        Title = title;
+        SnapshotUrl = snapshotUrl;
+        VideoUrl = videoUrl;
+        Format = format;
+        PubTime = pubTime;
     }
 
     public LiveVideo_list(String userId, String exp, String pv, String HV, String type, String title, String snapshotUrl, String videoUrl, String format, String pubTime) {
@@ -43,6 +59,14 @@ public class LiveVideo_list {
         VideoUrl = videoUrl;
         Format = format;
         PubTime = pubTime;
+    }
+
+    public String getId() {
+        return Id;
+    }
+
+    public void setId(String id) {
+        Id = id;
     }
 
     public String getUserId() {

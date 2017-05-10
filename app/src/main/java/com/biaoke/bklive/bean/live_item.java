@@ -52,6 +52,19 @@ public class live_item {
         Type = type;
     }
 
+    public live_item(String userId, String nickName, String iconUrl, String exp, String title, String snapshotUrl, String videoUrl, String format, String HV, String type) {
+        UserId = userId;
+        NickName = nickName;
+        IconUrl = iconUrl;
+        Exp = exp;
+        Title = title;
+        SnapshotUrl = snapshotUrl;
+        VideoUrl = videoUrl;
+        Format = format;
+        this.HV = HV;
+        Type = type;
+    }
+
     @Override
     public String toString() {
         return "live_item{" +
