@@ -95,7 +95,7 @@ public class FoundFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.fragment_un_login, container, false);
+        View view = inflater.inflate(R.layout.fragment_found, container, false);
         unbinder = ButterKnife.bind(this, view);
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
@@ -156,14 +156,12 @@ public class FoundFragment extends Fragment {
         int firstPosition = layoutMgr.findFirstVisibleItemPosition();
         View v = layoutMgr.getChildAt(position - firstPosition);
         if (Build.VERSION.SDK_INT > 22) {
-            Log.e("发现页面", "走了加载更多");
             recyclerviewFound.setOnScrollChangeListener(new View.OnScrollChangeListener() {
                 @Override
                 public void onScrollChange(View v, int scrollX, int scrollY, int oldScrollX, int oldScrollY) {
                     int visibleItemCount = xGridLayoutManager.getChildCount();//显示在页面内的item
                     int lineItemCount = xGridLayoutManager.getSpanCount();//每行的item
                     int totalItemCount = xGridLayoutManager.getItemCount();//总的item
-//                    Log.e(visibleItemCount + "", totalItemCount + "---" + lineItemCount);
                     recyclerviewFound.getFocusedChild();
 //                    Log.e("-----", recyclerviewFound.getChildAt(totalItemCount-4) + "在集合中返回指定位置的视图。");
                     Log.e("myPosition",myPosition+"");

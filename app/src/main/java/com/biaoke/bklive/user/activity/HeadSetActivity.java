@@ -116,6 +116,9 @@ public class HeadSetActivity extends BaseActivity {
                 } else {
                     sexes = "女";
                 }
+                if (nickName.isEmpty()) {
+                    Toast.makeText(HeadSetActivity.this, "昵称不能空", Toast.LENGTH_SHORT).show();
+                } else {
                 JSONObject jsonObject_r = new JSONObject();
                 try {
                     jsonObject_r.put("Mobile", phonenum);
@@ -123,14 +126,13 @@ public class HeadSetActivity extends BaseActivity {
                     jsonObject_r.put("NickName", nickName);
                     jsonObject_r.put("Gender", sexes);
                     jsonObject_r.put("Code", pinNum);
-//                    jsonObject_r.put("PwdModel", "1");
                     jsonObject_r.put("Protocol", "Register");
                     jsonObject_r.put("Cmd", "3");
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-//                Log.d("pppppppppppppp", jsonObject_r.toString() + "");
-                Okhttputils(Api.ENCRYPT64, jsonObject_r.toString());
+                    Okhttputils(Api.ENCRYPT64, jsonObject_r.toString());
+                }
                 break;
         }
     }

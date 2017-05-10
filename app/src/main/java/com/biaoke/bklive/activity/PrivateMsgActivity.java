@@ -1,5 +1,6 @@
 package com.biaoke.bklive.activity;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
@@ -66,6 +67,7 @@ public class PrivateMsgActivity extends BaseActivity {
     private String fromUserId;
     private String msg_addFollow;
     private String accessKey;
+    private String privatemessage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -105,6 +107,13 @@ public class PrivateMsgActivity extends BaseActivity {
         }
     };
 
+    @Override
+    protected void onStart() {
+        super.onStart();
+        SharedPreferences sharedPreferences_message = getSharedPreferences("PriMsg", Context.MODE_APPEND);
+        privatemessage =sharedPreferences_message.getString("privatemessage","");
+
+    }
 
     @Subscribe(threadMode = ThreadMode.MainThread)
     public void Event_privateMessage(Event_privatemessage privatemessage) {

@@ -61,7 +61,8 @@
             android:layout_marginTop="@dimen/y24"
             android:background="@drawable/hotstyle2"
             android:text="设置头像"
-            android:textSize="@dimen/x34" />
+            android:textSize="@dimen/x34"
+            android:visibility="gone" />
     </LinearLayout>
 
     <RelativeLayout

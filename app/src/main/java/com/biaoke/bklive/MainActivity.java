@@ -1,17 +1,14 @@
 package com.biaoke.bklive;
 
-import android.Manifest;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.SharedPreferences;
 import android.graphics.drawable.ColorDrawable;
-import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
-import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentStatePagerAdapter;
 import android.support.v4.view.ViewPager;
@@ -155,9 +152,6 @@ public class MainActivity extends BaseActivity {
     private PopupWindow popupWindow_vedio, popupWindow_login;
     private ImageView imageView_qq;
     private String APPID = "1106047080";
-    //    Tencent mTencent;
-//    private BaseUiListener mIUiListener;
-//    private UserInfo mInfo;
     private String openID = null;
     //点击2次返回，退出程序
     private boolean isExit = false;
@@ -196,21 +190,18 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         glideUtis_header_user = new GlideUtis(this);
         //6.0之后开启相机的权限
-        if (Build.VERSION.SDK_INT >= 23) {
-            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
-            ActivityCompat.requestPermissions(this, mPermissionList, 123);
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
-        }
+//        if (Build.VERSION.SDK_INT >= 23) {
+//            String[] mPermissionList = new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+//            ActivityCompat.requestPermissions(this, mPermissionList, 123);
+//        }
+//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+//            requestPermissions(new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE}, 2);
+//        }
 
-//        mTencent = Tencent.createInstance(APPID, MainActivity.this.getApplication());
         //首先获取用户ID，直播要取
         sharedPreferences_user = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         UserId = sharedPreferences_user.getString("userId", "");//如果取不到值就取后面的""
-        Log.e(UserId + "主页面获取用户名:", UserId);
-//        String AccessKey=sharedPreferences_user.getString("AccessKey","");
-//        Log.e(AccessKey + "主页面获取用户名:", AccessKey);
+//        Log.e(UserId + "主页面获取用户名:", UserId);
         BottomBar bottomBar = (BottomBar) findViewById(R.id.ll_bottom_bar);
         bottomBar.setOnItemChangedListener(new BottomBar.OnItemChangedListener() {
 
@@ -220,7 +211,6 @@ public class MainActivity extends BaseActivity {
                     mainHead.setVisibility(View.VISIBLE);
                     llMain.setVisibility(View.VISIBLE);
                     mine.setVisibility(View.GONE);
-//                    llUser.setVisibility(View.GONE);
                     slUser.setVisibility(View.GONE);
                 } else if (index == 1) {
                     SharedPreferences sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
@@ -231,7 +221,6 @@ public class MainActivity extends BaseActivity {
                     } else {
                         mainHead.setVisibility(View.GONE);
                         mine.setVisibility(View.VISIBLE);
-//                        llUser.setVisibility(View.VISIBLE);
                         slUser.setVisibility(View.VISIBLE);
                         llMain.setVisibility(View.GONE);
 
@@ -246,7 +235,6 @@ public class MainActivity extends BaseActivity {
                         Log.e("主页面获取用户ID", jsonObject_user.toString());
                         UserInfoHttp(Api.ENCRYPT64, jsonObject_user.toString());
                     }
-//                    setUserInfo();
                 }
 
             }
@@ -493,6 +481,13 @@ public class MainActivity extends BaseActivity {
                 setBackgroundAlpha(1.0f, MainActivity.this);
                 popupWindow_vedio.dismiss();
                 llBottomBar.setVisibility(View.VISIBLE);
+            }
+        });
+        ImageView imageView_livescreen = (ImageView) contentView.findViewById(R.id.live_screeen);
+        imageView_livescreen.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(MainActivity.this, "敬请期待", Toast.LENGTH_SHORT).show();
             }
         });
         ImageView imageView_vedioshort = (ImageView) contentView.findViewById(R.id.vedio_short);

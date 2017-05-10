@@ -5,7 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y320">
+        android:layout_height="@dimen/y500">
 
         <ImageView
             android:id="@+id/video_image"
@@ -16,7 +16,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentEnd="true"
-            android:layout_marginTop="@dimen/y10"
+            android:layout_marginTop="@dimen/y40"
+            android:layout_marginEnd="@dimen/x46"
             android:background="@drawable/bk_contribution_charm"
             android:gravity="center"
             android:orientation="horizontal">
@@ -57,12 +58,13 @@
             android:textSize="@dimen/x34" />
 
         <LinearLayout
+            android:gravity="center"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
             android:layout_alignParentEnd="true"
             android:layout_marginBottom="@dimen/y23"
-            android:layout_marginEnd="@dimen/x30"
+            android:layout_marginEnd="@dimen/x40"
             android:orientation="horizontal">
 
             <ImageView

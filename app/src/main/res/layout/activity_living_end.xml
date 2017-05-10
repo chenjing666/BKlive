@@ -203,7 +203,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="@dimen/y20"
         android:gravity="center"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:visibility="gone">
 
         <ImageView
             android:id="@+id/iv_liveend_deletevideo"
