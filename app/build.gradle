@@ -122,7 +122,7 @@ dependencies {
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.5.1'
     compile files('libs/gson-2.2.4.jar')
     compile files('libs/okhttp-2.0.0-RC1.jar')
-    compile files('libs/SocialSDK_WeChat_Simplify.jar')
     compile files('libs/umeng_shareboard_widget.jar')
     compile files('libs/umeng_social_shareboard.jar')
+    compile files('libs/SocialSDK_WeiXin_Full.jar')
 }
