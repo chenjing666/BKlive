@@ -42,9 +42,10 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
 //                LogUtil.d(" 异步加载得到图片的 url=" + url);
                 iv.setImageBitmap(bitmap);
                 //设置完就释放掉
-                if (!bitmap.isRecycled()) {
-                    bitmap.recycle();
-                }
+//                if (!bitmap.isRecycled()) {
+//                    bitmap.recycle();
+                //会报错
+//                }
             }
         }
     };
