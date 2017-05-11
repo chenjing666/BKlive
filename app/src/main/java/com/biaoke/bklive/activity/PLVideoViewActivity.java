@@ -277,7 +277,7 @@ public class PLVideoViewActivity extends BaseActivity {
                     joinChatRoom();//加入聊天室
                     Thread.sleep(300);
                     GetChatRomCount();//读取聊天室人数
-                    GetChatRomList();//读取聊天室用户列表
+                    GetChatRomList();//读取聊天室用户列表  服务器给，不需要请求了
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();

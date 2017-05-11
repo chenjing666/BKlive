@@ -11,10 +11,9 @@
 
     <ImageView
         android:id="@+id/logo_welcome"
-        android:layout_width="@dimen/x600"
-        android:layout_height="@dimen/y1100"
-        android:layout_centerInParent="true"
-        android:background="@drawable/logo_welcome_480" />
+        android:layout_width="@dimen/x710"
+        android:layout_height="@dimen/y1200"
+        android:layout_centerInParent="true" />
 
     <ImageView
         android:id="@+id/logo_welcome2"

@@ -39,6 +39,7 @@
         android:background="@color/white">
 
         <EditText
+            android:gravity="center"
             android:id="@+id/et_nickName"
             android:layout_width="match_parent"
             android:layout_height="@dimen/y315"

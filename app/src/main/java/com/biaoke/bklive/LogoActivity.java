@@ -21,6 +21,7 @@ import com.biaoke.bklive.message.AppConsts;
 import com.biaoke.bklive.user.mylocation.Constants;
 import com.biaoke.bklive.user.mylocation.LMLocationListener;
 
+import java.util.Random;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -43,12 +44,24 @@ public class LogoActivity extends BaseActivity {
     private int count = 0;
     private String wd;
     private String jd;
+    private Random random;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_logo);
         ButterKnife.bind(this);
+        random = new Random();
+        int what = random.nextInt(3);
+        Log.e("随机数",what+"");
+        if (what == 0) {
+            logoWelcome.setImageResource(R.drawable.logo_welcome_480);
+        } else if (what == 1) {
+            logoWelcome.setImageResource(R.drawable.logo_welcome_shop1);
+        } else {
+            logoWelcome.setImageResource(R.drawable.logo_welcome_shop2);
+        }
+
         getLocation();
         Animation animation = AnimationUtils.loadAnimation(this, R.anim.logo_alpha);
         animation.setAnimationListener(new Animation.AnimationListener() {

@@ -2,7 +2,6 @@ package com.biaoke.bklive;
 
 import android.app.Application;
 
-import com.biaoke.bklive.utils.CrashHandler;
 import com.lkl.pay.app.application.ApplicationController;
 import com.qiniu.pili.droid.streaming.StreamingEnv;
 import com.umeng.socialize.Config;
@@ -32,8 +31,8 @@ public class AppLaunch extends Application {
             PlatformConfig.setQQZone("1106024311", "FGnkSQttl6C4Wdd6");
         }
         //异常捕获工具初始化
-        CrashHandler crashHandler = CrashHandler.getInstance();
-        crashHandler.setCustomCrashHanler(getApplicationContext());
+//        CrashHandler crashHandler = CrashHandler.getInstance();
+//        crashHandler.setCustomCrashHanler(getApplicationContext());
 
 
         //上线了可以用来捕获用户产生的异常，把错误信息已文件的形式上传到服务器

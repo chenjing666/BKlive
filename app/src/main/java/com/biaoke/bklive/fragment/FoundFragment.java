@@ -75,7 +75,7 @@ public class FoundFragment extends Fragment {
     private View mHeaderView;
     private View mFooterView;
     private liveItemAdapter liveItemAdapter;
-    private ImageView imageView;
+    private ImageView imageView, imageView_load;
     private String useId;
     private int page = 0;
     private String BannerUp;
@@ -90,6 +90,8 @@ public class FoundFragment extends Fragment {
     private String jd;
     private List<ImageCycleView.ImageInfo> list;
     private int myPosition;
+    private AnimationDrawable anim_load;
+    private AnimationDrawable anim;
 
     @RequiresApi(api = Build.VERSION_CODES.M)//api23以上才能对xrecyclerview 进行滑动监听
     @Nullable
@@ -97,6 +99,11 @@ public class FoundFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_found, container, false);
         unbinder = ButterKnife.bind(this, view);
+//        imageView_load = (ImageView) getActivity().findViewById(R.id.load_found);
+//        imageView_load.setBackgroundResource(R.drawable.load_found);
+//        anim_load = (AnimationDrawable) imageView_load.getBackground();
+//        anim_load.start();
+
         if (!recyclerDataList.isEmpty()) {
             recyclerDataList.clear();
         }
@@ -122,8 +129,8 @@ public class FoundFragment extends Fragment {
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
         imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
         imageView.setBackgroundResource(R.drawable.header_down_load);
-        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
-        anim.start();
+        anim = (AnimationDrawable) imageView.getBackground();
+
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
         recyclerviewFound.addHeaderView(mHeaderView, 80);
         recyclerviewFound.addFootView(mFooterView, 50);
@@ -147,6 +154,7 @@ public class FoundFragment extends Fragment {
             @Override
             public void onRefresh() {
                 page = 0;
+                anim.start();
                 refreshData();
             }
         });
@@ -164,9 +172,9 @@ public class FoundFragment extends Fragment {
                     int totalItemCount = xGridLayoutManager.getItemCount();//总的item
                     recyclerviewFound.getFocusedChild();
 //                    Log.e("-----", recyclerviewFound.getChildAt(totalItemCount-4) + "在集合中返回指定位置的视图。");
-                    Log.e("myPosition",myPosition+"");
-                    int item=totalItemCount-myPosition;
-                    if (item==0||item==1||item==2||item==3||item==4||item==5||item==6||item==7) {
+                    Log.e("myPosition", myPosition + "");
+                    int item = totalItemCount - myPosition;
+                    if (item == 0 || item == 1 || item == 2 || item == 3 || item == 4 || item == 5 || item == 6 || item == 7) {
                         Log.e("发现页面2", "走了加载更多");
                         loadMoreData();
                     }
@@ -177,8 +185,6 @@ public class FoundFragment extends Fragment {
         sendMyLocation(wd, jd);
         return view;
     }
-
-
 
     //    {"Protocol":"UpGps","UserId":"1001","wd":"33.955879","jd":"118.343085","AccessKey":"bk5977"}
     private void sendMyLocation(String wd, String jd) {
@@ -571,7 +577,7 @@ public class FoundFragment extends Fragment {
 //            @Override
 //            public ImageView loadAndDisplay(ImageCycleView.ImageInfo imageInfo) {
 
-                //本地图片
+        //本地图片
 //                ImageView imageView = new ImageView(getActivity());
 //                imageView.setImageResource(Integer.parseInt(imageInfo.image.toString()));
 //                return imageView;
@@ -587,7 +593,7 @@ public class FoundFragment extends Fragment {
 //                smartImageView.setImageResource(Integer.parseInt(imageInfo.image.toString()));
 //                return smartImageView;
 
-                //使用BitmapUtils,只能使用网络图片
+        //使用BitmapUtils,只能使用网络图片
 //                BitmapUtils bitmapUtils = new BitmapUtils(getActivity());
 //                ImageView imageView = new ImageView(getActivity());
 //                bitmapUtils.display(imageView, imageInfo.image.toString());

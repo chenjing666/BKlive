@@ -268,7 +268,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         setContentView(R.layout.activity_swcamera_streaming);
         ButterKnife.bind(this);
         EventBus.getDefault().register(this);//注册
-
+        list.clear();//清楚列表缓存头像
         mClipboardManager = (ClipboardManager) getSystemService(CLIPBOARD_SERVICE);
         liveDescription.setVisibility(View.VISIBLE);
         bottomBarLiving.setVisibility(View.GONE);
@@ -414,7 +414,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                                 Thread.sleep(50);
                                 GetChatRomCount();//读取聊天室人数
                                 Thread.sleep(50);
-                                GetChatRomList();//读取聊天室用户列表
+                                GetChatRomList();//读取聊天室用户列表  服务器给，不需要请求了
                             } catch (InterruptedException e) {
                                 e.printStackTrace();
                             }
