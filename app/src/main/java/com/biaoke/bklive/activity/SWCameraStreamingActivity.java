@@ -806,6 +806,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                                     onlinePeople.setText("观众：" + ChatRomCount);
                                 }
                                 if (cmd.equals("GetChatRomList")) {//获取聊天室用户ID
+                                    list.clear();
                                     String Result = object_joinchat.getString("Result");
                                     if (Result.equals("1")) {
                                         JSONArray jsonArray_list = new JSONArray(object_joinchat.getString("Data"));

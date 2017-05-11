@@ -2,6 +2,7 @@ package com.biaoke.bklive.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Matrix;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,6 +33,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
     XRecyclerView xRecyclerView;
 //    private GlideUtis glideUtis;
     private LoadImage loadImage;
+    private Bitmap bm;
     private LoadImage.ImageLoadListener listener = new LoadImage.ImageLoadListener() {
         /** *回调方法 *@parambitmap 请求回来的 bitmap *@paramurl 图片请求地址 */
         public void imageLoadOk(Bitmap bitmap, String url) {
@@ -40,7 +42,11 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
 //            LogUtil.d(url);
             if (iv != null) {
 //                LogUtil.d(" 异步加载得到图片的 url=" + url);
-                iv.setImageBitmap(bitmap);
+                Matrix matrix = new Matrix();
+                matrix.setScale(0.7f, 0.7f);
+                bm = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(),
+                        bitmap.getHeight(), matrix, true);
+                iv.setImageBitmap(bm);
                 //设置完就释放掉
 //                if (!bitmap.isRecycled()) {
 //                    bitmap.recycle();
