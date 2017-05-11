@@ -2,7 +2,6 @@ package com.biaoke.bklive.adapter;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -13,7 +12,6 @@ import com.biaoke.bklive.R;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.common.CommonUtil;
 import com.biaoke.bklive.common.LoadImage;
-import com.biaoke.bklive.common.LogUtil;
 import com.pkmmte.view.CircularImageView;
 import com.xlibs.xrv.view.XRecyclerView;
 
@@ -32,15 +30,16 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
     private List<live_item> list;
     private Context context;
     XRecyclerView xRecyclerView;
+//    private GlideUtis glideUtis;
     private LoadImage loadImage;
     private LoadImage.ImageLoadListener listener = new LoadImage.ImageLoadListener() {
         /** *回调方法 *@parambitmap 请求回来的 bitmap *@paramurl 图片请求地址 */
         public void imageLoadOk(Bitmap bitmap, String url) {
             // 类似于 findviewById 得到每个 listview 的图片通过异步加载显示图 片
             ImageView iv = (ImageView) xRecyclerView.findViewWithTag(CommonUtil.NETPATH + url);
-            LogUtil.d(url);
+//            LogUtil.d(url);
             if (iv != null) {
-                LogUtil.d(" 异步加载得到图片的 url=" + url);
+//                LogUtil.d(" 异步加载得到图片的 url=" + url);
                 iv.setImageBitmap(bitmap);
             }
         }
@@ -49,6 +48,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
     public liveItemAdapter(Context context, XRecyclerView xRecyclerView) {
         this.context = context;
         this.xRecyclerView = xRecyclerView;
+//        glideUtis = new GlideUtis(context);
         loadImage = new LoadImage(context, listener);
     }
 
@@ -65,7 +65,7 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
 
     @Override
     public void onBindViewHolder(final liveItemViewHolder holder, final int position) {
-        defaultBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
+//        defaultBitmap = BitmapFactory.decodeResource(context.getResources(), R.mipmap.ic_launcher);
         live_item bean = list.get(position);
         String IconUrl = bean.getIconUrl();//获取头像地址
         String SnapshotUrl = bean.getSnapshotUrl();
@@ -80,7 +80,8 @@ public class liveItemAdapter extends XRecyclerView.Adapter<liveItemAdapter.liveI
         if (bitmap_main != null) {
             holder.itemLiveThumbnail.setImageBitmap(bitmap_main);
         }
-
+//        glideUtis.glideCircle(bean.getIconUrl(), holder.itemLiveHead, true);
+//        glideUtis.glide(bean.getSnapshotUrl(), holder.itemLiveThumbnail, true);
         if (bean.getType().equals("live")) {
             holder.itemLiveState.setVisibility(View.VISIBLE);
         }

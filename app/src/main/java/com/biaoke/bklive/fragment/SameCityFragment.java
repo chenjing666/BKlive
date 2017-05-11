@@ -68,6 +68,7 @@ public class SameCityFragment extends Fragment {
 
     //websocket
     private Intent websocketServiceIntent;
+    private AnimationDrawable anim;
 
     @Nullable
     @Override
@@ -92,8 +93,8 @@ public class SameCityFragment extends Fragment {
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
         imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
         imageView.setBackgroundResource(R.drawable.header_down_load);
-        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
-        anim.start();
+        anim = (AnimationDrawable) imageView.getBackground();
+
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
         xrecyclerviewSamecity.addHeaderView(mHeaderView, 80);
         xrecyclerviewSamecity.addFootView(mFooterView, 50);
@@ -118,6 +119,7 @@ public class SameCityFragment extends Fragment {
             @Override
             public void onRefresh() {
                 page = 0;
+                anim.start();
                 refreshData();
             }
         });

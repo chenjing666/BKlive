@@ -66,6 +66,7 @@ public class FollowFragment extends Fragment {
     private List<FollowLiveBean> mList = new ArrayList<>();
     //websocket
     private Intent websocketServiceIntent;
+    private AnimationDrawable anim;
 
     @Nullable
     @Override
@@ -87,11 +88,12 @@ public class FollowFragment extends Fragment {
             e.printStackTrace();
         }
         getVideo(jsonObject_content.toString());
+
         mHeaderView = LayoutInflater.from(getActivity()).inflate(R.layout.header, null);
         imageView = (ImageView) mHeaderView.findViewById(R.id.headiv_found);
         imageView.setBackgroundResource(R.drawable.header_down_load);
-        AnimationDrawable anim = (AnimationDrawable) imageView.getBackground();
-        anim.start();
+        anim = (AnimationDrawable) imageView.getBackground();
+
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
         recyclerviewFollow.addHeaderView(mHeaderView, 80);
         recyclerviewFollow.addFootView(mFooterView, 50);
@@ -107,6 +109,7 @@ public class FollowFragment extends Fragment {
             @Override
             public void onRefresh() {
                 page = 1;
+                anim.start();
                 refreshData();
             }
         });

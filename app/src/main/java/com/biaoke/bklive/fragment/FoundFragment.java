@@ -172,10 +172,8 @@ public class FoundFragment extends Fragment {
                     int totalItemCount = xGridLayoutManager.getItemCount();//总的item
                     recyclerviewFound.getFocusedChild();
 //                    Log.e("-----", recyclerviewFound.getChildAt(totalItemCount-4) + "在集合中返回指定位置的视图。");
-                    Log.e("myPosition", myPosition + "");
                     int item = totalItemCount - myPosition;
                     if (item == 0 || item == 1 || item == 2 || item == 3 || item == 4 || item == 5 || item == 6 || item == 7) {
-                        Log.e("发现页面2", "走了加载更多");
                         loadMoreData();
                     }
                 }
@@ -186,7 +184,6 @@ public class FoundFragment extends Fragment {
         return view;
     }
 
-    //    {"Protocol":"UpGps","UserId":"1001","wd":"33.955879","jd":"118.343085","AccessKey":"bk5977"}
     private void sendMyLocation(String wd, String jd) {
         JSONObject object_location = new JSONObject();
         try {
@@ -311,6 +308,7 @@ public class FoundFragment extends Fragment {
      * refresh
      */
     private void refreshData() {
+        recyclerviewFound= (XRecyclerView) getActivity().findViewById(R.id.recyclerview_found);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -329,6 +327,7 @@ public class FoundFragment extends Fragment {
      * load more
      */
     private void loadMoreData() {
+        recyclerviewFound= (XRecyclerView) getActivity().findViewById(R.id.recyclerview_found);
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
@@ -374,19 +373,16 @@ public class FoundFragment extends Fragment {
                 getActivity().startService(websocketServiceIntent);
                 WebSocketService.webSocketConnect();
             } else {
-                //跳转短视频视频播放，暂未开通
                 Intent intent_shortvideo = new Intent(getActivity(), ShortVideoActivity.class);
                 intent_shortvideo.putExtra("path", recyclerDataList.get(postion).getVideoUrl());
                 startActivity(intent_shortvideo);
                 //添加视频点击
                 setPv(recyclerDataList.get(postion).getId());
-//                Toast.makeText(getActivity(), "暂未开通", Toast.LENGTH_SHORT).show();
             }
         }
     };
 
     //    设置播放次数
-//    {"Protocol":"Video","Cmd":"SetPv","UserId":"1174","Id":"0","AccessKey":"bk5977"}
     private void setPv(String videoId) {
         JSONObject object_identification = new JSONObject();
         try {
