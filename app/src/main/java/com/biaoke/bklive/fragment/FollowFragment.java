@@ -58,7 +58,7 @@ public class FollowFragment extends Fragment {
     private JSONObject jsonObject_content;
     private String useId;
     private String accessKey;
-    private int page = 1;
+    private int page = 0;
     private View mHeaderView;
     private View mFooterView;
     private ImageView imageView;
@@ -74,14 +74,14 @@ public class FollowFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_follow, container, false);
         unbinder = ButterKnife.bind(this, view);
 
-
+Log.e("onCreateView","onCreateView");
         SharedPreferences sharedPreferences = getActivity().getSharedPreferences("isLogin", Context.MODE_PRIVATE);
         useId = sharedPreferences.getString("userId", "");
         accessKey = sharedPreferences.getString("AccessKey", "");
         jsonObject_content = new JSONObject();
         try {
             jsonObject_content.put("Protocol", "Explore");
-            jsonObject_content.put("Cmd", "GuangZhu");
+            jsonObject_content.put("Cmd", "GuanZhu");
             jsonObject_content.put("UserId", useId);
             jsonObject_content.put("Page", page + "");
         } catch (JSONException e) {
@@ -108,7 +108,7 @@ public class FollowFragment extends Fragment {
         recyclerviewFollow.setOnRefreshListener(new OnRefreshListener() {
             @Override
             public void onRefresh() {
-                page = 1;
+                page = 0;
                 anim.start();
                 refreshData();
             }
