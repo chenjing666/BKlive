@@ -16,4 +16,12 @@
         android:layout_gravity="center">
 
     </com.pili.pldroid.player.widget.PLVideoView>
+    <ImageView
+        android:id="@+id/video_close"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="@dimen/y20"
+        android:layout_marginEnd="@dimen/x20"
+        android:background="@drawable/livecamera_close" />
 </RelativeLayout>

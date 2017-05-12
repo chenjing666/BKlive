@@ -65,6 +65,8 @@ import de.greenrobot.event.ThreadMode;
 import okhttp3.Call;
 import okhttp3.MediaType;
 
+import static android.support.v4.content.FileProvider.getUriForFile;
+
 
 public class EditUserActivity extends BaseActivity {
 
@@ -618,12 +620,21 @@ public class EditUserActivity extends BaseActivity {
     }
 
     private void takePhoto() {
-        Intent openCameraIntent = new Intent(
-                MediaStore.ACTION_IMAGE_CAPTURE);
-        tempUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.jpg"));
-        // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
-        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
-        startActivityForResult(openCameraIntent, TAKE_PICTURE);
+
+
+//        File cameraPhoto = new File(Environment.getExternalStorageDirectory(), "bkimage.jpg");
+        Intent takePhotoIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        tempUri = getUriForFile(this, getPackageName() + ".fileprovider", new File(Environment.getExternalStorageDirectory(), "image.jpg"));
+        takePhotoIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+        startActivityForResult(takePhotoIntent, TAKE_PICTURE);
+
+
+//        Intent openCameraIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+//        File sdfile=new File(Environment.getExternalStorageDirectory(), "bkimage.jpg");
+////        tempUri = Uri.fromFile(new File(Environment.getExternalStorageDirectory(), "image.jpg"));
+//        // 指定照片保存路径（SD卡），image.jpg为一个临时文件，每次拍照后这个图片都会被替换
+//        openCameraIntent.putExtra(MediaStore.EXTRA_OUTPUT, tempUri);
+//        startActivityForResult(openCameraIntent, TAKE_PICTURE);
     }
 
     ;
@@ -637,6 +648,7 @@ public class EditUserActivity extends BaseActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
+        Log.e("返回码", "requestCode"+requestCode + "resultCode"+resultCode);
         if (resultCode == RESULT_OK) { // 如果返回码是可以用的
             switch (requestCode) {
                 case TAKE_PICTURE:

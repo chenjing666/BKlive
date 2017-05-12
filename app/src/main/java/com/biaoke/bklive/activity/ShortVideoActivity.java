@@ -1,19 +1,26 @@
 package com.biaoke.bklive.activity;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.widget.ImageView;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.message.AppConsts;
 import com.pili.pldroid.player.PLMediaPlayer;
+import com.pili.pldroid.player.widget.PLVideoView;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
+import butterknife.OnClick;
 
 public class ShortVideoActivity extends BaseActivity {
 
     @BindView(R.id.PLVideoView)
-    com.pili.pldroid.player.widget.PLVideoView mVideoView;
+    PLVideoView mVideoView;
+    @BindView(R.id.video_close)
+    ImageView videoClose;
     private String shortvideopath;
 
     @Override
@@ -35,6 +42,12 @@ public class ShortVideoActivity extends BaseActivity {
             @Override
             public void onBufferingUpdate(PLMediaPlayer plMediaPlayer, int i) {
                 mVideoView.start();
+            }
+        });
+        mVideoView.setOnCompletionListener(new PLMediaPlayer.OnCompletionListener() {
+            @Override
+            public void onCompletion(PLMediaPlayer plMediaPlayer) {
+                videoEnd();
             }
         });
     }
@@ -60,5 +73,29 @@ public class ShortVideoActivity extends BaseActivity {
     protected void onDestroy() {
         super.onDestroy();
         mVideoView.stopPlayback();
+    }
+
+    @OnClick(R.id.video_close)
+    public void onClick() {
+        finish();
+    }
+
+    private void videoEnd() {
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setMessage("视频播放结束！确认退出？")
+                .setCancelable(false)
+                .setPositiveButton("确定", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+//                        Intent intent_livingEnd = new Intent(ShortVideoActivity.this, LivingEndActivity.class);
+//                        startActivity(intent_livingEnd);
+                        finish();
+                    }
+                }).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.cancel();
+            }
+        }).show();
     }
 }

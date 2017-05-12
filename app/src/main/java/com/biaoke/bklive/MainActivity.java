@@ -194,8 +194,15 @@ public class MainActivity extends BaseActivity {
         ButterKnife.bind(this);
         glideUtis_header_user = new GlideUtis(this);
         //6.0之后开启相机的权限
+//        ||ContextCompat.checkSelfPermission(this, Manifest.permission.WRITE_SETTINGS) != PackageManager.PERMISSION_GRANTED
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
-            String[] mPermissionList = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE, Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE, Manifest.permission.WRITE_EXTERNAL_STORAGE, Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW, Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS};
+            String[] mPermissionList = new String[]{Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE,
+                    Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.CALL_PHONE,
+                    Manifest.permission.READ_LOGS, Manifest.permission.READ_PHONE_STATE,
+                    Manifest.permission.SET_DEBUG_APP, Manifest.permission.SYSTEM_ALERT_WINDOW,
+                    Manifest.permission.GET_ACCOUNTS, Manifest.permission.WRITE_APN_SETTINGS,
+                    Manifest.permission.WRITE_SETTINGS};
+//            android.permission.WRITE_SETTINGS
             ActivityCompat.requestPermissions(this, mPermissionList, 123);
         }
         //首先获取用户ID，直播要取
@@ -253,7 +260,11 @@ public class MainActivity extends BaseActivity {
             ivSexUser.setImageResource(R.drawable.female);
         }
         userId.setText(UserId);
-        tvUserSignture.setText(mSignture);
+        if (mSignture.isEmpty()) {
+            tvUserSignture.setText("还没有设置签名");
+        } else {
+            tvUserSignture.setText(mSignture);
+        }
         tvLiveNum.setText(mLiveNum);
         tvFollowNum.setText(mFollow);
         tvFanNum.setText(mFans);
