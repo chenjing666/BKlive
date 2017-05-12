@@ -21,7 +21,7 @@ import android.widget.Toast;
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.activity.PLVideoViewActivity;
 import com.biaoke.bklive.activity.ShortVideoActivity;
-import com.biaoke.bklive.adapter.liveItemAdapter;
+import com.biaoke.bklive.adapter.liveItemAdapter_samecity;
 import com.biaoke.bklive.bean.live_item;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.websocket.WebSocketService;
@@ -63,7 +63,7 @@ public class SameCityFragment extends Fragment {
     private List<live_item> recyclerDataList = new ArrayList<>();
     private View mHeaderView;
     private View mFooterView;
-    private liveItemAdapter liveItemAdapter;
+    private liveItemAdapter_samecity liveItemAdapter;
     private ImageView imageView;
 
     //websocket
@@ -103,7 +103,7 @@ public class SameCityFragment extends Fragment {
         xGridLayoutManager.setAutoMeasureEnabled(false);
         xrecyclerviewSamecity.setLayoutManager(xGridLayoutManager);
         //设置适配器
-        liveItemAdapter = new liveItemAdapter(getActivity(), xrecyclerviewSamecity);
+        liveItemAdapter = new liveItemAdapter_samecity(getActivity());
         liveItemAdapter.bind(recyclerDataList);
         liveItemAdapter.setOnItemClickListener(listen);
         xrecyclerviewSamecity.setAdapter(liveItemAdapter);
@@ -173,7 +173,7 @@ public class SameCityFragment extends Fragment {
     }
 
 
-    private liveItemAdapter.OnItemClickListener listen = new liveItemAdapter.OnItemClickListener() {
+    private liveItemAdapter_samecity.OnsamecityItemClickListener listen = new liveItemAdapter_samecity.OnsamecityItemClickListener() {
         @Override
         public void onItemClick(View view, int postion) {
             String type = recyclerDataList.get(postion).getType();
