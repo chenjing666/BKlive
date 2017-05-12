@@ -98,7 +98,6 @@ public class SameCityFragment extends Fragment {
         mFooterView = LayoutInflater.from(getActivity()).inflate(R.layout.footer, null);
         xrecyclerviewSamecity.addHeaderView(mHeaderView, 80);
         xrecyclerviewSamecity.addFootView(mFooterView, 50);
-
         //设置布局管理器,可以根据图片大小自适应
         XStaggeredGridLayoutManager xGridLayoutManager = new XStaggeredGridLayoutManager(2, XStaggeredGridLayoutManager.VERTICAL);
         xGridLayoutManager.setAutoMeasureEnabled(false);
@@ -108,6 +107,8 @@ public class SameCityFragment extends Fragment {
         liveItemAdapter.bind(recyclerDataList);
         liveItemAdapter.setOnItemClickListener(listen);
         xrecyclerviewSamecity.setAdapter(liveItemAdapter);
+//        liveItemAdapter.notifyDataSetChanged();
+//        xrecyclerviewSamecity.getChildAt(6);
 
         xrecyclerviewSamecity.setOnLoadMoreListener(new OnLoadMoreListener() {
             @Override
@@ -137,7 +138,7 @@ public class SameCityFragment extends Fragment {
                 initRefreshData();
                 xrecyclerviewSamecity.refreshComplate();
             }
-        }, 2000);
+        }, 1500);
     }
 
     private void initRefreshData() {
@@ -357,6 +358,12 @@ public class SameCityFragment extends Fragment {
         super.onStart();
         IntentFilter filter = new IntentFilter(WebSocketService.WEBSOCKET_ACTION);
         getActivity().registerReceiver(imReceiver, filter);
+
+//        Log.e("samecityfragment", liveItemAdapter.getItemCount() + "");
+//        if (liveItemAdapter.getItemCount() == 0) {
+//            refreshData();
+//            Log.d("samecityfragment","走了samecityfragment");
+//        }
     }
 
     @Override
