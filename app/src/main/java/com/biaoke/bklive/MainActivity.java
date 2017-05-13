@@ -519,6 +519,7 @@ public class MainActivity extends BaseActivity {
                 setBackgroundAlpha(1.0f, MainActivity.this);
                 popupWindow_vedio.dismiss();
                 llBottomBar.setVisibility(View.VISIBLE);
+//                finish();
             }
         });
         popupWindow_vedio.setTouchable(true);

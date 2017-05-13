@@ -338,6 +338,7 @@ public class PLVideoViewActivity extends BaseActivity {
             switch (message.what) {
                 case 0:
                     LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, false);
+//                    layoutManager_chatmessage.setReverseLayout(true);//反转布局
                     layoutManager_chatmessage.setAutoMeasureEnabled(false);
                     chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
                     livingroomChatListAdapter = new LivingroomChatListAdapter(PLVideoViewActivity.this, chatList);
@@ -596,13 +597,14 @@ public class PLVideoViewActivity extends BaseActivity {
                                     //提示某某加入聊天室
                                     livingroomChatListBean_chatmsg = new LivingroomChatListBean("", "", mNickName, "加入聊天室");
                                     chatList.add(livingroomChatListBean_chatmsg);
+                                    LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, false);
+                                    layoutManager_chatmessage.setAutoMeasureEnabled(false);
+                                    chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
+                                    livingroomChatSysAdapter = new LivingroomChatSysAdapter(PLVideoViewActivity.this, chatList);
+                                    livingroomChatSysAdapter.bind(chatList);
+                                    chatRecyclerview.setAdapter(livingroomChatSysAdapter);
                                 }
-                                LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(PLVideoViewActivity.this, LinearLayoutManager.VERTICAL, true);
-                                layoutManager_chatmessage.setAutoMeasureEnabled(false);
-                                chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
-                                livingroomChatSysAdapter = new LivingroomChatSysAdapter(PLVideoViewActivity.this, chatList);
-                                livingroomChatSysAdapter.bind(chatList);
-                                chatRecyclerview.setAdapter(livingroomChatSysAdapter);
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
@@ -1898,6 +1900,7 @@ public class PLVideoViewActivity extends BaseActivity {
         danmaku.padding = 5;
         danmaku.textSize = sp2px(20);
         danmaku.textColor = Color.WHITE;
+        danmaku.timeOffset = 600;
         danmaku.setTime(danmakuView.getCurrentTime());
         if (withBorder) {
             danmaku.borderColor = Color.GREEN;

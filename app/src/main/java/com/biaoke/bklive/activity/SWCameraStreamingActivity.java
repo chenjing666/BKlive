@@ -398,10 +398,12 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
                 case 2:
                     LinearLayoutManager layoutManager_chatmessage = new LinearLayoutManager(SWCameraStreamingActivity.this, LinearLayoutManager.VERTICAL, false);
                     layoutManager_chatmessage.setAutoMeasureEnabled(false);
+//                    layoutManager_chatmessage.setReverseLayout(true);
                     chatRecyclerviewLiving.setLayoutManager(layoutManager_chatmessage);
                     livingroomChatListAdapter = new LivingroomChatListAdapter(SWCameraStreamingActivity.this, chatList);
                     livingroomChatListAdapter.bind(chatList);
                     chatRecyclerviewLiving.setAdapter(livingroomChatListAdapter);
+//                    MoveTo.MoveToPosition(layoutManager_chatmessage, chatRecyclerviewLiving, layoutManager_chatmessage.getItemCount());
                     break;
                 case 1:
                     Toast.makeText(SWCameraStreamingActivity.this, "AK认证失败，请重新登录", Toast.LENGTH_SHORT).show();
@@ -896,6 +898,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
         danmaku.padding = 5;
         danmaku.textSize = sp2px(20);
         danmaku.textColor = Color.WHITE;
+        danmaku.timeOffset=600;
         danmaku.setTime(danmakuView.getCurrentTime());
         if (withBorder) {
             danmaku.borderColor = Color.GREEN;

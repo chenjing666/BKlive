@@ -49,7 +49,12 @@ public class VideoHeadImgAdapter extends RecyclerView.Adapter<VideoHeadImgAdapte
 
     @Override
     public void onBindViewHolder(final ViewHoldeer holder, final int position) {
-        glideUtis.glideCircle(mList.get(position).getImgUrl(), holder.itemHeadImgIv, true);
+        if (mList.get(position).getImgUrl() == null) {
+            //获取不到就显示默认
+            glideUtis.glideCircle("http://server-test.bk5977.com:8800/BK/logo/logo-72.png", holder.itemHeadImgIv, true);
+        } else {
+            glideUtis.glideCircle(mList.get(position).getImgUrl(), holder.itemHeadImgIv, true);
+        }
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
                 @Override
