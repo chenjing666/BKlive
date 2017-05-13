@@ -308,7 +308,7 @@ public class SWCameraStreamingActivity extends BaseActivity implements Streaming
             public void onClick(View v) {
                 //根布局点赞
                 periscopeLayout.addHeart();
-                giftLayout.showLeftGiftVeiw(SWCameraStreamingActivity.this, mNickName, IconUrl);//礼物文字显示,后期送礼物用到
+//                giftLayout.showLeftGiftVeiw(SWCameraStreamingActivity.this, mNickName, IconUrl);//礼物文字显示,后期送礼物用到
             }
         });
 

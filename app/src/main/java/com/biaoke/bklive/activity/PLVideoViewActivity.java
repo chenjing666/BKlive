@@ -284,6 +284,15 @@ public class PLVideoViewActivity extends BaseActivity {
                 }
             }
         }).start();
+        //礼物显示
+        ivLivingroomUpvot.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //根布局点赞
+                periscopeLayout.addHeart();
+                giftLayout.showLeftGiftVeiw(PLVideoViewActivity.this, mNickName, IconUrl);//礼物文字显示,后期送礼物用到
+            }
+        });
 
         danmakuView = (DanmakuView) findViewById(R.id.danmaku_view);
         danmakuView.enableDanmakuDrawingCache(true);

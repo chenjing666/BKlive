@@ -86,14 +86,21 @@ public class PeriscopeLayout extends RelativeLayout {
     private void init() {
 
         //初始化显示的图片
-        drawables = new Drawable[3];
-        Drawable red = getResources().getDrawable(R.mipmap.live_pl_red);
-        Drawable yellow = getResources().getDrawable(R.mipmap.live_pl_yellow);
-        Drawable blue = getResources().getDrawable(R.mipmap.live_pl_blue);
+        drawables = new Drawable[6];
+        Drawable red = getResources().getDrawable(R.drawable.upvote_livingroom1);
+        Drawable yellow = getResources().getDrawable(R.drawable.upvote_livingroom2);
+        Drawable blue = getResources().getDrawable(R.drawable.upvote_livingroom3);
+
+        Drawable red1 = getResources().getDrawable(R.drawable.upvote_livingroom4);
+        Drawable yellow1 = getResources().getDrawable(R.drawable.upvote_livingroom5);
+        Drawable blue1 = getResources().getDrawable(R.drawable.upvote_livingroom6);
 
         drawables[0] = red;
         drawables[1] = yellow;
         drawables[2] = blue;
+        drawables[3] = red1;
+        drawables[4] = yellow1;
+        drawables[5] = blue1;
         //获取图的宽高 用于后面的计算
         //注意 我这里3张图片的大小都是一样的,所以我只取了一个
         dHeight = red.getIntrinsicHeight();
@@ -126,7 +133,7 @@ public class PeriscopeLayout extends RelativeLayout {
 
         ImageView imageView = new ImageView(getContext());
         //随机选一个
-        imageView.setImageDrawable(drawables[random.nextInt(3)]);
+        imageView.setImageDrawable(drawables[random.nextInt(6)]);
         imageView.setLayoutParams(lp);
 
         addView(imageView);
