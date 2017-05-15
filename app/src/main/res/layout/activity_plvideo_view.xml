@@ -198,6 +198,13 @@
             android:id="@+id/chat_recyclerview"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
+        <ListView
+            android:id="@+id/listview_chatroom"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone">
+
+        </ListView>
     </RelativeLayout>
     <!--礼物及分享-->
     <RelativeLayout

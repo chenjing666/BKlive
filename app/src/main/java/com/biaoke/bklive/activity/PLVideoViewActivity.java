@@ -30,6 +30,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.PopupWindow;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -41,6 +42,7 @@ import com.biaoke.bklive.activity.room.PeriscopeLayout;
 import com.biaoke.bklive.adapter.LivingroomChatListAdapter;
 import com.biaoke.bklive.adapter.LivingroomChatSysAdapter;
 import com.biaoke.bklive.adapter.VideoHeadImgAdapter;
+import com.biaoke.bklive.adapter.livingroomChatAdapter;
 import com.biaoke.bklive.base.BaseActivity;
 import com.biaoke.bklive.bean.HeadBean;
 import com.biaoke.bklive.bean.LivingroomChatListBean;
@@ -142,6 +144,8 @@ public class PLVideoViewActivity extends BaseActivity {
     RelativeLayout rlBarageSwitch;
     @BindView(R.id.gift_wen_big)
     ImageView giftWenBig;
+    @BindView(R.id.listview_chatroom)
+    ListView listviewChatroom;
     private GlideUtis glideUtis;
     private PLVideoView mVideoView;
     private String path2;
@@ -158,6 +162,8 @@ public class PLVideoViewActivity extends BaseActivity {
     private List<LivingroomChatListBean> chatList = new ArrayList<>();
     private LivingroomChatListAdapter livingroomChatListAdapter;
     private LivingroomChatListBean livingroomChatListBean_chatmsg;
+
+    private livingroomChatAdapter livingroomChatAdapter;
     //系统提示
     private LivingroomChatSysAdapter livingroomChatSysAdapter;
     private String mNickName;
@@ -351,6 +357,8 @@ public class PLVideoViewActivity extends BaseActivity {
                     layoutManager_chatmessage.setAutoMeasureEnabled(false);
                     chatRecyclerview.setLayoutManager(layoutManager_chatmessage);
                     livingroomChatListAdapter = new LivingroomChatListAdapter(PLVideoViewActivity.this, chatList);
+                    livingroomChatAdapter = new livingroomChatAdapter(chatList, PLVideoViewActivity.this);
+//                    listviewChatroom.setAdapter(livingroomChatAdapter);
                     livingroomChatListAdapter.bind(chatList);
                     chatRecyclerview.setAdapter(livingroomChatListAdapter);
                     break;
@@ -2173,6 +2181,7 @@ public class PLVideoViewActivity extends BaseActivity {
             Toast.makeText(PLVideoViewActivity.this, platform + " 分享取消了", Toast.LENGTH_SHORT).show();
         }
     };
+
     //获取用户信息
     public void UserInfoHttp(String url, String path) {
         OkHttpUtils
