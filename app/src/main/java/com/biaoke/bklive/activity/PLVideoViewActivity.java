@@ -661,6 +661,10 @@ public class PLVideoViewActivity extends BaseActivity {
                     livingroomChatSysAdapter.bind(chatList);
                     chatRecyclerview.setAdapter(livingroomChatSysAdapter);
                 }
+                if (cmd.equals("GetChatRomCount")) {
+                    int ChatRomCount = object_chatMsg.getInt("ChatRomCount");
+                    onlinePeople.setText("观众：" + ChatRomCount);
+                }
 
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -1194,10 +1198,10 @@ public class PLVideoViewActivity extends BaseActivity {
         viewList = new ArrayList<View>();// 将要分页显示的View装入数组中
         gift_view1 = mlayout.inflate(R.layout.gift_view1, null);
         gift_view2 = mlayout.inflate(R.layout.gift_view2, null);
-        gift_view3 = mlayout.inflate(R.layout.gift_view3, null);
+//        gift_view3 = mlayout.inflate(R.layout.gift_view3, null);
         viewList.add(gift_view1);
         viewList.add(gift_view2);
-        viewList.add(gift_view3);
+//        viewList.add(gift_view3);
         GiftPagerAdapter giftadapter = new GiftPagerAdapter();
         viewPager_gift.setAdapter(giftadapter);
         select_only = true;

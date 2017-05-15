@@ -16,6 +16,7 @@ import android.widget.Toast;
 import com.biaoke.bklive.MainActivity;
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
+import com.biaoke.bklive.common.CountDownTimerUtils;
 import com.biaoke.bklive.message.Api;
 import com.biaoke.bklive.message.AppConsts;
 import com.zhy.http.okhttp.OkHttpUtils;
@@ -86,6 +87,11 @@ public class ForgetPasswordActivity extends BaseActivity {
                 finish();
                 break;
             case R.id.send_pin:
+                //添加验证码倒计时
+                //new倒计时对象,总共的时间,每隔多少秒更新一次时间
+                CountDownTimerUtils mCountDownTimerUtils = new CountDownTimerUtils(sendPin, 60000, 1000);
+                mCountDownTimerUtils.start();
+
                 JSONObject jsonObject_pin = new JSONObject();
                 phonenum = putPhoneNum.getText().toString().trim();
                 try {

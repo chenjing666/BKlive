@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.biaoke.bklive.R;
 import com.biaoke.bklive.base.BaseActivity;
@@ -21,6 +22,40 @@ public class SetActivity extends BaseActivity {
     Button btnLoginout;
     @BindView(R.id.back)
     ImageView back;
+    @BindView(R.id.set_phone_bind)
+    TextView setPhoneBind;
+    @BindView(R.id.set_password_change)
+    TextView setPasswordChange;
+    @BindView(R.id.set_accept_primsg)
+    TextView setAcceptPrimsg;
+    @BindView(R.id.set_live_remind)
+    TextView setLiveRemind;
+    @BindView(R.id.set_defriend)
+    TextView setDefriend;
+    @BindView(R.id.set_about_us)
+    TextView setAboutUs;
+    @BindView(R.id.set_chatbarrage_primsg)
+    ImageView setChatbarragePrimsg;
+    @BindView(R.id.set_barrage_primsg_close)
+    ImageView setBarragePrimsgClose;
+    @BindView(R.id.set_barrage_primsg_open)
+    ImageView setBarragePrimsgOpen;
+    @BindView(R.id.set_cache)
+    TextView setCache;
+    @BindView(R.id.set_chatbarrage_cache)
+    ImageView setChatbarrageCache;
+    @BindView(R.id.set_barrage_cache_close)
+    ImageView setBarrageCacheClose;
+    @BindView(R.id.set_barrage_cache_open)
+    ImageView setBarrageCacheOpen;
+    @BindView(R.id.set_autoplay)
+    TextView setAutoplay;
+    @BindView(R.id.set_chatbarrage_autoplay)
+    ImageView setChatbarrageAutoplay;
+    @BindView(R.id.set_barrage_autoplay_close)
+    ImageView setBarrageAutoplayClose;
+    @BindView(R.id.set_barrage_autoplay_open)
+    ImageView setBarrageAutoplayOpen;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,9 +69,26 @@ public class SetActivity extends BaseActivity {
         return AppConsts.POWER_BAR_BACKGROUND;
     }
 
-    @OnClick({R.id.btn_loginout, R.id.back})
+    @OnClick({R.id.btn_loginout, R.id.back, R.id.set_phone_bind, R.id.set_password_change, R.id.set_accept_primsg, R.id.set_live_remind,
+            R.id.set_defriend, R.id.set_about_us, R.id.set_cache, R.id.set_autoplay})
     public void onClick(View view) {
         switch (view.getId()) {
+            case R.id.set_phone_bind:
+                break;
+            case R.id.set_password_change:
+                break;
+            case R.id.set_accept_primsg:
+                break;
+            case R.id.set_live_remind:
+                break;
+            case R.id.set_defriend:
+                break;
+            case R.id.set_about_us:
+                break;
+            case R.id.set_cache:
+                break;
+            case R.id.set_autoplay:
+                break;
             case R.id.btn_loginout:
                 SharedPreferences sharedPreferences = getSharedPreferences("isLogin", Context.MODE_PRIVATE);
                 SharedPreferences.Editor editor = sharedPreferences.edit();

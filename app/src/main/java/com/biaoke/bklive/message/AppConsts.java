@@ -13,6 +13,7 @@ public class AppConsts {
     public static final int NETWORKTYPE_GPRS = 1;//cprs网络
     public static final int NETWORKTYPE_WIFI = 2;//wifi网络
 
+    public static final String POWER_BAR_TRANSPARENT = "#00000000";//透明背景
     public static final String POWER_BAR_WHITE = "#FFFFFF";//白色背景
     public static final String POWER_BAR_BLUE = "#5293e4";//蓝色背景
     public static final String POWER_BAR_GRAY = "#808080";//灰色背景

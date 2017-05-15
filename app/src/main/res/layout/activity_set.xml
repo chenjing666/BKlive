@@ -28,12 +28,13 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:text="编辑资料"
+            android:text="设置"
             android:textColor="@color/white"
             android:textSize="@dimen/x34" />
     </RelativeLayout>
 
     <TextView
+        android:id="@+id/set_phone_bind"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
         android:background="@color/white"
@@ -46,6 +47,7 @@
         android:textSize="@dimen/x34" />
 
     <TextView
+        android:id="@+id/set_password_change"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
         android:layout_marginTop="@dimen/y4"
@@ -58,12 +60,15 @@
         android:textColor="#222222"
         android:textSize="@dimen/x34" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y16">
     <TextView
+        android:id="@+id/set_accept_primsg"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
-        android:layout_marginTop="@dimen/y16"
         android:background="@color/white"
-        android:drawableEnd="@drawable/item_more"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/x38"
         android:paddingStart="@dimen/x38"
@@ -71,7 +76,38 @@
         android:textColor="#222222"
         android:textSize="@dimen/x34" />
 
+        <ImageView
+            android:id="@+id/set_chatbarrage_primsg"
+            android:layout_width="@dimen/x90"
+            android:layout_height="@dimen/y66"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x28"
+            android:background="@drawable/barrage_selector" />
+
+        <ImageView
+            android:id="@+id/set_barrage_primsg_close"
+            android:layout_width="@dimen/x56"
+            android:layout_height="@dimen/y56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x28"
+            android:background="@drawable/livingroom_chatbarrage_switch" />
+
+        <ImageView
+            android:id="@+id/set_barrage_primsg_open"
+            android:layout_width="@dimen/x56"
+            android:layout_height="@dimen/y56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x62"
+            android:background="@drawable/livingroom_chatbarrage_switch"
+            android:visibility="gone" />
+
+    </RelativeLayout>
+
     <TextView
+        android:id="@+id/set_live_remind"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
         android:layout_marginTop="@dimen/y4"
@@ -85,6 +121,7 @@
         android:textSize="@dimen/x34" />
 
     <TextView
+        android:id="@+id/set_defriend"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
         android:layout_marginTop="@dimen/y4"
@@ -97,12 +134,15 @@
         android:textColor="#222222"
         android:textSize="@dimen/x34" />
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y16">
     <TextView
+        android:id="@+id/set_cache"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
-        android:layout_marginTop="@dimen/y16"
         android:background="@color/white"
-        android:drawableEnd="@drawable/item_more"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/x38"
         android:paddingStart="@dimen/x38"
@@ -110,18 +150,80 @@
         android:textColor="#222222"
         android:textSize="@dimen/x34" />
 
+        <ImageView
+            android:id="@+id/set_chatbarrage_cache"
+            android:layout_width="@dimen/x90"
+            android:layout_height="@dimen/y66"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x28"
+            android:background="@drawable/barrage_selector" />
+
+        <ImageView
+            android:id="@+id/set_barrage_cache_close"
+            android:layout_width="@dimen/x56"
+            android:layout_height="@dimen/y56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x28"
+            android:background="@drawable/livingroom_chatbarrage_switch" />
+
+        <ImageView
+            android:id="@+id/set_barrage_cache_open"
+            android:layout_width="@dimen/x56"
+            android:layout_height="@dimen/y56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x62"
+            android:background="@drawable/livingroom_chatbarrage_switch"
+            android:visibility="gone" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/y4">
     <TextView
+        android:id="@+id/set_autoplay"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
-        android:layout_marginTop="@dimen/y4"
         android:background="@color/white"
-        android:drawableEnd="@drawable/item_more"
         android:gravity="center_vertical"
         android:paddingEnd="@dimen/x38"
         android:paddingStart="@dimen/x38"
         android:text="wifi自动播放"
         android:textColor="#222222"
         android:textSize="@dimen/x34" />
+
+        <ImageView
+            android:id="@+id/set_chatbarrage_autoplay"
+            android:layout_width="@dimen/x90"
+            android:layout_height="@dimen/y66"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x28"
+            android:background="@drawable/barrage_selector" />
+
+        <ImageView
+            android:id="@+id/set_barrage_autoplay_close"
+            android:layout_width="@dimen/x56"
+            android:layout_height="@dimen/y56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x28"
+            android:background="@drawable/livingroom_chatbarrage_switch" />
+
+        <ImageView
+            android:id="@+id/set_barrage_autoplay_open"
+            android:layout_width="@dimen/x56"
+            android:layout_height="@dimen/y56"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:layout_marginEnd="@dimen/x62"
+            android:background="@drawable/livingroom_chatbarrage_switch"
+            android:visibility="gone" />
+
+    </RelativeLayout>
 
     <TextView
         android:layout_width="match_parent"
@@ -150,6 +252,7 @@
         android:textSize="@dimen/x34" />
 
     <TextView
+        android:id="@+id/set_about_us"
         android:layout_width="match_parent"
         android:layout_height="@dimen/y74"
         android:layout_marginTop="@dimen/y4"
