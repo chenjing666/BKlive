@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.Message;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -74,11 +75,33 @@ public class MyVedioActivity extends BaseActivity {
         GridLayoutManager gridLayoutManager = new GridLayoutManager(this, 2);
         gridLayoutManager.setAutoMeasureEnabled(false);
         recyclerViewMyvideo.setLayoutManager(gridLayoutManager);
-        shortVideoAdapter = new ShortVideoAdapter(this, shortVideoList);
-        shortVideoAdapter.bindData(shortVideoList);
-        shortVideoAdapter.setOnItemClickListener(videoListen);
-        recyclerViewMyvideo.setAdapter(shortVideoAdapter);
+        Log.e("hhhheeee22", shortVideoList.size() + "");
+//        shortVideoAdapter = new ShortVideoAdapter(this, shortVideoList);
+//        shortVideoAdapter.bindData(shortVideoList);
+//        shortVideoAdapter.setOnItemClickListener(videoListen);
+//        recyclerViewMyvideo.setAdapter(shortVideoAdapter);
+        initRefreshLayout();
+    }
 
+    private Handler mhandler = new Handler() {
+        public void handleMessage(Message message) {
+            switch (message.what) {
+                case 1:
+//                    GridLayoutManager gridLayoutManager = new GridLayoutManager(MyVedioActivity.this, 2);
+//                    gridLayoutManager.setAutoMeasureEnabled(false);
+//                    recyclerViewMyvideo.setLayoutManager(gridLayoutManager);
+                    Log.e("hhhheeee22", shortVideoList.size() + "");
+                    shortVideoAdapter = new ShortVideoAdapter(MyVedioActivity.this, shortVideoList);
+                    shortVideoAdapter.bindData(shortVideoList);
+                    shortVideoAdapter.setOnItemClickListener(videoListen);
+                    recyclerViewMyvideo.setAdapter(shortVideoAdapter);
+
+                    break;
+            }
+        }
+    };
+
+    private void initRefreshLayout() {
         //初始化RefreshLayout
         //使用本对象作为key，用来记录上一次刷新的事件，如果两次下拉刷新间隔太近，不会触发刷新方法
         refreshLayoutMyvideo.setLastUpdateTimeRelateObject(this);
@@ -102,7 +125,6 @@ public class MyVedioActivity extends BaseActivity {
                 refreshData();
             }
         });
-
     }
 
     private ShortVideoAdapter.OnItemClickListener videoListen = new ShortVideoAdapter.OnItemClickListener() {
@@ -119,7 +141,7 @@ public class MyVedioActivity extends BaseActivity {
 
     @Override
     protected String getPowerBarColors() {
-        return AppConsts.POWER_BAR_TRANSPARENT;
+        return AppConsts.POWER_BAR_GRAY;
     }
 
     /**
@@ -171,9 +193,9 @@ public class MyVedioActivity extends BaseActivity {
     public void onStart() {
         super.onStart();
         //当前页面没数据，刷新
-        if (shortVideoAdapter.getItemCount() == 0) {
-            refreshLayoutMyvideo.autoRefresh();
-        }
+//        if (shortVideoAdapter.getItemCount() == 0) {
+//            refreshLayoutMyvideo.autoRefresh();
+//        }
     }
 
     //获取视频用户信息
@@ -238,6 +260,9 @@ public class MyVedioActivity extends BaseActivity {
                                                                 String PubTime = jsonobject.getString("PubTime");
                                                                 LiveVideo_list liveVideo_list = new LiveVideo_list(videoid, UserId_video, Pv, Exp, HV, type, Title, SnapshotUrl, videoUrl, Format, PubTime);
                                                                 shortVideoList.add(liveVideo_list);
+                                                                Message message = new Message();
+                                                                message.what = 1;
+                                                                mhandler.sendMessage(message);
                                                             }
 
                                                         } catch (JSONException e) {

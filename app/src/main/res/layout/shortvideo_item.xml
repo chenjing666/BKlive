@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -9,12 +9,13 @@
 
         <ImageView
             android:id="@+id/shortvideo_image"
+            android:adjustViewBounds="true"
             android:layout_width="match_parent"
             android:layout_height="match_parent" />
 
         <LinearLayout
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="@dimen/x200"
+            android:layout_height="@dimen/y60"
             android:layout_alignParentEnd="true"
             android:background="@drawable/bk_contribution_charm"
             android:gravity="center"
@@ -33,14 +34,14 @@
                 android:layout_marginStart="@dimen/x10"
                 android:text="22"
                 android:textColor="@color/gray_light"
-                android:textSize="@dimen/x40" />
+                android:textSize="@dimen/x36" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="看过"
                 android:textColor="@color/gray_light"
-                android:textSize="@dimen/x26" />
+                android:textSize="@dimen/x22" />
 
         </LinearLayout>
 
@@ -49,8 +50,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/y20"
-            android:layout_marginStart="@dimen/x20"
+            android:layout_marginBottom="@dimen/y90"
+            android:layout_centerHorizontal="true"
             android:text="视频标题"
             android:textColor="@color/gray_light"
             android:textSize="@dimen/x34" />
@@ -74,6 +75,8 @@
                 android:id="@+id/video_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:textSize="@dimen/x16"
+                android:textColor="@color/black"
                 android:text="1小时前" />
         </LinearLayout>
     </RelativeLayout>

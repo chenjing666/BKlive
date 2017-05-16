@@ -15,6 +15,7 @@ import com.biaoke.bklive.utils.GlideUtis;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
+import java.util.Random;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -28,6 +29,7 @@ public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.Vi
     private Context context;
     GlideUtis glideUtis;
     private List<LiveVideo_list> mList;
+    private Random random;
 
     public ShortVideoAdapter(Context context, List<LiveVideo_list> mList) {
         this.context = context;
@@ -48,12 +50,34 @@ public class ShortVideoAdapter extends RecyclerView.Adapter<ShortVideoAdapter.Vi
 
     @Override
     public void onBindViewHolder(final VideoViewHolder holder, final int position) {
+        random = new Random();
         //封面
         ImageLoader.getInstance().displayImage(mList.get(position).getSnapshotUrl(), holder.shortvideoImage, AvatarLoadOptions.build_item());
-
         holder.liveLooknum.setText(mList.get(position).getPv());
         holder.videoTitle.setText(mList.get(position).getTitle());
         holder.videoTime.setText(mList.get(position).getPubTime());
+
+        int ranInt = random.nextInt(6);
+        switch (ranInt) {
+            case 0:
+                holder.videoTitle.setTextColor(context.getResources().getColor(R.color.black));
+                break;
+            case 1:
+                holder.videoTitle.setTextColor(context.getResources().getColor(R.color.background_color));
+                break;
+            case 2:
+                holder.videoTitle.setTextColor(context.getResources().getColor(R.color.red));
+                break;
+            case 3:
+                holder.videoTitle.setTextColor(context.getResources().getColor(R.color.yellow));
+                break;
+            case 4:
+                holder.videoTitle.setTextColor(context.getResources().getColor(R.color.brown));
+                break;
+            case 5:
+                holder.videoTitle.setTextColor(context.getResources().getColor(R.color.green));
+                break;
+        }
         // ####################   item点击事件   #################
         if (onItemClickListener != null) {
             holder.itemView.setOnClickListener(new View.OnClickListener() {
