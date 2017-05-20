@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/y450"
+    android:layout_height="@dimen/y660"
     android:orientation="vertical">
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="@dimen/y360">
+        android:layout_height="@dimen/y570">
 
         <ImageView
             android:id="@+id/item_live_Thumbnail"
@@ -26,8 +26,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="@dimen/y10"
-            android:layout_marginStart="@dimen/x50"
+            android:layout_marginBottom="@dimen/y30"
+            android:layout_marginStart="@dimen/x90"
+            android:textColor="@color/white"
             android:text="标题"
             android:textSize="@dimen/x34" />
     </RelativeLayout>

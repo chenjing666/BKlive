@@ -203,7 +203,7 @@ public class ContributionActivity extends AppCompatActivity {
                 initRefreshData();
                 xrecyclerviewDayOrAll.refreshComplate();
             }
-        }, 2000);
+        }, 1500);
     }
 
     private void initRefreshData() {
@@ -230,7 +230,7 @@ public class ContributionActivity extends AppCompatActivity {
                 initRefreshDataAll();
                 xrecyclerviewDayOrAll.refreshComplate();
             }
-        }, 2000);
+        }, 1500);
     }
 
     private void initRefreshDataAll() {

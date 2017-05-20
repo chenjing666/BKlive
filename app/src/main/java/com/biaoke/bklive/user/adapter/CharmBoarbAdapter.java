@@ -50,7 +50,7 @@ public class CharmBoarbAdapter extends XRecyclerView.Adapter<CharmBoarbAdapter.c
     public void onBindViewHolder(charmBoardViewHolder holder, int position) {
 
         if (position == 0) {
-            holder.bkContributionItem.setVisibility(View.INVISIBLE);
+            holder.bkContributionItem.setVisibility(View.GONE);
         }
         if (position == 1) {
             holder.charmBoardHeadSecond.setVisibility(View.VISIBLE);
@@ -62,7 +62,7 @@ public class CharmBoarbAdapter extends XRecyclerView.Adapter<CharmBoarbAdapter.c
             holder.charmBoardThird.setVisibility(View.VISIBLE);
             holder.tvCharmBoard.setVisibility(View.GONE);
         }
-        holder.tvCharmBoard.setText("NO." + (position + 2));
+        holder.tvCharmBoard.setText("NO." + (position + 1));
         glideUtis.glideCircle(mList.get(position).getHeadUrl(), holder.charmBoardHead, true);
         holder.charmBoardLevel.setText(mList.get(position).getLevel());
         holder.contributionNickname.setText(mList.get(position).getNickName());
